@@ -1,0 +1,268 @@
+;;;; -*- Mode: Text -*-
+
+(:name "ASN.1"
+ :domain-file "asn.1-domain.lisp"
+ :package "ASN.1"
+ :grammar "zebu-mg"
+ :identifier-start-chars
+ "abcdefghijklmnopqrstuvwxyz"
+ :identifier-continue-chars
+ "-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+ :case-sensitive t
+ :lex-cats ((Type-Reference "[A-Z][a-zA-Z0-9-]*")
+	    (Signed-Number "-?[0-9]+")
+	    (Anything "[^ ]+")
+            (HString "'[0-9a-fA-F]*'[hH]")))
+
+;; Domain Definitions
+
+Module-Definition := kb-domain: [(identifier) (body)];
+Module-Body := kb-domain: [(exports) (imports) (assignment-list kb-sequence)];
+Exports := kb-domain: [(list kb-sequence) (all-exports)];
+Imports := kb-domain: [(list kb-sequence) (valid)];
+Symbols-From-Module := kb-domain: [(symbols) (global-module-reference)];
+Assignment := kb-domain: [(type) (value)]
+                    <<print-function: generate-print-function>>;
+Value-Assignment := kb-domain: [(name) (type) (value)]
+                    <<print-function: generate-print-function>>;
+Object-Identifier-Value := kb-domain: [(value)];
+Obj-Id-Component := kb-domain: [(name) (value)];
+
+;; Rule Definitions
+Module-Definition -->
+  Module-Identifier "DEFINITIONS" "::="
+  "BEGIN" Module-Body "END"
+    { Module-Definition:[(identifier Module-Identifier) (body Module-Body)] };
+
+Module-Identifier -->  Module-Reference;
+Module-Reference --> Type-Reference;
+
+Module-Body --> Exports Imports Assignment* " "
+                { Module-Body:[(assignment-list Assignment*)
+                               (exports Exports) (imports Imports)] }
+                | ;
+
+Exports --> "EXPORTS" Symbol* "," ";" { Exports:[(list Symbol*)] }
+          | "EXPORTS" "ALL" ";"       { Exports:[(all-exports t)] }
+          | ;
+
+Symbol --> Reference;
+
+Imports --> "IMPORTS" Symbols-From-Module* " " ";"
+            { Imports:[(valid t) (list Symbols-From-Module*)] }
+          | ;
+
+Symbols-From-Module --> Symbol+ "," "FROM" Global-Module-Reference
+                        { Symbols-From-Module:[(symbols Symbol+)
+                                               (global-module-reference
+                                                Global-Module-Reference)] };
+Global-Module-Reference --> Module-Reference;
+
+Reference --> Type-Reference | Identifier;
+
+Assignment --> Type-Assignment {Assignment:[(type :type) (value Type-Assignment)]}
+             | Value-Assignment {Assignment:[(type :value) (value Value-Assignment)]};
+
+Type-Assignment --> Type-Reference "::=" Type
+                  | Type-Reference "MACRO" "::=" "BEGIN" Garbage+ " " "END"
+                  ;
+
+Garbage --> Anything;
+
+Value-Assignment --> Identifier Type "::=" Value
+                     { Value-Assignment:[(name Identifier)
+                                         (type Type)
+                                         (value Value)] }
+
+                   | Identifier "OBJECT-IDENTITY"
+                     "STATUS" Status
+                     "DESCRIPTION" Description
+                     Object-Identity-Reference
+                     "::=" Object-Identifier-Value
+                     { Value-Assignment:[(name Identifier)
+                                         (type :object-identity)
+                                         (value Object-Identifier-Value)] }
+
+                   | Identifier "MODULE-IDENTITY"
+                     "LAST-UPDATED" Last-Updated
+                     "ORGANIZATION" Organization
+                     "CONTACT-INFO" Contact-Info
+                     "DESCRIPTION" Description
+                     Module-Revision* " "
+                     "::=" Object-Identifier-Value
+                     { Value-Assignment:[(name Identifier)
+                                         (type :module-identity)
+                                         (value Object-Identifier-Value)] }
+
+                   | Identifier "OBJECT-TYPE"
+                     "SYNTAX" Type
+                     Object-Type-Units
+                     Object-Type-Access
+                     "STATUS" Status
+                     "DESCRIPTION" Description
+                     Object-Type-Index
+                     Object-Type-Augments
+                     Object-Type-Reference
+                     Object-Type-Defval
+                     "::=" Object-Identifier-Value
+                     { Value-Assignment:[(name Identifier)
+                                         (type :object-type)
+                                         (value Object-Identifier-Value)] }
+
+                   | Identifier "NOTIFICATION-TYPE"
+                     Notification-Type-Objects
+                     "STATUS" Status
+                     "DESCRIPTION" Description
+                     "::=" Object-Identifier-Value
+                     { Value-Assignment:[(name Identifier)
+                                         (type :notification-type)
+                                         (value Object-Identifier-Value)] }
+
+                   | Identifier "NOTIFICATION-GROUP"
+                     "NOTIFICATIONS" "{" Identifier+ "," "}"
+                     "STATUS" Status
+                     "DESCRIPTION" Description
+                     "::=" Object-Identifier-Value
+                     { Value-Assignment:[(name Identifier)
+                                         (type :notification-group)
+                                         (value Object-Identifier-Value)] }
+
+                   | Identifier "MODULE-COMPLIANCE"
+                     "STATUS" Status
+                     "DESCRIPTION" Description
+                     Module-Compliance-Body+ " "
+                     "::=" Object-Identifier-Value
+                     { Value-Assignment:[(name Identifier)
+                                         (type :module-compliance)
+                                         (value Object-Identifier-Value)] }
+
+                   | Identifier "OBJECT-GROUP"
+                     "OBJECTS" "{" Identifier+ "," "}"
+                     "STATUS" Status
+                     "DESCRIPTION" Description
+                     "::=" Object-Identifier-Value
+                     { Value-Assignment:[(name Identifier)
+                                         (type :object-group)
+                                         (value Object-Identifier-Value)] }
+                   ;
+
+Status --> Identifier;
+Description --> String;
+Last-Updated --> String;
+Organization --> String;
+Contact-Info --> String;
+Module-Revision --> "REVISION" String "DESCRIPTION" String;
+Object-Identity-Reference --> "REFERENCE" String |;
+Object-Type-Index --> "INDEX" "{" Object-Type-Index-Value+ "," "}" |;
+Object-Type-Index-Value --> "IMPLIED" Identifier | Identifier;
+Object-Type-Augments --> "AUGMENTS" "{" Identifier "}" |;
+Object-Type-Defval --> "DEFVAL" "{" Object-Type-Defval-Value "}" |;
+Object-Type-Defval-Value --> String
+                           | HString
+                           | Obj-Id-Component
+                           | "{" Identifier* "," "}";
+
+Object-Type-Units --> "UNITS" String |;
+Object-Type-Reference --> "REFERENCE" String |;
+Object-Type-Access --> "MAX-ACCESS" Identifier | "ACCESS" Identifier;
+Module-Compliance-Body --> Module-Compliance-Local | Module-Compliance-Other;
+Module-Compliance-Local --> "MODULE"
+                            Module-Compliance-Mandatory
+                            Module-Compliance-Item* " ";
+Module-Compliance-Mandatory --> "MANDATORY-GROUPS" "{" Identifier+ "," "}" |;
+Module-Compliance-Item --> Module-Compliance-Group | Module-Compliance-Object;
+Module-Compliance-Other --> "MODULE" Type-Reference
+                            "MANDATORY-GROUPS" "{" Identifier+ "," "}"
+                            Module-Compliance-Item* " ";
+
+Module-Compliance-Group --> "GROUP" Identifier "DESCRIPTION" Description;
+Module-Compliance-Object --> "OBJECT" Identifier
+                             Module-Compliance-Object-Syntax
+                             Module-Compliance-Object-Write-Syntax
+                             Module-Compliance-Object-Access
+                             "DESCRIPTION" Description;
+Module-Compliance-Object-Syntax --> "SYNTAX" Type |;
+Module-Compliance-Object-Write-Syntax --> "WRITE-SYNTAX" Type |;
+Module-Compliance-Object-Access --> "MIN-ACCESS" Identifier |;
+
+Notification-Type-Objects --> "OBJECTS" "{" Identifier+ "," "}" |;
+
+Type --> Builtin-Type | Named-Type;
+
+Builtin-Type --> Object-Identifier-Type
+               | Choice-Type
+               | String-Type
+               | Integer-Type
+               | Sequence-Of-Type
+               | Sequence-Type
+               | Textual-Convention-Type
+               | Tagged-Type;
+
+Named-Type --> Type-Reference ;
+
+Textual-Convention-Type --> "TEXTUAL-CONVENTION"
+                            Textual-Convention-Display-Hint
+                            "STATUS" Identifier
+                            "DESCRIPTION" String
+                            Textual-Convention-Reference
+                            "SYNTAX" Type;
+
+Textual-Convention-Display-Hint --> "DISPLAY-HINT" String | ;
+Textual-Convention-Reference --> "REFERENCE" String | ;
+
+Object-Identifier-Type --> "OBJECT" "IDENTIFIER";
+
+Value --> Builtin-Value;
+
+Builtin-Value --> Object-Identifier-Value;
+
+Object-Identifier-Value --> "{" Obj-Id-Component+ " " "}"
+                            { Object-Identifier-Value:[(value Obj-Id-Component+)] };
+
+Obj-Id-Component --> Name-And-Number-Form | Name-Form | Number-Form;
+
+Name-And-Number-Form --> Identifier "(" Number-Form ")"
+                         { Obj-Id-Component:[(name Identifier) (value Number-Form)] };
+Name-Form --> Identifier;
+Number-Form --> Number;
+
+Choice-Type --> "CHOICE" "{" Garbage+ " " "}";
+String-Type --> String-Type-Name String-Options;
+
+String-Type-Name --> "OCTET" "STRING"
+                   | "DisplayString"
+                   | "PhysAddress"
+                   | "SnmpAdminString"
+                   | "DateAndTime"
+                   | "InternationalDisplayString"
+                   | "Opaque" ;
+
+String-Options -->  "(" "SIZE" "(" Numbers+ "|" ")" ")" |;
+
+Numbers --> Common-Number ".." Common-Number
+          | Common-Number;
+
+Integer-Type --> Integer-Type-Name "(" Splited-Numbers+ "|" ")"
+               | Integer-Type-Name "{" Named-Number+ "," "}"
+               | Integer-Type-Name;
+
+Integer-Type-Name --> "INTEGER"
+                    | "Integer32"
+                    | "Unsigned32"
+                    | "RowStatus"
+                    | "SnmpSecurityModel"
+                    | "BITS" ;
+
+Splited-Numbers --> Common-Number | Common-Number ".." Common-Number;
+Named-Number --> Identifier "(" Common-Number ")";
+
+Common-Number --> Signed-Number | HString;
+
+Sequence-Type --> "SEQUENCE" "{" Garbage* " " "}";
+Sequence-Of-Type --> "SEQUENCE" "OF" Type;
+
+Tagged-Type --> Tag Type | Tag "IMPLICIT" Type | Tag "EXPLICIT" Type;
+Tag --> "[" Class Class-Number "]";
+Class-Number --> Signed-Number;
+Class --> "UNIVERSAL" | "APPLICATION" | "PRIVATE" |;
+
