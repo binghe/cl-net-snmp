@@ -1,0 +1,13 @@
+cl-net-snmp (1.1) unstable; urgency=low
+
+  * [fix] snmp-walk
+  * [new] counter, gauge, opaque
+
+ -- Chun Tian (binghe) <binghe@163.org>  Wed, 17 Oct 2007 18:06:37 +0800
+
+cl-net-snmp (0.6) unstable; urgency=low
+
+  * Initial release.
+
+ -- Chun Tian (binghe) <binghe@163.org>  Thu, 07 Jun 2007 17:02:19 +0800
+

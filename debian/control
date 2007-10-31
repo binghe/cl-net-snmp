@@ -1,0 +1,13 @@
+Source: cl-net-snmp
+Section: libs
+Priority: optional
+Build-Depends: debhelper (>= 4.0)
+Build-Depends-Indep: dh-lisp
+Maintainer: Chun Tian (binghe) <binghe@163.org>
+Standards-Version: 3.7.2.0
+
+Package: cl-net-snmp
+Architecture: all
+Depends: ${misc:Depends}, cl-cffi, cl-net-telent-date, cl-iolib, cl-sql-postgresql, cl-hunchentoot
+Description: Common Lisp Net-SNMP library
+ .
