@@ -1,7 +1,7 @@
 (in-package :snmp.system)
 
 (defpackage smi
-  (:use :common-lisp :asn.1 #-(and lispworks win32) :net.sockets)
+  (:use :common-lisp :asn.1 #-lispworks :net.sockets #+lispworks :comm)
   (:export ;; general
            value-of general-type plain-value
            ;; object-id

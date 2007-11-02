@@ -5,19 +5,11 @@
 (defvar *default-community* "public")
 (defvar *default-class* 'v1-session)
 
-#-win32
 (defclass session ()
   ((socket :reader socket-of
            :initarg :socket
-           :type socket)
+           :type #+lispworks socket-stream #-lispworks socket)
    (version :reader version-of
-	    :initarg :version
-	    :type integer
-	    :initform *default-version*)))
-
-#+win32
-(defclass session ()
-  ((version :reader version-of
 	    :initarg :version
 	    :type integer
 	    :initform *default-version*)))
@@ -63,12 +55,23 @@
   (declare (ignore initargs))
   (setf (slot-value instance 'version) +snmp-version-3+))
 
-(defun make-session (host &key (class *default-class*)
+(defun open-session (host &key (class *default-class*)
                                (port *default-port*)
                                (community *default-community*))
+  #-lispworks
   (let ((s (make-socket :remote-host host
                         :remote-port port
                         :type :datagram
                         :ipv6 nil)))
     (set-socket-option s :receive-timeout :sec 1 :usec 0)
-    (make-instance class :socket s :community community)))
+    (make-instance class :socket s :community community))
+  #+lispworks
+  (make-instance class
+                 :socket (open-udp-stream host port
+                                          :element-type '(unsigned-byte 8)
+                                          :read-timeout 1
+                                          :errorp t)
+                 :community community))
+
+(defmethod close-session ((instance session))
+  (close (socket-of instance)))

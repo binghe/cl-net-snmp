@@ -4,12 +4,11 @@
   (:documentation "SNMP Get"))
 
 (defmethod snmp-get ((host string) &rest vars)
-  (let ((session (make-session host)))
+  (let ((session (open-session host)))
     (unwind-protect
         (apply #'snmp-get session vars)
-      (close (socket-of session)))))
+      (close-session session))))
 
-#-win32
 (defmethod snmp-get ((session v1-session) &rest vars)
   (let ((vb (mapcar #'(lambda (x) (list (etypecase x
                                           (object-id x)
@@ -22,12 +21,13 @@
                                                        :variable-bindings vb))))
       (let ((data (ber-encode message))
             (socket (socket-of session)))
+        #-lispworks
         (socket-send (make-array (length data)
                                  :element-type '(unsigned-byte 8)
                                  :adjustable nil
-                                 :initial-contents data
-                                 #+lispworks :allocation #+lispworks :static)
+                                 :initial-contents data)
                      socket)
+        #+lispworks (progn (write-sequence data socket) (force-output socket))
         (let ((message (decode-message socket)))
           (mapcar #'second
                   (variable-bindings
