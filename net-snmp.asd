@@ -3,8 +3,7 @@
 (in-package :cl-user)
 
 (defpackage snmp.system
-  (:use :common-lisp :asdf)
-  (:export #+lispworks make-fli-templates))
+  (:use :common-lisp :asdf))
 
 (in-package :snmp.system)
 
@@ -69,9 +68,3 @@
   :components (;; ASN.1
 	       (:module asn.1
                 :components ((:file "devel")))))
-
-;; (fli:start-collecting-template-info)
-#+lispworks
-(defun make-fli-templates ()
-  (with-open-file (stream "fli-templates.lisp" :direction :output)
-    (fli:print-collected-template-info :output-stream stream)))
