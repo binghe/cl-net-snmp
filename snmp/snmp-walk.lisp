@@ -4,12 +4,11 @@
   (:documentation "SNMP Walk"))
 
 (defmethod snmp-walk ((host string) var)
-  (let ((session (make-session host)))
+  (let ((session (open-session host)))
     (unwind-protect
-        (snmp-walk (make-session host) var)
-      (close (socket-of session)))))
+        (snmp-walk session var)
+      (close-session session))))
 
-#-win32
 (defmethod snmp-walk ((session v1-session) (var object-id))
   "SNMP Walk for v1 and v2c"
   (let ((message (make-instance 'message
@@ -23,12 +22,13 @@
                      (request-id (message-data message)) id)
                (let ((data (ber-encode message))
                      (socket (socket-of session)))
+                 #-lispworks
                  (socket-send (make-array (length data)
                                           :element-type '(unsigned-byte 8)
                                           :adjustable nil
-                                          :initial-contents data
-                                          #+lispworks :allocation #+lispworks :static)
+                                          :initial-contents data)
                               socket)
+                 #+lispworks (progn (write-sequence data socket) (force-output socket))
                  (let ((result (decode-message socket)))
                    (let ((vb (car (variable-bindings (message-data result)))))
                      (if (not (oid-< (car vb) var))
