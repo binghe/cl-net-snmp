@@ -16,8 +16,9 @@
                :cl-ppcre        ; for oid resolve
                :ironclad        ; for v3 support
                :net-telent-date ; for time convert
-	       #-win32 :iolib   ; for networking
-	       #+win32 :cffi	; for portable FFI
+               #+lispworks :lispworks-udp
+               #-lispworks :iolib
+               :cffi		; for FFI need...
                :zebu)           ; for mib parse
   :components (;; ASN.1
 	       (:module asn.1
@@ -31,7 +32,7 @@
 			     (:file "integer"   :depends-on ("package"))
 			     (:file "string"    :depends-on ("package"))
 			     (:file "sequence"  :depends-on ("package"))
-                             #-win32 (:file "ipaddress" :depends-on ("package"))
+                             #+ignore (:file "ipaddress" :depends-on ("package"))
 			     (:file "oid"       :depends-on ("package"))
                              (:file "timeticks" :depends-on ("package"))
                              (:file "pdu"       :depends-on ("package"))
@@ -51,7 +52,6 @@
 			     (:file "browser"   :depends-on ("tree")))
 		:depends-on (smi))
 	       ;; SNMP
-               #-win32
 	       (:module snmp
 		:components ((:file "package")
                              (:file "constants" :depends-on ("package"))
