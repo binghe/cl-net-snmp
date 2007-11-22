@@ -42,10 +42,14 @@
 		   :initarg :security-level
 		   :type integer
 		   :initform +snmp-sec-level-authnopriv+)
-   (security-auth-proto :reader security-auth-proto
-			:initarg :security-auth-proto
-			:type (member :hmac-md5 :hmac-sha1)
-			:initform :hmac-md5)
+   (auth-proto :reader auth-proto
+               :initarg :auth-proto
+               :type (member :md5 :sha)
+               :initform :md5)
+   (priv-proto :reader priv-proto
+               :initarg :priv-proto
+               :type (member :des :aes)
+               :initform :des)
    (passphrase :initarg :passphrase
 	       :type string))
   (:documentation "SNMP v3 session, user security model"))
