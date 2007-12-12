@@ -1,0 +1,5 @@
+RFC1155-SMI DEFINITIONS ::= BEGIN
+
+	-- predefined in mcompile.exe
+
+END
