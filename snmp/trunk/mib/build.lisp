@@ -53,7 +53,6 @@
     "RMON-MIB"
     "NOTIFICATION-LOG-MIB"
     "SMUX-MIB"
-    "LINUX-HA-MIB"     ;; heartbeat-2
     ))
 
 (defparameter *mib-pathname-base*

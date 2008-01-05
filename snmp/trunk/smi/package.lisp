@@ -10,6 +10,8 @@
            oid-<
            *oid-print-name* *oid-print-id* *oid-print-short*
            *oid-print-length*
+           ;; sequence
+           empty-sequence-p
            ;; pdu
            get-request-pdu
            get-next-request-pdu
@@ -21,10 +23,11 @@
            error-status
            error-index
            ;; message
-           message
+           v1-message
+           v3-message
            decode-message
            variable-bindings
-           message-data
+           msg-data-of
            request-id
            ;; timeticks
            timeticks ticks hours minutes seconds s/100

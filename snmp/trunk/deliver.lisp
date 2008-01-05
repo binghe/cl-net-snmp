@@ -4,18 +4,20 @@
 
 ;;; Where we are going to deliver the image. 
 
-(defvar *delivered-image-name* "/tmp/cl-snmp")
+(defvar *delivered-image-name* "~/mibrowser")
 
 ;;; Load the "application". 
 
 (clc:clc-require :net-snmp)
 
-(defun main ()
-  (princ
-   (snmp:snmp-walk "localhost" "system")))
+;;(defun main ()
+;;  (princ
+;;   (snmp:snmp-walk "localhost" "system")))
 
-(compile 'main)
+;;(compile 'main)
+
+;;(mib:browser)
 
 ;; Deliver.
 
-(deliver 'main *delivered-image-name* 5)
+(deliver 'mib:browser *delivered-image-name* 5 :interface :capi)

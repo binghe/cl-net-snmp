@@ -31,7 +31,8 @@
 			     (:file "integer"   :depends-on ("package"))
 			     (:file "string"    :depends-on ("package"))
 			     (:file "sequence"  :depends-on ("package"))
-                             #+ignore (:file "ipaddress" :depends-on ("package"))
+                             #+ignore ;; TODO: port this type to lispworks.
+                             (:file "ipaddress" :depends-on ("package"))
 			     (:file "oid"       :depends-on ("package"))
                              (:file "timeticks" :depends-on ("package"))
                              (:file "pdu"       :depends-on ("package"))
@@ -55,8 +56,9 @@
 		:components ((:file "package")
                              (:file "constants" :depends-on ("package"))
                              (:file "session"   :depends-on ("constants"))
-                             (:file "snmp-get" :depends-on ("session"))
-                             (:file "snmp-walk" :depends-on ("session")))
+                             (:file "report"    :depends-on ("session"))
+                             (:file "snmp-get"  :depends-on ("session" "report"))
+                             (:file "snmp-walk" :depends-on ("session" "report")))
 		:depends-on (asn.1 smi mib))))
 
 (defsystem net-snmp-devel
