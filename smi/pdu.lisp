@@ -42,8 +42,8 @@
     (let ((sub-encode (apply #'nconc
                              (map 'list #'ber-encode (nconc (list request-id
                                                                   error-status
-                                                                  error-index)
-                                                            (list variable-bindings))))))
+                                                                  error-index
+                                                                  variable-bindings))))))
       (nconc (ber-encode-type 2 1 tag)
              (ber-encode-length (length sub-encode))
              sub-encode))))
