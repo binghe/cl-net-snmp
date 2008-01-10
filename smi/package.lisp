@@ -12,6 +12,7 @@
            *oid-print-length*
            ;; sequence
            empty-sequence-p
+           empty-sequence
            ;; pdu
            get-request-pdu
            get-next-request-pdu
@@ -27,7 +28,7 @@
            v3-message
            decode-message
            variable-bindings
-           msg-data-of
+           msg-pdu-of
            request-id
            ;; timeticks
            timeticks ticks hours minutes seconds s/100

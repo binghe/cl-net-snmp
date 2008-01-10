@@ -8,7 +8,7 @@
            insert-node resolve
            reset-tree build-tree
            read-mib parse
-           #+lispworks browser))
+           #+lispworks browser mib-browser))
 
 (in-package :mib)
 

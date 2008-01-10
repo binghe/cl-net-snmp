@@ -14,12 +14,12 @@
   (let ((message (make-instance 'v1-message
                                 :version (version-of session)
                                 :community (community-of session)
-                                :data (make-instance 'get-next-request-pdu
-                                                     :request-id 0
-                                                     :variable-bindings (list nil)))))
+                                :pdu (make-instance 'get-next-request-pdu
+                                                    :request-id 0
+                                                    :variable-bindings (list nil)))))
     (labels ((iter (v id acc)
-               (setf (car (variable-bindings (msg-data-of message))) (list v nil)
-                     (request-id (msg-data-of message)) id)
+               (setf (car (variable-bindings (msg-pdu-of message))) (list v nil)
+                     (request-id (msg-pdu-of message)) id)
                (let ((data (ber-encode message))
                      (socket (socket-of session)))
                  #-lispworks
@@ -33,7 +33,7 @@
                    (write-sequence data socket)
                    (force-output socket))
                  (let ((result (decode-message socket 1)))
-                   (let ((vb (car (variable-bindings (msg-data-of result)))))
+                   (let ((vb (car (variable-bindings (msg-pdu-of result)))))
                      (if (not (oid-< (car vb) var))
                        (nreverse acc)
                        (iter (first vb) (1+ id) (cons vb acc))))))))

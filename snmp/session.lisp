@@ -6,76 +6,86 @@
 (defvar *default-class* 'v1-session)
 
 (defclass session ()
-  ((socket :reader socket-of
-           :initarg :socket
-           :type #+lispworks socket-stream #-lispworks socket)
-   (version :reader version-of
-	    :initarg :version
-	    :type integer
-	    :initform *default-version*)))
+  ((socket            :type #+lispworks socket-stream #-lispworks socket
+		      :accessor socket-of
+		      :initarg :socket)
+   (version           :type integer
+		      :accessor version-of
+		      :initarg :version
+		      :initform *default-version*))
+  (:documentation "SNMP session base"))
 
 (defclass v1-session (session)
-  ((community :reader community-of
-              :initarg :community
-              :type string
-              :initform *default-community*))
+  ((community         :type string
+		      :accessor community-of
+		      :initarg :community
+		      :initform *default-community*))
   (:documentation "SNMP v1 session, community based"))
-
-(defmethod initialize-instance :after ((instance v1-session)
-                                       &rest initargs &key &allow-other-keys)
-  (declare (ignore initargs))
-  (setf (slot-value instance 'version) +snmp-version-1+))
 
 (defclass v2c-session (v1-session) ()
   (:documentation "SNMP v2c session, community based"))
 
-(defmethod initialize-instance :after ((instance v2c-session)
-                                       &rest initargs &key &allow-other-keys)
-  (declare (ignore initargs))
-  (setf (slot-value instance 'version) +snmp-version-2c+))
-
 (defclass v3-session (session)
-  ((security-name :reader security-name
-                  :initarg :security-name
-		  :type string)
-   (security-level :reader security-level
-		   :initarg :security-level
-		   :type integer
-		   :initform +snmp-sec-level-authnopriv+)
-   (auth-proto :reader auth-proto
-               :initarg :auth-proto
-               :type (member :md5 :sha)
-               :initform :md5)
-   (priv-proto :reader priv-proto
-               :initarg :priv-proto
-               :type (member :des :aes)
-               :initform :des)
-   (passphrase :initarg :passphrase
-	       :type string))
+  ((security-name     :type string
+		      :accessor security-name
+		      :initarg :security-name)
+   (security-level    :type string
+		      :accessor security-level
+		      :initarg :security-level)
+   (engine-id         :type string
+		      :initarg :engine-id
+		      :accessor engine-id-of)
+   (engine-boots      :type integer
+		      :initarg :engine-boots
+		      :accessor engine-boots-of)
+   (engine-time       :type integer
+		      :initarg :engine-time
+		      :accessor engine-time-of)
+   (auth-key          :type string
+		      :initarg :auth-key
+		      :accessor auth-key-of)
+   (priv-key          :type string
+		      :initarg :priv-key
+		      :accessor priv-key-of)
+   (context-engine-id :type string
+		      :initarg :context-engine-id
+		      :accessor context-engine-id-of)
+   (context-name      :type string
+		      :initarg :context-name
+		      :accessor context-name-of))
   (:documentation "SNMP v3 session, user security model"))
 
-(defmethod initialize-instance :after ((instance v3-session)
+(defmethod initialize-instance :after ((session v1-session)
                                        &rest initargs &key &allow-other-keys)
   (declare (ignore initargs))
-  (setf (slot-value instance 'version) +snmp-version-3+))
+  (setf (version-of session) +snmp-version-1+))
+
+(defmethod initialize-instance :after ((session v2c-session)
+                                       &rest initargs &key &allow-other-keys)
+  (declare (ignore initargs))
+  (setf (version-of session) +snmp-version-2c+))
+
+(defmethod initialize-instance :after ((session v3-session)
+                                       &rest initargs &key &allow-other-keys)
+  (declare (ignore initargs))
+  (setf (version-of session) +snmp-version-3+)
+  (princ initargs))
 
 (defun open-session (host &key (class *default-class*)
                                (port *default-port*)
-                               (community *default-community*))
-  #-lispworks
-  (let ((s (make-socket :remote-host host
-                        :remote-port port
-                        :type :datagram
-                        :ipv6 nil)))
-    (set-socket-option s :receive-timeout :sec 1 :usec 0)
-    (make-instance class :socket s :community community))
-  #+lispworks
-  (make-instance class
-                 :socket (open-udp-stream host port
-                                          :element-type '(unsigned-byte 8)
-                                          :read-timeout 1
-                                          :errorp t)
-                 :community community))
+                               (community *default-community*)
+                               (read-timeout 1))
+  (let ((s #-lispworks (make-socket :remote-host host
+				    :remote-port port
+				    :type :datagram
+				    :ipv6 nil)
+	   #+lispworks (open-udp-stream host port
+					:element-type '(unsigned-byte 8)
+					:read-timeout read-timeout
+					:errorp t)))
+    #-lispworks
+    (set-socket-option s :receive-timeout :sec read-timeout :usec 0)
+    (make-instance class :socket s :community community)))
 
-(defmethod close-session ((instance session))
-  (close (socket-of instance)))
+(defmethod close-session ((session session))
+  (close (socket-of session)))
