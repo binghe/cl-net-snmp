@@ -154,3 +154,20 @@
             x (ber-decode (make-instance 'ber-stream :seq code))
             code code)
     x))
+
+(defclass raw-data ()
+  ((data :accessor raw-data-of
+         :initarg :data 
+         :type (vector (unsigned-byte 8) *)
+         :initform #(0))))
+
+(declaim (inline raw-data))
+
+(defun raw-data-p (data)
+  (typep 'raw-data data))
+
+(defun raw-data (data)
+  (make-instance 'raw-data :data (concatenate 'vector data)))
+
+(defmethod ber-encode ((value raw-data))
+  (raw-data-of value))
