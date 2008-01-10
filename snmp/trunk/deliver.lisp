@@ -20,4 +20,9 @@
 
 ;; Deliver.
 
-(deliver 'mib:browser *delivered-image-name* 5 :interface :capi)
+(require "capi-ps-lib")
+
+(deliver 'mib:browser *delivered-image-name* 5
+         :interface :capi
+         :keep-symbol-names '(capi:graph-pane
+                              mib:mib-browser))

@@ -7,6 +7,8 @@
 
 (in-package :snmp.system)
 
+;; (declaim (optimize (safety 3) (debug 3) (speed 0) (space 0)))
+
 (defsystem net-snmp
   :description "Simple Network Manangement Protocol"
   :version "1.2"

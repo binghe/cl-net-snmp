@@ -5,26 +5,28 @@
 (defmethod plain-value ((object sequence))
   object)
 
-;; we define (:null) = null sequence (#x30 #x00)
+;; for non-null sequence
 (defmethod ber-encode ((value sequence))
-  (if (empty-sequence-p value)
-    ;; for null sequence
-    (ber-encode-empty-sequence)
-    ;; for non-null sequence
-    (let ((sub-encode (apply #'nconc
-                             (map 'list #'ber-encode value))))
-      (nconc (ber-encode-type 0 1 16)
-             (ber-encode-length (length sub-encode))
-             sub-encode))))
+  (let ((sub-encode (apply #'nconc
+                           (map 'list #'ber-encode value))))
+    (nconc (ber-encode-type 0 1 16)
+           (ber-encode-length (length sub-encode))
+           sub-encode)))
 
-(defun ber-encode-empty-sequence ()
+;; for non-null sequence
+(defclass empty-sequence () ())
+
+(defmethod ber-encode ((value empty-sequence))
   (nconc (ber-encode-type 0 1 16)
          (ber-encode-length 0)))
 
-(declaim (inline empty-sequence-p))
+(declaim (inline empty-sequence-p)
+         (inline empty-sequence))
+
 (defun empty-sequence-p (sequence)
-  (declare (type list sequence))
-  (eq (car sequence) :null))
+  (typep sequence 'empty-sequence))
+
+(defun empty-sequence () (make-instance 'empty-sequence))
 
 (defmethod ber-decode-value ((stream stream) (type (eql :sequence)) length)
   (declare (type stream stream)
@@ -32,7 +34,7 @@
            (ignore type))
   (if (zerop length)
     ;; for null sequence
-    (list :null)
+    (empty-sequence)
     ;; for non-null sequence
     (labels ((iter (length-left acc)
                (if (zerop length-left)

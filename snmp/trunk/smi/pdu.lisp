@@ -40,10 +40,10 @@
            (type fixnum tag))
   (with-slots (request-id error-status error-index variable-bindings) value
     (let ((sub-encode (apply #'nconc
-                             (map 'list #'ber-encode (nconc (list request-id
-                                                                  error-status
-                                                                  error-index
-                                                                  variable-bindings))))))
+                             (map 'list #'ber-encode (list request-id
+                                                           error-status
+                                                           error-index
+                                                           variable-bindings)))))
       (nconc (ber-encode-type 2 1 tag)
              (ber-encode-length (length sub-encode))
              sub-encode))))

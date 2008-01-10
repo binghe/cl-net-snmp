@@ -13,6 +13,9 @@
            ber-decode-type
            ber-decode-length
            install-asn.1-type
+           raw-data-p
+           raw-data
+           raw-data-of
            ;;; Symbols from ASN.1 Syntax
            Obj-Id-Component-p
            Obj-Id-Component-name
