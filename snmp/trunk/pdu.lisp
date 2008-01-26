@@ -1,25 +1,36 @@
-(in-package :smi)
+(in-package :snmp)
 
 (defclass base-pdu ()
-  ((request-id        :type (unsigned-byte 32)
-                      :accessor request-id
-                      :initform 0
-                      :initarg :request-id)
-   (variable-bindings :type list
-                      :accessor variable-bindings
-                      :initform nil
-                      :initarg :variable-bindings)))
+  ((request-id-counter :type integer
+                       :initform 0
+                       :allocation :class)
+   (request-id         :type integer
+                       :accessor request-id-of
+                       :initarg :request-id)
+   (variable-bindings  :type list
+                       :accessor variable-bindings-of
+                       :initarg :variable-bindings)))
+
+(defun generate-request-id (pdu)
+  (with-slots (request-id-counter) pdu
+    (incf request-id-counter)))
+
+(defmethod initialize-instance :after ((pdu base-pdu)
+                                       &rest initargs &key &allow-other-keys)
+  (declare (ignore initargs))
+  (unless (slot-boundp pdu 'request-id)
+    (setf (slot-value pdu 'request-id) (generate-request-id pdu))))
 
 (defclass pdu (base-pdu)
-  ((error-status      :type integer
-                      :reader error-status
-                      :initform 0
-                      :initarg :error-status)
-   (error-index       :type integer
-                      :reader error-index
-                      :initform 0
-                      :initarg :error-index))
-  (:documentation "SNMP Generate PDU Class"))
+  ((error-status :type integer
+                 :reader error-status
+                 :initform 0
+                 :initarg :error-status)
+   (error-index  :type integer
+                 :reader error-index
+                 :initform 0
+                 :initarg :error-index))
+  (:documentation "SNMP Generate PDU class"))
 
 (defmethod print-object ((obj pdu) stream)
   (with-slots (request-id error-status error-index variable-bindings) obj

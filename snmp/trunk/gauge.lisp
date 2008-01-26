@@ -1,4 +1,4 @@
-(in-package :smi)
+(in-package :snmp)
 
 (defclass gauge (general-type) ())
 
