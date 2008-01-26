@@ -1,4 +1,4 @@
-(in-package :smi)
+(in-package :snmp)
 
 (defclass timeticks ()
   ((ticks :type fixnum :initarg :ticks :initform 0 :reader ticks)

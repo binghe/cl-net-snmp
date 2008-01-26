@@ -2,17 +2,18 @@
 ;;;; Object ID Base Support ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(in-package :smi)
-
-(defvar *oid-print-name* t)
-(defvar *oid-print-id* nil)
-(defvar *oid-print-short* t)
-(defvar *oid-print-length* 2)
+(in-package :snmp)
 
 (defclass object-id ()
   ((rev-ids :initform nil :type list :reader oid-revid :initarg :id)
    (rev-names :initform nil :type list :reader oid-name :initarg :name)
    (length :initform 0 :type integer :reader oid-length)))
+
+(defmethod print-object ((obj object-id) stream)
+  (with-slots (rev-ids) obj
+    (print-unreadable-object (obj stream :type t)
+      (let ((part-1 (reverse rev-ids)))
+        (format stream "~A~{.~A~}" (car part-1) (cdr part-1))))))
 
 (defmethod plain-value ((object object-id))
   (reverse (oid-revid object)))
@@ -98,3 +99,10 @@
         (o-2-len (oid-length oid-2)))
     (if (<= o-1-len o-2-len) nil
       (equal o-2 (nthcdr (- o-1-len o-2-len) o-1)))))
+
+(defgeneric *->oid (x)
+  (:documentation "Anything -> Object ID"))
+
+(defmethod *->oid ((x object-id)) x)
+(defmethod *->oid ((x list)) (make-object-id x))
+(defmethod *->oid ((x vector)) (make-object-id (concatenate 'list x)))

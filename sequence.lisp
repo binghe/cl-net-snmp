@@ -1,4 +1,4 @@
-(in-package :smi)
+(in-package :snmp)
 
 ;;; SEQUENCE (:sequence)
 
@@ -15,6 +15,9 @@
 
 ;; for non-null sequence
 (defclass empty-sequence () ())
+
+(defmethod plain-value ((object empty-sequence))
+  nil)
 
 (defmethod ber-encode ((value empty-sequence))
   (nconc (ber-encode-type 0 1 16)

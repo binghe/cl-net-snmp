@@ -1,4 +1,4 @@
-(in-package :smi)
+(in-package :snmp)
 
 (defclass counter (general-type) ())
 (defclass counter32 (counter) ())
