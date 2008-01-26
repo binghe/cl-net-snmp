@@ -6,13 +6,11 @@
 (defvar *default-class* 'v1-session)
 
 (defclass session ()
-  ((socket            :type #+lispworks socket-stream #-lispworks socket
+  ((socket            :type socket-stream
 		      :accessor socket-of
 		      :initarg :socket)
    (version           :type integer
-		      :accessor version-of
-		      :initarg :version
-		      :initform *default-version*))
+		      :accessor version-of))
   (:documentation "SNMP session base"))
 
 (defclass v1-session (session)
@@ -27,11 +25,10 @@
 
 (defclass v3-session (session)
   ((security-name     :type string
-		      :accessor security-name-of
+		      :reader security-name-of
 		      :initarg :security-name)
-   (security-level    :type string
-		      :accessor security-level-of
-		      :initarg :security-level)
+   (security-level    :type fixnum
+		      :accessor security-level-of)
    (engine-id         :type string
 		      :initarg :engine-id
 		      :accessor engine-id-of)
@@ -46,40 +43,49 @@
 		      :accessor auth-key-of)
    (priv-key          :type string
 		      :initarg :priv-key
-		      :accessor priv-key-of)
+		      :accessor priv-key-of))
   (:documentation "SNMP v3 session, user security model"))
 
 (defmethod initialize-instance :after ((session v1-session)
                                        &rest initargs &key &allow-other-keys)
   (declare (ignore initargs))
-  (setf (version-of session) +snmp-version-1+))
+  (setf (slot-value session 'version) +snmp-version-1+))
 
 (defmethod initialize-instance :after ((session v2c-session)
                                        &rest initargs &key &allow-other-keys)
   (declare (ignore initargs))
-  (setf (version-of session) +snmp-version-2c+))
+  (setf (slot-value session 'version) +snmp-version-2c+))
 
 (defmethod initialize-instance :after ((session v3-session)
                                        &rest initargs &key &allow-other-keys)
   (declare (ignore initargs))
-  (setf (version-of session) +snmp-version-3+)
-  (princ initargs))
+  (with-slots (version security-level) session
+    (setf version +snmp-version-3+
+          ;; msgFlags = Security-Level + Reportable:
+          ;; .... .1.. = Reportable: Set
+          ;; .... ..1. = Encrypted: Set
+          ;; .... ...1 = Authenticated: Set
+          security-level (+ (if (slot-boundp session 'auth-key) 1 0)
+                            (if (slot-boundp session 'priv-key) 2 0)))))
 
 (defun open-session (host &key (class *default-class*)
                                (port *default-port*)
-                               (community *default-community*)
-                               (read-timeout 1))
-  (let ((s #-lispworks (make-socket :remote-host host
-				    :remote-port port
-				    :type :datagram
-				    :ipv6 nil)
-	   #+lispworks (open-udp-stream host port
-					:element-type '(unsigned-byte 8)
-					:read-timeout read-timeout
-					:errorp t)))
-    #-lispworks
-    (set-socket-option s :receive-timeout :sec read-timeout :usec 0)
-    (make-instance class :socket s :community community)))
+                               (read-timeout 1) ;; second
+                               (community "public")
+                               security-name
+                               auth-key
+                               priv-key)
+  (let ((socket (open-udp-stream host port
+                                 :element-type '(unsigned-byte 8)
+                                 :read-timeout read-timeout
+                                 :errorp t)))
+    (make-instance class :socket socket
+                   ;; SNMPv1, v2c
+                   :community community
+                   ;; SNMPv3
+                   :security-name security-name
+                   :auth-key auth-key
+                   :priv-key priv-key)))
 
 (defmethod close-session ((session session))
   (close (socket-of session)))

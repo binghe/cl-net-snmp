@@ -1,4 +1,4 @@
-(in-package :smi)
+(in-package :snmp)
 
 (defmethod plain-value ((object (eql nil)))
   object)
@@ -18,3 +18,4 @@
 
 (eval-when (:load-toplevel :execute)
   (install-asn.1-type :null 0 0 5))
+

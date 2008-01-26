@@ -1,4 +1,4 @@
-(in-package :smi)
+(in-package :snmp)
 
 (defmethod plain-value ((object string))
   object)

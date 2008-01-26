@@ -1,4 +1,4 @@
-(in-package :smi)
+(in-package :snmp)
 
 (defclass opaque (general-type) ())
 
@@ -21,13 +21,12 @@
 
 (defmethod encode-opaque ((o single-float))
   (nconc (list #x9f #x78 #x04)
-         (let ((f (cffi:foreign-alloc :float :initial-element o)))
-           (unwind-protect
-               (list (cffi:mem-aref f :uint8 3)
-                     (cffi:mem-aref f :uint8 2)
-                     (cffi:mem-aref f :uint8 1)
-                     (cffi:mem-aref f :uint8 0))
-             (cffi:foreign-free f)))))
+         (let ((integer (ieee-floats:encode-float32 o)))
+           (let ((a (ash (logand integer #xff000000) -24))
+                 (b (ash (logand integer #x00ff0000) -16))
+                 (c (ash (logand integer #x0000ff00) -8))
+                 (d      (logand integer #x000000ff)))
+             (list a b c d)))))
 
 (defmethod ber-encode ((value opaque))
   (nconc (ber-encode-type 1 0 4)
@@ -52,15 +51,9 @@
         (f-1 (read-byte stream))
         (f-2 (read-byte stream))
         (f-3 (read-byte stream)))
-    (let ((f (cffi:foreign-alloc :float :initial-element 0.0)))
-      (unwind-protect
-          (progn
-            (setf (cffi:mem-aref f :uint8 3) f-0
-                  (cffi:mem-aref f :uint8 2) f-1
-                  (cffi:mem-aref f :uint8 1) f-2
-                  (cffi:mem-aref f :uint8 0) f-3)
-            (make-instance 'opaque :value (cffi:mem-ref f :float)))
-        (cffi:foreign-free f)))))
+    (let ((integer (logior (ash f-0 24) (ash f-1 16) (ash f-2 8) f-3)))
+      (make-instance 'opaque
+                     :value (ieee-floats:decode-float32 integer)))))
 
 (defmethod ber-encode ((value single-float))
   (ber-encode (make-instance 'opaque :value value)))
