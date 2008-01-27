@@ -4,10 +4,8 @@
   (:documentation "SNMP Walk"))
 
 (defmethod snmp-walk ((host string) var)
-  (let ((session (open-session host)))
-    (unwind-protect
-        (snmp-walk session var)
-      (close-session session))))
+  (with-open-session (s host)
+    (snmp-walk s var)))
 
 (defmethod snmp-walk ((session v1-session) (var object-id))
   "SNMP Walk for v1 and v2c"
@@ -49,9 +47,7 @@
                                 :pdu (make-instance 'get-next-request-pdu
                                                     :variable-bindings (list nil)))))
     (labels ((iter (v acc)
-               (setf (car (variable-bindings-of (msg-pdu-of message))) (list v nil)
-                     (request-id-of (msg-pdu-of message)) (generate-request-id
-                                                           (msg-pdu-of message)))
+               (setf (car (variable-bindings-of (msg-pdu-of message))) (list v nil))
                (let ((data (ber-encode message))
                      (socket (socket-of session)))
                  (write-sequence data socket)
@@ -60,5 +56,10 @@
                    (let ((vb (car (variable-bindings-of (msg-pdu-of result)))))
                      (if (not (oid-< (car vb) var))
                        (nreverse acc)
-                       (iter (first vb) (cons vb acc))))))))
+                       ;; Increase MsgID and RequestID and do next loop
+                       (progn
+                         (setf (msg-id-of message) (generate-msg-id message)
+                               (request-id-of (msg-pdu-of message)) (generate-request-id
+                                                                     (msg-pdu-of message)))
+                         (iter (first vb) (cons vb acc)))))))))
       (iter var nil))))

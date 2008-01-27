@@ -2,5 +2,6 @@
 
 (defpackage snmp
   (:use :common-lisp :comm :stream)
-  (:export #:open-session #:close-session
-	   #:snmp-get #:snmp-walk))
+  (:export #:+snmp-version-1+ #:+snmp-version-2c+ #:+snmp-version-3+
+           #:open-session #:close-session #:with-open-session
+   	   #:snmp-get #:snmp-walk))
