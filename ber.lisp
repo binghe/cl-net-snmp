@@ -164,6 +164,13 @@
 (defmethod ber-encode ((value raw-data))
   (raw-data-of value))
 
+(defun ber-encode->string (data)
+  (concatenate 'string (mapcar #'code-char (ber-encode data))))
+
+(defun ber-decode<-string (data)
+  (declare (type string data))
+  (ber-decode (map 'vector #'char-code data)))
+
 ;;; Test Code
 
 (defun ber-test (x)

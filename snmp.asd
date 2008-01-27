@@ -30,5 +30,5 @@
                (:file "message"   :depends-on ("constants" "pdu"))
                (:file "session"   :depends-on ("message"))
                (:file "report"    :depends-on ("session" "sequence"))
-               (:file "snmp-get"  :depends-on ("report"))
-               (:file "snmp-walk" :depends-on ("report"))))
+               (:file "snmp-get"  :depends-on ("report" "oid"))
+               (:file "snmp-walk" :depends-on ("report" "oid"))))

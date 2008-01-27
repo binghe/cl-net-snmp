@@ -7,11 +7,11 @@
 
 ;; for non-null sequence
 (defmethod ber-encode ((value sequence))
-  (let ((sub-encode (apply #'nconc
+  (let ((sub-encode (apply #'append
                            (map 'list #'ber-encode value))))
-    (nconc (ber-encode-type 0 1 16)
-           (ber-encode-length (length sub-encode))
-           sub-encode)))
+    (append (ber-encode-type 0 1 16)
+            (ber-encode-length (length sub-encode))
+            sub-encode)))
 
 ;; for non-null sequence
 (defclass empty-sequence () ())
@@ -20,8 +20,8 @@
   nil)
 
 (defmethod ber-encode ((value empty-sequence))
-  (nconc (ber-encode-type 0 1 16)
-         (ber-encode-length 0)))
+  (append (ber-encode-type 0 1 16)
+          (ber-encode-length 0)))
 
 (declaim (inline empty-sequence-p)
          (inline empty-sequence))
