@@ -6,9 +6,9 @@
 ;;; OCTET STRING (:octet-string)
 
 (defmethod ber-encode ((value string))
-  (nconc (ber-encode-type 0 0 4)
-         (ber-encode-length (length value))
-         (map 'list #'char-code value)))
+  (append (ber-encode-type 0 0 4)
+          (ber-encode-length (length value))
+          (map 'list #'char-code value)))
 
 (defmethod ber-decode-value ((stream stream) (type (eql :octet-string)) length)
   (declare (type stream stream)

@@ -43,18 +43,18 @@
 		      :initarg :engine-time
                       :initform 0
 		      :accessor engine-time-of)
-   (auth-protocol     :type (member :md5 :sha nil)
+   (auth-protocol     :type (member :md5 :sha1 nil)
                       :initarg :auth-protocol
                       :initform nil
                       :accessor auth-protocol-of)
-   (auth-key          :type string
+   (auth-key          :type (simple-array (unsigned-byte 8) (*))
 		      :initarg :auth-key
 		      :accessor auth-key-of)
    (priv-protocol     :type (member :des :aes nil)
                       :initarg :priv-protocol
                       :initform nil
                       :accessor priv-protocol-of)
-   (priv-key          :type string
+   (priv-key          :type (simple-array (unsigned-byte 8) (*))
 		      :initarg :priv-key
 		      :accessor priv-key-of))
   (:documentation "SNMP v3 session, user security model"))
@@ -85,6 +85,14 @@
         (gethash +snmp-version-2c+ *snmp-class-table*) 'v2c-session
         (gethash +snmp-version-3+ *snmp-class-table*) 'v3-session))
 
+(defgeneric *->key (key))
+
+(defmethod *->key ((key string))
+  (map '(simple-array (unsigned-byte 8) (*)) #'char-code key))
+
+(defmethod *->key ((key sequence))
+  (concatenate '(simple-array (unsigned-byte 8) (*)) key))
+
 (Defun open-session (host &key port version community user auth priv (read-timeout 1))
   ;; first, what version we are talking about if version not been set?
   (let* ((real-version (or version
@@ -104,21 +112,21 @@
         (when auth
           (if (atom auth)
             (nconc args (list :auth-protocol *default-auth-protocol*
-                              :auth-key auth))
+                              :auth-key (*->key auth)))
             (let ((auth-protocol (car auth))
                   (auth-key (cdr auth)))
               (nconc args (list :auth-protocol auth-protocol
-                                :auth-key (if (atom auth-key) auth-key
-                                            (car auth-key)))))))
+                                :auth-key (*->key (if (atom auth-key) auth-key
+                                                    (car auth-key))))))))
         (when priv
           (if (atom priv)
             (nconc args (list :priv-protocol *default-priv-protocol*
-                              :priv-key priv))
+                              :priv-key (*->key priv)))
             (let ((priv-protocol (car priv))
                   (priv-key (cdr priv)))
               (nconc args (list :priv-protocol priv-protocol
-                                :priv-key (if (atom priv-key) priv-key
-                                            (car priv-key)))))))))
+                                :priv-key (*->key (if (atom priv-key) priv-key
+                                                    (car priv-key))))))))))
     (apply #'make-instance args)))
 
 (defmethod close-session ((session session))
