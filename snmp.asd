@@ -8,9 +8,9 @@
   :description "Simple Network Manangement Protocol"
   :version "2.0"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
-  :depends-on (:lispworks-udp ;; for UDP networking on LispWorks
-               :ironclad      ;; for SNMPv3
-               :ieee-floats)  ;; for SMI opaque (single-float) type
+  :depends-on (lispworks-udp ;; for UDP networking on LispWorks
+               ironclad      ;; for SNMPv3
+               ieee-floats)  ;; for SMI opaque (single-float) type
   :components ((:file "package")
                (:file "ber" :depends-on ("package"))
 	       (:file "smi" :depends-on ("ber"))

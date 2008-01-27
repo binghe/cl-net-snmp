@@ -31,18 +31,23 @@
 		      :accessor security-level-of)
    (engine-id         :type string
 		      :initarg :engine-id
+                      :initform ""
 		      :accessor engine-id-of)
    (engine-boots      :type integer
 		      :initarg :engine-boots
+                      :initform 0
 		      :accessor engine-boots-of)
    (engine-time       :type integer
 		      :initarg :engine-time
+                      :initform 0
 		      :accessor engine-time-of)
    (auth-key          :type string
 		      :initarg :auth-key
+                      :initform nil
 		      :accessor auth-key-of)
    (priv-key          :type string
 		      :initarg :priv-key
+                      :initform nil
 		      :accessor priv-key-of))
   (:documentation "SNMP v3 session, user security model"))
 
@@ -59,14 +64,14 @@
 (defmethod initialize-instance :after ((session v3-session)
                                        &rest initargs &key &allow-other-keys)
   (declare (ignore initargs))
-  (with-slots (version security-level) session
+  (with-slots (version security-level auth-key priv-key) session
     (setf version +snmp-version-3+
           ;; msgFlags = Security-Level + Reportable:
           ;; .... .1.. = Reportable: Set
           ;; .... ..1. = Encrypted: Set
           ;; .... ...1 = Authenticated: Set
-          security-level (+ (if (slot-boundp session 'auth-key) 1 0)
-                            (if (slot-boundp session 'priv-key) 2 0)))))
+          security-level (+ (if auth-key 1 0)
+                            (if priv-key 2 0)))))
 
 (defun open-session (host &key (class *default-class*)
                                (port *default-port*)

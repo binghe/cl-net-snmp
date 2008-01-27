@@ -37,6 +37,9 @@
               (empty-sequence)
               ;; for non-null vars
               (mapcar #'(lambda (x) (list (*->oid x) nil)) vars))))
+    ;; Get a report first if the session is new created
+    (when (need-report-p session)
+      (snmp-report session))
     (let ((message (make-instance 'v3-message
                                   :user-name (security-name-of session)
                                   :security-level (security-level-of session)
