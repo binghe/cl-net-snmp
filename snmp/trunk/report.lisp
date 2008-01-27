@@ -2,6 +2,11 @@
 
 (in-package :snmp)
 
+(defun need-report-p (session)
+  "return true if a SNMPv3 session has no engine infomation set"
+  (declare (type v3-session session))
+  (zerop (engine-time-of session)))
+
 (defun snmp-report (session)
   (declare (type v3-session session))
   (let ((message

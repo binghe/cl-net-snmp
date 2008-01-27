@@ -40,7 +40,7 @@
 
 (defclass v3-message (message)
   ((msg-id-counter     :type integer ;; Message ID counter, always increase
-                       :initform 0
+                       :initform #x01000000
                        :allocation :class)
    (msg-id             :type integer
                        :initarg :id
@@ -97,7 +97,7 @@
                msg-engine-id msg-engine-boots msg-engine-time) msg
     (let ((global-data (list msg-id                 ; msgID
                              ;; msgMaxSize 65507 (hardcode now)
-                             (raw-data '(#x02 #x03 #x00 #xff #xe3))
+                             (raw-data (list #x02 #x03 #x00 #xff #xe3))
                              ;; msgFlags: security-level with report flag
                              (make-string 1
                                           :initial-element (code-char
@@ -110,13 +110,13 @@
       (let ((msg-authentication-parameters "")
             (msg-privacy-parameters "")             ; not support yet.
             (msg-data-2 (raw-data msg-data)))
-        (declare (ignore msg-authentication-parameters
-                         msg-privacy-parameters))
         (let ((security-data (list->string
                               (ber-encode (list msg-engine-id
                                                 msg-engine-boots
                                                 msg-engine-time
-                                                msg-user-name)))))
+                                                msg-user-name
+                                                msg-authentication-parameters
+                                                msg-privacy-parameters)))))
           (ber-encode (list msg-version
                             global-data
                             security-data
@@ -124,10 +124,12 @@
 
 ;;; SNMPv3 Message Decode
 (defmethod decode-message ((message-list list) (version (eql 3)))
-  (destructuring-bind (nil (id nil sec-level-str nil) sec-string data) message-list
+  (destructuring-bind (ver (id max-size sec-level-str sec-model) sec-string data) message-list
+    (declare (ignore ver sec-model max-size))
     (let ((pdu (third data)))
-      (destructuring-bind (engine-id engine-boots engine-time user)
+      (destructuring-bind (engine-id engine-boots engine-time user auth priv)
           (ber-decode (map 'vector #'char-code sec-string))
+        (declare (ignore auth priv))
         (make-instance 'v3-message
                        :pdu pdu
                        :id id

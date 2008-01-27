@@ -112,13 +112,13 @@
                      acc))))
         (values res length-length)))))
   
-(defgeneric ber-encode (value))
+(defgeneric ber-encode (data))
+(defgeneric ber-decode (data))
 
-(defun ber-decode (stream)
-  (declare (type stream stream))
-  (let ((type (ber-decode-type stream))
-        (length (ber-decode-length stream)))
-    (ber-decode-value stream type length)))
+(defmethod ber-decode ((data stream))
+  (let ((type (ber-decode-type data))
+        (length (ber-decode-length data)))
+    (ber-decode-value data type length)))
 
 (defgeneric ber-decode-value (stream type length))
 
@@ -126,11 +126,8 @@
   (declare (type stream stream)
            (type fixnum length)
            (ignore type))
-  (dotimes (i length)
-    (read-byte stream))
+  (dotimes (i length) (read-byte stream))
   nil)
-
-;;;; Test Code
 
 (defclass ber-stream (fundamental-input-stream)
   ((sequence :type sequence :initarg :seq :reader ber-sequence)
@@ -148,12 +145,9 @@
       (incf (ber-position instance))
       byte)))
 
-(defun ber-test (x)
-  (let ((code (ber-encode x)))
-    (format t "~A -> ~A~%~{~8,'0B ~}~%~{~D ~}~%"
-            x (ber-decode (make-instance 'ber-stream :seq code))
-            code code)
-    x))
+(defmethod ber-decode ((value sequence))
+  (let ((stream (make-instance 'ber-stream :seq value)))
+    (ber-decode stream)))
 
 (defclass raw-data ()
   ((data :accessor raw-data-of
@@ -169,3 +163,12 @@
 
 (defmethod ber-encode ((value raw-data))
   (raw-data-of value))
+
+;;; Test Code
+
+(defun ber-test (x)
+  (let ((code (ber-encode x)))
+    (format t "~A -> ~A~%~{~8,'0B ~}~%~{~D ~}~%"
+            x (ber-decode (make-instance 'ber-stream :seq code))
+            code code)
+    x))
