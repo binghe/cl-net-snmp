@@ -19,8 +19,8 @@
   ()
   (:documentation "Community-based SNMP v2c Message"))
 
-(defmethod ber-encode ((value v1-message))
-  (with-slots (msg-version msg-community msg-pdu) value
+(defmethod ber-encode ((msg v1-message))
+  (with-slots (msg-version msg-community msg-pdu) msg
     (ber-encode (list msg-version msg-community msg-pdu))))
 
 (defgeneric decode-message (stream version))
@@ -40,7 +40,7 @@
 
 (defclass v3-message (message)
   ((msg-id-counter     :type integer ;; Message ID counter, always increase
-                       :initform #x01000000
+                       :initform 0
                        :allocation :class)
    (msg-id             :type integer
                        :initarg :id
@@ -92,24 +92,26 @@
 
 ;;; SNMPv3 Message Encode
 (defmethod ber-encode ((msg v3-message))
-  (with-slots (msg-version msg-id msg-pdu
-               msg-user-name msg-security-level
-               msg-engine-id msg-engine-boots msg-engine-time) msg
-    (let ((global-data (list msg-id                 ; msgID
-                             ;; msgMaxSize 65507 (hardcode now)
+  (with-slots (msg-version msg-pdu msg-id
+                           msg-user-name
+                           msg-security-level
+                           msg-engine-id
+                           msg-engine-boots
+                           msg-engine-time) msg
+    (let ((global-data (list msg-id
+                             ;; msgMaxSize 65507 (hardcode now, I must encode info 3 bytes?)
                              (raw-data (list #x02 #x03 #x00 #xff #xe3))
-                             ;; msgFlags: security-level with report flag
+                             ;; msgFlags: security-level + reportable flag
                              (make-string 1
                                           :initial-element (code-char
                                                             (logior #b100 ; reportable
                                                                     msg-security-level)))
                              +snmp-sec-model-usm+)) ; msgSecurityModel: USM (3)
-          (msg-data (ber-encode (list msg-engine-id ; contextEngineID, not support yet.
-                                      ""            ; contextName, not support yet.
-                                      msg-pdu))))   ; data
-      (let ((msg-authentication-parameters "")
-            (msg-privacy-parameters "")             ; not support yet.
-            (msg-data-2 (raw-data msg-data)))
+          (msg-data (list msg-engine-id ; contextEngineID, not support yet.
+                          ""            ; contextName, not support yet.
+                          msg-pdu)))    ; data
+      (let ((msg-authentication-parameters "")      ; not support auth yet.
+            (msg-privacy-parameters ""))            ; not support priv yet.
         (let ((security-data (list->string
                               (ber-encode (list msg-engine-id
                                                 msg-engine-boots
@@ -120,7 +122,7 @@
           (ber-encode (list msg-version
                             global-data
                             security-data
-                            msg-data-2)))))))
+                            msg-data)))))))
 
 ;;; SNMPv3 Message Decode
 (defmethod decode-message ((message-list list) (version (eql 3)))
