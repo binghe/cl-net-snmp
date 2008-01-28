@@ -88,6 +88,7 @@
 (defgeneric *->key (key))
 
 (defmethod *->key ((key string))
+  ;; TODO: this is not right, we must write something like net-snmp's generateKu()
   (map '(simple-array (unsigned-byte 8) (*)) #'char-code key))
 
 (defmethod *->key ((key sequence))
@@ -107,8 +108,7 @@
       (nconc args (list :community (or community *default-community*)))
       ;; for SNMPv3, we detect the auth and priv parameters
       (progn
-        (nconc args (list :security-name
-                          (or user *default-security-name*)))
+        (nconc args (list :security-name (or user *default-security-name*)))
         (when auth
           (if (atom auth)
             (nconc args (list :auth-protocol *default-auth-protocol*
