@@ -2,7 +2,7 @@
 ;;;; MIB Base Support ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(in-package :mib)
+(in-package :snmp)
 
 #|
 MIB Tree Structure:
@@ -56,11 +56,14 @@ MIB Tree Structure:
            (tree-nodes node)))
 
 (defmethod tree-node ((id list) &optional (node *mib-tree*))
-  (if (endp id) (values node t)
-    (let ((next (tree-node (car id) node)))
-      (if next
-          (tree-node (cdr id) next)
-        (values id nil)))))
+  (labels ((iter (id-list node)
+             (if (endp id-list)
+               (values node nil)
+               (let ((next (tree-node (car id-list) node)))
+                 (if next
+                   (iter (cdr id-list) next)
+                   (values node id-list))))))
+    (iter id node)))
 
 (defmethod tree-node ((id string) &optional (node *mib-tree*))
   (declare (ignore node))
@@ -70,20 +73,24 @@ MIB Tree Structure:
 
 (defmethod resolve ((name list))
   (multiple-value-bind (r v) (tree-node name)
-    (if v (reverse (tree-name r))
-      (append
-       (reverse
-        (tree-name
-         (tree-node
-          (reverse (nthcdr (list-length r) (reverse name))))))
-       r))))
+    (if v
+      (append (reverse (tree-name (tree-node
+                                   (reverse (nthcdr (list-length r) (reverse name)))))) v)
+      (reverse (tree-name r)))))
 
 (defmethod resolve ((name string))
-  (let ((names (cl-ppcre:split "\\." name)))
+  (let ((names (split-sequence #\. name)))
     (cond ((gethash (first names) *mib-index*)
            (make-instance 'object-id :id (nconc (reverse (mapcar #'parse-integer (cdr names)))
                                                 (tree-id (gethash (first names) *mib-index*)))))
-          (t nil))))
+          ;; pure number id
+          (t (progn (when (string= "" (first names)) ;; ".1.3.6"
+                      (setf names (cdr names)))
+               (multiple-value-bind (base-id others) (tree-node (mapcar #'parse-integer names))
+                 (if (null others)
+                   base-id
+                   (make-instance 'object-id :id (nconc (reverse others)
+                                                        (tree-id base-id))))))))))
 
 (defun parse-mib (file &key (verbose nil))
   (let ((*comment-start* "--")
@@ -114,3 +121,5 @@ MIB Tree Structure:
 
 (eval-when (:load-toplevel :execute)
   (reset-tree))
+
+(defmethod *->oid ((x string)) (resolve x))

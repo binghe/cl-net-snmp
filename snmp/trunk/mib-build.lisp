@@ -1,4 +1,4 @@
-(in-package :mib)
+(in-package :snmp)
 
 (defparameter *mib-list*
   '("SNMPv2-SMI"
@@ -52,13 +52,12 @@
     "LM-SENSORS-MIB"
     "RMON-MIB"
     "NOTIFICATION-LOG-MIB"
-    "SMUX-MIB"
-    ))
+    "SMUX-MIB"))
 
 (defparameter *mib-pathname-base*
   (merge-pathnames
-   (make-pathname :directory '(:relative "mib" "mibs"))
-   (asdf:component-pathname (asdf:find-system :net-snmp))))
+   (make-pathname :directory '(:relative "mib" "base"))
+   (asdf:component-pathname (asdf:find-system :snmp))))
 
 (defun mib-pathname (name &optional (base *mib-pathname-base*))
   (merge-pathnames (make-pathname :name name :type "txt")
