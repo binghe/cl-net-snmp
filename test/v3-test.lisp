@@ -1,11 +1,11 @@
 (in-package :snmp)
 
-(defparameter *key*
+(defparameter *key-1*
   #(#x64 #xa6 #x63 #x58 #x6d #x30 #x79 #xb3 #x56 #x7d #xf7 #x88 #xf8 #x28 #x99 #x21))
 
 (defun v3-test ()
   (let ((oid (list 1 3 6 1 2 1 1)))
-    (with-open-session (s "debian.local" :user "md5user" :auth *key*)
+    (with-open-session (s "debian.local" :user "md5user" :auth *key-1*)
       (snmp-walk s oid))))
 
 (defparameter *authenticate-data*
@@ -59,9 +59,10 @@
     (with-open-session (s host :user "md5" :auth `(:md5 ,md5-key))
       (format t "MD5: ~A~%" (car (snmp-get s oid))))
     (with-open-session (s host :user "sha" :auth `(:sha1 ,sha1-key))
-      (format t "SHA1: ~A~%" (car (snmp-get s oid))))
-    (with-open-session (s host :user "md5des" :auth `(:md5 ,md5-key) :priv `(:des ,des-key))
-      (format t "MD5/DES: ~A~%" (car (snmp-get s oid))))))
+      (format t "SHA1: ~A~%" (car (snmp-get s oid))))))
+
+;;    (with-open-session (s host :user "md5des" :auth `(:md5 ,md5-key) :priv `(:des ,des-key))
+;;      (format t "MD5/DES: ~A~%" (car (snmp-get s oid))))))
 
 (defparameter *encrypted-data*
   #(#x9f #xfd #x95 #xf2 #x78 #x15 #x51 #x58  #x1e #xab #xee #x20 #x89 #x17 #xc6 #x18

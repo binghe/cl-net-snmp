@@ -4,7 +4,8 @@
   (:use :common-lisp
         #+lispworks :comm
         #+lispworks :stream
-        #+mib :zebu)
+        #+mib :zebu
+        :split-sequence)
   (:export ;; constants
            #:+snmp-version-1+
            #:+snmp-version-2c+
@@ -15,4 +16,6 @@
            #:with-open-session
            ;; snmp operation
    	   #:snmp-get
-           #:snmp-walk))
+           #:snmp-walk
+           ;; utils
+           #:mib-browser))

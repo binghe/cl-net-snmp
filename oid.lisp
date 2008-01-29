@@ -9,12 +9,6 @@
    (rev-names :initform nil :type list :reader oid-name :initarg :name)
    (length :initform 0 :type integer :reader oid-length)))
 
-(defmethod print-object ((obj object-id) stream)
-  (with-slots (rev-ids) obj
-    (print-unreadable-object (obj stream :type t)
-      (let ((part-1 (reverse rev-ids)))
-        (format stream "~A~{.~A~}" (car part-1) (cdr part-1))))))
-
 (defmethod plain-value ((object object-id))
   (reverse (oid-revid object)))
 
