@@ -30,9 +30,8 @@
                          (iter (first vb) (cons vb acc)))))))))
       (iter var nil))))
 
-(defmethod snmp-walk ((session session) (var list))
-  (let ((oid (*->oid var)))
-    (snmp-walk session oid)))
+(defmethod snmp-walk ((session session) var)
+  (snmp-walk session (*->oid var)))
 
 (defmethod snmp-walk ((session v3-session) (var object-id))
   "SNMP Walk for v3"
