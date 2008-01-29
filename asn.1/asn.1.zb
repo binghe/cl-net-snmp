@@ -2,7 +2,7 @@
 
 (:name "ASN.1"
  :domain-file "asn.1-domain.lisp"
- :package "ASN.1"
+ :package "SNMP"
  :grammar "zebu-mg"
  :identifier-start-chars
  "abcdefghijklmnopqrstuvwxyz"
