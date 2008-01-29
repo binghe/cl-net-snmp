@@ -8,7 +8,7 @@
    (pdu     :type pdu
             :initarg :pdu
             :accessor pdu-of))
-  (:documentation "Common SNMP Message"))
+  (:documentation "SNMP message base class"))
 
 (defclass v1-message (message) ()
   (:documentation "Community-based SNMP v1 Message"))
@@ -80,21 +80,21 @@
          (msg-data (list (engine-id-of session) ; contextEngineID, not support yet.
                          ""                     ; contextName, not support yet.
                          (pdu-of message)))     ; PDU
+         (need-auth-p (and (not (report-flag message))
+                           (auth-protocol-of session)))
+         (need-priv-p (and (not (report-flag message))
+                           (priv-protocol-of session)))
          ;; RFC 2574 (USM for SNMPv3), 7.3.1.
          ;; 1) The msgAuthenticationParameters field is set to the
          ;;    serialization, according to the rules in [RFC1906], of an OCTET
          ;;    STRING containing 12 zero octets.
-         (msg-authentication-parameters (if (and (not (report-flag message))
-                                                 (auth-protocol-of session))
+         (msg-authentication-parameters (if need-auth-p
                                           (make-string 12 :initial-element (code-char 0)) ""))
          ;; RFC 2574 (USM for SNMPv3), 8.1.1.1. DES key and Initialization Vector
          ;; Now it's a list, not string, as we do this later.
-         (msg-privacy-parameters (if (and (not (report-flag message))
-                                          (priv-protocol-of session))
-                                   (generate-privacy-parameters message) nil)))
+         (msg-privacy-parameters (if need-priv-p (generate-privacy-parameters message) nil)))
     ;; Privacy support (we encrypt and replace msg-data here)
-    (when (and (not (report-flag message))
-               (priv-protocol-of session))
+    (when need-priv-p
       (setf msg-data (encrypt-message message msg-privacy-parameters msg-data)))
     ;; Authentication support
     (labels ((encode-v3-message (auth)
@@ -109,11 +109,10 @@
                                                            (map 'string #'code-char
                                                                 msg-privacy-parameters)))
                                  msg-data))))
-      (let ((tmp (encode-v3-message msg-authentication-parameters)))
-        (if (or (report-flag message)
-                (not (auth-protocol-of session))) tmp
+      (let ((unauth-data (encode-v3-message msg-authentication-parameters)))
+        (if (not need-auth-p) unauth-data
           ;; authencate the encode-data and re-encode it
-          (encode-v3-message (authenticate-message tmp
+          (encode-v3-message (authenticate-message unauth-data
                                                    (auth-key-of session)
                                                    (auth-protocol-of session))))))))
 
