@@ -73,18 +73,21 @@
   (concatenate '(simple-array (unsigned-byte 8) (*))
                (mapcar #'logxor '(#x00 #x00 #x00 #x01 #x31 #xba #x81 #x87)
                                 '(#x5c #x26 #xfa #xc3 #x8d #x72 #x47 #x12))))
+
 (defparameter *key*
   (concatenate '(simple-array (unsigned-byte 8) (*))
                #(#xf3 #xd8 #xbe #xae #xb1 #x84 #xf2 #xb0)))
 
+(defun cipher ()
+  (ironclad:make-cipher :des
+                        :mode :cbc
+                        :key *key*
+                        :initialization-vector *iv*))
+
 (defun priv-test ()
-  (let ((cipher (ironclad:make-cipher :des
-                                      :mode :cbc
-                                      :key *key*
-                                      :initialization-vector *iv*))
-        (data (copy-seq *encrypted-data*)))
+  (let ((data (copy-seq *encrypted-data*)))
     (format t "~X~%" data)
-    (ironclad:encrypt-in-place cipher data)
+    (ironclad:decrypt-in-place (cipher) data)
     (format t "~X~%" data)
-    (ironclad:decrypt-in-place cipher data)
+    (ironclad:encrypt-in-place (cipher) data)
     (format t "~X~%" data)))

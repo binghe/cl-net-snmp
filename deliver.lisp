@@ -8,7 +8,7 @@
 
 ;;; Load the "application". 
 
-(clc:clc-require :net-snmp)
+(asdf:setup 'snmp)
 
 ;;(defun main ()
 ;;  (princ
@@ -22,7 +22,7 @@
 
 (require "capi-ps-lib")
 
-(deliver 'mib:browser *delivered-image-name* 5
+(deliver 'snmp:mib-browser *delivered-image-name* 5
          :interface :capi
          :keep-symbol-names '(capi:graph-pane
-                              mib:mib-browser))
+                              snmp:mib-browser))
