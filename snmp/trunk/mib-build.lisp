@@ -54,14 +54,10 @@
     "NOTIFICATION-LOG-MIB"
     "SMUX-MIB"))
 
-(defparameter *mib-pathname-base*
-  (merge-pathnames
-   (make-pathname :directory '(:relative "mib" "base"))
-   (asdf:component-pathname (asdf:find-system :snmp))))
+(defparameter *mib-pathname-base* #p"snmp:mib;base;")
 
 (defun mib-pathname (name &optional (base *mib-pathname-base*))
-  (merge-pathnames (make-pathname :name name :type "txt")
-                   base))
+  (merge-pathnames (make-pathname :name name :type "txt") base))
 
 (defun test-syntax-2 (name)
   (parse-mib (mib-pathname name)))

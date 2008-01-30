@@ -19,3 +19,14 @@
            #:snmp-walk
            ;; utils
            #:mib-browser))
+
+(in-package :snmp)
+
+(let* ((defaults (asdf:component-pathname (asdf:find-system :snmp)))
+       (home (make-pathname :name :wild :type :wild
+                            :directory (append (pathname-directory defaults)
+                                               '(:wild-inferiors))
+                            :host (pathname-host defaults)
+                            :defaults defaults)))
+  (setf (logical-pathname-translations "snmp")
+        `(("**;*.*" ,home))))
