@@ -1,16 +1,7 @@
 (in-package :snmp)
 
-(defvar *asn.1-syntax-source*
-  (merge-pathnames
-   (make-pathname :name "asn.1" :type "zb"
-		  :directory '(:relative "asn.1"))
-   (asdf:component-pathname (asdf:find-system :snmp))))
-
-(defparameter *asn.1-syntax*
-  (merge-pathnames
-   (make-pathname :name "asn.1" :type "tab"
-		  :directory '(:relative "asn.1"))
-   (asdf:component-pathname (asdf:find-system :snmp))))
+(defparameter *asn.1-syntax-source* #p"snmp:asn1;asn1.zb")
+(defparameter *asn.1-syntax* #p"snmp:asn1;asn1.tab")
 
 (defun generate-print-function (item stream level)
   (declare (ignore item level))

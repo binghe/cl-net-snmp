@@ -6,5 +6,5 @@
     (zebu-compile-file zb :output-file tab)
     (zebu-load-file tab)))
 
-(eval-when (:load-toplevel :execute)
-  (update-syntax))
+;;(eval-when (:load-toplevel :execute)
+;;  (update-syntax))
