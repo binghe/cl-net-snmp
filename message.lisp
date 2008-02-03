@@ -184,3 +184,10 @@
         (replace result-data data)
         (ironclad:encrypt-in-place cipher result-data)
         (map 'string #'code-char result-data)))))
+
+(defvar *session->message* (make-hash-table))
+
+(eval-when (:load-toplevel :execute)
+  (setf (gethash 'v1-session *session->message*) 'v1-message
+        (gethash 'v2c-session *session->message*) 'v2c-message
+        (gethash 'v3-session *session->message*) 'v3-message))
