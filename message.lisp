@@ -10,6 +10,8 @@
             :accessor pdu-of))
   (:documentation "SNMP message base class"))
 
+;;; SNMPv1 and SNMPv2c
+
 (defclass v1-message (message) ()
   (:documentation "Community-based SNMP v1 Message"))
 
@@ -21,32 +23,32 @@
                     (community-of (session-of message))
                     (pdu-of message))))
 
-(defgeneric decode-message (stream version))
+(defgeneric decode-message (session stream))
 
-(defmethod decode-message ((stream stream) fake-version)
-  (declare (ignore fake-version))
+(defmethod decode-message ((s session) (stream stream))
   (let ((message-list (ber-decode stream)))
-    (let ((version (first message-list)))
-      (decode-message message-list version))))
+    (decode-message s message-list)))
 
-(defmethod decode-message ((message-list list) (version integer))
+(defmethod decode-message ((s v1-session) (message-list list))
   (destructuring-bind (version community pdu) message-list
     (declare (ignore version community))
     (make-instance 'v1-message :pdu pdu)))
 
+;;; SNMP v3
+
 (defclass v3-message (message)
   ;; start msgID must be big, or net-snmp cannot decode our message
-  ((msg-id-counter     :type (unsigned-byte 32)
-                       :initform #x01000000
-                       :allocation :class)
-   (msg-id             :type (unsigned-byte 32)
-                       :initarg :id
-                       :accessor msg-id-of)
+  ((msg-id-counter :type (unsigned-byte 32)
+                   :initform #x01000000
+                   :allocation :class)
+   (msg-id         :type (unsigned-byte 32)
+                   :initarg :id
+                   :accessor msg-id-of)
    ;;; Report flag, for SNMP report use.
-   (report-flag        :type boolean
-                       :initform nil
-                       :initarg :report
-                       :accessor report-flag))
+   (report-flag    :type boolean
+                   :initform nil
+                   :initarg :report
+                   :accessor report-flag))
   (:documentation "User-based SNMP v3 Message"))
 
 (defmethod generate-msg-id ((message v3-message))
@@ -89,10 +91,13 @@
          ;;    serialization, according to the rules in [RFC1906], of an OCTET
          ;;    STRING containing 12 zero octets.
          (msg-authentication-parameters (if need-auth-p
-                                          (make-string 12 :initial-element (code-char 0)) ""))
+                                          (make-string 12 :initial-element (code-char 0))
+                                          ""))
          ;; RFC 2574 (USM for SNMPv3), 8.1.1.1. DES key and Initialization Vector
          ;; Now it's a list, not string, as we do this later.
-         (msg-privacy-parameters (if need-priv-p (generate-privacy-parameters message) nil)))
+         (msg-privacy-parameters (if need-priv-p
+                                   (generate-privacy-parameters message)
+                                   nil)))
     ;; Privacy support (we encrypt and replace msg-data here)
     (when need-priv-p
       (setf msg-data (encrypt-message message msg-privacy-parameters msg-data)))
@@ -103,7 +108,8 @@
                                  (ber-encode->string (list (engine-id-of session)
                                                            (engine-boots-of session)
                                                            (engine-time-of session)
-                                                           (if (report-flag message) ""
+                                                           (if (report-flag message)
+                                                             ""
                                                              (security-name-of session))
                                                            auth
                                                            (map 'string #'code-char
@@ -127,11 +133,27 @@
          (subseq (ironclad:hmac-digest hmac) 0 12))))
 
 ;;; SNMPv3 Message Decode
-(defmethod decode-message ((message-list list) (version (eql 3)))
+(defmethod decode-message ((s v3-session) (message-list list))
   (destructuring-bind (version global-data security-string data) message-list
-    (declare (ignore version global-data security-string))
-    (let ((pdu (third data)))
-      (make-instance 'v3-message :pdu pdu))))
+    (declare (ignore version global-data))
+    (if (not (priv-protocol-of s))
+      (let ((pdu (third data)))
+        (make-instance 'v3-message :pdu pdu))
+      ;;; decrypt message
+      (let ((salt (map '(simple-array (unsigned-byte 8) (*)) #'char-code
+                       (nth 5 (ber-decode<-string security-string))))
+            (des-key (subseq (priv-key-of s) 0 8))
+            (pre-iv (subseq (priv-key-of s) 8 16))
+            (data (map '(simple-array (unsigned-byte 8) (*)) #'char-code data)))
+        (let* ((iv (map '(simple-array (unsigned-byte 8) (*)) #'logxor
+                        pre-iv salt))
+               (cipher (ironclad:make-cipher :des ; (priv-protocol-of s)
+                                             :mode :cbc
+                                             :key des-key 
+                                             :initialization-vector iv)))
+          (ironclad:decrypt-in-place cipher data)
+          (let ((pdu (third (ber-decode data))))
+            (make-instance 'v3-message :pdu pdu)))))))
 
 ;;; RFC 2574 (USM for SNMPv3), 8.1.1.1. DES key and Initialization Vector
 (defmethod generate-privacy-parameters ((message v3-message))
@@ -144,28 +166,21 @@
         (push (logand salt #xff) result)
         (setf salt (ash salt -8))))))
 
-(defun u32->vector (u32)
-  (let ((result nil))
-    (concatenate '(simple-array (unsigned-byte 8) (*))
-                 (dotimes (i 8 result)
-                   (push (logand u32 #xff) result)
-                   (setf u32 (ash u32 -8))))))
-
 ;;; Encrypt msgData
 (defmethod encrypt-message ((message v3-message)
                             (msg-privacy-parameters list) (msg-data list))
-  (labels ((acc (a b) (logior (ash a 8) b)))
-    (let ((salt (reduce #'acc msg-privacy-parameters))
-          (pre-iv (reduce #'acc (subseq (priv-key-of (session-of message)) 8 16))))
-      (let ((iv (logxor pre-iv salt)))
-        (let ((cipher (ironclad:make-cipher
-                       (priv-protocol-of (session-of message))
-                       :key (subseq (priv-key-of (session-of message)) 0 8)
-                       :mode :cbc
-                       :initialization-vector (u32->vector iv)))
-              (data (ber-encode msg-data)))
-          (let ((result-data (concatenate '(simple-array (unsigned-byte 8) (*))
-                                          (nconc data (make-list (mod (list-length data) 8)
-                                                                 :initial-element #x00)))))
-            (ironclad:encrypt-in-place cipher result-data)
-            (map 'string #'code-char result-data)))))))
+  (let ((salt (coerce msg-privacy-parameters '(simple-array (unsigned-byte 8) (*))))
+        (pre-iv (subseq (priv-key-of (session-of message)) 8 16))
+        (des-key (subseq (priv-key-of (session-of message)) 0 8))
+        (data (coerce (ber-encode msg-data) '(simple-array (unsigned-byte 8) (*)))))
+    (let ((iv (map '(simple-array (unsigned-byte 8) (*)) #'logxor pre-iv salt))
+          (result-length (* (1+ (floor (length data) 8)) 8))) ;; extend length to (mod 8)
+      (let ((cipher (ironclad:make-cipher :des ; (priv-protocol-of (session-of message))
+                                          :key des-key
+                                          :mode :cbc
+                                          :initialization-vector iv))
+            (result-data (make-array result-length
+                                     :element-type '(unsigned-byte 8) :initial-element 0)))
+        (replace result-data data)
+        (ironclad:encrypt-in-place cipher result-data)
+        (map 'string #'code-char result-data)))))

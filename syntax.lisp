@@ -1,6 +1,6 @@
 (in-package :snmp)
 
-(defparameter *asn.1-syntax-source* #p"snmp:asn1;asn1.zb")
+(defparameter *asn.1-source* #p"snmp:asn1;asn1.zb")
 (defparameter *asn.1-syntax* #p"snmp:asn1;asn1.tab")
 
 (defun generate-print-function (item stream level)

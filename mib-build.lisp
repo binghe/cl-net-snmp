@@ -105,7 +105,7 @@
 
 (defun build-tree ()
   (dolist (i *mib-list* t)
-    (format t "Parsing ~A" i)
+    (format t ";; Parsing ~A" i)
     (read-mib (mib-pathname i))
     (format t ".~%")))
 
