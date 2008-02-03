@@ -13,38 +13,31 @@
 (capi:define-interface mib-browser ()
   ()
   (:panes
-   (mib-graph
-    capi:graph-pane
-    :children-function 'children-function
-    :directed t
-    :print-function 'print-child
-    :reader graph-reader
-    :roots (tree-nodes *mib-tree*)
-    :callback-type :interface-data
-    :selection-callback 'display-graph-selection)
-   (title-pane-name
-    capi:title-pane
-    :text "Name:")
-   (display-pane-name
-    capi:display-pane
-    :text "")
-   (title-pane-oid
-    capi:title-pane
-    :text "OID:")
-   (display-pane-oid
-    capi:display-pane
-    :text ""))
+   (mib-graph capi:graph-pane
+              :children-function 'children-function
+              :directed t
+              :print-function 'print-child
+              :reader graph-reader
+              :roots (cdr (tree-nodes *mib-tree*))
+              :callback-type :interface-data
+              :selection-callback 'display-graph-selection)
+   (title-pane-name capi:title-pane
+                    :text "Name:")
+   (display-pane-name capi:display-pane
+                      :text "")
+   (title-pane-oid capi:title-pane
+                   :text "OID:")
+   (display-pane-oid capi:display-pane
+                     :text ""))
   (:layouts
-   (main-layout
-    capi:column-layout
-    '(mib-graph grid-layout))
-   (grid-layout
-    capi:grid-layout
-    '(title-pane-name display-pane-name title-pane-oid display-pane-oid)
-    :y-adjust :center))
+   (main-layout capi:column-layout
+                '(mib-graph grid-layout))
+   (grid-layout capi:grid-layout
+                '(title-pane-name display-pane-name title-pane-oid display-pane-oid)
+                :y-adjust :center))
   (:default-initargs
-   :best-height 768
-   :best-width 1024
+   :best-height 600
+   :best-width 800
    :layout 'main-layout
    :title "MIB Browser"))
 
@@ -56,6 +49,8 @@
             (format nil "~A~{.~A~}" (car name) (cdr name))
             (capi:display-pane-text display-pane-oid)
             (format nil "~A~{.~A~}" (car oid) (cdr oid))))))
+
+(defvar *mib-browser*)
 
 (defun mib-browser ()
   (capi:display (make-instance 'mib-browser)))

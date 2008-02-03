@@ -120,6 +120,10 @@
         (length (ber-decode-length data)))
     (ber-decode-value data type length)))
 
+(defmethod ber-decode ((value sequence))
+  (let ((stream (make-instance 'ber-stream :seq value)))
+    (ber-decode stream)))
+
 (defgeneric ber-decode-value (stream type length))
 
 (defmethod ber-decode-value ((stream stream) (type (eql :unknown)) length)
@@ -144,10 +148,6 @@
     (let ((byte (elt (ber-sequence instance) (ber-position instance))))
       (incf (ber-position instance))
       byte)))
-
-(defmethod ber-decode ((value sequence))
-  (let ((stream (make-instance 'ber-stream :seq value)))
-    (ber-decode stream)))
 
 (defclass raw-data ()
   ((data :accessor raw-data-of

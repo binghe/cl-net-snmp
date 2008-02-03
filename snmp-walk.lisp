@@ -20,7 +20,7 @@
                  (write-sequence data socket)
                  (force-output socket)
                  ;; time goes ...
-                 (let ((result (decode-message socket 1)))
+                 (let ((result (decode-message session socket)))
                    (let ((vb (car (variable-bindings-of (pdu-of result)))))
                      (if (not (oid-< (car vb) var))
                        (nreverse acc)
@@ -49,7 +49,7 @@
                  (write-sequence data socket)
                  (force-output socket)
                  ;; time goes ...
-                 (let ((result (decode-message socket 3)))
+                 (let ((result (decode-message session socket)))
                    (let ((vb (car (variable-bindings-of (pdu-of result)))))
                      (if (not (oid-< (car vb) var))
                        (nreverse acc)
