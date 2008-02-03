@@ -91,3 +91,34 @@
     (format t "~X~%" data)
     (ironclad:encrypt-in-place (cipher) data)
     (format t "~X~%" data)))
+
+(defun decrypt-test ()
+  (let ((salt (coerce #(#x00 #x00 #x00 #x01 #x4f #xc5 #xe6 #x2a)
+                      '(simple-array (unsigned-byte 8) (*))))
+        ;; 0xe4f89c717175bd884778c36f5497f08d
+        (des-key (coerce #(#xe4 #xf8 #x9c #x71 #x71 #x75 #xbd #x88)
+                         '(simple-array (unsigned-byte 8) (*))))
+        (pre-iv (coerce #(#x47 #x78 #xc3 #x6f #x54 #x97 #xf0 #x8d)
+                        '(simple-array (unsigned-byte 8) (*))))
+        (data (coerce #(                         #x08 #xa5 #xe1  #xf9 #xb4 #x38 #xc3 #x0e #x79 #x20 #xe8
+                        #xb2 #x8e #xb5 #x0f #x14 #xf5 #xb8 #x7c  #x20 #x26 #xa9 #x9a #xea #x3f #x81 #xcf
+                        #x73 #x56 #x2d #x34 #x93 #x82 #xd7 #x21  #x66 #x3d #x4a #xb8 #x2d #xd1 #x39 #xc9
+                        #xc8 #x31 #x02 #x07 #x5b #x13 #xd7 #x51  #x31 #x26 #x20 #x6b #x6a)
+                      '(simple-array (unsigned-byte 8) (*)))))
+    (let* ((iv (map '(simple-array (unsigned-byte 8) (*))
+                    #'logxor pre-iv salt))
+           (cipher (ironclad:make-cipher :des
+                                         :mode :cbc
+                                         :key des-key 
+                                         :initialization-vector iv)))
+      (format t "~X~%~X~%" pre-iv iv)
+      (format t "~X~%" (map '(simple-array (unsigned-byte 8) (*)) #'logxor iv salt))
+      (ironclad:decrypt-in-place cipher data)
+      (format t "~X~%" data))))
+
+(defun v3-priv ()
+  (let ((key #(#xe4 #xf8 #x9c #x71 #x71 #x75 #xbd #x88
+               #x47 #x78 #xc3 #x6f #x54 #x97 #xf0 #x8d))
+        (oid "system"))
+    (with-open-session (s "debian.local" :user "md5des" :auth key :priv key)
+      (snmp-walk s oid))))

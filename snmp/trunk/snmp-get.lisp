@@ -20,7 +20,7 @@
         (write-sequence data socket)
         (force-output socket)
         ;; time goes up ...
-        (let ((message (decode-message socket 1)))
+        (let ((message (decode-message session socket)))
           (let ((data (variable-bindings-of (pdu-of message))))
             (mapcar #'second data)))))))
 
@@ -40,6 +40,6 @@
           (write-sequence data socket)
           (force-output socket)
           ;; time goes up ...
-          (let ((message (decode-message socket 3)))
+          (let ((message (decode-message session socket)))
             (let ((data (variable-bindings-of (pdu-of message))))
               (mapcar #'second data))))))))
