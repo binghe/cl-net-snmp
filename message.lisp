@@ -66,8 +66,8 @@
 
 (defun generate-global-data (id level)
   (list id
-        ;; msgMaxSize 65507 (hardcode now, must encode info 3 bytes or net-snmp cannot decode
-        (raw-data (list #x02 #x03 #x00 #xff #xe3))
+        ;; msgMaxSize (fix 65507 for net-snmp)
+        65507
         ;; msgFlags: security-level + reportable flag
         (make-string 1 :initial-element (code-char (logior #b100 level)))
         ;; msgSecurityModel: USM (3)
