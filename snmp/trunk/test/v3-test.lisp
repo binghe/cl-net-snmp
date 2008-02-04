@@ -119,6 +119,6 @@
 (defun v3-priv ()
   (let ((key #(#xe4 #xf8 #x9c #x71 #x71 #x75 #xbd #x88
                #x47 #x78 #xc3 #x6f #x54 #x97 #xf0 #x8d))
-        (oid "system"))
+        (oid "sysDescr.0"))
     (with-open-session (s "debian.local" :user "md5des" :auth key :priv key)
-      (snmp-walk s oid))))
+      (snmp-get s oid))))
