@@ -39,7 +39,7 @@
 (defclass v3-message (message)
   ;; start msgID must be big, or net-snmp cannot decode our message
   ((msg-id-counter :type (unsigned-byte 32)
-                   :initform #x01000000
+                   :initform 0
                    :allocation :class)
    (msg-id         :type (unsigned-byte 32)
                    :initarg :id
@@ -179,8 +179,9 @@
                                           :key des-key
                                           :mode :cbc
                                           :initialization-vector iv))
-            (result-data (make-array result-length
-                                     :element-type '(unsigned-byte 8) :initial-element 0)))
+            (result-data (make-sequence '(simple-array (unsigned-byte 8) (*))
+                                        result-length
+                                        :initial-element 0)))
         (replace result-data data)
         (ironclad:encrypt-in-place cipher result-data)
         (map 'string #'code-char result-data)))))

@@ -2,7 +2,7 @@
 
 (defclass base-pdu ()
   ((request-id-counter :type integer
-                       :initform #x01000000
+                       :initform 0
                        :allocation :class)
    (request-id         :type integer
                        :accessor request-id-of

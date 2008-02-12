@@ -1,18 +1,22 @@
 (in-package :snmp)
 
-#-mib
+#+no-mib
 (defmethod print-object ((obj object-id) stream)
   (with-slots (rev-ids) obj
     (print-unreadable-object (obj stream :type t)
       (let ((part-1 (reverse rev-ids)))
         (format stream "~A~{.~A~}" (car part-1) (cdr part-1))))))
 
+#-no-mib
 (defparameter *oid-print-id* t)
+#-no-mib
 (defparameter *oid-print-name* t)
+#-no-mib
 (defparameter *oid-print-short* t)
+#-no-mib
 (defparameter *oid-print-length* 4)
 
-#+mib
+#-no-mib
 (defmethod print-object ((obj object-id) stream)
   (with-slots (rev-ids rev-names) obj
     (print-unreadable-object (obj stream :type t)
