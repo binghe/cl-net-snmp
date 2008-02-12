@@ -50,8 +50,6 @@
             (capi:display-pane-text display-pane-oid)
             (format nil "~A~{.~A~}" (car oid) (cdr oid))))))
 
-(defvar *mib-browser*)
-
 (defun mib-browser ()
   (capi:display (make-instance 'mib-browser)))
 

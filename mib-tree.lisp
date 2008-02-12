@@ -79,7 +79,8 @@ MIB Tree Structure:
       (reverse (tree-name r)))))
 
 (defmethod resolve ((name string))
-  (let ((names (split-sequence #\. name)))
+  (let ((names #+lispworks (lw:split-sequence "." name)
+               #-lispworks (split-sequence:split-sequence #\. name)))
     (cond ((gethash (first names) *mib-index*)
            (make-instance 'object-id :id (nconc (reverse (mapcar #'parse-integer (cdr names)))
                                                 (tree-id (gethash (first names) *mib-index*)))))

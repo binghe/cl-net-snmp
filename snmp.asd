@@ -4,19 +4,19 @@
 
 (require "comm")
 
-;;; comment this if you do not need MIB or you don't like/have ZEBU
-(pushnew :mib *features*)
+;;; Use this if you do not need MIB or you don't like/have ZEBU
+;; (pushnew :no-mib *features*)
 
 (defsystem snmp
   :description "Simple Network Manangement Protocol"
   :version "2.0"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
-  :depends-on (:lispworks-udp    ;; for UDP networking on LispWorks
+  :depends-on (#+lispworks :lispworks-udp
                :ironclad         ;; for SNMPv3
                :ieee-floats      ;; for SMI opaque (single-float) type
-               :split-sequence   ;; for OID parse
+               #-lispworks :split-sequence
                #+ignore :usocket ;; Networking base in the future
-               #+mib zebu)
+               #-no-mib :zebu)
   :components ((:file "package")
                (:file "ber" :depends-on ("package"))
 	       (:file "smi" :depends-on ("ber"))
@@ -39,13 +39,17 @@
                (:file "report"    :depends-on ("message" "session" "sequence"))
                (:file "snmp-get"  :depends-on ("report" "oid"))
                (:file "snmp-walk" :depends-on ("report" "oid"))
-               #+mib (:file "syntax")
-               #+mib (:file "mib-tree" :depends-on ("syntax" "oid"))
-               #+mib (:file "mib-build" :depends-on ("mib-tree"))
+               #-no-mib (:file "syntax" :depends-on ("package"))
+               #-no-mib (:file "mib-tree" :depends-on ("syntax" "oid"))
+               #-no-mib (:file "mib-build" :depends-on ("mib-tree"))
                (:file "print-oid" :depends-on ("oid"))
-               #+(and mib lispworks capi)
-               (:file "mib-browser" :depends-on ("mib-tree"))))
+               #+(and (not no-mib) lispworks)
+               (:file "mib-browser" :depends-on ("mib-tree"))
+               #+(and (not no-mib) lispworks)
+               (:file "snmp-utility" :depends-on ("snmp-get" "snmp-walk"))))
 
+;;; Only needed when you want to modify the ASN.1 syntax file (asn1.zb)
+#-no-mib
 (defsystem snmp-devel
   :description "Simple Network Manangement Protocol (Development)"
   :version "2.0"
