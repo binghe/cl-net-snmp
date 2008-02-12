@@ -59,10 +59,9 @@
     (with-open-session (s host :user "md5" :auth `(:md5 ,md5-key))
       (format t "MD5: ~A~%" (car (snmp-get s oid))))
     (with-open-session (s host :user "sha" :auth `(:sha1 ,sha1-key))
-      (format t "SHA1: ~A~%" (car (snmp-get s oid))))))
-
-;;    (with-open-session (s host :user "md5des" :auth `(:md5 ,md5-key) :priv `(:des ,des-key))
-;;      (format t "MD5/DES: ~A~%" (car (snmp-get s oid))))))
+      (format t "SHA1: ~A~%" (car (snmp-get s oid))))
+    (with-open-session (s host :user "md5des" :auth `(:md5 ,md5-key) :priv `(:des ,des-key))
+      (format t "MD5/DES: ~A~%" (car (snmp-get s oid))))))
 
 (defparameter *encrypted-data*
   #(#x9f #xfd #x95 #xf2 #x78 #x15 #x51 #x58  #x1e #xab #xee #x20 #x89 #x17 #xc6 #x18
