@@ -1,40 +1,26 @@
 (in-package :snmp)
 
-(defgeneric snmp-walk (object var)
+(defgeneric snmp-walk (object vars)
   (:documentation "SNMP Walk"))
 
-(defmethod snmp-walk ((host string) var)
+(defmethod snmp-walk ((host string) (vars list))
   (with-open-session (s host)
-    (snmp-walk s var)))
+    (snmp-walk s vars)))
 
-(defmethod snmp-walk ((session session) var)
-  (snmp-walk session (*->oid var)))
-
-(defmethod snmp-walk ((session session) (var object-id))
+(defmethod snmp-walk ((session session) (vars list))
   "SNMP Walk for v1, v2c and v3"
-  ;; Get a report first if the session is new created
-  (when (and (= +snmp-version-3+ (version-of session))
-             (need-report-p session))
-    (snmp-report session))
-  (let ((message (make-instance (gethash (type-of session) *session->message*)
-                                :session session
-                                :pdu (make-instance 'get-next-request-pdu
-                                                    :variable-bindings (list nil)))))
-    (labels ((iter (v acc)
-               (setf (car (variable-bindings-of (pdu-of message))) (list v nil))
-               (let ((data (ber-encode message))
-                     (socket (socket-of session)))
-                 (write-sequence data socket)
-                 (force-output socket)
-                 ;; time goes ...
-                 (let ((result (decode-message session socket)))
-                   (let ((vb (car (variable-bindings-of (pdu-of result)))))
-                     (if (not (oid-< (car vb) var))
-                       (nreverse acc)
-                       ;; Increase MsgID and RequestID and do next loop
-                       (progn
-                         (when (= +snmp-version-3+ (version-of session))
-                           (setf (msg-id-of message) (generate-msg-id message)))
-                         (setf (request-id-of (pdu-of message)) (generate-request-id (pdu-of message)))
-                         (iter (first vb) (cons vb acc)))))))))
-      (iter var nil))))
+  (when vars
+    (let ((base-vars (mapcar #'*->oid vars)))
+      (labels ((iter (current-vars acc)
+                 (let ((temp (snmp-get-next session current-vars)))
+                   (let ((new-vars (mapcar #'first temp)))
+                     (if (some #'oid->= new-vars base-vars)
+                       acc
+                       (iter new-vars (mapcar #'cons temp acc)))))))
+        (iter base-vars (make-list (length vars)))))))
+
+(defmethod snmp-walk (object (var string))
+  (car (snmp-walk object (list var))))
+
+(defmethod snmp-walk (object (var object-id))
+  (car (snmp-walk object (list var))))

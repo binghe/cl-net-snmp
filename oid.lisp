@@ -94,6 +94,9 @@
     (if (<= o-1-len o-2-len) nil
       (equal o-2 (nthcdr (- o-1-len o-2-len) o-1)))))
 
+(defun oid->= (oid-1 oid-2)
+  (not (oid-< oid-1 oid-2)))
+
 (defgeneric *->oid (x)
   (:documentation "Anything -> Object ID"))
 

@@ -94,7 +94,7 @@
 (defmethod *->key ((key sequence))
   (concatenate '(simple-array (unsigned-byte 8) (*)) key))
 
-(Defun open-session (host &key port version community user auth priv (read-timeout 1))
+(defun open-session (host &key port version community user auth priv (read-timeout 5))
   ;; first, what version we are talking about if version not been set?
   (let* ((real-version (or version
                           (if user +snmp-version-3+ *default-version*)))

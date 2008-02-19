@@ -19,3 +19,26 @@
       (format stream "(~D (~D ~D)) ~A"
               request-id non-repeaters max-repetitions variable-bindings))))
 
+(defmethod ber-encode ((value get-bulk-request-pdu))
+  (with-slots (request-id non-repeaters max-repetitions variable-bindings) value
+    (let ((sub-encode (apply #'nconc
+                             (map 'list #'ber-encode (list request-id
+                                                           non-repeaters
+                                                           max-repetitions
+                                                           variable-bindings)))))
+      (nconc (ber-encode-type 2 1 5)
+             (ber-encode-length (length sub-encode))
+             sub-encode))))
+
+(defmethod ber-decode-value ((stream stream) (type (eql :get-bulk-request-pdu)) length)
+  (declare (type fixnum length) (ignore type))
+  (let ((data (ber-decode-value stream :sequence length)))
+    (destructuring-bind (request-id non-repeaters max-repetitions variable-bindings) data
+      (make-instance 'get-bulk-request-pdu
+                     :request-id request-id
+                     :non-repeaters non-repeaters
+                     :max-repetitions max-repetitions
+                     :variable-bindings variable-bindings))))
+
+(eval-when (:load-toplevel :execute)
+  (install-asn.1-type :get-bulk-request-pdu 2 1 5))
