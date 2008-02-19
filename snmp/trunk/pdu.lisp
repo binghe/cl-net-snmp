@@ -84,7 +84,7 @@
 
 (defmethod ber-decode-value ((stream stream) (type (eql :get-next-request-pdu)) length)
   (declare (type fixnum length) (ignore type))
-  (ber-decode-pdu stream length 'get-request-pdu))
+  (ber-decode-pdu stream length 'get-next-request-pdu))
 
 (defmethod ber-decode-value ((stream stream) (type (eql :response-pdu)) length)
   (declare (type fixnum length) (ignore type))

@@ -17,16 +17,16 @@
               :children-function 'children-function
               :directed t
               :print-function 'print-child
-              :reader graph-reader
+              :accessor browser-graph
               :roots (cdr (tree-nodes *mib-tree*))
               :callback-type :interface-data
               :selection-callback 'display-graph-selection)
    (title-pane-name capi:title-pane
-                    :text "Name:")
+                    :text "Name: ")
    (display-pane-name capi:display-pane
                       :text "")
    (title-pane-oid capi:title-pane
-                   :text "OID:")
+                   :text "OID: ")
    (display-pane-oid capi:display-pane
                      :text ""))
   (:layouts
@@ -40,6 +40,12 @@
    :best-width 800
    :layout 'main-layout
    :title "MIB Browser"))
+
+(defmethod initialize-instance :after ((interface mib-browser) &rest initargs
+                                       &key &allow-other-keys)
+  (declare (ignore initargs))
+  (let ((root (capi:graph-pane-nodes (browser-graph interface))))
+    (format t "call this function:~A~%" (type-of root))))
 
 (defun display-graph-selection (self data)
   (let ((name (reverse (tree-name data)))

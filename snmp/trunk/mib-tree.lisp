@@ -84,6 +84,7 @@ MIB Tree Structure:
     (cond ((gethash (first names) *mib-index*)
            (make-instance 'object-id :id (nconc (reverse (mapcar #'parse-integer (cdr names)))
                                                 (tree-id (gethash (first names) *mib-index*)))))
+          ((= (list-length names) 1) (resolve "zeroDotZero"))
           ;; pure number id
           (t (progn (when (string= "" (first names)) ;; ".1.3.6"
                       (setf names (cdr names)))
