@@ -15,7 +15,7 @@
                  (let ((temp (snmp-get-next session current-vars)))
                    (let ((new-vars (mapcar #'first temp)))
                      (if (some #'oid->= new-vars base-vars)
-                       acc
+                       (mapcar #'nreverse acc)
                        (iter new-vars (mapcar #'cons temp acc)))))))
         (iter base-vars (make-list (length vars)))))))
 
