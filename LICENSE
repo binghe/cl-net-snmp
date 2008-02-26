@@ -1,6 +1,6 @@
 ;;;; -*- Mode: Lisp -*-
 
-Copyright (c) 2007-2008, Chun Tian (binghe)
+Copyright (c) 2007-2008, Chun TIAN (binghe) <binghe.lisp@gmail.com>
 
 All rights reserved.
 
@@ -12,8 +12,9 @@ are met:
       notice, this list of conditions and the following disclaimer.
 
     * Redistributions in binary form must reproduce the above copyright
-      notice, this list of conditions and the following disclaimer in the
-      documentation and/or other materials provided with the distribution.
+      notice, this list of conditions and the following disclaimer in
+      the documentation and/or other materials provided with the
+      distribution.
 
     * Neither the name of the NetEase.com, Inc. nor the names of its
       contributors may be used to endorse or promote products derived
