@@ -4,11 +4,16 @@
 
 (in-package :snmp)
 
-(let ((dispatch-table (make-hash-table :test #'equal)))
-  (defun get-asn.1-type (class p/c tags)
-    (gethash (list class p/c tags) dispatch-table :unknown))
-  (defun install-asn.1-type (type class p/c tags)
-    (setf (gethash (list class p/c tags) dispatch-table) type)))
+(defvar *ber-dispatch-table* (make-hash-table :test #'equal))
+
+(defun get-asn.1-type (class p/c tags)
+  (gethash (list class p/c tags) *ber-dispatch-table* :unknown))
+
+(defun install-asn.1-type (type class p/c tags)
+  (setf (gethash (list class p/c tags) *ber-dispatch-table*) type))
+
+(defun uninstall-asn.1-type (class p/c tags)
+  (setf (gethash (list class p/c tags) *ber-dispatch-table*) :unknown))
 
 ;;;;   8   7    6    5 4 3 2 1
 ;;;; +-------+-----+-----------+

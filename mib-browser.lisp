@@ -34,8 +34,7 @@
            :callback 'search-callback
            :buttons (list :ok t)
            :callback-type :interface-data
-           :visible-min-width '(:character 10)
-           :visible-max-width '(:character 30))
+           :visible-min-width '(:character 10))
    (title-pane-name capi:title-pane :text "Name (OID):")
    (display-pane-name capi:display-pane))
   (:layouts
@@ -46,7 +45,9 @@
                 :y-adjust :center))
   (:default-initargs
    :layout 'main-layout
-   :title "MIB Browser"))
+   :title "MIB Browser"
+   :best-width 800
+   :best-height 600))
 
 (defmethod capi:interface-display :before ((self mib-browser))
   (let ((g (mib-browser-mib-graph self))
