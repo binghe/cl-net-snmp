@@ -8,6 +8,7 @@
 
 ;;; Load the "application". 
 
+(load "~/.lispworks")
 (asdf:setup 'snmp)
 
 ;;(defun main ()
@@ -24,5 +25,6 @@
 
 (deliver 'snmp:mib-browser *delivered-image-name* 5
          :interface :capi
+         :keep-pretty-printer t
          :keep-symbol-names '(capi:graph-pane
                               snmp:mib-browser))

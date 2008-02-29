@@ -48,7 +48,9 @@
                #+(and (not no-mib) lispworks)
                (:file "mib-browser" :depends-on ("mib-tree"))
                #+(and (not no-mib) lispworks)
-               (:file "snmp-utility" :depends-on ("snmp-get" "snmp-walk"))))
+               (:file "snmp-utility" :depends-on ("snmp-get" "snmp-walk"))
+               (:file "snmp-response" :depends-on ("report" "oid" "pdu"))
+               (:file "snmp-server" :depends-on ("snmp-response"))))
 
 ;;; Only needed when you want to modify the ASN.1 syntax file (asn1.zb)
 #-no-mib

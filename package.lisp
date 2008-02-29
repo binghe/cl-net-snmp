@@ -20,7 +20,10 @@
            #:snmp-get-bulk
            ;; utils
            #:mib-browser
-           #:snmp-utility))
+           #:snmp-utility
+           ;; server
+           #:snmp-server
+           #:control))
 
 (in-package :snmp)
 
