@@ -1,3 +1,8 @@
+;;;; ASN.1 IPv4 Address Type
+;;;; note: this file used some function of LispWorks' COMM package:
+;;;; STRING-IP-ADDRESS, IP-ADDRESS-STRING
+;;;; we should port them to usocket package, if possible.
+
 (in-package :snmp)
 
 (defclass ipaddress (general-type) ())

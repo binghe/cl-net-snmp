@@ -117,8 +117,11 @@
                      acc))))
         (values res length-length)))))
   
-(defgeneric ber-encode (data))
-(defgeneric ber-decode (data))
+(defgeneric ber-encode (data)
+  (:documentation "BER encode a ASN.1 object into list"))
+
+(defgeneric ber-decode (data)
+  (:documentation "BER decode data into a ASN.1 object"))
 
 (defmethod ber-decode ((data stream))
   (let ((type (ber-decode-type data))
@@ -143,16 +146,16 @@
    (length :type integer :accessor ber-length)
    (position :type integer :initform 0 :accessor ber-position)))
 
-(defmethod shared-initialize :after ((obj ber-stream) slot-names &rest initargs)
+(defmethod initialize-instance :after ((obj ber-stream) &rest initargs &key &allow-other-keys)
   (declare (ignore slot-names initargs))
   (setf (ber-length obj) (length (ber-sequence obj))))
 
 (defmethod stream-read-byte ((instance ber-stream))
-  (if (= (ber-position instance) (ber-length instance))
+  (with-slots (sequence position length) instance
+    (if (= position length)
       :eof
-    (let ((byte (elt (ber-sequence instance) (ber-position instance))))
-      (incf (ber-position instance))
-      byte)))
+      (prog1 (elt sequence position)
+        (incf (ber-position instance))))))
 
 (defclass raw-data ()
   ((data :accessor raw-data-of
@@ -181,6 +184,5 @@
 (defun ber-test (x)
   (let ((code (ber-encode x)))
     (format t "~A -> ~A~%~{~8,'0B ~}~%~{~D ~}~%"
-            x (ber-decode (make-instance 'ber-stream :seq code))
-            code code)
+            x (ber-decode code) code code)
     x))

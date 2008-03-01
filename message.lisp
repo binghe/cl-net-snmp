@@ -1,3 +1,5 @@
+;;;; SNMP UDP Message class and encode/decode functions
+
 (in-package :snmp)
 
 (defclass message ()
@@ -5,9 +7,9 @@
             :initarg :session
             :initform nil
             :accessor session-of)
-   (pdu     :type pdu
-            :initarg :pdu
-            :accessor pdu-of))
+   (pdu :type pdu
+        :initarg :pdu
+        :accessor pdu-of))
   (:documentation "SNMP message base class"))
 
 ;;; SNMPv1 and SNMPv2c
@@ -32,7 +34,7 @@
 (defmethod decode-message ((s v1-session) (message-list list))
   (destructuring-bind (version community pdu) message-list
     (declare (ignore version community))
-    (make-instance 'v1-message :pdu pdu)))
+    (make-instance 'v1-message :session s :pdu pdu)))
 
 ;;; SNMP v3
 
@@ -66,7 +68,7 @@
 
 (defun generate-global-data (id level)
   (list id
-        ;; msgMaxSize (fix 65507 for net-snmp)
+        ;; msgMaxSize (fixed 65507 from net-snmp)
         65507
         ;; msgFlags: security-level + reportable flag
         (make-string 1 :initial-element (code-char (logior #b100 level)))
@@ -153,7 +155,7 @@
                                              :initialization-vector iv)))
           (ironclad:decrypt-in-place cipher data)
           (let ((pdu (third (ber-decode data))))
-            (make-instance 'v3-message :pdu pdu)))))))
+            (make-instance 'v3-message :session s :pdu pdu)))))))
 
 ;;; RFC 2574 (USM for SNMPv3), 8.1.1.1. DES key and Initialization Vector
 (defmethod generate-privacy-parameters ((message v3-message))
