@@ -50,9 +50,7 @@
                #-no-mib (:file "mib-build" :depends-on ("mib-tree"))
                (:file "print-oid" :depends-on ("oid"))
                #+(and (not no-mib) lispworks)
-               (:file "mib-browser" :depends-on ("mib-tree"))
-               #+(and (not no-mib) lispworks)
-               (:file "snmp-utility" :depends-on ("snmp-get" "snmp-walk"))
+               (:file "snmp-utility" :depends-on ("snmp-get" "snmp-walk" "mib-tree"))
                (:file "snmp-response" :depends-on ("report" "oid" "pdu"))
                (:file "snmp-server" :depends-on ("snmp-response"))))
 

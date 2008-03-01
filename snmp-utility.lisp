@@ -12,17 +12,10 @@
           (id (car (tree-id x))))
       (format nil "~A(~D)" name id))))
 
-(defmethod capi:interface-display :before ((self mib-browser))
-  (let ((g (mib-browser-mib-graph self))
-        (start-node (gethash "internet" *mib-index*)))
-    (setf (capi:choice-selected-item g) start-node
-          *nodes* (capi:graph-pane-nodes g))
-    (display-graph-selection self start-node)))
-
-(defun display-graph-selection (self data)
+(defun display-graph-selection (interface data)
   (let ((name (reverse (tree-name data)))
         (oid (reverse (tree-id data))))
-    (with-slots (display-pane-name) self
+    (with-slots (display-pane-name) interface
       (setf (capi:display-pane-text display-pane-name)
             (format nil "~A~{.~A~} (~A~{.~A~})"
                     (car name) (cdr name)
@@ -53,7 +46,7 @@
               :visible-min-height 300)
    (search capi:text-input-pane
            :title "Search:"
-           :text "system"
+           :text "internet"
            :callback 'search-callback
            :buttons (list :ok t)
            :callback-type :interface-data
@@ -63,9 +56,9 @@
   (:layouts
    (main-layout capi:column-layout '(main-tab-layout))
    (main-tab-layout capi:tab-layout ()
-                    :items '(("SNMP Get" snmp-get-layout)
-                             ("SNMP Walk" snmp-walk-layout)
-                             ("MIB Browser" mib-browser-layout))
+                    :items '(("MIB Browser" mib-browser-layout)
+                             ("SNMP Get" snmp-get-layout)
+                             ("SNMP Walk" snmp-walk-layout))
                     :print-function 'car
                     :visible-child-function 'second)
    (snmp-get-layout capi:column-layout ())
@@ -80,6 +73,13 @@
    :best-width 800
    :best-height 600
    :title "SNMP Utility"))
+
+(defmethod capi:interface-display :before ((self snmp-utility))
+  (let ((g (mib-browser-mib-graph self))
+        (start-node (gethash "internet" *mib-index*)))
+    (setf (capi:choice-selected-item g) start-node
+          *nodes* (capi:graph-pane-nodes g))
+    (display-graph-selection self start-node)))
 
 (defun snmp-utility ()
   (capi:display (make-instance 'snmp-utility)))

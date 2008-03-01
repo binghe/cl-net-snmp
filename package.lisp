@@ -18,8 +18,7 @@
            #:snmp-get-next
            #:snmp-walk
            #:snmp-get-bulk
-           ;; utils
-           #:mib-browser
+           ;; GUI client
            #:snmp-utility
            ;; server
            #:snmp-server
