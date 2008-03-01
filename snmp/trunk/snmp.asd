@@ -4,6 +4,9 @@
 
 (require "comm")
 
+;;; We don't support build MIB tree from non-lispworks platform (at present)
+#-lispworks (pushnew :no-mib *features*)
+
 ;;; Use this if you do not need MIB or you don't like/have ZEBU
 ;; (pushnew :no-mib *features*)
 
@@ -12,7 +15,7 @@
   :version "2.0"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
   :depends-on (#+lispworks :lispworks-udp
-               :ironclad         ;; for SNMPv3
+               :ironclad         ;; for SNMPv3 auth/priv support
                :ieee-floats      ;; for SMI opaque (single-float) type
                #-lispworks :split-sequence
                #+ignore :usocket ;; Networking base in the future
@@ -27,6 +30,7 @@
 	       (:file "opaque" :depends-on ("integer" "smi"))
 	       (:file "counter" :depends-on ("integer" "smi"))
 	       (:file "gauge" :depends-on ("integer" "smi"))
+               #+lispworks ;; ipaddress.lisp has functions from LispWorks's COMM package
 	       (:file "ipaddress" :depends-on ("smi"))
 	       (:file "oid" :depends-on ("ber"))
 	       (:file "timeticks" :depends-on ("ber"))
