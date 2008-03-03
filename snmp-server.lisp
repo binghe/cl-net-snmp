@@ -3,10 +3,26 @@
 (defvar *server-dispatch-table* (make-hash-table :test #'equal)
   "SNMP server dispatch table")
 
+(defmacro define-oid-handler ((var revid) &body body)
+  (let ((o (gensym)) (h (gensym)))
+    `(let ((,o ,revid)
+           (,h #'(lambda (,var) ,@body)))
+       (setf (gethash ,o *server-dispatch-table*) ,h))))
+
+(defun undefine-oid-handler (revid)
+  (setf (gethash revid *server-dispatch-table*) nil))
+
 (defun process-oid-request (oid)
   "Process a OID request, do the real server work and reply a result (not implemented)"
   (declare (type object-id oid))
-  oid)
+  (process-oid (oid-revid oid)))
+
+(defun process-oid (revid &optional (base revid))
+  (declare (type list revid))
+  (let ((handler (gethash revid *server-dispatch-table*)))
+    (if handler
+      (funcall handler base)
+      (process-oid (cdr revid) base))))
 
 (defun snmp-server-function (input)
   "Main function in UDP loop
@@ -17,22 +33,30 @@
       (coerce (ber-encode output)
               '(simple-array (unsigned-byte 8) (*))))))
 
-(defgeneric process-message (message)
+(defun process-message (message-list)
+  "return a message sequence"
+  (process-message-internal (car message-list) message-list))
+
+(defgeneric process-message-internal (version message-list)
   (:documentation "Process SNMP Message"))
 
-(defmethod process-message ((message v1-message))
-  "Process SNMP v1/v2c message"
-  (with-slots (session pdu) message
-    (let ((reply-pdu (process-pdu pdu)))
-      (when reply-pdu
-        (make-instance 'v1-message :session session :pdu reply-pdu)))))
+(defmethod process-message-internal ((version (eql +snmp-version-1+)) (message-list list))
+  "Process SNMP v1 message"
+  (process-message-v1/v2c message-list))
 
-(defmethod process-message ((message v3-message))
-  "Process SNMP v3 message"
-  (with-slots (session pdu msg-id) message
+(defmethod process-message-internal ((version (eql +snmp-version-2c+)) (message-list list))
+  "Process SNMP v2c message"
+  (process-message-v1/v2c message-list))
+
+(defun process-message-v1/v2c (message-list)
+  (destructuring-bind (version community pdu) message-list
     (let ((reply-pdu (process-pdu pdu)))
       (when reply-pdu
-        (make-instance 'v3-message :session session :pdu reply-pdu :id msg-id)))))
+        (list version community reply-pdu)))))
+
+(defmethod process-message-internal ((version (eql +snmp-version-3+)) (message-list list))
+  "Process SNMP v3 message, not implemented"
+  nil)
 
 (defgeneric process-pdu (pdu)
   (:documentation "Process SNMP PDU"))

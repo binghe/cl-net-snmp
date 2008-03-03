@@ -36,6 +36,7 @@
 	       (:file "timeticks" :depends-on ("ber"))
 	       (:file "pdu" :depends-on ("ber"))
 	       (:file "bulk-pdu" :depends-on ("pdu"))
+               (:file "network" :depends-on ("package"))
 	       (:file "constants" :depends-on ("package"))
                (:file "keytool"   :depends-on ("package"))
                (:file "session"   :depends-on ("keytool" "constants"))
@@ -51,8 +52,8 @@
                (:file "print-oid" :depends-on ("oid"))
                #+(and (not no-mib) lispworks)
                (:file "snmp-utility" :depends-on ("snmp-get" "snmp-walk" "mib-tree"))
-               (:file "snmp-response" :depends-on ("report" "oid" "pdu"))
-               (:file "snmp-server" :depends-on ("snmp-response"))))
+               (:file "snmp-server" :depends-on ("oid" "message" "pdu"))
+               (:file "oid-handler" :depends-on ("snmp-server"))))
 
 ;;; Only needed when you want to modify the ASN.1 syntax file (asn1.zb)
 #-no-mib
