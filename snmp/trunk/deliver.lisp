@@ -2,29 +2,22 @@
 
 (load-all-patches)
 
+#-cocoa
+(require "capi-ps-lib")
+
 ;;; Where we are going to deliver the image. 
+(defvar *delivered-image-name* "~/snmp-utility")
 
-(defvar *delivered-image-name* "~/mibrowser")
-
-;;; Load the "application". 
-
+;;; Load the "application".
 (load "~/.lispworks")
 (asdf:setup 'snmp)
 
-;;(defun main ()
-;;  (princ
-;;   (snmp:snmp-walk "localhost" "system")))
 
-;;(compile 'main)
-
-;;(mib:browser)
-
-;; Deliver.
-
-(require "capi-ps-lib")
-
-(deliver 'snmp:mib-browser *delivered-image-name* 5
+;;; Deliver.
+(deliver 'snmp:snmp-utility *delivered-image-name* 5
          :interface :capi
          :keep-pretty-printer t
          :keep-symbol-names '(capi:graph-pane
-                              snmp:mib-browser))
+                              capi:editor-pane
+                              capi:display-pane
+                              snmp:snmp-utility))
