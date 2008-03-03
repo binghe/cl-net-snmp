@@ -1,3 +1,5 @@
+;;;; SNMP Walk
+
 (in-package :snmp)
 
 (defgeneric snmp-walk (object vars)

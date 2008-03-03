@@ -22,7 +22,9 @@
            #:snmp-utility
            ;; server
            #:snmp-server
-           #:control))
+           #:control
+           #:define-oid-handler
+           #:undefine-oid-handler))
 
 (in-package :snmp)
 
