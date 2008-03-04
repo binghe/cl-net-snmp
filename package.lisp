@@ -15,14 +15,13 @@
            #:with-open-session
            ;; snmp operation
    	   #:snmp-get
-           #:snmp-get-next
            #:snmp-walk
-           #:snmp-get-bulk
+           #:snmp-bulk
            ;; GUI client
            #:snmp-utility
            ;; server
-           #:snmp-server
-           #:control
+           #:enable-snmp-service
+           #:disable-snmp-service
            #:define-oid-handler
            #:undefine-oid-handler))
 
