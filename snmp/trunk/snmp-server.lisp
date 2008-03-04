@@ -3,11 +3,10 @@
 (defvar *server-dispatch-table* (make-hash-table :test #'equal)
   "SNMP server dispatch table")
 
-(defmacro define-oid-handler ((var revid) &body body)
-  (let ((o (gensym)) (h (gensym)))
-    `(let ((,o ,revid)
-           (,h #'(lambda (,var) ,@body)))
-       (setf (gethash ,o *server-dispatch-table*) ,h))))
+(defmacro defoid (oid (var) &body body)
+  (let ((h (gensym)) (o (*->oid oid)))
+    `(let ((,h #'(lambda (,var) ,@body)))
+       (setf (gethash ',(oid-revid o) *server-dispatch-table*) ,h))))
 
 (defun undefine-oid-handler (revid)
   (setf (gethash revid *server-dispatch-table*) nil))
@@ -101,7 +100,7 @@
              :initform #'snmp-server-function))
   (:documentation "SNMP Server"))
 
-(defvar *snmp-server*)
+(defvar *snmp-server* nil)
 
 (defmethod control ((server snmp-server) (action (eql :start)))
   "SNMP server start"
@@ -121,5 +120,14 @@
       (mp:process-kill process)
       (setf process nil))))
 
-(defun init-snmp-server ()
-  (setf *snmp-server* (make-instance 'snmp-server)))
+(defun enable-snmp-service (&optional (port 8161))
+  (unless *snmp-server*
+    (let ((snmpd (make-instance 'snmp-server :port port)))
+      (control snmpd :start)
+      (setf *snmp-server* snmpd))))
+
+(defun disable-snmp-service ()
+  (when *snmp-server*
+    (control *snmp-server* :stop)
+    (setf *snmp-server* nil)))
+

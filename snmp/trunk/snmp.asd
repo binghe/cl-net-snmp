@@ -2,8 +2,6 @@
 
 (in-package :asdf)
 
-(require "comm")
-
 ;;; We don't support build MIB tree from non-lispworks platform (at present)
 #-lispworks (pushnew :no-mib *features*)
 
@@ -18,7 +16,6 @@
                :ironclad         ;; for SNMPv3 auth/priv support
                :ieee-floats      ;; for SMI opaque (single-float) type
                #-lispworks :split-sequence
-               #+ignore :usocket ;; Networking base in the future
                #-no-mib :zebu)
   :components ((:file "package")
                (:file "ber" :depends-on ("package"))
@@ -30,30 +27,28 @@
 	       (:file "opaque" :depends-on ("integer" "smi"))
 	       (:file "counter" :depends-on ("integer" "smi"))
 	       (:file "gauge" :depends-on ("integer" "smi"))
-               #+lispworks ;; ipaddress.lisp has functions from LispWorks's COMM package
 	       (:file "ipaddress" :depends-on ("smi"))
 	       (:file "oid" :depends-on ("ber"))
 	       (:file "timeticks" :depends-on ("ber"))
 	       (:file "pdu" :depends-on ("ber"))
 	       (:file "bulk-pdu" :depends-on ("pdu"))
-               (:file "network" :depends-on ("package"))
 	       (:file "constants" :depends-on ("package"))
-               (:file "keytool"   :depends-on ("package"))
-               (:file "session"   :depends-on ("keytool" "constants"))
-               (:file "message"   :depends-on ("session" "constants" "pdu"))
-               (:file "report"    :depends-on ("message" "session" "sequence"))
-               (:file "snmp-get"  :depends-on ("report" "oid" "pdu"))
-               (:file "snmp-get-next" :depends-on ("report" "oid" "pdu"))
-               (:file "snmp-get-bulk" :depends-on ("report" "oid" "bulk-pdu"))
-               (:file "snmp-walk" :depends-on ("snmp-get-next"))
+               (:file "keytool" :depends-on ("package"))
+               (:file "session" :depends-on ("keytool" "constants"))
+               (:file "message" :depends-on ("session" "constants" "pdu"))
+               (:file "network" :depends-on ("session" "message"))
+               (:file "report" :depends-on ("message" "session" "sequence"))
+               (:file "snmp-get" :depends-on ("report" "oid" "bulk-pdu" "network"))
+               (:file "snmp-walk" :depends-on ("report" "oid" "pdu" "network"))
+               (:file "snmp-trap" :depends-on ("oid" "pdu" "network"))
                #-no-mib (:file "syntax" :depends-on ("package"))
                #-no-mib (:file "mib-tree" :depends-on ("syntax" "oid"))
                #-no-mib (:file "mib-build" :depends-on ("mib-tree"))
-               (:file "print-oid" :depends-on ("oid"))
-               #+(and (not no-mib) lispworks)
-               (:file "snmp-utility" :depends-on ("snmp-get" "snmp-walk" "mib-tree"))
+               (:file "print-oid" :depends-on ("oid" #-no-mib "mib-tree"))
                (:file "snmp-server" :depends-on ("oid" "message" "pdu"))
-               (:file "oid-handler" :depends-on ("snmp-server"))))
+               (:file "oid-handler" :depends-on ("snmp-server" "mib-build"))
+               #+(and (not no-mib) capi)
+               (:file "snmp-utility" :depends-on ("snmp-get" "snmp-walk" "mib-tree"))))
 
 ;;; Only needed when you want to modify the ASN.1 syntax file (asn1.zb)
 #-no-mib
