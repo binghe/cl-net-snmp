@@ -23,10 +23,14 @@
       (funcall handler base)
       (process-oid (cdr revid) base))))
 
-(defun snmp-server-function (input)
+(defvar *snmp-server-log* nil)
+
+(defun snmp-server-function (input host)
   "Main function in UDP loop
    accept input as vector, decode, call process-message, encode into vector and return"
-  (declare (type (simple-array (unsigned-byte 8) (*)) input))
+  (declare (type (simple-array (unsigned-byte 8) (*)) input)
+           (type simple-base-string host))
+  (push (cons (get-universal-time) host) *snmp-server-log*)
   (let ((output (process-message (ber-decode input))))
     (when output
       (coerce (ber-encode output)
@@ -130,4 +134,3 @@
   (when *snmp-server*
     (control *snmp-server* :stop)
     (setf *snmp-server* nil)))
-
