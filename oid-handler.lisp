@@ -23,3 +23,6 @@
    We define it to `the host machine of lisp image'"
   (declare (ignore o))
   (format nil "~A ~A ~A" (machine-instance) (machine-type) (machine-version)))
+
+(defoid "system" (o)
+  "xxx")
