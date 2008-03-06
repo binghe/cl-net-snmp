@@ -15,14 +15,6 @@
 (defconstant +asn-sequence+	#x10)
 (defconstant +asn-set+		#x11)
 
-(defconstant +asn-universal+	#b00000000)
-(defconstant +asn-application+	#b01000000)
-(defconstant +asn-context+	#b10000000)
-(defconstant +asn-private+	#b11000000)
-
-(defconstant +asn-primitive+	#b00000000)
-(defconstant +asn-constructor+	#b00100000)
-
 ;; defined types (from the SMI, RFC 1157)
 (defconstant +asn-ipaddress+	(logior +asn-application+ 0))
 (defconstant +asn-counter+	(logior +asn-application+ 1))
@@ -38,11 +30,6 @@
 
 (defconstant +asn-float+	(logior +asn-application+ 8))
 (defconstant +asn-double+	(logior +asn-application+ 9))
-
-;;; from snmp.h
-(defconstant +snmp-version-1+  0)
-(defconstant +snmp-version-2c+ 1)
-(defconstant +snmp-version-3+  3)
 
 (defconstant +snmp-sec-model-any+ 0)
 (defconstant +snmp-sec-model-snmpv1+ 1)
@@ -89,10 +76,3 @@
 (defconstant +snmp-stat-error+ 1)
 (defconstant +snmp-stat-timeout+ 2)
 
-(defconstant +snmp-err-success+ 0)
-(defconstant +snmp-err-noerror+ 0)
-(defconstant +snmp-err-toobig+ 1)
-(defconstant +snmp-err-nosuchname+ 2)
-(defconstant +snmp-err-badvalue+ 3)
-(defconstant +snmp-err-readonly+ 4)
-(defconstant +snmp-err-generr+ 5)

@@ -1,5 +1,9 @@
 (in-package :snmp)
 
+(defconstant +snmp-version-1+  0)
+(defconstant +snmp-version-2c+ 1)
+(defconstant +snmp-version-3+  3)
+
 (defparameter *default-version* +snmp-version-1+)
 (defparameter *default-port* 8161)
 (defparameter *default-community* "public")
@@ -29,7 +33,7 @@
   ((security-name     :type string
 		      :reader security-name-of
 		      :initarg :security-name)
-   (security-level    :type fixnum
+   (security-level    :type (unsigned-byte 8)
 		      :accessor security-level-of)
    (engine-id         :type string
 		      :initarg :engine-id
@@ -75,8 +79,8 @@
           ;; .... .1.. = Reportable: Set
           ;; .... ..1. = Encrypted: Set
           ;; .... ...1 = Authenticated: Set
-          security-level (+ (if auth-protocol #b01 #b00)
-                            (if priv-protocol #b10 #b00)))))
+          security-level (logior (if auth-protocol #b01 #b00)
+                                 (if priv-protocol #b10 #b00)))))
 
 (defvar *snmp-class-table* (make-hash-table))
 

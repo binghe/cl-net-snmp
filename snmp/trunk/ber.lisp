@@ -4,6 +4,14 @@
 
 (in-package :snmp)
 
+(defconstant +asn-universal+   0)
+(defconstant +asn-application+ 1)
+(defconstant +asn-context+     2)
+(defconstant +asn-private+     3)
+
+(defconstant +asn-primitive+   0)
+(defconstant +asn-constructor+ 1)
+
 (defvar *ber-dispatch-table* (make-hash-table :test #'equal))
 
 (defun get-asn.1-type (class p/c tags)
