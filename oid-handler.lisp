@@ -1,3 +1,5 @@
+;;;; SNMP Server variables
+
 (in-package :snmp)
 
 ;;; iso.org.dod.internet.mgmt.mib-2.system (1.3.6.1.2.1.1)
@@ -23,6 +25,3 @@
    We define it to `the host machine of lisp image'"
   (declare (ignore o))
   (format nil "~A ~A ~A" (machine-instance) (machine-type) (machine-version)))
-
-(defoid "system" (o)
-  "xxx")

@@ -5,6 +5,9 @@
 (defmethod plain-value ((object sequence))
   object)
 
+(defun ber-encode-list (list)
+  (apply #'append (mapcar #'ber-encode list)))
+
 ;; for non-null sequence
 (defmethod ber-encode ((value sequence))
   (let ((sub-encode (apply #'append
