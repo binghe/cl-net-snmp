@@ -1,7 +1,4 @@
 ;;;; ASN.1 IPv4 Address Type
-;;;; note: this file used some function of LispWorks' COMM package:
-;;;; STRING-IP-ADDRESS, IP-ADDRESS-STRING
-;;;; we should port them to usocket package, if possible.
 
 (in-package :snmp)
 
@@ -9,12 +6,12 @@
 
 (defun ipaddress (address)
   (declare (type string address))
-  (make-instance 'ipaddress :value (string-ip-address address)))
+  (make-instance 'ipaddress :value (usocket::host-to-hbo address)))
 
 (defmethod print-object ((obj ipaddress) stream)
   (with-slots (value) obj
     (print-unreadable-object (obj stream :type t)
-      (format stream "~A" (ip-address-string value)))))
+      (format stream "~A" (usocket:hbo-to-dotted-quad value)))))
 
 (defmethod ber-encode ((value ipaddress))
   (let* ((addr (value-of value))
