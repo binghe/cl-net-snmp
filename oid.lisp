@@ -5,15 +5,14 @@
 (in-package :snmp)
 
 (defclass object-id ()
-  ((rev-ids :initform nil :type list :reader oid-revid :initarg :id)
-   (rev-names :initform nil :type list :reader oid-name :initarg :name)
+  ((rev-ids :initform nil :reader oid-revid :initarg :id)
+   (rev-names :initform nil :reader oid-name :initarg :name)
    (length :initform 0 :type integer :reader oid-length)))
 
 (defmethod plain-value ((object object-id))
   (reverse (oid-revid object)))
 
-(defun oid (oid)
-  (declare (type object-id oid))
+(defmethod oid ((oid object-id))
   (reverse (slot-value 'rev-ids oid)))
 
 (defmethod initialize-instance :after ((instance object-id)
@@ -22,7 +21,8 @@
   (with-slots (rev-ids length) instance
     (setf length (list-length rev-ids))))
 
-(defmethod make-object-id (ids)
+(defun make-object-id (ids)
+  (declare (type list ids))
   (make-instance 'object-id :id (reverse ids)))
 
 (deftype oid-component () '(unsigned-byte 29))

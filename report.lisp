@@ -14,11 +14,14 @@
                         :pdu (make-instance 'get-request-pdu
                                             :variable-bindings (empty-sequence)))))
     (send-snmp-message session message :receive nil)
-    (destructuring-bind (engine-id engine-boots engine-time user auth priv)
-        ;; security-data: 3rd field of message list
-        (ber-decode<-string (third (ber-decode (socket-of session))))
-      (declare (ignore user auth priv))
-      (setf (engine-id-of session) engine-id
-            (engine-boots-of session) engine-boots
-            (engine-time-of session) engine-time)
-      session)))
+    (let ((ber-stream #+lispworks  (socket-of session)
+		      #+sbcl (let ((buffer (socket-receive (socket-of session) nil 65507)))
+			       (make-instance 'ber-stream :seq (map 'vector #'char-code buffer)))))
+      (destructuring-bind (engine-id engine-boots engine-time user auth priv)
+	  ;; security-data: 3rd field of message list
+	  (ber-decode<-string (third (ber-decode ber-stream)))
+	(declare (ignore user auth priv))
+	(setf (engine-id-of session) engine-id
+	      (engine-boots-of session) engine-boots
+	      (engine-time-of session) engine-time)
+	session))))

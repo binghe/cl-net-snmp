@@ -5,8 +5,8 @@
 
 (defun v3-test ()
   (let ((oid (list 1 3 6 1 2 1 1)))
-    (with-open-session (s "debian.local" :user "md5user" :auth *key-1*)
-      (snmp-walk s oid))))
+    (with-open-session (s "debian.local" :port 161 :user "md5user" :auth *key-1*)
+      (snmp-walk s (list oid)))))
 
 (defparameter *authenticate-data*
   #(                                                             #x30 #x81 #x83 #x02

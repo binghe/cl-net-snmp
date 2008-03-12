@@ -134,7 +134,10 @@
     (apply #'make-instance args)))
 
 (defmethod close-session ((session session))
-  (close (socket-of session)))
+  #+lispworks
+  (close (socket-of session))
+  #+sbcl
+  (socket-close (socket-of session)))
 
 (defmacro with-open-session ((session &rest args) &body body)
   `(let ((,session (open-session ,@args)))

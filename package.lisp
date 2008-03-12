@@ -2,9 +2,15 @@
 
 (defpackage snmp
   (:use :common-lisp
-        #+lispworks :comm
-        #+lispworks :stream
-        #-no-mib :zebu)
+	;; Gray Stream
+        #+(or cmu lispworks) :stream
+	#+sbcl :sb-gray
+	#+clozure :gray
+	;; Networking
+	#+lispworks :comm
+	#+sbcl :sb-bsd-sockets
+	#+cmucl :extensions
+	:zebu)
   (:export ;; constants
            #:+snmp-version-1+
            #:+snmp-version-2c+
@@ -35,6 +41,8 @@
                               :directory (append (pathname-directory defaults)
                                                  '(:wild-inferiors))
                               :host (pathname-host defaults)
-                              :defaults defaults)))
-    (setf (logical-pathname-translations "snmp")
-          `(("**;*.*" ,home)))))
+                              :defaults defaults
+			      :version :newest)))
+    (setf (logical-pathname-translations "SNMP")
+          `(("**;*.*.NEWEST" ,home)
+	    ("**;*.*" ,home)))))
