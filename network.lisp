@@ -36,11 +36,4 @@
 
 #+cmu
 (defun open-udp-stream (host port &key &allow-other-keys)
-  (declare (type integer port)
-	   (type (or vector string) host))
-  (let ((socket (make-instance 'inet-socket :type :datagram :protocol :udp
-			       :element-type element-type))
-	(address (if (stringp host)
-		     (host-ent-address (get-host-by-name host)) host)))
-    (socket-connect socket address port)
-    socket))
+  nil)
