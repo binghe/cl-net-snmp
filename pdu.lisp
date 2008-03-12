@@ -104,7 +104,7 @@
                     :initarg :max-repetitions))
   (:documentation "SNMP Bulk PDU"))
 
-(defmethod proint-object ((instance bulk-pdu) stream)
+(defmethod print-object ((instance bulk-pdu) stream)
   (with-slots (request-id non-repeaters max-repetitions variable-bindings) instance
     (print-unreadable-object (instance stream :type t)
       (format stream "(~D (~D ~D)) ~A"
