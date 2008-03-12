@@ -5,7 +5,7 @@
 (defconstant +snmp-version-3+  3)
 
 (defparameter *default-version* +snmp-version-1+)
-(defparameter *default-port* 8161)
+(defparameter *default-port* 161)
 (defparameter *default-community* "public")
 (defparameter *default-security-name* "snmp")
 (defparameter *default-auth-protocol* :md5)
