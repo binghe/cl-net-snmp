@@ -2,6 +2,11 @@
 
 (in-package :asdf)
 
+;;; Load networking support
+#+sbcl (require :sb-bsd-sockets)
+#+cmucl (require :gray-streams)
+#+lispworks (require "comm")
+
 (defsystem snmp
   :description "Simple Network Manangement Protocol"
   :version "2.0"
@@ -32,17 +37,26 @@
 	       (:file "pdu"		:depends-on ("sequence" "oid" "timeticks"))
 	       (:file "constants"	:depends-on ("package"))
                (:file "keytool"		:depends-on ("package"))
-               (:file "session"		:depends-on ("keytool" "constants"))
+	       #+(or sbcl lispworks)
+	       (:file "session"		:depends-on ("keytool" "constants"))
+	       #+(or sbcl lispworks)
                (:file "message"		:depends-on ("pdu" "session"))
+	       #+(or sbcl lispworks)
                (:file "network"		:depends-on ("session" "message"))
+	       #+(or sbcl lispworks)
                (:file "report"		:depends-on ("sequence" "session" "message"))
+	       #+(or sbcl lispworks)
                (:file "snmp-get"	:depends-on ("oid" "pdu" "network" "report"))
+	       #+(or sbcl lispworks)
                (:file "snmp-walk"	:depends-on ("oid" "pdu" "network" "report"))
+	       #+(or sbcl lispworks)
                (:file "snmp-trap"	:depends-on ("oid" "pdu" "network" "report"))
+	       #+lispworks
                (:file "snmp-server"	:depends-on ("oid" "message" "pdu"))
+	       #+lispworks
                (:file "oid-handler"	:depends-on ("snmp-server" "mib-build"))
-               #+capi
-               (:file "snmp-utility"	:depends-on ("snmp-get" "snmp-walk" "mib-tree"))))
+               #+lispworks
+	       (:file "snmp-utility"	:depends-on ("snmp-get" "snmp-walk" "mib-tree"))))
 
 ;;; Only needed when you want to modify the ASN.1 syntax file (asn1.zb)
 (defsystem snmp-devel

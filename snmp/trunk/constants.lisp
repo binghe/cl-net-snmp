@@ -15,22 +15,6 @@
 (defconstant +asn-sequence+	#x10)
 (defconstant +asn-set+		#x11)
 
-;; defined types (from the SMI, RFC 1157)
-(defconstant +asn-ipaddress+	(logior +asn-application+ 0))
-(defconstant +asn-counter+	(logior +asn-application+ 1))
-(defconstant +asn-gauge+	(logior +asn-application+ 2))
-(defconstant +asn-unsigned+	(logior +asn-application+ 2))
-(defconstant +asn-timeticks+	(logior +asn-application+ 3))
-(defconstant +asn-opaque+	(logior +asn-application+ 4))
-
-;; defined types (from the SMI, RFC 1442)
-(defconstant +asn-nsap+		(logior +asn-application+ 5))
-(defconstant +asn-counter64+	(logior +asn-application+ 6))
-(defconstant +asn-uinteger+	(logior +asn-application+ 7))
-
-(defconstant +asn-float+	(logior +asn-application+ 8))
-(defconstant +asn-double+	(logior +asn-application+ 9))
-
 (defconstant +snmp-sec-model-any+ 0)
 (defconstant +snmp-sec-model-snmpv1+ 1)
 (defconstant +snmp-sec-model-snmpv2c+ 2)
@@ -39,37 +23,6 @@
 (defconstant +snmp-sec-level-noauth+     1)
 (defconstant +snmp-sec-level-authnopriv+ 2)
 (defconstant +snmp-sec-level-authpriv+   3)
-
-;; PDU types in SNMPv1, SNMPsec, SNMPv2p, SNMPv2c, SNMPv2u, SNMPv2*, and SNMPv3
-(defconstant +snmp-msg-get+
-  (logior +asn-context+ +asn-constructor+ 0))
-
-(defconstant +snmp-msg-getnext+
-  (logior +asn-context+ +asn-constructor+ 1))
-
-(defconstant +snmp-msg-response+
-  (logior +asn-context+ +asn-constructor+ 2))
-
-(defconstant +snmp-msg-set+
-  (logior +asn-context+ +asn-constructor+ 3))
-
-;; PDU types in SNMPv1 and SNMPsec
-(defconstant +snmp-msg-trap+
-  (logior +asn-context+ +asn-constructor+ 4))
-
-;; PDU types in SNMPv2p, SNMPv2c, SNMPv2u, SNMPv2*, and SNMPv3
-(defconstant +snmp-msg-getbulk+
-  (logior +asn-context+ +asn-constructor+ 5))
-
-(defconstant +snmp-msg-inform+
-  (logior +asn-context+ +asn-constructor+ 6))
-
-(defconstant +snmp-msg-trap2+
-  (logior +asn-context+ +asn-constructor+ 7))
-
-;; PDU types in SNMPv2u, SNMPv2*, and SNMPv3
-(defconstant +snmp-msg-report+
-  (logior +asn-context+ +asn-constructor+ 8))
 
 ;;; from snmp_client.h
 (defconstant +snmp-stat-success+ 0)
