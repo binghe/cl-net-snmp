@@ -1,5 +1,9 @@
 (in-package :snmp)
 
+(defun v2-test ()
+  (with-open-session (s "2950.lab.163.org" :port 161 :version +snmp-version-2c+ :community "public")
+    (snmp-walk s '("system"))))
+
 (defparameter *key-1*
   #(#x64 #xa6 #x63 #x58 #x6d #x30 #x79 #xb3 #x56 #x7d #xf7 #x88 #xf8 #x28 #x99 #x21))
 

@@ -16,7 +16,7 @@
                #+lispworks :lispworks-udp
                #-lispworks :split-sequence
                :usocket
-               :zebu)
+               :zebu-compiler)
   :components ((:file "package")
                (:file "ber"		:depends-on ("package"))
 	       (:file "smi"		:depends-on ("ber"))
@@ -58,11 +58,3 @@
                #+lispworks
 	       (:file "snmp-utility"	:depends-on ("snmp-get" "snmp-walk" "mib-tree"))))
 
-;;; Only needed when you want to modify the ASN.1 syntax file (asn1.zb)
-(defsystem snmp-devel
-  :description "Simple Network Manangement Protocol (Development)"
-  :version "2.0"
-  :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
-  :depends-on (snmp
-               zebu-compiler)
-  :components ((:file "devel")))
