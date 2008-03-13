@@ -137,7 +137,7 @@
   #+lispworks
   (close (socket-of session))
   #+sbcl
-  (socket-close (socket-of session)))
+  (sb-bsd-sockets:socket-close (socket-of session)))
 
 (defmacro with-open-session ((session &rest args) &body body)
   `(let ((,session (open-session ,@args)))
