@@ -2,19 +2,18 @@
 
 (defpackage snmp
   (:use :common-lisp
-	;; Gray Stream
+        #+lispworks :comm
+        ;; Gray Stream
         #+(or cmu lispworks) :stream
 	#+sbcl :sb-gray
 	#+clozure :gray
-	;; Networking
-	#+lispworks :comm
-	#+sbcl :sb-bsd-sockets
-	#+cmucl :extensions
 	:zebu)
   (:export ;; constants
            #:+snmp-version-1+
            #:+snmp-version-2c+
            #:+snmp-version-3+
+	   ;; types
+	   #:object-id
            ;; snmp session
            #:open-session
            #:close-session
