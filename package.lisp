@@ -7,7 +7,7 @@
         #+(or cmu lispworks) :stream
 	#+sbcl :sb-gray
 	#+clozure :gray
-	:zebu)
+	#+mib :zebu)
   (:export ;; constants
            #:+snmp-version-1+
            #:+snmp-version-2c+
