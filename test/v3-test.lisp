@@ -4,12 +4,16 @@
   (with-open-session (s "2950.lab.163.org" :port 161 :version +snmp-version-2c+ :community "public")
     (snmp-walk s '("system"))))
 
+(defun rtt-test ()
+  (with-open-session (s "cf.space.163.org" :port 161 :version +snmp-version-2c+ :community "private")
+    (snmp-walk s '("system"))))
+
 (defparameter *key-1*
   #(#x64 #xa6 #x63 #x58 #x6d #x30 #x79 #xb3 #x56 #x7d #xf7 #x88 #xf8 #x28 #x99 #x21))
 
 (defun v3-test ()
-  (let ((oid (list 1 3 6 1 2 1 1)))
-    (with-open-session (s "debian.local" :port 161 :user "md5user" :auth *key-1*)
+  (let ((oid "system"))
+    (with-open-session (s "debian-amd64.local" :port 161 :user "md5user" :auth *key-1*)
       (snmp-walk s (list oid)))))
 
 (defparameter *authenticate-data*

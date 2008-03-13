@@ -1,7 +1,7 @@
-;;;; -*- Mode: Text -*-
+;;;; -*- Mode: Lisp -*-
 
 (:name "ASN.1"
- :domain-file "snmp:asn1;asn1-domain.lisp"
+ :domain-file #p"SNMP:ASN1;ASN1-DOMAIN.LISP"
  :package "SNMP"
  :grammar "zebu-mg"
  :identifier-start-chars
