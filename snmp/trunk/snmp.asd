@@ -7,6 +7,8 @@
 #+cmucl (require :gray-streams)
 #+lispworks (require "comm")
 
+(pushnew :mib *features*)
+
 (defsystem snmp
   :description "Simple Network Manangement Protocol"
   :version "2.0"
@@ -16,7 +18,7 @@
                #+lispworks :lispworks-udp
                #-lispworks :split-sequence
                :usocket
-               :zebu-compiler)
+               #+mib :zebu-compiler)
   :components ((:file "package")
                (:file "ber"		:depends-on ("package"))
 	       (:file "smi"		:depends-on ("ber"))
@@ -29,10 +31,13 @@
 	       (:file "gauge"		:depends-on ("smi" "integer"))
 	       (:file "ipaddress"	:depends-on ("smi"))
 	       (:file "oid"		:depends-on ("ber"))
+	       #+mib
                (:file "syntax"		:depends-on ("package"))
+	       #+mib
                (:file "mib-tree"	:depends-on ("syntax" "oid"))
+	       #+mib
                (:file "mib-build"	:depends-on ("mib-tree"))
-               (:file "print-oid"	:depends-on ("oid" "mib-tree"))
+               (:file "print-oid"	:depends-on ("oid" #+mib "mib-tree"))
 	       (:file "timeticks"	:depends-on ("ber"))
 	       (:file "pdu"		:depends-on ("sequence" "oid" "timeticks"))
 	       (:file "constants"	:depends-on ("package"))
@@ -53,8 +58,8 @@
                (:file "snmp-trap"	:depends-on ("oid" "pdu" "network" "report"))
 	       #+lispworks
                (:file "snmp-server"	:depends-on ("oid" "message" "pdu"))
-	       #+lispworks
+	       #+(and mib lispworks)
                (:file "oid-handler"	:depends-on ("snmp-server" "mib-build"))
-               #+lispworks
+               #+(and mib lispworks)
 	       (:file "snmp-utility"	:depends-on ("snmp-get" "snmp-walk" "mib-tree"))))
 
