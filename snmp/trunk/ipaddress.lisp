@@ -32,10 +32,7 @@
         (b (read-byte stream))
         (c (read-byte stream))
         (d (read-byte stream)))
-    (make-instance 'ipaddress :value (logior (ash a 24)
-                                             (ash b 16)
-                                             (ash c 8)
-                                             d))))
+    (make-instance 'ipaddress :value (logior (ash a 24) (ash b 16) (ash c 8) d))))
 
 (eval-when (:load-toplevel :execute)
   (install-asn.1-type :ipaddress 1 0 0))

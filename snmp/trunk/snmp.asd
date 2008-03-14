@@ -5,8 +5,8 @@
 ;;; Load networking support
 #+sbcl (require :sb-bsd-sockets)
 #+cmucl (require :gray-streams)
-#+lispworks (require "comm")
 
+#+lispworks
 (pushnew :mib *features*)
 
 (defsystem snmp
@@ -26,6 +26,7 @@
 	       (:file "integer"		:depends-on ("ber"))
 	       (:file "string"		:depends-on ("ber"))
 	       (:file "sequence"	:depends-on ("ber"))
+	       (:file "timeticks"	:depends-on ("smi" "integer"))
 	       (:file "opaque"		:depends-on ("smi" "integer"))
 	       (:file "counter"		:depends-on ("smi" "integer"))
 	       (:file "gauge"		:depends-on ("smi" "integer"))
@@ -38,7 +39,6 @@
 	       #+mib
                (:file "mib-build"	:depends-on ("mib-tree"))
                (:file "print-oid"	:depends-on ("oid" #+mib "mib-tree"))
-	       (:file "timeticks"	:depends-on ("ber"))
 	       (:file "pdu"		:depends-on ("sequence" "oid" "timeticks"))
 	       (:file "constants"	:depends-on ("package"))
                (:file "keytool"		:depends-on ("package"))

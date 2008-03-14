@@ -22,6 +22,8 @@
    	   #:snmp-get
            #:snmp-walk
            #:snmp-bulk
+           #:snmp-trap
+           #:snmp-inform
            ;; GUI client
            #:snmp-utility
            ;; server
