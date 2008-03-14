@@ -32,13 +32,14 @@
 (defclass trap-pdu (base-pdu)
   ((enterprise    :type object-id
                   :initarg :enterprise)
-   (agent-addr    :initarg :agent-addr)
+   (agent-addr    :type ipaddress 
+                  :initarg :agent-addr)
    (generic-trap  :type (integer 0 6)
                   :initarg :generic-trap)
    (specific-trap :type integer
                   :initarg :specific-trap)
-   (time-stamp    :type timeticks
-                  :initarg :time-stamp))
+   (timestamp     :type timeticks
+                  :initarg :timestamp))
   (:documentation "SNMP v1 Trap PDU"))
 
 (defclass common-pdu (base-pdu)
@@ -134,13 +135,13 @@
   (ber-encode-pdu value +set-request-pdu+))
 
 (defmethod ber-encode ((value trap-pdu))
-  (with-slots (enterprise agent-addr generic-trap specific-trap time-stamp
+  (with-slots (enterprise agent-addr generic-trap specific-trap timestamp
                           variable-bindings) value
     (let ((sub-encode (ber-encode-list (list enterprise
                                              agent-addr
                                              generic-trap
                                              specific-trap
-                                             time-stamp
+                                             timestamp
                                              variable-bindings))))
       (nconc (ber-encode-type 2 1 +trap-pdu+)
              (ber-encode-length (length sub-encode))
@@ -196,14 +197,14 @@
 (defmethod ber-decode-value ((stream stream) (type (eql :trap-pdu)) length)
   (declare (type fixnum length) (ignore type))
   (let ((data (ber-decode-value stream :sequence length)))
-    (destructuring-bind (enterprise agent-addr generic-trap specific-trap time-stamp
+    (destructuring-bind (enterprise agent-addr generic-trap specific-trap timestamp
                                     variable-bindings) data
       (make-instance 'trap-pdu
                      :enterprise enterprise
                      :agent-addr agent-addr
                      :generic-trap generic-trap
                      :specific-trap specific-trap
-                     :time-stamp time-stamp
+                     :timestamp timestamp
                      :variable-bindings variable-bindings))))
 
 (defmethod ber-decode-value ((stream stream) (type (eql :bulk-pdu)) length)
