@@ -10,7 +10,7 @@
 
 (defun trap-test ()
   (with-open-session (s "2950.lab.163.org" :port 162 :version +snmp-version-1+ :community "public")
-    (snmp-trap s '(("laLoadInt.0" 3)))))
+    (snmp-trap s nil)))'(("laLoadInt.0" . 3)))))
 
 (defparameter *key-1*
   #(#x64 #xa6 #x63 #x58 #x6d #x30 #x79 #xb3 #x56 #x7d #xf7 #x88 #xf8 #x28 #x99 #x21))

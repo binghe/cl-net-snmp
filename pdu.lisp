@@ -118,9 +118,10 @@
                                              error-status
                                              error-index
                                              variable-bindings))))
-      (nconc (ber-encode-type 2 1 tag)
-             (ber-encode-length (length sub-encode))
-             sub-encode))))
+      (concatenate 'vector
+                   (ber-encode-type 2 1 tag)
+                   (ber-encode-length (length sub-encode))
+                   sub-encode))))
 
 (defmethod ber-encode ((value get-request-pdu))
   (ber-encode-pdu value +get-request-pdu+))
@@ -143,9 +144,10 @@
                                              specific-trap
                                              timestamp
                                              variable-bindings))))
-      (nconc (ber-encode-type 2 1 +trap-pdu+)
-             (ber-encode-length (length sub-encode))
-             sub-encode))))
+      (concatenate 'vector
+                   (ber-encode-type 2 1 +trap-pdu+)
+                   (ber-encode-length (length sub-encode))
+                   sub-encode))))
 
 (defmethod ber-encode ((value bulk-pdu))
   (with-slots (request-id non-repeaters max-repetitions variable-bindings) value
@@ -153,9 +155,10 @@
                                              non-repeaters
                                              max-repetitions
                                              variable-bindings))))
-      (nconc (ber-encode-type 2 1 +bulk-pdu+)
-             (ber-encode-length (length sub-encode))
-             sub-encode))))
+      (concatenate 'vector
+                   (ber-encode-type 2 1 +bulk-pdu+)
+                   (ber-encode-length (length sub-encode))
+                   sub-encode))))
 
 (defmethod ber-encode ((value inform-request-pdu))
   (ber-encode-pdu value +inform-request-pdu+))
@@ -171,7 +174,8 @@
            (type fixnum length)
            (type symbol class))
   (let ((data (ber-decode-value stream :sequence length)))
-    (destructuring-bind (request-id error-status error-index variable-bindings) data
+    (destructuring-bind (request-id error-status error-index
+                                    variable-bindings) (coerce data 'list)
       (make-instance class
                      :request-id request-id
                      :error-status error-status
@@ -198,7 +202,7 @@
   (declare (type fixnum length) (ignore type))
   (let ((data (ber-decode-value stream :sequence length)))
     (destructuring-bind (enterprise agent-addr generic-trap specific-trap timestamp
-                                    variable-bindings) data
+                                    variable-bindings) (coerce data 'list)
       (make-instance 'trap-pdu
                      :enterprise enterprise
                      :agent-addr agent-addr
@@ -210,7 +214,8 @@
 (defmethod ber-decode-value ((stream stream) (type (eql :bulk-pdu)) length)
   (declare (type fixnum length) (ignore type))
   (let ((data (ber-decode-value stream :sequence length)))
-    (destructuring-bind (request-id non-repeaters max-repetitions variable-bindings) data
+    (destructuring-bind (request-id non-repeaters max-repetitions
+                                    variable-bindings) (coerce data 'list)
       (make-instance 'get-bulk-request-pdu
                      :request-id request-id
                      :non-repeaters non-repeaters

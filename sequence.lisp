@@ -2,45 +2,28 @@
 
 ;;; SEQUENCE (:sequence)
 
-(defmethod plain-value ((object sequence))
-  object)
+(defmethod plain-value ((object sequence)) (coerce object 'vector))
+(defmethod ber-equal ((a sequence) (b sequence))
+  (every #'ber-equal a b))
 
+;;; used by pdu.lisp
 (defun ber-encode-list (list)
-  (apply #'append (mapcar #'ber-encode list)))
+  (apply #'concatenate 'vector (mapcar #'ber-encode list)))
 
 ;; for non-null sequence
 (defmethod ber-encode ((value sequence))
-  (let ((sub-encode (apply #'append
+  "Encode any VECTOR and non-nil LIST into ASN.1 sequence"
+  (let ((sub-encode (apply #'concatenate 'vector
                            (map 'list #'ber-encode value))))
-    (append (ber-encode-type 0 1 16)
-            (ber-encode-length (length sub-encode))
-            sub-encode)))
-
-;; for non-null sequence
-(defclass empty-sequence () ())
-
-(defmethod plain-value ((object empty-sequence))
-  nil)
-
-(defmethod ber-encode ((value empty-sequence))
-  (append (ber-encode-type 0 1 16)
-          (ber-encode-length 0)))
-
-(declaim (inline empty-sequence-p)
-         (inline empty-sequence))
-
-(defun empty-sequence-p (sequence)
-  (typep sequence 'empty-sequence))
-
-(defun empty-sequence () (make-instance 'empty-sequence))
+    (concatenate 'vector
+                 (ber-encode-type 0 1 16)
+                 (ber-encode-length (length sub-encode))
+                 sub-encode)))
 
 (defmethod ber-decode-value ((stream stream) (type (eql :sequence)) length)
-  (declare (type stream stream)
-           (type fixnum length)
-           (ignore type))
-  (if (zerop length)
-    ;; for null sequence
-    (empty-sequence)
+  (declare (type fixnum length) (ignore type))
+  "Decode ASN.1 sequence data and return a VECTOR"
+  (if (zerop length) #()
     ;; for non-null sequence
     (labels ((iter (length-left acc)
                (if (zerop length-left)
@@ -54,7 +37,7 @@
                               sub-length-length
                               sub-length)
                            (cons (ber-decode-value stream sub-type sub-length) acc)))))))
-      (iter length nil))))
+      (coerce (iter length nil) 'vector))))
 
 (eval-when (:load-toplevel :execute)
   (install-asn.1-type :sequence 0 1 16))

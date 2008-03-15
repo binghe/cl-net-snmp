@@ -2,8 +2,8 @@
 
 (defclass opaque (general-type) ())
 
-(defun opaque (v)
-  (make-instance 'opaque :value v))
+(defun opaque (value)
+  (make-instance 'opaque :value value))
 
 (defmethod print-object ((obj opaque) stream)
   (with-slots (value) obj
@@ -20,18 +20,19 @@
   (the fixnum 7))
 
 (defmethod encode-opaque ((o single-float))
-  (nconc (list #x9f #x78 #x04)
-         (let ((integer (ieee-floats:encode-float32 o)))
-           (let ((a (ash (logand integer #xff000000) -24))
-                 (b (ash (logand integer #x00ff0000) -16))
-                 (c (ash (logand integer #x0000ff00) -8))
-                 (d      (logand integer #x000000ff)))
-             (list a b c d)))))
+  (concatenate 'vector #(#x9f #x78 #x04)
+               (let ((integer (ieee-floats:encode-float32 o)))
+                 (let ((a (ash (logand integer #xff000000) -24))
+                       (b (ash (logand integer #x00ff0000) -16))
+                       (c (ash (logand integer #x0000ff00) -8))
+                       (d      (logand integer #x000000ff)))
+                   (vector a b c d)))))
 
 (defmethod ber-encode ((value opaque))
-  (nconc (ber-encode-type 1 0 4)
-         (ber-encode-length (opaque-length value))
-         (encode-opaque (value-of value))))
+  (concatenate 'vector
+               (ber-encode-type 1 0 4)
+               (ber-encode-length (opaque-length value))
+               (encode-opaque (value-of value))))
 
 (defmethod ber-decode-value ((stream stream) (type (eql :opaque)) length)
   (declare (type stream stream)
@@ -52,11 +53,10 @@
         (f-2 (read-byte stream))
         (f-3 (read-byte stream)))
     (let ((integer (logior (ash f-0 24) (ash f-1 16) (ash f-2 8) f-3)))
-      (make-instance 'opaque
-                     :value (ieee-floats:decode-float32 integer)))))
+      (opaque (ieee-floats:decode-float32 integer)))))
 
 (defmethod ber-encode ((value single-float))
-  (ber-encode (make-instance 'opaque :value value)))
+  (ber-encode (opaque value)))
 
 (eval-when (:load-toplevel :execute)
   (install-asn.1-type :opaque 1 0 4))

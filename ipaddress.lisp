@@ -19,9 +19,10 @@
          (b (ash (logand addr #x00ff0000) -16))
          (c (ash (logand addr #x0000ff00) -8))
          (d      (logand addr #x000000ff)))
-    (nconc (ber-encode-type 1 0 0)
-           (ber-encode-length 4)
-           (list a b c d))))
+    (concatenate 'vector
+                 (ber-encode-type 1 0 0)
+                 (ber-encode-length 4)
+                 (list a b c d))))
 
 (defmethod ber-decode-value ((stream stream) (type (eql :ipaddress)) length)
   (declare (type stream stream)

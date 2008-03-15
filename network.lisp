@@ -46,7 +46,7 @@
                #+sbcl
                (let ((buffer (sb-bsd-sockets:socket-receive socket nil 65507)))
                  (decode-message session (make-instance 'ber-stream
-                                                        :seq (map 'vector #'char-code buffer))))))
+                                                        :sequence (map 'vector #'char-code buffer))))))
       (if (not receive)
         (send)
 	#+lispworks

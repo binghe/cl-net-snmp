@@ -4,6 +4,9 @@
   ()
   (:documentation "Timeticks: per second/100"))
 
+(defun timeticks (time)
+  (make-instance 'timeticks :value time))
+
 (defmethod plain-value ((object timeticks))
   (/ (value-of object 100.0)))
 
@@ -23,13 +26,14 @@
 (defmethod ber-encode ((tvalue timeticks))
   (let ((value (value-of tvalue)))
     (multiple-value-bind (v l) (ber-encode-integer value)
-      (nconc (ber-encode-type 1 0 3)
-             (ber-encode-length l)
-             v))))
+      (concatenate 'vector
+                   (ber-encode-type 1 0 3)
+                   (ber-encode-length l)
+                   v))))
 
 (defmethod ber-decode-value ((stream stream) (type (eql :timeticks)) length)
   (declare (type fixnum length) (ignore type))
-  (make-instance 'timeticks :value (ber-decode-integer-value stream length)))
+  (timeticks (ber-decode-integer-value stream length)))
 
 (eval-when (:load-toplevel :execute)
   (install-asn.1-type :timeticks 1 0 3))

@@ -15,13 +15,13 @@
 (defvar *ber-dispatch-table* (make-hash-table :test #'equal))
 
 (defun get-asn.1-type (class p/c tags)
-  (gethash (list class p/c tags) *ber-dispatch-table* :unknown))
+  (gethash (list class p/c tags) *ber-dispatch-table* nil))
 
 (defun install-asn.1-type (type class p/c tags)
   (setf (gethash (list class p/c tags) *ber-dispatch-table*) type))
 
 (defun uninstall-asn.1-type (class p/c tags)
-  (setf (gethash (list class p/c tags) *ber-dispatch-table*) :unknown))
+  (setf (gethash (list class p/c tags) *ber-dispatch-table*) nil))
 
 ;;;;   8   7    6    5 4 3 2 1
 ;;;; +-------+-----+-----------+
@@ -51,15 +51,15 @@
   (declare (type (integer 0 3) class)
            (type (integer 0 1) p/c)
            (type (integer 0) tags))
-  (assert (and (<= 0 class 3) (<= 0 p/c 1) (<= 0 tags)))
   (labels ((iter (n p acc)
              (if (zerop n) acc
                (multiple-value-bind (q r) (floor n 128)
                  (iter q 1 (cons (logior (ash p 7) r) acc))))))
-    (if (< tags 31)
-        (list (logior (ash class 6) (ash p/c 5) tags))
-      (cons (logior (ash class 6) (ash p/c 5) 31)
-            (iter tags 0 nil)))))
+    (coerce (if (< tags 31)
+              (list (logior (ash class 6) (ash p/c 5) tags))
+              (cons (logior (ash class 6) (ash p/c 5) 31)
+                    (iter tags 0 nil)))
+            'vector)))
 
 (defun ber-decode-type (stream)
   "Decode BER Type Domain"
@@ -106,8 +106,7 @@
              (if (zerop n) (cons (mod (logior 128 l) 256) acc)
                (multiple-value-bind (q r) (floor n 256)
                  (iter q (cons r acc) (1+ l))))))
-    (if (< length 128) (list length)
-      (iter length nil 0))))
+    (coerce (if (< length 128) (list length) (iter length nil 0)) 'vector)))
 
 (defun ber-decode-length (stream)
   "Decode BER Length Domain"
@@ -126,10 +125,13 @@
         (values res length-length)))))
   
 (defgeneric ber-encode (data)
-  (:documentation "BER encode a ASN.1 object into list"))
+  (:documentation "BER encode a ASN.1 object into VECTOR (not LIST)"))
 
 (defgeneric ber-decode (data)
   (:documentation "BER decode data into a ASN.1 object"))
+
+(defgeneric ber-equal (a b)
+  (:documentation "BER equal predication function"))
 
 (defmethod ber-decode ((data stream))
   (let ((type (ber-decode-type data))
@@ -137,22 +139,24 @@
     (ber-decode-value data type length)))
 
 (defmethod ber-decode ((value sequence))
-  (let ((stream (make-instance 'ber-stream :seq value)))
+  (let ((stream (make-instance 'ber-stream :sequence value)))
     (ber-decode stream)))
 
 (defgeneric ber-decode-value (stream type length))
 
-(defmethod ber-decode-value ((stream stream) (type (eql :unknown)) length)
-  (declare (type stream stream)
-           (type fixnum length)
-           (ignore type))
-  (dotimes (i length) (read-byte stream))
-  nil)
+(defmethod ber-decode-value ((stream stream) (type (eql nil)) length)
+  "Note: A UNKNOWN BER data will be decoded as NIL"
+  (declare (type fixnum length) (ignore type))
+  (dotimes (i length nil) (read-byte stream)))
+
+;;; BER Stream: make stream from sequence
+;;; TODO: port this into CLs other than LispWorks, SBCL and OpenMCL
 
 (defclass ber-stream (fundamental-input-stream)
-  ((sequence :type sequence :initarg :seq :reader ber-sequence)
+  ((sequence :type sequence :initarg :sequence :reader ber-sequence)
    (length :type integer :accessor ber-length)
-   (position :type integer :initform 0 :accessor ber-position)))
+   (position :type integer :initform 0 :accessor ber-position))
+  (:documentation "A helper Gray Stream which used for make a sequence into STREAM"))
 
 (defmethod initialize-instance :after ((obj ber-stream) &rest initargs &key &allow-other-keys)
   (declare (ignore slot-names initargs))
@@ -160,28 +164,31 @@
 
 (defmethod stream-read-byte ((instance ber-stream))
   (with-slots (sequence position length) instance
-    (if (= position length)
-      :eof
+    (if (= position length) :eof
       (prog1 (elt sequence position)
         (incf (ber-position instance))))))
 
-(defclass raw-data ()
-  ((data :accessor raw-data-of
-         :initarg :data 
-         :type list
+;;; RAW BER data: can be encoded to anything but anything cannot be decoded into RAW
+
+(defclass raw ()
+  ((data :accessor data-of
+         :initarg :data
+         :type sequence
          :initform nil)))
 
-(defun raw-data-p (data)
-  (typep 'raw-data data))
+(defun raw-p (data)
+  (typep 'raw data))
 
-(defun raw-data (data)
-  (make-instance 'raw-data :data data))
+(defun raw (data)
+  (make-instance 'raw :data data))
 
-(defmethod ber-encode ((value raw-data))
-  (raw-data-of value))
+(defmethod ber-encode ((value raw))
+  (coerce (data-of value) 'vector))
+
+;;; other BER utility
 
 (defun ber-encode->string (data)
-  (concatenate 'string (mapcar #'code-char (ber-encode data))))
+  (map 'string #'code-char (ber-encode data)))
 
 (defun ber-decode<-string (data)
   (declare (type string data))
@@ -190,7 +197,8 @@
 ;;; Test Code
 
 (defun ber-test (x)
-  (let ((code (ber-encode x)))
+  (let* ((code (coerce (ber-encode x) 'list))
+         (xx (ber-decode code)))
     (format t "~A -> ~A~%~{~8,'0B ~}~%~{~D ~}~%"
-            x (ber-decode code) code code)
-    x))
+            x xx code code)
+    (ber-equal x xx)))

@@ -2,6 +2,9 @@
 ;;;; Object ID Base Support ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
+;;;; TODO: fix bug in (ber-test (object-id #(0), #(0 0), #(0 0 0), ...))
+
 (in-package :snmp)
 
 (defclass object-id ()
@@ -12,6 +15,9 @@
 (defmethod plain-value ((object object-id))
   (reverse (oid-revid object)))
 
+(defmethod ber-equal ((a object-id) (b object-id))
+  (equal (oid-revid a) (oid-revid b)))
+
 (defmethod oid ((oid object-id))
   (reverse (slot-value 'rev-ids oid)))
 
@@ -21,9 +27,9 @@
   (with-slots (rev-ids length) instance
     (setf length (list-length rev-ids))))
 
-(defun make-object-id (ids)
-  (declare (type list ids))
-  (make-instance 'object-id :id (reverse ids)))
+(defun object-id (ids)
+  (declare (type sequence ids))
+  (make-instance 'object-id :id (reverse (coerce ids 'list))))
 
 (deftype oid-component () '(unsigned-byte 29))
 (deftype oid-component-length () '(integer 0 4))
@@ -56,16 +62,17 @@
                                 (multiple-value-list
                                  (number-split (+ (* (first subids) 40)
                                                   (second subids)) 0 nil 0)))))
-          (nconc (ber-encode-type 0 0 6)
-                 (ber-encode-length l)
-                 v))))))
+          (concatenate 'vector
+                       (ber-encode-type 0 0 6)
+                       (ber-encode-length l)
+                       v))))))
 
 (defmethod ber-decode-value ((s stream) (type (eql :object-identifier)) length)
   (declare (type stream s)
            (type fixnum length)
            (ignore type))
   (if (zerop length)
-      (make-instance 'objet-id)
+      (make-instance 'object-id)
     (labels ((get-number (acc len)
                (let* ((byte (read-byte s))
                       (val (logior (ash acc 7) (logand byte 127))))
@@ -85,6 +92,8 @@
 (eval-when (:load-toplevel :execute)
   (install-asn.1-type :object-identifier 0 0 6))
 
+;;; Object ID utilitys
+
 (defun oid-< (oid-1 oid-2)
   "test if oid-1 is oid-2's child"
   (let ((o-1 (oid-revid oid-1))
@@ -101,5 +110,4 @@
   (:documentation "Anything -> Object ID"))
 
 (defmethod *->oid ((x object-id)) x)
-(defmethod *->oid ((x list)) (make-object-id x))
-(defmethod *->oid ((x vector)) (make-object-id (concatenate 'list x)))
+(defmethod *->oid ((x sequence)) (object-id x))
