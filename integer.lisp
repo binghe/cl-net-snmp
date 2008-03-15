@@ -1,7 +1,7 @@
 (in-package :snmp)
 
-(defmethod plain-value ((object integer))
-  object)
+(defmethod plain-value ((object integer)) object)
+(defmethod ber-equal ((a integer) (b integer)) (= a b))
 
 (defun ber-encode-integer (value)
   (declare (type integer value))
@@ -17,11 +17,13 @@
       (iter value nil 0))))
 
 (defmethod ber-encode ((value integer))
+  "Encode a plus integer, we don't support minus integer though ASN.1 support it"
   (assert (<= 0 value))
   (multiple-value-bind (v l) (ber-encode-integer value)
-    (nconc (ber-encode-type 0 0 2)
-           (ber-encode-length l)
-           v)))
+    (concatenate 'vector
+                 (ber-encode-type 0 0 2)
+                 (ber-encode-length l)
+                 v)))
 
 (defun ber-decode-integer-value (stream length)
   (declare (type stream stream)
@@ -32,9 +34,7 @@
     (iter 0 0)))
 
 (defmethod ber-decode-value ((stream stream) (type (eql :integer)) length)
-  (declare (type stream stream)
-           (type fixnum length)
-           (ignore type))
+  (declare (type fixnum length) (ignore type))
   (ber-decode-integer-value stream length))
 
 (eval-when (:load-toplevel :execute)
