@@ -28,7 +28,7 @@
 (defgeneric decode-message (session stream))
 
 (defmethod decode-message ((s session) (stream stream))
-  (let ((message-list (ber-decode stream)))
+  (let ((message-list (coerce (ber-decode stream) 'list)))
     (decode-message s message-list)))
 
 (defmethod decode-message ((s v1-session) (message-list list))

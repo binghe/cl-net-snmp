@@ -9,17 +9,17 @@
 
 (defun snmp-report (session)
   (declare (type v3-session session))
-  (let ((message
-         (make-instance 'v3-message :session session :report t
-                        :pdu (make-instance 'get-request-pdu
-                                            :variable-bindings (empty-sequence)))))
+  (let ((message (make-instance 'v3-message :session session :report t
+                                :pdu (make-instance 'get-request-pdu
+                                                    :variable-bindings #()))))
     (send-snmp-message session message :receive nil)
     (let ((ber-stream #+lispworks  (socket-of session)
 		      #+sbcl (let ((buffer (socket-receive (socket-of session) nil 65507)))
-			       (make-instance 'ber-stream :seq (map 'vector #'char-code buffer)))))
+			       (make-instance 'ber-stream
+                                              :sequence (map 'vector #'char-code buffer)))))
       (destructuring-bind (engine-id engine-boots engine-time user auth priv)
 	  ;; security-data: 3rd field of message list
-	  (ber-decode<-string (third (ber-decode ber-stream)))
+	  (ber-decode<-string (third (coerce (ber-decode ber-stream) 'list)))
 	(declare (ignore user auth priv))
 	(setf (engine-id-of session) engine-id
 	      (engine-boots-of session) engine-boots

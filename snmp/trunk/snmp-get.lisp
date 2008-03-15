@@ -24,7 +24,8 @@
                                                         :variable-bindings vb))))
         (let ((reply (send-snmp-message session message)))
           (when reply
-            (mapcar #'second (variable-bindings-of (pdu-of reply)))))))))
+            (map 'list #'(lambda (x) (elt x 1))
+                 (variable-bindings-of (pdu-of reply)))))))))
 
 (defmethod snmp-get ((host string) (var string))
   (car (snmp-get host (list var))))
