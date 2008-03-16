@@ -1,9 +1,26 @@
+;;;; -*- Mode: lisp; Syntax: ansi-common-lisp; Base: 10; Package: cl-user; -*-
+
+#|
+<DOCUMENTATION>
+ <DESCRIPTION>
+  package definitions for SNMP
+  </DESCRIPTION>
+ <COPYRIGHT YEAR='2007-2008' AUTHOR='Chun Tian (binghe)' MARK='(C)'
+            HREF='https://cl-net-snmp.svn.sourceforge.net/svnroot/cl-net-snmp/snmp/trunk/package.lisp'/>
+ <CHRONOLOGY>
+  <DELTA DATE='20080316'>create documentation for "package.lisp"</DELTA>
+  </CHRONOLOGY>
+ </DOCUMENTATION>
+|#
+
 (in-package :cl-user)
 
 (defpackage snmp
-  (:use :common-lisp
+  (:use #-genera :common-lisp
+	#+genera :future-common-lisp
+	;; Networking
         #+lispworks :comm
-        ;; Gray Stream
+        ;; Stream
         #+(or cmu lispworks) :stream
 	#+sbcl :sb-gray
 	#+clozure :gray
@@ -14,6 +31,11 @@
            #:+snmp-version-3+
 	   ;; types
 	   #:object-id
+           #:ipaddress
+           #:timeticks
+           #:opaque
+           #:gauge
+           #:counter
            ;; snmp session
            #:open-session
            #:close-session
@@ -24,8 +46,8 @@
            #:snmp-bulk
            #:snmp-trap
            #:snmp-inform
-           ;; GUI client
-           #:snmp-utility
+           ;; GUI client for LispWorks
+	   #+lispworks #:snmp-utility
            ;; server
            #:enable-snmp-service
            #:disable-snmp-service
@@ -34,7 +56,8 @@
 
 (in-package :snmp)
 
-;;; Logical Pathname Translations
+;;; Logical Pathname Translations, learn from CL-HTTP source code
+
 (eval-when (:load-toplevel :execute)
   (let* ((defaults #+asdf (asdf:component-pathname (asdf:find-system :snmp))
                    #-asdf *load-pathname*)
@@ -47,3 +70,5 @@
     (setf (logical-pathname-translations "SNMP")
           `(("**;*.*.NEWEST" ,home)
 	    ("**;*.*" ,home)))))
+
+:eof

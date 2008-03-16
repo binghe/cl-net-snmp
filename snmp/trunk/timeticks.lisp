@@ -1,3 +1,18 @@
+;;;; -*- Mode: lisp; Syntax: ansi-common-lisp; Base: 10; Package: snmp; -*-
+
+#|
+<DOCUMENTATION>
+ <DESCRIPTION>
+  ASN.1 TimeTicks Type support
+  </DESCRIPTION>
+ <COPYRIGHT YEAR='2007-2008' AUTHOR='Chun Tian (binghe)' MARK='(C)'
+            HREF='https://cl-net-snmp.svn.sourceforge.net/svnroot/cl-net-snmp/snmp/trunk/timeticks.lisp'/>
+ <CHRONOLOGY>
+  <DELTA DATE='20080316'>create documentation for "timeticks.lisp"</DELTA>
+  </CHRONOLOGY>
+ </DOCUMENTATION>
+|#
+
 (in-package :snmp)
 
 (defclass timeticks (general-type)
@@ -37,3 +52,5 @@
 
 (eval-when (:load-toplevel :execute)
   (install-asn.1-type :timeticks 1 0 3))
+
+:eof

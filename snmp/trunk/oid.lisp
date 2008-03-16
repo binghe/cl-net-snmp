@@ -1,7 +1,17 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; Object ID Base Support ;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; -*- Mode: lisp; Syntax: ansi-common-lisp; Base: 10; Package: snmp; -*-
 
+#|
+<DOCUMENTATION>
+ <DESCRIPTION>
+  ASN.1 'OBJECT IDENTIFIER' Type support
+  </DESCRIPTION>
+ <COPYRIGHT YEAR='2007-2008' AUTHOR='Chun Tian (binghe)' MARK='(C)'
+            HREF='https://cl-net-snmp.svn.sourceforge.net/svnroot/cl-net-snmp/snmp/trunk/oid.lisp'/>
+ <CHRONOLOGY>
+  <DELTA DATE='20080316'>create documentation for "oid.lisp"</DELTA>
+  </CHRONOLOGY>
+ </DOCUMENTATION>
+|#
 
 ;;;; TODO: fix bug in (ber-test (object-id #(0), #(0 0), #(0 0 0), ...))
 
@@ -111,3 +121,5 @@
 
 (defmethod *->oid ((x object-id)) x)
 (defmethod *->oid ((x sequence)) (object-id x))
+
+:eof
