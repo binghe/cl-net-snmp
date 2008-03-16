@@ -28,27 +28,53 @@
                                                       :timestamp (timeticks uptime)))))
       (send-snmp-message session message :receive nil))))
 
-(defmethod snmp-trap ((session v2c-session) (vars list) &key
-                      (uptime (truncate (* (get-internal-run-time)
-                                           #.(/ 100 internal-time-units-per-second))))
-                      (trap-oid *default-trap-enterprise*)
-                      &allow-other-keys)
-  "SNMPv2 Trap"
+(defun snmp-trap-internal (session vars uptime trap-oid inform)
   (let ((vb (list* (list (object-id '#(1 3 6 1 2 1 1 3 0))
                          (make-instance 'timeticks :value uptime))
                    (list (object-id '#(1 3 6 1 6 3 1 1 4 1 0))
                          trap-oid)
                    (mapcar #'(lambda (x) (list (*->oid (car x)) (cdr x))) vars))))
-    (let ((message (make-instance 'v2c-message :session session
-                                  :pdu (make-instance 'snmpv2-trap-pdu
+    (let ((message (make-instance (gethash (type-of session) *session->message*)
+                                  :session session
+                                  :pdu (make-instance (if inform
+                                                        'inform-request-pdu
+                                                        'snmpv2-trap-pdu)
                                                       :variable-bindings vb))))
-      (send-snmp-message session message :receive nil))))
+      (send-snmp-message session message :receive inform))))
+
+(defmethod snmp-trap ((session v2c-session) (vars list) &key
+                      (uptime (truncate (* (get-internal-run-time)
+                                           #.(/ 100 internal-time-units-per-second))))
+                      (trap-oid *default-trap-enterprise*)
+                      (inform nil)
+                      &allow-other-keys)
+  (snmp-trap-internal session vars uptime trap-oid inform))
+
+(defmethod snmp-trap ((session v3-session) (vars list) &key
+                      (uptime (truncate (* (get-internal-run-time)
+                                           #.(/ 100 internal-time-units-per-second))))
+                      (trap-oid *default-trap-enterprise*)
+                      (inform nil)
+                      &allow-other-keys)
+  (when (need-report-p session)
+    (snmp-report session))
+  (snmp-trap-internal session vars uptime trap-oid inform))
 
 (defgeneric snmp-inform (session vars &key)
   (:documentation "SNMP Inform, only support v2c and v3 session"))
 
-(defmethod snmp-inform ((session v2c-session) (vars list) &key &allow-other-keys)
-  )
+(defmethod snmp-inform ((session v2c-session) (vars list) &key
+                        (uptime (truncate (* (get-internal-run-time)
+                                             #.(/ 100 internal-time-units-per-second))))
+                        (trap-oid *default-trap-enterprise*)
+                        &allow-other-keys)
+  "SNMPv2 Inform"
+  (snmp-trap session vars :uptime uptime :trap-oid trap-oid :inform t))
 
-(defmethod snmp-inform ((session v3-session) (vars list) &key &allow-other-keys)
-  )
+(defmethod snmp-inform ((session v3-session) (vars list) &key
+                        (uptime (truncate (* (get-internal-run-time)
+                                             #.(/ 100 internal-time-units-per-second))))
+                        (trap-oid *default-trap-enterprise*)
+                        &allow-other-keys)
+  "SNMPv3 Inform"
+  (snmp-trap session vars :uptime uptime :trap-oid trap-oid :inform t))
