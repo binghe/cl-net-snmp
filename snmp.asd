@@ -66,6 +66,8 @@
 	       #+(or sbcl lispworks)
                (:file "snmp-get"	:depends-on ("oid" "pdu" "network" "report"))
 	       #+(or sbcl lispworks)
+               (:file "snmp-set"	:depends-on ("oid" "pdu" "network" "report"))
+	       #+(or sbcl lispworks)
                (:file "snmp-walk"	:depends-on ("oid" "pdu" "network" "report"))
 	       #+(or sbcl lispworks)
                (:file "snmp-trap"	:depends-on ("oid" "pdu" "network" "report"))
