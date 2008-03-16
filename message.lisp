@@ -152,7 +152,7 @@
   (destructuring-bind (version global-data security-string data) message-list
     (declare (ignore version global-data))
     (if (not (priv-protocol-of s))
-      (let ((pdu (third data)))
+      (let ((pdu (elt data 2)))
         (make-instance 'v3-message :pdu pdu))
       ;;; decrypt message
       (let ((salt (map '(simple-array (unsigned-byte 8) (*)) #'char-code
