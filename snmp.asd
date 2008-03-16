@@ -1,4 +1,17 @@
-;;;; -*- Mode: Lisp -*-
+;;;; -*- Mode: lisp; Syntax: ansi-common-lisp; Base: 10; Package: asdf; -*-
+
+#|
+<DOCUMENTATION>
+ <DESCRIPTION>
+  ASDF system definition for SNMP
+  </DESCRIPTION>
+ <COPYRIGHT YEAR='2007-2008' AUTHOR='Chun Tian (binghe)' MARK='(C)'
+            HREF='https://cl-net-snmp.svn.sourceforge.net/svnroot/cl-net-snmp/snmp/trunk/snmp.asd'/>
+ <CHRONOLOGY>
+  <DELTA DATE='20080316'>create documentation for "snmp.asd"</DELTA>
+  </CHRONOLOGY>
+ </DOCUMENTATION>
+|#
 
 (in-package :asdf)
 
@@ -32,6 +45,7 @@
 	       (:file "gauge"		:depends-on ("integer"))
 	       (:file "ipaddress"	:depends-on ("smi"))
 	       (:file "oid"		:depends-on ("smi"))
+	       (:file "pdu"		:depends-on ("sequence" "oid" "timeticks"))
 	       #+mib
                (:file "syntax"		:depends-on ("package"))
 	       #+mib
@@ -39,7 +53,6 @@
 	       #+mib
                (:file "mib-build"	:depends-on ("mib-tree"))
                (:file "print-oid"	:depends-on ("oid" #+mib "mib-tree"))
-	       (:file "pdu"		:depends-on ("sequence" "oid" "timeticks"))
 	       (:file "constants"	:depends-on ("package"))
                (:file "keytool"		:depends-on ("package"))
 	       #+(or sbcl lispworks)
@@ -63,3 +76,4 @@
                #+(and mib lispworks)
 	       (:file "snmp-utility"	:depends-on ("snmp-get" "snmp-walk" "mib-tree"))))
 
+:eof

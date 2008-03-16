@@ -25,8 +25,7 @@
                                                       :agent-addr (ipaddress agent-addr)
                                                       :generic-trap generic-trap
                                                       :specific-trap specific-trap
-                                                      :timestamp (make-instance 'timeticks
-                                                                                :value uptime)))))
+                                                      :timestamp (timeticks uptime)))))
       (send-snmp-message session message :receive nil))))
 
 (defmethod snmp-trap ((session v2c-session) (vars list) &key
