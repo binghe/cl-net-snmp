@@ -1,4 +1,17 @@
-;;; SNMPv3 get-request & report support
+;;;; -*- Mode: lisp; Syntax: ansi-common-lisp; Base: 10; Package: snmp; -*-
+
+#|
+<DOCUMENTATION>
+ <DESCRIPTION>
+  SNMPv3 REPORT
+  </DESCRIPTION>
+ <COPYRIGHT YEAR='2007-2008' AUTHOR='Chun Tian (binghe)' MARK='(C)'
+            HREF='https://cl-net-snmp.svn.sourceforge.net/svnroot/cl-net-snmp/snmp/trunk/report.lisp'/>
+ <CHRONOLOGY>
+  <DELTA DATE='20080316'>create documentation for "report.lisp"</DELTA>
+  </CHRONOLOGY>
+ </DOCUMENTATION>
+|#
 
 (in-package :snmp)
 
@@ -19,9 +32,11 @@
                                               :sequence (map 'vector #'char-code buffer)))))
       (destructuring-bind (engine-id engine-boots engine-time user auth priv)
 	  ;; security-data: 3rd field of message list
-	  (ber-decode<-string (third (coerce (ber-decode ber-stream) 'list)))
+	  (coerce (ber-decode<-string (elt (ber-decode ber-stream) 2)) 'list)
 	(declare (ignore user auth priv))
 	(setf (engine-id-of session) engine-id
 	      (engine-boots-of session) engine-boots
 	      (engine-time-of session) engine-time)
 	session))))
+
+:eof

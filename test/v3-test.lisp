@@ -10,14 +10,22 @@
 
 (defun trap-test ()
   (with-open-session (s "2950.lab.163.org" :port 162 :version +snmp-version-1+ :community "public")
-    (snmp-trap s nil)))'(("laLoadInt.0" . 3)))))
+    (snmp-trap s nil)))
+
+(defun v2trap-test ()
+  (with-open-session (s "debian.local" :port 162 :version +snmp-version-2c+ :community "public")
+    (snmp-trap s nil)))
+
+(defun inform-test ()
+  (with-open-session (s "debian.local" :port 162 :version +snmp-version-2c+ :community "public")
+    (snmp-inform s nil)))
 
 (defparameter *key-1*
   #(#x64 #xa6 #x63 #x58 #x6d #x30 #x79 #xb3 #x56 #x7d #xf7 #x88 #xf8 #x28 #x99 #x21))
 
 (defun v3-test ()
   (let ((oid "system"))
-    (with-open-session (s "debian-amd64.local" :port 161 :user "md5user" :auth *key-1*)
+    (with-open-session (s "debian.local" :port 161 :user "md5user" :auth *key-1*)
       (snmp-walk s (list oid)))))
 
 (defparameter *authenticate-data*
