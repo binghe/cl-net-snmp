@@ -1,8 +1,23 @@
+;;;; -*- Mode: lisp; Syntax: ansi-common-lisp; Base: 10; Package: snmp; -*-
+
+#|
+<DOCUMENTATION>
+ <DESCRIPTION>
+  ASN.1 SEQUENCE Structure support
+  </DESCRIPTION>
+ <COPYRIGHT YEAR='2007-2008' AUTHOR='Chun Tian (binghe)' MARK='(C)'
+            HREF='https://cl-net-snmp.svn.sourceforge.net/svnroot/cl-net-snmp/snmp/trunk/sequence.lisp'/>
+ <CHRONOLOGY>
+  <DELTA DATE='20080316'>create documentation for "sequence.lisp"</DELTA>
+  </CHRONOLOGY>
+ </DOCUMENTATION>
+|#
+
 (in-package :snmp)
 
-;;; SEQUENCE (:sequence)
+(defmethod plain-value ((object sequence))
+  (coerce object 'vector))
 
-(defmethod plain-value ((object sequence)) (coerce object 'vector))
 (defmethod ber-equal ((a sequence) (b sequence))
   (every #'ber-equal a b))
 
@@ -41,3 +56,5 @@
 
 (eval-when (:load-toplevel :execute)
   (install-asn.1-type :sequence 0 1 16))
+
+:eof

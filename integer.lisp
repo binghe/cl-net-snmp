@@ -1,3 +1,18 @@
+;;;; -*- Mode: lisp; Syntax: ansi-common-lisp; Base: 10; Package: snmp; -*-
+
+#|
+<DOCUMENTATION>
+ <DESCRIPTION>
+  ASN.1 INTEGER Type support
+  </DESCRIPTION>
+ <COPYRIGHT YEAR='2007-2008' AUTHOR='Chun Tian (binghe)' MARK='(C)'
+            HREF='https://cl-net-snmp.svn.sourceforge.net/svnroot/cl-net-snmp/snmp/trunk/integer.lisp'/>
+ <CHRONOLOGY>
+  <DELTA DATE='20080316'>create documentation for "integer.lisp"</DELTA>
+  </CHRONOLOGY>
+ </DOCUMENTATION>
+|#
+
 (in-package :snmp)
 
 (defmethod plain-value ((object integer)) object)
@@ -39,3 +54,5 @@
 
 (eval-when (:load-toplevel :execute)
   (install-asn.1-type :integer 0 0 2))
+
+:eof

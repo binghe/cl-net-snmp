@@ -1,11 +1,24 @@
-;;;; ASN.1 IPv4 Address Type
+;;;; -*- Mode: lisp; Syntax: ansi-common-lisp; Base: 10; Package: snmp; -*-
+
+#|
+<DOCUMENTATION>
+ <DESCRIPTION>
+  ASN.1 IPADDRESS Type, only IPv4 is supported.
+  </DESCRIPTION>
+ <COPYRIGHT YEAR='2007-2008' AUTHOR='Chun Tian (binghe)' MARK='(C)'
+            HREF='https://cl-net-snmp.svn.sourceforge.net/svnroot/cl-net-snmp/snmp/trunk/ipaddress.lisp'/>
+ <CHRONOLOGY>
+  <DELTA DATE='20080316'>create documentation for "ipaddress.lisp"</DELTA>
+  </CHRONOLOGY>
+ </DOCUMENTATION>
+|#
 
 (in-package :snmp)
 
 (defclass ipaddress (general-type) ())
 
 (defun ipaddress (address)
-  (declare (type string address))
+  "translate to ASN.1 ipaddress from any form"
   (make-instance 'ipaddress :value (usocket::host-to-hbo address)))
 
 (defmethod print-object ((obj ipaddress) stream)
@@ -37,3 +50,5 @@
 
 (eval-when (:load-toplevel :execute)
   (install-asn.1-type :ipaddress 1 0 0))
+
+:eof
