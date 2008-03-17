@@ -42,6 +42,7 @@
            #:with-open-session
            ;; snmp operation
    	   #:snmp-get
+           #:snmp-set
            #:snmp-walk
            #:snmp-bulk
            #:snmp-trap

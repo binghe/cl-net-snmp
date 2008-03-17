@@ -1,0 +1,16 @@
+1. BER Encode/Decode Cache
+
+	(consider use weak hash)
+
+2. Multi-operation optimize
+
+	Make a SNMP client helper thread to do the sync job.
+
+3. Port networking code to USOCKET
+
+	Make a USOCKET UDP patch, load before SNMP package loaded.
+
+4. Fix BER-TEST of OID 0.0.0....
+
+5. KEY-tool is broken, test and fix it.
+

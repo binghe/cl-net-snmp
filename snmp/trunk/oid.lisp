@@ -8,12 +8,10 @@
  <COPYRIGHT YEAR='2007-2008' AUTHOR='Chun Tian (binghe)' MARK='(C)'
             HREF='https://cl-net-snmp.svn.sourceforge.net/svnroot/cl-net-snmp/snmp/trunk/oid.lisp'/>
  <CHRONOLOGY>
-  <DELTA DATE='20080316'>create documentation for "oid.lisp"</DELTA>
+  <DELTA DATE='20080317'>Fix BER-ENCODE bug when OID is  {0}, {0.0}, and {0.0.x}</DELTA>
   </CHRONOLOGY>
  </DOCUMENTATION>
 |#
-
-;;;; TODO: fix bug in (ber-test (object-id #(0), #(0 0), #(0 0 0), ...))
 
 (in-package :snmp)
 
@@ -26,7 +24,9 @@
   (reverse (oid-revid object)))
 
 (defmethod ber-equal ((a object-id) (b object-id))
-  (equal (oid-revid a) (oid-revid b)))
+  (or (equal (oid-revid a) (oid-revid b))
+      (and (equal (oid-revid a) '(0)) (equal (oid-revid b) '(0 0)))
+      (and (equal (oid-revid b) '(0)) (equal (oid-revid a) '(0 0)))))
 
 (defmethod oid ((oid object-id))
   (reverse (slot-value 'rev-ids oid)))
@@ -64,14 +64,13 @@
         (multiple-value-bind (v l)
             (case length
               (0 (values nil 0))
-              (1 (number-split (* (first subids) 40) 0 nil 0))
-              (2 (number-split (+ (* (first subids) 40)
-                                  (second subids)) 0 nil 0))
+              (1 (number-get (* (first subids) 40)))
+              (2 (number-get (+ (* (first subids) 40) (second subids))))
               (otherwise (apply #'iter
                                 (cddr subids)
                                 (multiple-value-list
-                                 (number-split (+ (* (first subids) 40)
-                                                  (second subids)) 0 nil 0)))))
+                                 (number-get (+ (* (first subids) 40)
+                                                (second subids)))))))
           (concatenate 'vector
                        (ber-encode-type 0 0 6)
                        (ber-encode-length l)
