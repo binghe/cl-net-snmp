@@ -98,14 +98,12 @@
 (defmethod *->key ((key sequence))
   (concatenate '(simple-array (unsigned-byte 8) (*)) key))
 
-(defun open-session (host &key port version community user auth priv (read-timeout 1))
+(defun open-session (host &key port version community user auth priv)
   ;; first, what version we are talking about if version not been set?
   (let* ((real-version (or version
-                          (if user +snmp-version-3+ *default-version*)))
-         (socket (open-udp-stream host (or port *default-port*)
-                                  :element-type '(unsigned-byte 8)
-                                  :read-timeout read-timeout
-                                  :errorp t))
+                           (if user +snmp-version-3+ *default-version*)))
+         (socket (socket-connect/udp host (or port *default-port*)
+                                     :stream t :element-type '(unsigned-byte 8)))
          (args (list (gethash real-version *snmp-class-table*)
                      :socket socket)))
     (if (/= real-version +snmp-version-3+)
@@ -134,10 +132,7 @@
     (apply #'make-instance args)))
 
 (defmethod close-session ((session session))
-  #+lispworks
-  (close (socket-of session))
-  #+sbcl
-  (sb-bsd-sockets:socket-close (socket-of session)))
+  (socket-close (socket-of session)))
 
 (defmacro with-open-session ((session &rest args) &body body)
   `(let ((,session (open-session ,@args)))
