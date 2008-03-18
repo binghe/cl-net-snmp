@@ -16,9 +16,9 @@
 (in-package :cl-user)
 
 (defpackage snmp
-  (:use #-genera :common-lisp
-	#+genera :future-common-lisp
-	;; Networking
+  (:use #+genera :future-common-lisp
+        #-genera :common-lisp
+        ;; Networking
         #+lispworks :comm
         ;; Stream
         #+(or cmu lispworks) :stream

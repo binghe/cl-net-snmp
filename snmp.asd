@@ -32,7 +32,14 @@
                #-lispworks :split-sequence
                :usocket
                #+mib :zebu-compiler)
-  :components ((:file "package")
+  :components ((:module "usocket-udp"
+                :components ((:file "usocket")
+                             #+clozure   (:file "usocket-clozure")
+                             #+clisp     (:file "usocket-clisp")
+                             #+cmu       (:file "usocket-cmucl")
+                             #+sbcl      (:file "usocket-sbcl")
+                             #+lispworks (:file "usocket-lispworks")))
+               (:file "package")
                (:file "ber"		:depends-on ("package"))
 	       (:file "smi"		:depends-on ("ber"))
                (:file "null"		:depends-on ("smi"))
@@ -60,7 +67,8 @@
 	       #+(or sbcl lispworks)
                (:file "message"		:depends-on ("pdu" "session"))
 	       #+(or sbcl lispworks)
-               (:file "network"		:depends-on ("session" "message"))
+               (:file "network"		:depends-on ("usocket-udp"
+						     "session" "message"))
 	       #+(or sbcl lispworks)
                (:file "report"		:depends-on ("sequence" "session" "message"))
 	       #+(or sbcl lispworks)
