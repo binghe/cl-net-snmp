@@ -63,6 +63,7 @@
       (make-instance 'opaque :value nil))))
 
 (defmethod ber-decode-value ((stream stream) (type (eql :float)) length)
+  (declare (ignore length))
   (let ((f-0 (read-byte stream))
         (f-1 (read-byte stream))
         (f-2 (read-byte stream))
