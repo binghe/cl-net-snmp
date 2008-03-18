@@ -18,8 +18,7 @@
 (defpackage snmp
   (:use #+genera :future-common-lisp
         #-genera :common-lisp
-        ;; Networking
-        #+lispworks :comm
+        :usocket
         ;; Stream
         #+(or cmu lispworks) :stream
 	#+sbcl :sb-gray

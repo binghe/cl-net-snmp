@@ -34,11 +34,12 @@
                #+mib :zebu-compiler)
   :components ((:module "usocket-udp"
                 :components ((:file "usocket")
-                             #+clozure   (:file "usocket-clozure")
-                             #+clisp     (:file "usocket-clisp")
-                             #+cmu       (:file "usocket-cmucl")
-                             #+sbcl      (:file "usocket-sbcl")
-                             #+lispworks (:file "usocket-lispworks")))
+                             #+clozure   (:file "usocket-clozure" :depends-on ("usocket"))
+                             #+clisp     (:file "usocket-clisp" :depends-on ("usocket"))
+                             #+cmu       (:file "usocket-cmucl" :depends-on ("usocket"))
+                             #+sbcl      (:file "usocket-sbcl" :depends-on ("usocket"))
+                             #+lispworks (:file "usocket-lispworks"
+                                          :depends-on ("usocket"))))
                (:file "package")
                (:file "ber"		:depends-on ("package"))
 	       (:file "smi"		:depends-on ("ber"))
@@ -79,9 +80,9 @@
                (:file "snmp-walk"	:depends-on ("oid" "pdu" "network" "report"))
 	       #+(or sbcl lispworks)
                (:file "snmp-trap"	:depends-on ("oid" "pdu" "network" "report"))
-	       #+lispworks
+	       #+ignore
                (:file "snmp-server"	:depends-on ("oid" "message" "pdu"))
-	       #+(and mib lispworks)
+	       #+ignore
                (:file "oid-handler"	:depends-on ("snmp-server" "mib-build"))
                #+(and mib lispworks)
 	       (:file "snmp-utility"	:depends-on ("snmp-get" "snmp-walk" "mib-tree"))))

@@ -2,7 +2,7 @@
 
 (defun v2-test ()
   (with-open-session (s "2950.lab.163.org" :port 161 :version +snmp-version-2c+ :community "public")
-    (snmp-walk s '("system"))))
+    (snmp-walk s '(#(1 3 6 1 2 1 1 0)))))
 
 (defun rtt-test ()
   (with-open-session (s "cf.space.163.org" :port 161 :version +snmp-version-2c+ :community "private")

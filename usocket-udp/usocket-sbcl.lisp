@@ -19,6 +19,29 @@
 
 (in-package :usocket)
 
+(defun socket-connect/udp (host port &key (stream nil) (element-type '(unsigned-byte 8)))
+  (let ((socket (make-instance 'sb-bsd-sockets:inet-socket
+			       :type :datagram :protocol :udp
+			       :element-type element-type)))
+    (if (and host port)
+	(let ((address (if (stringp host)
+			   (sb-bsd-sockets:host-ent-address (sb-bsd-sockets:get-host-by-name host))
+			   host)))
+	  (sb-bsd-sockets:socket-connect socket address port)
+	  (if stream
+	      (let ((stream (sb-bsd-sockets:socket-make-stream socket
+							       :element-type element-type)))
+		(make-stream-datagram-socket socket stream))
+	      (make-datagram-socket socket)))
+	(make-datagram-socket socket))))
 
+(defmethod socket-send ((socket datagram-usocket) buffer length &key address port)
+  (let ((s (socket socket))
+	(dest (if (and address port) (list address port) nil)))
+    (sb-bsd-sockets:socket-send socket buffer length :address dest)))
+
+(defmethod socket-receive ((socket datagram-usocket) buffer length)
+  (let ((s (socket socket)))
+    (sb-bsd-sockets:socket-receive socket buffer length :element-type '(unsigned-byte 8))))
 
 :eof
