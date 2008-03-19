@@ -21,15 +21,17 @@
 
 (defun socket-connect/udp (host port &key (stream nil) (element-type '(unsigned-byte 8)))
   (let ((socket (make-instance 'sb-bsd-sockets:inet-socket
-			       :type :datagram :protocol :udp
-			       :element-type element-type)))
+			       :type :datagram :protocol :udp)))
     (if (and host port)
 	(let ((address (if (stringp host)
-			   (sb-bsd-sockets:host-ent-address (sb-bsd-sockets:get-host-by-name host))
+			   (sb-bsd-sockets:host-ent-address
+			    (sb-bsd-sockets:get-host-by-name host))
 			   host)))
 	  (sb-bsd-sockets:socket-connect socket address port)
 	  (if stream
 	      (let ((stream (sb-bsd-sockets:socket-make-stream socket
+							       :input t :output t
+							       :buffering :full
 							       :element-type element-type)))
 		(make-stream-datagram-socket socket stream))
 	      (make-datagram-socket socket)))

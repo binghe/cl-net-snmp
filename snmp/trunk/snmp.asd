@@ -15,10 +15,6 @@
 
 (in-package :asdf)
 
-;;; Load networking support
-#+sbcl (require :sb-bsd-sockets)
-#+cmucl (require :gray-streams)
-
 #+lispworks
 (pushnew :mib *features*)
 
@@ -26,20 +22,24 @@
   :description "Simple Network Manangement Protocol"
   :version "2.0"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
-  :depends-on (:ieee-floats
-               :ironclad
-               #+lispworks :lispworks-udp
+  :depends-on (:bordeaux-threads     ; Portable UDP server
+               :ieee-floats          ; ASN.1 OPAQUE FLOAT encode/decode
+               :ironclad             ; SNMPv3 authentication/encryption support
+               #+lispworks
+               :lispworks-udp        ; Used by usocket-udp
                #-lispworks :split-sequence
-               :usocket
+               :trivial-gray-streams ; Maybe used for portable BER-STREAM
+               :usocket              ; Portable networking support
                #+mib :zebu-compiler)
   :components ((:module "usocket-udp"
+                :serial t
                 :components ((:file "usocket")
-                             #+clozure   (:file "usocket-clozure" :depends-on ("usocket"))
-                             #+clisp     (:file "usocket-clisp" :depends-on ("usocket"))
-                             #+cmu       (:file "usocket-cmucl" :depends-on ("usocket"))
-                             #+sbcl      (:file "usocket-sbcl" :depends-on ("usocket"))
-                             #+lispworks (:file "usocket-lispworks"
-                                          :depends-on ("usocket"))))
+                             #+clozure   (:file "usocket-clozure")
+                             #+clisp     (:file "usocket-clisp")
+                             #+cmu       (:file "usocket-cmucl")
+                             #+sbcl      (:file "usocket-sbcl")
+                             #+lispworks (:file "usocket-lispworks")
+                             (:file "udp-server")))
                (:file "package")
                (:file "ber"		:depends-on ("package"))
 	       (:file "smi"		:depends-on ("ber"))
@@ -63,23 +63,17 @@
                (:file "print-oid"	:depends-on ("oid" #+mib "mib-tree"))
 	       (:file "constants"	:depends-on ("package"))
                (:file "keytool"		:depends-on ("package"))
-	       #+(or sbcl lispworks)
-	       (:file "session"		:depends-on ("keytool" "constants"))
-	       #+(or sbcl lispworks)
+	       (:file "session"		:depends-on ("usocket-udp"
+                                                     "keytool" "constants"))
                (:file "message"		:depends-on ("pdu" "session"))
-	       #+(or sbcl lispworks)
                (:file "network"		:depends-on ("usocket-udp"
 						     "session" "message"))
-	       #+(or sbcl lispworks)
                (:file "report"		:depends-on ("sequence" "session" "message"))
-	       #+(or sbcl lispworks)
                (:file "snmp-get"	:depends-on ("oid" "pdu" "network" "report"))
-	       #+(or sbcl lispworks)
                (:file "snmp-set"	:depends-on ("oid" "pdu" "network" "report"))
-	       #+(or sbcl lispworks)
                (:file "snmp-walk"	:depends-on ("oid" "pdu" "network" "report"))
-	       #+(or sbcl lispworks)
-               (:file "snmp-trap"	:depends-on ("oid" "pdu" "network" "report"))
+               (:file "snmp-trap"	:depends-on ("oid" "pdu" "network" "report"
+                                                     "ipaddress"))
 	       #+ignore
                (:file "snmp-server"	:depends-on ("oid" "message" "pdu"))
 	       #+ignore
