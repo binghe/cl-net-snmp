@@ -19,6 +19,24 @@
 
 (in-package :usocket)
 
+(defun socket-connect/udp (host port &key (stream nil) (element-type '(unsigned-byte 8)))
+  (if (and host port)
+      (let ((socket (extensions:connect-to-inet-socket host port :datagram)))
+	(if stream
+	    (make-stream-datagram-socket socket
+					 (system:make-fd-stream socket
+								:input t :output t
+								:buffering :full
+								:element-type element-type))
+	    (make-datagram-socket socket)))
+      (make-datagram-socket (extensions:create-inet-socket :datagram))))
 
+(defmethod socket-send ((socket datagram-usocket) buffer length &key address port)
+  (let ((s (socket socket)))
+    (extensions:inet-sendto s buffer length address port)))
+
+(defmethod socket-receive ((socket datagram-usocket) buffer length)
+  (let ((s (socket socket)))
+    (extensions:inet-recvfrom s buffer length)))
 
 :eof

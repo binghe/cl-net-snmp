@@ -21,11 +21,10 @@
 
 (in-package :usocket)
 
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (export '(stream-datagram-usocket
-            socket-connect/udp
-            socket-send
-            socket-receive)))
+(export '(stream-datagram-usocket
+          socket-connect/udp
+          socket-send
+          socket-receive))
 
 (defclass stream-datagram-usocket (stream-usocket datagram-usocket)
   ()

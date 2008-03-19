@@ -8,6 +8,7 @@
  <COPYRIGHT YEAR='2007-2008' AUTHOR='Chun Tian (binghe)' MARK='(C)'
             HREF='https://cl-net-snmp.svn.sourceforge.net/svnroot/cl-net-snmp/snmp/trunk/package.lisp'/>
  <CHRONOLOGY>
+  <DELTA DATE='20080319'>use TRIVIAL-GRAY-STREAMS now</DELTA>
   <DELTA DATE='20080316'>create documentation for "package.lisp"</DELTA>
   </CHRONOLOGY>
  </DOCUMENTATION>
@@ -19,10 +20,7 @@
   (:use #+genera :future-common-lisp
         #-genera :common-lisp
         :usocket
-        ;; Stream
-        #+(or cmu lispworks) :stream
-	#+sbcl :sb-gray
-	#+clozure :gray
+        :trivial-gray-streams
 	#+mib :zebu)
   (:export ;; constants
            #:+snmp-version-1+
