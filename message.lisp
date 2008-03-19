@@ -18,7 +18,6 @@
 (defclass message ()
   ((session :type session
             :initarg :session
-            :initform nil
             :accessor session-of)
    (pdu :type pdu
         :initarg :pdu
@@ -153,7 +152,7 @@
     (declare (ignore version global-data))
     (if (not (priv-protocol-of s))
       (let ((pdu (elt data 2)))
-        (make-instance 'v3-message :pdu pdu))
+        (make-instance 'v3-message :session s :pdu pdu))
       ;;; decrypt message
       (let ((salt (map '(simple-array (unsigned-byte 8) (*)) #'char-code
                        (nth 5 (ber-decode<-string security-string))))

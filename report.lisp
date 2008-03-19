@@ -26,10 +26,7 @@
                                 :pdu (make-instance 'get-request-pdu
                                                     :variable-bindings #()))))
     (send-snmp-message session message :receive nil)
-    (let ((ber-stream #+lispworks  (socket-of session)
-		      #+sbcl (let ((buffer (socket-receive (socket-of session) nil 65507)))
-			       (make-instance 'ber-stream
-                                              :sequence (map 'vector #'char-code buffer)))))
+    (let ((ber-stream (socket-stream (socket-of session))))
       (destructuring-bind (engine-id engine-boots engine-time user auth priv)
 	  ;; security-data: 3rd field of message list
 	  (coerce (ber-decode<-string (elt (ber-decode ber-stream) 2)) 'list)

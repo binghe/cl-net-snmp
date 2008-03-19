@@ -27,9 +27,9 @@
 (defconstant +report-pdu+           8)
 
 (defclass base-pdu ()
-  ((variable-bindings  :type list
+  ((variable-bindings  :type sequence
                        :accessor variable-bindings-of
-                       :initform nil
+                       :initform #()
                        :initarg :variable-bindings))
   (:documentation "All PDU type have a variable bindings"))
 

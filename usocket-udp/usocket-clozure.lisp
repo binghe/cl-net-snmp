@@ -19,6 +19,32 @@
 
 (in-package :usocket)
 
+(defun socket-connect/udp (host port &key (stream nil) (element-type 'base-char))
+  (let ((socket (openmcl-socket:make-socket :address-family :internet
+					    :type :datagram)))
+    (if (and host port)
+	(progn
+	  (ccl::inet-connect (ccl::socket-device socket)
+			     (ccl::host-as-inet-host host)
+			     (ccl::port-as-inet-port port "udp"))
+	  (if stream
+	      (let ((stream (ccl::make-fd-stream (ccl::socket-device socket)
+						 :class 'ccl::tcp-stream
+						 :direction :io
+						 :element-type element-type
+						 :character-p nil)))
+		(make-stream-datagram-socket socket stream))
+	      (make-datagram-socket socket)))
+	(make-datagram-socket socket))))
 
+(defmethod socket-send ((socket datagram-usocket) buffer length &key address port)
+  (let ((s (socket socket)))
+    (openmcl-socket:send-to s buffer length
+			    :remote-host address
+			    :remote-port port)))
+
+(defmethod socket-receive ((socket datagram-usocket) buffer length)
+  (let ((s (socket socket)))
+    (openmcl-socket:receive-from s length :buffer buffer)))
 
 :eof
