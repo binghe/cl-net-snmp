@@ -38,12 +38,16 @@
 	(make-datagram-socket socket))))
 
 (defmethod socket-send ((socket datagram-usocket) buffer length &key address port)
-  (let ((s (socket socket))
-	(dest (if (and address port) (list address port) nil)))
-    (sb-bsd-sockets:socket-send socket buffer length :address dest)))
+  (let* ((s (socket socket))
+         (host (if (stringp address)
+                 (sb-bsd-sockets:host-ent-address
+                  (sb-bsd-sockets:get-host-by-name address))
+                 address))
+         (dest (if (and host port) (list host port) nil)))
+    (sb-bsd-sockets:socket-send s buffer length :address dest)))
 
 (defmethod socket-receive ((socket datagram-usocket) buffer length)
   (let ((s (socket socket)))
-    (sb-bsd-sockets:socket-receive socket buffer length :element-type '(unsigned-byte 8))))
+    (sb-bsd-sockets:socket-receive s buffer length :element-type '(unsigned-byte 8))))
 
 :eof

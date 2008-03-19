@@ -43,6 +43,8 @@
     (mapcar #'(lambda (x) (mp:unnotice-fd (os-socket-handle x))) sockets)
     (remove nil (mapcar #'usocket-listen sockets))))
 
+;;; Part Two: UDP interface (depends on functions from my LISPWORKS-UDP)
+
 (defun socket-connect/udp (host port &key (stream nil) (element-type 'base-char))
   (if (and host port)
     (if stream
