@@ -39,6 +39,10 @@
 
 (defgeneric decode-message (session stream))
 
+(defmethod decode-message ((s session) (data sequence))
+  (let ((message-list (coerce (ber-decode data) 'list)))
+    (decode-message s message-list)))
+
 (defmethod decode-message ((s session) (stream stream))
   (let ((message-list (coerce (ber-decode stream) 'list)))
     (decode-message s message-list)))
@@ -132,16 +136,18 @@
       (let ((unauth-data (encode-v3-message msg-authentication-parameters)))
         (if (not need-auth-p) unauth-data
           ;; authencate the encode-data and re-encode it
-          (encode-v3-message (authenticate-message unauth-data
-                                                   (auth-key-of session)
+          (encode-v3-message (authenticate-message (coerce unauth-data
+                                                           '(simple-array (unsigned-byte 8) (*)))
+                                                   (coerce (auth-key-of session)
+                                                           '(simple-array (unsigned-byte 8) (*)))
                                                    (auth-protocol-of session))))))))
 
 ;;; need ironclad package for hmac/md5 and hmac/sha
 (defun authenticate-message (message key digest)
-  (declare (type (simple-array (unsigned-byte 8) (*)) key)
+  (declare (type (simple-array (unsigned-byte 8) (*)) message key)
            (type (member :md5 :sha1) digest))
   (let ((hmac (ironclad:make-hmac key digest)))
-    (ironclad:update-hmac hmac (*->key message))
+    (ironclad:update-hmac hmac message)
     ;; TODO, use a raw-data instead, for efficiency
     (map 'string #'code-char
          (subseq (ironclad:hmac-digest hmac) 0 12))))
