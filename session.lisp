@@ -4,10 +4,9 @@
 (defconstant +snmp-version-2c+ 1)
 (defconstant +snmp-version-3+  3)
 
-(defparameter *default-version* +snmp-version-1+)
+(defparameter *default-version* +snmp-version-2c+)
 (defparameter *default-port* 161)
 (defparameter *default-community* "public")
-(defparameter *default-security-name* "snmp")
 (defparameter *default-auth-protocol* :md5)
 (defparameter *default-priv-protocol* :des)
 
@@ -15,8 +14,15 @@
   ((socket            :type socket-stream
 		      :accessor socket-of
 		      :initarg :socket)
+   (host              :type string
+                      :accessor host-of
+                      :initarg :host)
+   (port              :type integer
+                      :accessor port-of
+                      :initarg :port)
    (version           :type integer
-		      :accessor version-of))
+                      :accessor version-of
+                      :initarg :version))
   (:documentation "SNMP session base"))
 
 (defclass v1-session (session)
@@ -54,13 +60,19 @@
    (auth-key          :type (simple-array (unsigned-byte 8) (*))
 		      :initarg :auth-key
 		      :accessor auth-key-of)
+   (auth-local-key    :type base-string
+                      :initarg :auth-local-key
+                      :accessor auth-local-key-of)
    (priv-protocol     :type (member :des :aes nil)
                       :initarg :priv-protocol
                       :initform nil
                       :accessor priv-protocol-of)
    (priv-key          :type (simple-array (unsigned-byte 8) (*))
 		      :initarg :priv-key
-		      :accessor priv-key-of))
+		      :accessor priv-key-of)
+   (priv-local-key    :type base-string
+                      :initarg :priv-local-key
+                      :accessor priv-local-key-of))
   (:documentation "SNMP v3 session, user security model"))
 
 (defmethod initialize-instance :after ((session v1-session) &rest initargs)
@@ -89,46 +101,48 @@
         (gethash +snmp-version-2c+ *snmp-class-table*) 'v2c-session
         (gethash +snmp-version-3+ *snmp-class-table*) 'v3-session))
 
-(defgeneric *->key (key))
-
-(defmethod *->key ((key string))
-  ;; TODO: this is not right, we must write something like net-snmp's generateKu()
-  (map '(simple-array (unsigned-byte 8) (*)) #'char-code key))
-
-(defmethod *->key ((key sequence))
-  (concatenate '(simple-array (unsigned-byte 8) (*)) key))
-
 (defun open-session (host &key port version community user auth priv)
   ;; first, what version we are talking about if version not been set?
   (let* ((real-version (or version
                            (if user +snmp-version-3+ *default-version*)))
-         (socket (socket-connect/udp host (or port *default-port*)
-                                     :stream t :element-type '(unsigned-byte 8)))
+         (socket (if *udp-stream-interface*
+                   (socket-connect/udp host (or port *default-port*)
+                                       :stream t :element-type '(unsigned-byte 8))
+                   (socket-connect/udp nil nil)))
          (args (list (gethash real-version *snmp-class-table*)
-                     :socket socket)))
+                     :socket socket :host host :port port)))
     (if (/= real-version +snmp-version-3+)
+      ;; for SNMPv1 and v2c, only set the community
       (nconc args (list :community (or community *default-community*)))
       ;; for SNMPv3, we detect the auth and priv parameters
       (progn
-        (nconc args (list :security-name (or user *default-security-name*)))
+        (nconc args (list :security-name user))
         (when auth
           (if (atom auth)
             (nconc args (list :auth-protocol *default-auth-protocol*
-                              :auth-key (*->key auth)))
+                              (if (stringp auth) :auth-local-key :auth-key) auth))
             (let ((auth-protocol (car auth))
                   (auth-key (cdr auth)))
-              (nconc args (list :auth-protocol auth-protocol
-                                :auth-key (*->key (if (atom auth-key) auth-key
-                                                    (car auth-key))))))))
+              (nconc args
+                     (list :auth-protocol auth-protocol)
+                     (let ((key (if (atom auth-key) auth-key (car auth-key))))
+                       (if (stringp key)
+                         (list :auth-local-key key)
+                         (list :auth-key (coerce key
+                                                 '(simple-array (unsigned-byte 8) (*))))))))))
         (when priv
           (if (atom priv)
             (nconc args (list :priv-protocol *default-priv-protocol*
-                              :priv-key (*->key priv)))
+                              (if (stringp priv) :priv-local-key :priv-key) priv))
             (let ((priv-protocol (car priv))
                   (priv-key (cdr priv)))
-              (nconc args (list :priv-protocol priv-protocol
-                                :priv-key (*->key (if (atom priv-key) priv-key
-                                                    (car priv-key))))))))))
+              (nconc args
+                     (list :priv-protocol priv-protocol)
+                     (let ((key (if (atom priv-key) priv-key (car priv-key))))
+                       (if (stringp key)
+                         (list :priv-local-key key)
+                         (list :priv-key (coerce key
+                                                 '(simple-array (unsigned-byte 8) (*))))))))))))
     (apply #'make-instance args)))
 
 (defmethod close-session ((session session))

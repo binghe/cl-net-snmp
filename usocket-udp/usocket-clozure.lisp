@@ -40,8 +40,8 @@
 (defmethod socket-send ((socket datagram-usocket) buffer length &key address port)
   (let ((s (socket socket)))
     (openmcl-socket:send-to s buffer length
-			    :remote-host address
-			    :remote-port port)))
+			    :remote-host (ccl::host-as-inet-host address)
+			    :remote-port (ccl::port-as-inet-port port "udp"))))
 
 (defmethod socket-receive ((socket datagram-usocket) buffer length)
   (let ((s (socket socket)))

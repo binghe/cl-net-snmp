@@ -69,4 +69,6 @@
           `(("**;*.*.NEWEST" ,home)
 	    ("**;*.*" ,home)))))
 
+(defparameter *udp-stream-interface* t)
+
 :eof

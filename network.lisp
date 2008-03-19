@@ -21,19 +21,27 @@
         do (format t "give up one packet at ~A.~%" (get-internal-real-time))
         finally (return message)))
   
-(defmethod send-snmp-message ((session session) (message message) &key (receive t))
+(defmethod send-snmp-message ((session session) (message message) &key (receive t) (report nil))
   (let ((socket (socket-of session))
-        (data (ber-encode message)))
+        (data (coerce (ber-encode message) '(simple-array (unsigned-byte 8) (*)))))
     (labels ((send ()
-               (progn 
-                 (write-sequence data (socket-stream socket))
-                 (force-output (socket-stream socket))))
+               (if *udp-stream-interface*
+                 (progn
+                   (write-sequence data (socket-stream socket))
+                   (force-output (socket-stream socket)))
+                 (socket-send socket data (length data)
+                              :address (host-of session)
+                              :port (port-of session))))
              (recv ()
-               (decode-message session (socket-stream socket))))
-      (if (not receive)
-        (send)
-        (progn
-          (if (send-until #'send socket)
-	    (recv-until #'recv #'(lambda (x) (= (request-id-of (pdu-of message))
-                                                (request-id-of (pdu-of x)))))
-            (error "cannot got a reply")))))))
+               (if *udp-stream-interface*
+                 (decode-message session (socket-stream socket))
+                 (decode-message session (socket-receive socket nil 65507)))))
+      (if receive
+        (if (send-until #'send socket)
+          (recv-until #'recv #'(lambda (x) (= (request-id-of (pdu-of message))
+                                              (request-id-of (pdu-of x)))))
+          (error "cannot got a reply"))
+        (if report
+          (unless (send-until #'send socket)
+            (error "cannot got a reply when report"))
+          (send))))))
