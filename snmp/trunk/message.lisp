@@ -161,7 +161,7 @@
         (make-instance 'v3-message :session s :pdu pdu))
       ;;; decrypt message
       (let ((salt (map '(simple-array (unsigned-byte 8) (*)) #'char-code
-                       (nth 5 (ber-decode<-string security-string))))
+                       (elt (ber-decode<-string security-string) 5)))
             (des-key (subseq (priv-local-key-of s) 0 8))
             (pre-iv (subseq (priv-local-key-of s) 8 16))
             (data (map '(simple-array (unsigned-byte 8) (*)) #'char-code data)))
@@ -172,7 +172,7 @@
                                              :key des-key 
                                              :initialization-vector iv)))
           (ironclad:decrypt-in-place cipher data)
-          (let ((pdu (third (ber-decode data))))
+          (let ((pdu (elt (ber-decode data) 2)))
             (make-instance 'v3-message :session s :pdu pdu)))))))
 
 ;;; RFC 2574 (USM for SNMPv3), 8.1.1.1. DES key and Initialization Vector

@@ -28,6 +28,14 @@
     (with-open-session (s "debian.local" :port 161 :user "md5user" :auth "ABCDEFGH")
       (snmp-walk s (list oid)))))
 
+(defun v3-test-2 ()
+  (let ((oid #(1 3 6 1 2 1 1)))
+    (with-open-session (s "debian.local"
+                          :port 161 :user "md5des"
+                          :auth "vHunxJXPRdUyAzjY"
+                          :priv "vHunxJXPRdUyAzjY")
+      (snmp-walk s (list oid)))))
+
 (defparameter *authenticate-data*
   #(                                                             #x30 #x81 #x83 #x02
     #x01 #x03 #x30 #x11 #x02 #x04 #x29 #x77  #xb1 #x57 #x02 #x03 #x00 #xff #xe3 #x04

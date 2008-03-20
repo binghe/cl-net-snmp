@@ -136,15 +136,15 @@
             (nconc args (list :priv-protocol *default-priv-protocol*)
                    (if (stringp auth)
                      (list :priv-key (generate-ku priv :hash-type :md5))
-                     (list :priv-local-key (coerce priv
-                                                   '(simple-array (unsigned-byte 8) (*))))))
+                     (list :priv-local-key
+                           (coerce priv '(simple-array (unsigned-byte 8) (*))))))
             (destructuring-bind (priv-protocol . priv-key) priv
               (nconc args (list :priv-protocol priv-protocol)
                      (let ((key (if (atom priv-key) priv-key (car priv-key))))
                        (if (stringp key)
                          (list :priv-key (generate-ku key :hash-type :md5))
-                         (list :priv-local-key (coerce key
-                                                       '(simple-array (unsigned-byte 8) (*))))))))))))
+                         (list :priv-local-key
+                               (coerce key '(simple-array (unsigned-byte 8) (*))))))))))))
     (apply #'make-instance args)))
 
 (defmethod close-session ((session session))
