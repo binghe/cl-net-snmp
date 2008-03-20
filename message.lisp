@@ -138,7 +138,7 @@
           ;; authencate the encode-data and re-encode it
           (encode-v3-message (authenticate-message (coerce unauth-data
                                                            '(simple-array (unsigned-byte 8) (*)))
-                                                   (coerce (auth-key-of session)
+                                                   (coerce (auth-local-key-of session)
                                                            '(simple-array (unsigned-byte 8) (*)))
                                                    (auth-protocol-of session))))))))
 
@@ -162,8 +162,8 @@
       ;;; decrypt message
       (let ((salt (map '(simple-array (unsigned-byte 8) (*)) #'char-code
                        (nth 5 (ber-decode<-string security-string))))
-            (des-key (subseq (priv-key-of s) 0 8))
-            (pre-iv (subseq (priv-key-of s) 8 16))
+            (des-key (subseq (priv-local-key-of s) 0 8))
+            (pre-iv (subseq (priv-local-key-of s) 8 16))
             (data (map '(simple-array (unsigned-byte 8) (*)) #'char-code data)))
         (let* ((iv (map '(simple-array (unsigned-byte 8) (*)) #'logxor
                         pre-iv salt))
@@ -190,8 +190,8 @@
 (defmethod encrypt-message ((message v3-message)
                             (msg-privacy-parameters list) (msg-data list))
   (let ((salt (coerce msg-privacy-parameters '(simple-array (unsigned-byte 8) (*))))
-        (pre-iv (subseq (priv-key-of (session-of message)) 8 16))
-        (des-key (subseq (priv-key-of (session-of message)) 0 8))
+        (pre-iv (subseq (priv-local-key-of (session-of message)) 8 16))
+        (des-key (subseq (priv-local-key-of (session-of message)) 0 8))
         (data (coerce (ber-encode msg-data) '(simple-array (unsigned-byte 8) (*)))))
     (let ((iv (map '(simple-array (unsigned-byte 8) (*)) #'logxor pre-iv salt))
           (result-length (* (1+ (floor (length data) 8)) 8))) ;; extend length to (mod 8)

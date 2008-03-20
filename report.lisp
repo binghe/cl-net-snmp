@@ -36,6 +36,14 @@
 	(setf (engine-id-of session) engine-id
 	      (engine-boots-of session) engine-boots
 	      (engine-time-of session) engine-time)
-	session))))
+        (when (auth-protocol-of session)
+          (setf (auth-local-key-of session) (generate-kul (map '(simple-array (unsigned-byte 8) (*))
+                                                               #'char-code engine-id)
+                                                          (auth-key-of session))))
+        (when (priv-protocol-of session)
+          (setf (priv-local-key-of session) (generate-kul (map '(simple-array (unsigned-byte 8) (*))
+                                                               #'char-code engine-id)
+                                                          (priv-key-of session))))
+        session))))
 
 :eof
