@@ -28,7 +28,8 @@
                (if *udp-stream-interface*
                  (progn
                    (write-sequence data (socket-stream socket))
-                   (force-output (socket-stream socket)))
+                   (force-output (socket-stream socket))
+                   t)
                  (socket-send socket data (length data)
                               :address (host-of session)
                               :port (port-of session))))
@@ -37,10 +38,13 @@
                  (decode-message session (socket-stream socket))
                  (decode-message session (socket-receive socket nil 65507)))))
       (if receive
-        (if (send-until #'send socket)
+        ;; receive = t
+        (if #-(and lispworks win32) (send-until #'send socket)
+            #+(and lispworks win32) (send)
           (recv-until #'recv #'(lambda (x) (= (request-id-of (pdu-of message))
                                               (request-id-of (pdu-of x)))))
           (error "cannot got a reply"))
+        ;; receive = nil
         (if report
           (unless (send-until #'send socket)
             (error "cannot got a reply when report"))

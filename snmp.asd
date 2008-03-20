@@ -15,7 +15,7 @@
 
 (in-package :asdf)
 
-#+lispworks
+#+ignore
 (pushnew :mib *features*)
 
 (defsystem snmp
