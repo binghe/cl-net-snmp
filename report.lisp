@@ -20,9 +20,12 @@
   (declare (type v3-session session))
   (zerop (engine-time-of session)))
 
-(defun snmp-report (session)
+(defun snmp-report (session &key (context ""))
   (declare (type v3-session session))
-  (let ((message (make-instance 'v3-message :session session :report t
+  (let ((message (make-instance 'v3-message
+                                :report t
+                                :session session
+                                :context context
                                 :pdu (make-instance 'get-request-pdu
                                                     :variable-bindings #()))))
     (send-snmp-message session message :receive nil :report t)
@@ -36,14 +39,16 @@
 	(setf (engine-id-of session) engine-id
 	      (engine-boots-of session) engine-boots
 	      (engine-time-of session) engine-time)
-        (when (auth-protocol-of session)
-          (setf (auth-local-key-of session) (generate-kul (map '(simple-array (unsigned-byte 8) (*))
-                                                               #'char-code engine-id)
-                                                          (auth-key-of session))))
-        (when (priv-protocol-of session)
-          (setf (priv-local-key-of session) (generate-kul (map '(simple-array (unsigned-byte 8) (*))
-                                                               #'char-code engine-id)
-                                                          (priv-key-of session))))
+        (when (and (auth-protocol-of session) (slot-boundp session 'auth-key))
+          (setf (auth-local-key-of session)
+                (generate-kul (map '(simple-array (unsigned-byte 8) (*))
+                                   #'char-code engine-id)
+                              (auth-key-of session))))
+        (when (and (priv-protocol-of session) (slot-boundp session 'priv-key))
+          (setf (priv-local-key-of session)
+                (generate-kul (map '(simple-array (unsigned-byte 8) (*))
+                                   #'char-code engine-id)
+                              (priv-key-of session))))
         session))))
 
 :eof

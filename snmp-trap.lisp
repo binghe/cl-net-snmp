@@ -28,7 +28,7 @@
                                                       :timestamp (timeticks uptime)))))
       (send-snmp-message session message :receive nil))))
 
-(defun snmp-trap-internal (session vars uptime trap-oid inform)
+(defun snmp-trap-internal (session vars uptime trap-oid inform &optional (context ""))
   (let ((vb (list* (list (object-id '#(1 3 6 1 2 1 1 3 0))
                          (make-instance 'timeticks :value uptime))
                    (list (object-id '#(1 3 6 1 6 3 1 1 4 1 0))
@@ -36,6 +36,7 @@
                    (mapcar #'(lambda (x) (list (*->oid (car x)) (cdr x))) vars))))
     (let ((message (make-instance (gethash (type-of session) *session->message*)
                                   :session session
+                                  :context context
                                   :pdu (make-instance (if inform
                                                         'inform-request-pdu
                                                         'snmpv2-trap-pdu)
@@ -55,10 +56,11 @@
                                            #.(/ 100 internal-time-units-per-second))))
                       (trap-oid *default-trap-enterprise*)
                       (inform nil)
+                      (context "")
                       &allow-other-keys)
   (when (need-report-p session)
     (snmp-report session))
-  (snmp-trap-internal session vars uptime trap-oid inform))
+  (snmp-trap-internal session vars uptime trap-oid inform context))
 
 (defgeneric snmp-inform (session vars &key)
   (:documentation "SNMP Inform, only support v2c and v3 session"))
@@ -75,6 +77,7 @@
                         (uptime (truncate (* (get-internal-run-time)
                                              #.(/ 100 internal-time-units-per-second))))
                         (trap-oid *default-trap-enterprise*)
+                        (context "")
                         &allow-other-keys)
   "SNMPv3 Inform"
-  (snmp-trap session vars :uptime uptime :trap-oid trap-oid :inform t))
+  (snmp-trap session vars :uptime uptime :trap-oid trap-oid :inform t :context context))
