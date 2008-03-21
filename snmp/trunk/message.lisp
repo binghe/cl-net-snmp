@@ -19,9 +19,9 @@
   ((session :type session
             :initarg :session
             :accessor session-of)
-   (pdu :type pdu
-        :initarg :pdu
-        :accessor pdu-of))
+   (pdu     :type pdu
+            :initarg :pdu
+            :accessor pdu-of))
   (:documentation "SNMP message base class"))
 
 ;;; SNMPv1 and SNMPv2c
@@ -62,6 +62,9 @@
    (msg-id         :type (unsigned-byte 32)
                    :initarg :id
                    :accessor msg-id-of)
+   (context        :type base-string
+                   :initarg :context
+                   :accessor context-of)
    ;;; Report flag, for SNMP report use.
    (report-flag    :type boolean
                    :initform nil
@@ -98,7 +101,7 @@
                                             (if (report-flag message) 0
                                               (security-level-of session))))
          (msg-data (list (engine-id-of session) ; contextEngineID, not support yet.
-                         ""                     ; contextName, not support yet.
+                         (context-of message)   ; contextName, not support yet.
                          (pdu-of message)))     ; PDU
          (need-auth-p (and (not (report-flag message))
                            (auth-protocol-of session)))
@@ -136,11 +139,11 @@
       (let ((unauth-data (encode-v3-message msg-authentication-parameters)))
         (if (not need-auth-p) unauth-data
           ;; authencate the encode-data and re-encode it
-          (encode-v3-message (authenticate-message (coerce unauth-data
-                                                           '(simple-array (unsigned-byte 8) (*)))
-                                                   (coerce (auth-local-key-of session)
-                                                           '(simple-array (unsigned-byte 8) (*)))
-                                                   (auth-protocol-of session))))))))
+          (encode-v3-message
+           (authenticate-message
+            (coerce unauth-data '(simple-array (unsigned-byte 8) (*)))
+            (coerce (auth-local-key-of session) '(simple-array (unsigned-byte 8) (*)))
+            (auth-protocol-of session))))))))
 
 ;;; need ironclad package for hmac/md5 and hmac/sha
 (defun authenticate-message (message key digest)
