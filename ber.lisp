@@ -163,15 +163,18 @@
 ;;; BER Stream: make stream from sequence
 ;;; TODO: port this into CLs other than LispWorks, SBCL and OpenMCL
 
-(defclass ber-stream (fundamental-input-stream)
+(defclass ber-stream (fundamental-binary-input-stream)
   ((sequence :type sequence :initarg :sequence :reader ber-sequence)
-   (length :type integer :accessor ber-length)
-   (position :type integer :initform 0 :accessor ber-position))
+   (length :type fixnum :accessor ber-length)
+   (position :type fixnum :initform 0 :accessor ber-position))
   (:documentation "A helper Gray Stream which used for make a sequence into STREAM"))
 
-(defmethod initialize-instance :after ((obj ber-stream) &rest initargs &key &allow-other-keys)
-  (declare (ignore slot-names initargs))
-  (setf (ber-length obj) (length (ber-sequence obj))))
+(defmethod initialize-instance :after ((instance ber-stream)
+                                       &rest initargs &key &allow-other-keys)
+  (declare (ignore initargs))
+  (setf (ber-length instance) (length (ber-sequence instance))))
+
+(defmethod stream-element-type ((instance ber-stream)) '(unsigned-byte 8))
 
 (defmethod stream-read-byte ((instance ber-stream))
   (with-slots (sequence position length) instance
