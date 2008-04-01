@@ -89,11 +89,35 @@ usmUser 1 3 0x80001f888095db4b345604de47 0x6d64357573657200 0x6d64357573657200 N
 
 (defun generate-ku (key-string &key (hash-type :md5))
   (declare (optimize (speed 3) safety)
-           (type base-string key-string)
+           (type string key-string)
            (type (member :md5 :sha1) hash-type))
   (let ((password (make-instance 'ku-stream
                                  :password (map 'simple-vector #'char-code key-string))))
     (ironclad:digest-stream hash-type password)))
+
+(defun generate-ku-no-stream (key-string &key (hash-type :md5))
+  (declare (optimize (speed 3) safety)
+           (type string key-string)
+           (type (member :md5 :sha1) hash-type))
+  (let ((password (map '(simple-array (unsigned-byte 8) (*)) #'char-code key-string))
+        (password-length (length key-string))
+        (digest (ironclad:make-digest hash-type))
+        (password-buffer (make-sequence '(simple-array (unsigned-byte 8) (*))
+                                        (case hash-type (:md5 64) (:sha1 72))
+                                        :initial-element 0))
+        (password-index 0))
+    (assert (>= password-length +usm-length-p-min+))
+    (format t "generating key ... ")
+    (dotimes (i (/ +usm-length-expanded-passphrase+ +usm-length-ku-hashblock+))
+      (loop for j fixnum from 0 below +usm-length-ku-hashblock+
+            do (progn
+                 (setf (elt password-buffer j)
+                       (elt password (mod password-index password-length)))
+                 (incf password-index)))
+      ;;; UPDATE-DIGEST is too slow on 32bit lispworks
+      (ironclad:update-digest digest password-buffer))
+    (format t "done.")
+    (ironclad:produce-digest digest)))
 
 (defun generate-kul (engine-id ku &key (hash-type :md5))
   (declare (type (simple-array (unsigned-byte 8) (*)) engine-id ku))

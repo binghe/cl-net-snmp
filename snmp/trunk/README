@@ -1,2 +1,4 @@
-;;;; -*- Mode: Lisp -*-
+    Simple Network Management Protocol for Common Lisp
+
+        Chun Tian (binghe) <binghe.lisp@gmail.com>
 

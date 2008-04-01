@@ -11,7 +11,7 @@
 (defparameter *default-priv-protocol* :des)
 
 (defclass session ()
-  ((socket            :type socket-stream
+  ((socket            :type datagram-usocket
 		      :accessor socket-of
 		      :initarg :socket)
    (host              :type string
