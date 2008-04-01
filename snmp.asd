@@ -15,15 +15,14 @@
 
 (in-package :asdf)
 
-#+ignore
+#+lispworks
 (pushnew :mib *features*)
 
 (defsystem snmp
   :description "Simple Network Manangement Protocol"
   :version "2.0"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
-  :depends-on (:bordeaux-threads     ; Portable UDP server
-               :ieee-floats          ; ASN.1 OPAQUE FLOAT encode/decode
+  :depends-on (:ieee-floats          ; ASN.1 OPAQUE FLOAT encode/decode
                :ironclad             ; SNMPv3 authentication/encryption support
                #+lispworks
                :lispworks-udp        ; Used by usocket-udp

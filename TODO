@@ -14,3 +14,7 @@
 
 5. [done] KEY-tool is broken, test and fix it.
 
+6. Fix SHA1 keytool support, now I don't know way it cannot work
+
+7. Fix AES encryption support
+
