@@ -1,4 +1,4 @@
-;;;; -*- Mode: lisp; Syntax: ansi-common-lisp; Base: 10; Package: asdf; -*-
+;;;; -*- Mode: Lisp; Package: ASDF; -*-
 
 #|
 <DOCUMENTATION>
@@ -24,22 +24,11 @@
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
   :depends-on (:ieee-floats          ; ASN.1 OPAQUE FLOAT encode/decode
                :ironclad             ; SNMPv3 authentication/encryption support
-               #+lispworks
-               :lispworks-udp        ; Used by usocket-udp
-               #-lispworks :split-sequence
-               :trivial-gray-streams ; Maybe used for portable BER-STREAM
-               :usocket              ; Portable networking support
+               :usocket-udp          ; portable UDP networking
+               :trivial-gray-streams ; portable gray stream
+               :split-sequence
                #+mib :zebu-compiler)
-  :components ((:module "usocket-udp"
-                :serial t
-                :components ((:file "usocket")
-                             #+clozure   (:file "usocket-clozure")
-                             #+clisp     (:file "usocket-clisp")
-                             #+cmu       (:file "usocket-cmucl")
-                             #+sbcl      (:file "usocket-sbcl")
-                             #+lispworks (:file "usocket-lispworks")
-                             (:file "udp-server")))
-               (:file "package")
+  :components ((:file "package")
                (:file "ber"		:depends-on ("package"))
 	       (:file "smi"		:depends-on ("ber"))
                (:file "null"		:depends-on ("smi"))
@@ -62,11 +51,9 @@
                (:file "print-oid"	:depends-on ("oid" #+mib "mib-tree"))
 	       (:file "constants"	:depends-on ("package"))
                (:file "keytool"		:depends-on ("package"))
-	       (:file "session"		:depends-on ("usocket-udp"
-                                                     "keytool" "constants"))
+	       (:file "session"		:depends-on ("keytool" "constants"))
                (:file "message"		:depends-on ("pdu" "session"))
-               (:file "network"		:depends-on ("usocket-udp"
-						     "session" "message"))
+               (:file "network"		:depends-on ("session" "message"))
                (:file "report"		:depends-on ("sequence" "session" "message"))
                (:file "snmp-get"	:depends-on ("oid" "pdu" "network" "report"))
                (:file "snmp-set"	:depends-on ("oid" "pdu" "network" "report"))
