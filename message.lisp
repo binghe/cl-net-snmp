@@ -21,7 +21,10 @@
             :accessor session-of)
    (pdu     :type pdu
             :initarg :pdu
-            :accessor pdu-of))
+            :accessor pdu-of)
+   (context        :type base-string
+                   :initarg :context
+                   :accessor context-of))
   (:documentation "SNMP message base class"))
 
 ;;; SNMPv1 and SNMPv2c
@@ -62,9 +65,6 @@
    (msg-id         :type (unsigned-byte 32)
                    :initarg :id
                    :accessor msg-id-of)
-   (context        :type base-string
-                   :initarg :context
-                   :accessor context-of)
    ;;; Report flag, for SNMP report use.
    (report-flag    :type boolean
                    :initform nil
