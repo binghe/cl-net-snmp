@@ -65,7 +65,7 @@
    (msg-id         :type (unsigned-byte 32)
                    :initarg :id
                    :accessor msg-id-of)
-   ;;; Report flag, for SNMP report use.
+   ;; Report flag, for SNMP report use.
    (report-flag    :type boolean
                    :initform nil
                    :initarg :report

@@ -23,7 +23,7 @@
   (make-instance 'timeticks :value time))
 
 (defmethod plain-value ((object timeticks))
-  (/ (value-of object 100.0)))
+  (/ (value-of object) 100.0))
 
 (defmethod print-object ((object timeticks) stream)
   (let (hours minutes seconds seconds/100 (ticks (value-of object)))

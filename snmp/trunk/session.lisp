@@ -3,7 +3,6 @@
 (defconstant +snmp-version-1+  0)
 (defconstant +snmp-version-2c+ 1)
 (defconstant +snmp-version-3+  3)
-
 (defparameter *default-version* +snmp-version-2c+)
 (defparameter *default-port* 161)
 (defparameter *default-community* "public")
@@ -29,14 +28,26 @@
   ((community         :type string
 		      :accessor community-of
 		      :initarg :community
-		      :initform *default-community*))
+		      :initform *default-community*)
+   (version           :type integer
+                      :accessor version-of
+                      :initarg :version
+		      :initform +snmp-version-1+))
   (:documentation "SNMP v1 session, community based"))
 
-(defclass v2c-session (v1-session) ()
+(defclass v2c-session (v1-session)
+  ((version           :type integer
+                      :accessor version-of
+                      :initarg :version
+		      :initform +snmp-version-2c+))
   (:documentation "SNMP v2c session, community based"))
 
 (defclass v3-session (session)
-  ((security-name     :type string
+  ((version           :type integer
+                      :accessor version-of
+                      :initarg :version
+		      :initform +snmp-version-3+)
+   (security-name     :type string
 		      :reader security-name-of
 		      :initarg :security-name)
    (security-level    :type (unsigned-byte 8)
@@ -74,14 +85,6 @@
                       :initarg :priv-local-key
                       :accessor priv-local-key-of))
   (:documentation "SNMP v3 session, user security model"))
-
-(defmethod initialize-instance :after ((session v1-session) &rest initargs)
-  (declare (ignore initargs))
-  (setf (slot-value session 'version) +snmp-version-1+))
-
-(defmethod initialize-instance :after ((session v2c-session) &rest initargs)
-  (declare (ignore initargs))
-  (setf (slot-value session 'version) +snmp-version-2c+))
 
 (defmethod initialize-instance :after ((session v3-session) &rest initargs)
   (declare (ignore initargs))
