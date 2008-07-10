@@ -2,9 +2,12 @@
 
 (in-package :snmp)
 
+(defparameter *snmp-send-times* 3)
+(defparameter *snmp-wait-timeout* 1)
+
 (defgeneric send-snmp-message (session message &key))
 
-(defun send-until (action socket &key (times 6) (wait-time 2))
+(defun send-until (action socket &key (times *snmp-send-times*) (wait-time *snmp-wait-timeout*))
   (loop with result = nil
         for i from 0 below times
         until (car result)
