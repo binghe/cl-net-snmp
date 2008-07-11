@@ -149,7 +149,7 @@
     (apply #'make-instance args)))
 
 (defmethod close-session ((session session))
-  #+lispworks (close (socket-of session))
+  #+lispworks (comm::close-socket (socket-of session))
   #-lispworks (socket-close (socket-of session)))
 
 (defmacro with-open-session ((session &rest args) &body body)
