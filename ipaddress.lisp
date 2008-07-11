@@ -1,17 +1,4 @@
-;;;; -*- Mode: lisp; Syntax: ansi-common-lisp; Base: 10; Package: snmp; -*-
-
-#|
-<DOCUMENTATION>
- <DESCRIPTION>
-  ASN.1 IPADDRESS Type, only IPv4 is supported.
-  </DESCRIPTION>
- <COPYRIGHT YEAR='2007-2008' AUTHOR='Chun Tian (binghe)' MARK='(C)'
-            HREF='https://cl-net-snmp.svn.sourceforge.net/svnroot/cl-net-snmp/snmp/trunk/ipaddress.lisp'/>
- <CHRONOLOGY>
-  <DELTA DATE='20080316'>create documentation for "ipaddress.lisp"</DELTA>
-  </CHRONOLOGY>
- </DOCUMENTATION>
-|#
+;;;; -*- Mode: Lisp -*-
 
 (in-package :snmp)
 
@@ -19,12 +6,14 @@
 
 (defun ipaddress (address)
   "translate to ASN.1 ipaddress from any form"
-  (make-instance 'ipaddress :value (usocket::host-to-hbo address)))
+  (make-instance 'ipaddress :value #+lispworks (string-ip-address address)
+                                   #-lispworks (usocket::host-to-hbo address)))
 
 (defmethod print-object ((obj ipaddress) stream)
   (with-slots (value) obj
     (print-unreadable-object (obj stream :type t)
-      (format stream "~A" (usocket:hbo-to-dotted-quad value)))))
+      (format stream "~A" #+lispworks (ip-address-string value)
+                          #-lispworks (usocket:hbo-to-dotted-quad value)))))
 
 (defmethod ber-encode ((value ipaddress))
   (let* ((addr (value-of value))
@@ -50,5 +39,3 @@
 
 (eval-when (:load-toplevel :execute)
   (install-asn.1-type :ipaddress 1 0 0))
-
-:eof

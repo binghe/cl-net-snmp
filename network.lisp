@@ -15,7 +15,7 @@
              (when (plusp i)
                (format t "resend times: ~A at ~A.~%" i (get-internal-real-time)))
              (funcall action)
-             (setf result (wait-for-input socket :timeout wait-time)))
+             (setf result (wait-for-input (list socket) :timeout wait-time)))
         finally (return result)))
 
 (defun recv-until (action stop-reason)
@@ -28,18 +28,14 @@
   (let ((socket (socket-of session))
         (data (coerce (ber-encode message) '(simple-array (unsigned-byte 8) (*)))))
     (labels ((send ()
-               (if *udp-stream-interface*
-                 (progn
-                   (write-sequence data (socket-stream socket))
-                   (force-output (socket-stream socket))
-                   t)
-                 (socket-send socket data (length data)
-                              :address (host-of session)
-                              :port (port-of session))))
+               #+lispworks (send-message socket data (length data)
+                                         (host-of session) (port-of session))
+               #-lispworks (socket-send socket data (length data)
+                                        :address (host-of session)
+                                        :port (port-of session)))
              (recv ()
-               (if *udp-stream-interface*
-                 (decode-message session (socket-stream socket))
-                 (decode-message session (socket-receive socket nil 65507)))))
+               (decode-message session #+lispworks (receive-message socket)
+                                       #-lispworks (socket-receive socket nil 65507))))
       (if receive
         ;; receive = t
         (if #-(and lispworks win32) (send-until #'send socket)
