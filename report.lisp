@@ -1,17 +1,4 @@
-;;;; -*- Mode: lisp; Syntax: ansi-common-lisp; Base: 10; Package: snmp; -*-
-
-#|
-<DOCUMENTATION>
- <DESCRIPTION>
-  SNMPv3 REPORT
-  </DESCRIPTION>
- <COPYRIGHT YEAR='2007-2008' AUTHOR='Chun Tian (binghe)' MARK='(C)'
-            HREF='https://cl-net-snmp.svn.sourceforge.net/svnroot/cl-net-snmp/snmp/trunk/report.lisp'/>
- <CHRONOLOGY>
-  <DELTA DATE='20080316'>create documentation for "report.lisp"</DELTA>
-  </CHRONOLOGY>
- </DOCUMENTATION>
-|#
+;;;; -*- Mode: lisp; -*-
 
 (in-package :snmp)
 
@@ -29,9 +16,8 @@
                                 :pdu (make-instance 'get-request-pdu
                                                     :variable-bindings #()))))
     (send-snmp-message session message :receive nil :report t)
-    (let ((ber-stream (if *udp-stream-interface*
-                        (socket-stream (socket-of session))
-                        (socket-receive (socket-of session) nil 65507))))
+    (let ((ber-stream #+lispworks (receive-message (socket-of session))
+                      #-lispworks (socket-receive (socket-of session) nil 65507)))
       (destructuring-bind (engine-id engine-boots engine-time user auth priv)
 	  ;; security-data: 3rd field of message list
 	  (coerce (ber-decode<-string (elt (ber-decode ber-stream) 2)) 'list)
@@ -50,5 +36,3 @@
                                    #'char-code engine-id)
                               (priv-key-of session))))
         session))))
-
-:eof

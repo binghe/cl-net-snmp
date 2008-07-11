@@ -9,18 +9,18 @@
     (format stream "<GPF>")))
 
 (defun update-syntax (&optional (zb *asn.1-source*) (tab *asn.1-syntax*))
-  (let ((*warn-conflicts* t)
-        (*allow-conflicts* t))
-    (zebu-compile-file zb :output-file tab)
-    (zebu-load-file tab)))
+  (let ((zebu:*warn-conflicts* t)
+        (zebu:*allow-conflicts* t))
+    (zebu:zebu-compile-file zb :output-file tab)
+    (zebu:zebu-load-file tab)))
 
 (eval-when (:compile-toplevel)
-  (let ((*warn-conflicts* t)
-        (*allow-conflicts* t))
-    (zebu-compile-file *asn.1-source* :output-file *asn.1-syntax*)))
+  (let ((zebu:*warn-conflicts* t)
+        (zebu:*allow-conflicts* t))
+    (zebu:zebu-compile-file *asn.1-source* :output-file *asn.1-syntax*)))
 
 (eval-when (:load-toplevel :execute)
-  (let ((*warn-conflicts* t)
-        (*allow-conflicts* t))
-    (zebu-load-file *asn.1-syntax*)))
+  (let ((zebu:*warn-conflicts* t)
+        (zebu:*allow-conflicts* t))
+    (zebu:zebu-load-file *asn.1-syntax*)))
 
