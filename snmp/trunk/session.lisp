@@ -108,10 +108,8 @@
   ;; first, what version we are talking about if version not been set?
   (let* ((real-version (or version
                            (if user +snmp-version-3+ *default-version*)))
-         (socket (if *udp-stream-interface*
-                   (socket-connect/udp host (or port *default-port*)
-                                       :stream t :element-type '(unsigned-byte 8))
-                   (socket-connect/udp nil nil)))
+         (socket #+lispworks (open-udp-socket :errorp t)
+                 #-lispworks (socket-connect/udp nil nil))
          (args (list (gethash real-version *snmp-class-table*)
                      :socket socket :host host :port port)))
     (if (/= real-version +snmp-version-3+)
@@ -151,7 +149,8 @@
     (apply #'make-instance args)))
 
 (defmethod close-session ((session session))
-  (socket-close (socket-of session)))
+  #+lispworks (close (socket-of session))
+  #-lispworks (socket-close (socket-of session)))
 
 (defmacro with-open-session ((session &rest args) &body body)
   `(let ((,session (open-session ,@args)))

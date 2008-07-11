@@ -25,12 +25,12 @@
 
 (defvar *snmp-server-log* nil)
 
-(defun snmp-server-function (input host)
+(defun snmp-server-function (input)
   "Main function in UDP loop
    accept input as vector, decode, call process-message, encode into vector and return"
-  (declare (type (simple-array (unsigned-byte 8) (*)) input)
-           (type simple-base-string host))
-  (push (cons (get-universal-time) host) *snmp-server-log*)
+  (push (format nil "[~A] ~A:~A~%"
+                (get-universal-time) comm:*client-address* comm:*client-port*)
+        *snmp-server-log*)
   (let ((output (process-message (ber-decode input))))
     (when output
       (coerce (ber-encode output)
@@ -38,26 +38,26 @@
 
 (defun process-message (message-list)
   "return a message sequence"
-  (process-message-internal (car message-list) message-list))
+  (process-message-internal (elt message-list 0) message-list))
 
 (defgeneric process-message-internal (version message-list)
   (:documentation "Process SNMP Message"))
 
-(defmethod process-message-internal ((version (eql +snmp-version-1+)) (message-list list))
+(defmethod process-message-internal ((version (eql +snmp-version-1+)) (message-list sequence))
   "Process SNMP v1 message"
   (process-message-v1/v2c message-list))
 
-(defmethod process-message-internal ((version (eql +snmp-version-2c+)) (message-list list))
+(defmethod process-message-internal ((version (eql +snmp-version-2c+)) (message-list sequence))
   "Process SNMP v2c message"
   (process-message-v1/v2c message-list))
 
 (defun process-message-v1/v2c (message-list)
-  (destructuring-bind (version community pdu) message-list
+  (dbind (version community pdu) message-list
     (let ((reply-pdu (process-pdu pdu)))
       (when reply-pdu
         (list version community reply-pdu)))))
 
-(defmethod process-message-internal ((version (eql +snmp-version-3+)) (message-list list))
+(defmethod process-message-internal ((version (eql +snmp-version-3+)) (message-list sequence))
   "Process SNMP v3 message, not implemented"
   nil)
 
@@ -110,18 +110,18 @@
   "SNMP server start"
   (with-slots (process address port function) server
     (unless process
-      (setf process (start-udp-server :address address
-                                      :service port
-                                      :announce nil
-                                      :process-name (format nil "SNMP Server (~A:~A)"
-                                                            (or address "*") port)
-                                      :function function)))))
+      (setf process (comm:start-udp-server :address address
+                                           :service port
+                                           :announce nil
+                                           :process-name (format nil "SNMP Server (~A:~A)"
+                                                                 (or address "*") port)
+                                           :function function)))))
 
 (defmethod control ((server snmp-server) (action (eql :stop)))
   "SNMP server stop"
   (with-slots (process) server
     (when process
-      (mp:process-kill process)
+      (comm:stop-udp-server process :wait t)
       (setf process nil))))
 
 (defun enable-snmp-service (&optional (port 8161))
