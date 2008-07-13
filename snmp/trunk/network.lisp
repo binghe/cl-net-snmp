@@ -5,7 +5,7 @@
 (defparameter *snmp-send-times* 3)
 (defparameter *snmp-wait-timeout* 1)
 
-(defgeneric send-snmp-message (session message &key))
+(defgeneric send-snmp-message (session message &key &allow-other-keys))
 
 (defun send-until (action socket &key (times *snmp-send-times*) (wait-time *snmp-wait-timeout*))
   (loop with result = nil

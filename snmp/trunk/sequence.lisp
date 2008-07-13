@@ -52,7 +52,9 @@
                               sub-length-length
                               sub-length)
                            (cons (ber-decode-value stream sub-type sub-length) acc)))))))
-      (coerce (iter length nil) 'vector))))
+      (let ((temp (coerce (iter length nil) 'vector)))
+        ;; (format t "sequence: ~A~%" temp)
+        temp))))
 
 (eval-when (:load-toplevel :execute)
   (install-asn.1-type :sequence 0 1 16))
