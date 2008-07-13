@@ -42,6 +42,9 @@
 
 (defgeneric decode-message (session stream))
 
+(defmethod decode-message ((s session) (source t))
+  (error "Unknown message source: ~A" source))
+
 (defmethod decode-message ((s session) (data sequence))
   (let ((message-list (coerce (ber-decode data) 'list)))
     (decode-message s message-list)))
@@ -54,6 +57,11 @@
   (destructuring-bind (version community pdu) message-list
     (declare (ignore version community))
     (make-instance 'v1-message :session s :pdu pdu)))
+
+(defmethod decode-message ((s v2c-session) (message-list list))
+  (destructuring-bind (version community pdu) message-list
+    (declare (ignore version community))
+    (make-instance 'v2c-message :session s :pdu pdu)))
 
 ;;; SNMP v3
 

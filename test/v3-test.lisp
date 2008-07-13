@@ -1,7 +1,7 @@
 (in-package :snmp)
 
 (defun v2-test ()
-  (with-open-session (s "debian.local" :port 161 :version +snmp-version-2c+ :community "public")
+  (with-open-session (s "debian-amd64.local" :port 161 :version +snmp-version-2c+ :community "public")
     (snmp-walk s '(#(1 3 6 1 2 1 1)))))
 
 (defun rtt-test ()

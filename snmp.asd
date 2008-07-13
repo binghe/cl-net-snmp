@@ -6,18 +6,19 @@
   :description "Simple Network Manangement Protocol"
   :version "2.0"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
-
-  :depends-on (:asn.1    ; Standalone ASN.1      
-               :ironclad ; SNMPv3 authentication/encryption support
+  :depends-on (:asn.1    ; Standalone ASN.1 utility
+	       :ironclad ; SNMPv3 authentication/encryption support
                #+lispworks :lispworks-udp
                #-lispworks :usocket-udp
                #-lispworks :split-sequence)
   :serial t
   :components ((:file "package")
                (:file "utility")
+               (:file "condition")
                (:file "ber")
 	       (:file "smi")
                (:file "null")
+               (:file "mib")
 	       (:file "integer")
 	       (:file "string")
 	       (:file "sequence")

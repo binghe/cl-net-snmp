@@ -161,8 +161,6 @@
   (dotimes (i length nil) (read-byte stream)))
 
 ;;; BER Stream: make stream from sequence
-;;; TODO: port this into CLs other than LispWorks, SBCL and OpenMCL
-
 (defclass ber-stream (fundamental-binary-input-stream)
   ((sequence :type sequence :initarg :sequence :reader ber-sequence)
    (length :type fixnum :accessor ber-length)
