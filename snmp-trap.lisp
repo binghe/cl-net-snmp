@@ -2,7 +2,7 @@
 
 (defvar *default-trap-enterprise* (object-id '#(1 3 6 1 4 1 26670)) "enterprises")
 
-(defgeneric snmp-trap (session vars &key)
+(defgeneric snmp-trap (session vars &key &allow-other-keys)
   (:documentation "SNMP Trap"))
 
 (defmethod snmp-trap ((session v1-session) (vars list) &key
@@ -62,7 +62,7 @@
     (snmp-report session))
   (snmp-trap-internal session vars uptime trap-oid inform context))
 
-(defgeneric snmp-inform (session vars &key)
+(defgeneric snmp-inform (session vars &key &allow-other-keys)
   (:documentation "SNMP Inform, only support v2c and v3 session"))
 
 (defmethod snmp-inform ((session v2c-session) (vars list) &key

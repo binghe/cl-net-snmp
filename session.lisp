@@ -10,7 +10,8 @@
 (defparameter *default-priv-protocol* :des)
 
 (defclass session ()
-  ((socket            :type datagram-usocket
+  ((socket            :type #+lispworks integer
+                            #-lispworks datagram-usocket
 		      :accessor socket-of
 		      :initarg :socket)
    (host              :type string
@@ -104,7 +105,8 @@
         (gethash +snmp-version-2c+ *snmp-class-table*) 'v2c-session
         (gethash +snmp-version-3+ *snmp-class-table*) 'v3-session))
 
-(defun open-session (host &key port version community user auth priv)
+(defun open-session (host &key (port *default-port*) (version *default-version*)
+                               (community *default-community*) user auth priv)
   ;; first, what version we are talking about if version not been set?
   (let* ((real-version (or version
                            (if user +snmp-version-3+ *default-version*)))

@@ -32,6 +32,7 @@
            ;; snmp operation
    	   #:snmp-get
            #:snmp-set
+           #:snmp-get-next
            #:snmp-walk
            #:snmp-bulk
            #:snmp-trap

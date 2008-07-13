@@ -2,7 +2,7 @@
 
 (in-package :snmp)
 
-(defgeneric snmp-get (object vars &key)
+(defgeneric snmp-get (object vars &key &allow-other-keys)
   (:documentation "SNMP Get"))
 
 (defmethod snmp-get ((host string) (vars list) &key (context ""))
@@ -55,7 +55,7 @@
     (values (nreverse result-table)
             (mapcar #'*->oid vars))))
 
-(defgeneric snmp-bulk (object vars &key)
+(defgeneric snmp-bulk (object vars &key &allow-other-keys)
   (:documentation "SNMP Get Bulk"))
 
 (defmethod snmp-bulk ((host string) (vars list) &key
