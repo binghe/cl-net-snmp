@@ -73,7 +73,9 @@
   (let ((mib.lisp-expr '()))
     (dolist (i *mib-list*)
       (compile-asn.1 (mib-file i) :to (lisp-file i))
-      (push `(:file ,(lisp-file i)) mib.lisp-expr))
+      (push `(:file ,(string-downcase
+                      (pathname-name (lisp-file i))))
+            mib.lisp-expr))
     (with-open-file (s *mib-list-file*
                        :direction :output
                        :if-exists :supersede)

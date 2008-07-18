@@ -1,7 +1,7 @@
 ;;;; -*- Mode: Lisp -*-
 
-((:FILE #P"SNMP:MIB;SNMPV2-SMI.LISP.NEWEST")
- (:FILE #P"SNMP:MIB;SNMPV2-TC.LISP.NEWEST")
- (:FILE #P"SNMP:MIB;SNMPV2-CONF.LISP.NEWEST")
- (:FILE #P"SNMP:MIB;SNMPV2-MIB.LISP.NEWEST")
- (:FILE #P"SNMP:MIB;SNMPV2-TM.LISP.NEWEST"))
+((:FILE "snmpv2-smi")
+ (:FILE "snmpv2-tc")
+ (:FILE "snmpv2-conf")
+ (:FILE "snmpv2-mib")
+ (:FILE "snmpv2-tm"))
