@@ -12,6 +12,7 @@
 (defun undefine-oid-handler (revid)
   (setf (gethash revid *server-dispatch-table*) nil))
 
+#+ignore
 (defun process-oid-request (oid)
   "Process a OID request, do the real server work and reply a result (not implemented)"
   (declare (type object-id oid))

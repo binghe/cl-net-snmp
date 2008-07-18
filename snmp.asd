@@ -13,10 +13,6 @@
                #-lispworks :split-sequence)
   :serial t
   :components ((:file "package")
-               (:module "mib"
-                :serial t
-                :components ((:file "snmpv2-smi")
-                             (:file "snmpv2-mib")))
 	       (:file "constants")
                (:file "utility")
                (:file "condition")
@@ -30,8 +26,19 @@
                (:file "snmp-set")
                (:file "snmp-smi")
                (:file "snmp-walk")
-               ;; (:file "snmp-trap")
-               #+lispworks
+               (:module "mib"
+                :serial t
+                :components #.(with-open-file
+                                  (s (let ((file (merge-pathnames (make-pathname :name "mib"
+                                                                                 :type "lisp-expr")
+                                                                  *load-pathname*)))
+                                       (format t ";; Load MIB list from ~A~%" file)
+                                       file) :direction :input)
+                                (let ((mibs (read s)))
+                                  (pprint mibs)
+                                  mibs)))
+               (:file "snmp-trap")
+               #+ignore
                (:file "snmp-server")
 	       #+lispworks
                (:file "update-mib")))
