@@ -3,6 +3,7 @@
 (defvar *server-dispatch-table* (make-hash-table :test #'equal)
   "SNMP server dispatch table")
 
+#+ignore
 (defmacro defoid (oid (var) &body body)
   (let ((h (gensym)) (o (*->oid oid)))
     `(let ((,h #'(lambda (,var) ,@body)))

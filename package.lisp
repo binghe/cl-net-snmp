@@ -8,27 +8,16 @@
         #+lispworks :lispworks
         #+lispworks :comm
         #-lispworks :usocket
-        :trivial-gray-streams)
-
+        :trivial-gray-streams
+        :asn.1)
   (:export ;; constants
            #:+snmp-version-1+
            #:+snmp-version-2c+
            #:+snmp-version-3+
-
-	   ;; types
-           #:plain-value
-	   #:object-id
-           #:ipaddress
-           #:timeticks
-           #:opaque
-           #:gauge
-           #:counter
-
            ;; snmp session
            #:open-session
            #:close-session
            #:with-open-session
-
            ;; snmp operation
    	   #:snmp-get
            #:snmp-set
@@ -37,12 +26,13 @@
            #:snmp-bulk
            #:snmp-trap
            #:snmp-inform
-
            ;; server
            #:enable-snmp-service
            #:disable-snmp-service
            #:define-oid-handler
-           #:undefine-oid-handler))
+           #:undefine-oid-handler
+           ;; other
+           #:update-mib))
 
 (in-package :snmp)
 
