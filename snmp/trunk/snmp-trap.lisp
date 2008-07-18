@@ -1,6 +1,6 @@
 (in-package :snmp)
 
-(defvar *default-trap-enterprise* (object-id '#(1 3 6 1 4 1 26670)) "enterprises")
+(defvar *default-trap-enterprise* asn.1::|enterprises| "enterprises")
 
 (defgeneric snmp-trap (session vars &key &allow-other-keys)
   (:documentation "SNMP Trap"))

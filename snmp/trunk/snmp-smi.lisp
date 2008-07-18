@@ -18,6 +18,5 @@
   (declare (type fixnum length) (ignore type))
   (dotimes (i length :end-of-mibview) (read-byte stream)))
 
-;; (uninstall-asn.1-type 1 0 18)
 (eval-when (:load-toplevel :execute)
   (install-asn.1-type :end-of-mibview 2 0 2))
