@@ -7,6 +7,7 @@
 
 (defgeneric send-snmp-message (session message &key &allow-other-keys))
 
+#-(and lispworks win32)
 (defun send-until (action socket &key (times *snmp-send-times*) (wait-time *snmp-wait-timeout*))
   (loop with result = nil
         for i from 0 below times
