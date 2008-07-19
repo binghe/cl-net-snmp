@@ -1,0 +1,4 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from MIB:SNMP-MPD-MIB
+
+("snmpv2-conf" "snmpv2-smi")
