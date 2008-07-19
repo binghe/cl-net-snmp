@@ -27,7 +27,6 @@
                (:file "snmp-smi")
                (:file "snmp-walk")
                (:module "mib"
-                :serial t
                 :components #.(with-open-file
                                   (s (let ((file (merge-pathnames (make-pathname :name "mib"
                                                                                  :type "lisp-expr")
