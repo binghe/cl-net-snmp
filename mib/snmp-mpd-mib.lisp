@@ -1,0 +1,16 @@
+;;;; Auto-generated from MIB:SNMP-MPD-MIB
+
+(IN-PACKAGE :ASN.1)
+(SETF *CURRENT-MODULE* 'SNMP-MPD-MIB)
+(DEFOID |snmpMPDMIB| (|snmpModules| 11))
+(DEFOID |snmpMPDAdmin| (|snmpMPDMIB| 1))
+(DEFOID |snmpMPDMIBObjects| (|snmpMPDMIB| 2))
+(DEFOID |snmpMPDMIBConformance| (|snmpMPDMIB| 3))
+(DEFOID |snmpMPDStats| (|snmpMPDMIBObjects| 1))
+(DEFOID |snmpUnknownSecurityModels| (|snmpMPDStats| 1))
+(DEFOID |snmpInvalidMsgs| (|snmpMPDStats| 2))
+(DEFOID |snmpUnknownPDUHandlers| (|snmpMPDStats| 3))
+(DEFOID |snmpMPDMIBCompliances| (|snmpMPDMIBConformance| 1))
+(DEFOID |snmpMPDMIBGroups| (|snmpMPDMIBConformance| 2))
+(DEFUNKNOWN 'MODULE-COMPLIANCE)
+(DEFOID |snmpMPDGroup| (|snmpMPDMIBGroups| 1))
