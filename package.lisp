@@ -5,6 +5,7 @@
 (defpackage snmp
   (:use #+genera :future-common-lisp
         #-genera :common-lisp
+        #+lispworks :harlequin-common-lisp
         #+lispworks :lispworks
         #+lispworks :comm
         #-lispworks :usocket
@@ -27,10 +28,11 @@
            #:snmp-trap
            #:snmp-inform
            ;; server
+           #:snmp-server
            #:enable-snmp-service
            #:disable-snmp-service
-           #:define-oid-handler
-           #:undefine-oid-handler
+           #:export-object-id
+           #:unexport-object-id
            ;; other
            #:update-mib))
 
