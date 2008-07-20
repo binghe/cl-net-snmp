@@ -17,7 +17,7 @@
   (declare (type integer generic-trap specific-trap)
            (type base-string agent-addr))
   (let ((vb (if (null vars) #()
-              (mapcar #'(lambda (x) (list (*->oid (car x)) (cdr x))) vars))))
+              (mapcar #'(lambda (x) (list (oid (car x)) (cdr x))) vars))))
     (let ((message (make-instance 'v1-message :session session
                                   :pdu (make-instance 'trap-pdu
                                                       :variable-bindings vb
@@ -29,11 +29,11 @@
       (send-snmp-message session message :receive nil))))
 
 (defun snmp-trap-internal (session vars uptime trap-oid inform &optional (context ""))
-  (let ((vb (list* (list (object-id '#(1 3 6 1 2 1 1 3 0))
+  (let ((vb (list* (list (oid "sysUpTime.0")
                          (make-instance 'timeticks :value uptime))
-                   (list (object-id '#(1 3 6 1 6 3 1 1 4 1 0))
+                   (list (oid "snmpTrapOID.0")
                          trap-oid)
-                   (mapcar #'(lambda (x) (list (*->oid (car x)) (cdr x))) vars))))
+                   (mapcar #'(lambda (x) (list (oid (car x)) (cdr x))) vars))))
     (let ((message (make-instance (gethash (type-of session) *session->message*)
                                   :session session
                                   :context context

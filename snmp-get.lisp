@@ -1,5 +1,3 @@
-;;;; -*- Mode: Lisp -*-
-
 (in-package :snmp)
 
 (defgeneric snmp-get (object vars &key &allow-other-keys)
@@ -13,7 +11,7 @@
 (defmethod snmp-get ((session session) (vars list) &key (context ""))
   "SNMP GET for v1, v2c and v3"
   (when vars
-    (let ((vb (mapcar #'(lambda (x) (list (*->oid x) nil)) vars)))
+    (let ((vb (mapcar #'(lambda (x) (list (oid x) nil)) vars)))
       ;; Get a report first if the session is new created
       (when (and (= +snmp-version-3+ (version-of session))
                  (need-report-p session))
@@ -53,7 +51,7 @@
                   (push (pop vbs) record)))
               result-table)))
     (values (nreverse result-table)
-            (mapcar #'*->oid vars))))
+            (mapcar #'oid vars))))
 
 (defgeneric snmp-bulk (object vars &key &allow-other-keys)
   (:documentation "SNMP Get Bulk"))
@@ -70,7 +68,7 @@
 (defmethod snmp-bulk ((session session) (vars list) &key
                       (non-repeaters 0) (max-repetitions 1) (context ""))
   (when vars
-    (let ((vb (mapcar #'(lambda (x) (list (*->oid x) nil)) vars)))
+    (let ((vb (mapcar #'(lambda (x) (list (oid x) nil)) vars)))
       ;; Get a report first if the session is new created
       (when (and (= +snmp-version-3+ (version-of session))
                  (need-report-p session))
@@ -88,5 +86,3 @@
             (generate-table vars
                             (variable-bindings-of (pdu-of reply))
                             non-repeaters max-repetitions)))))))
-
-:eof
