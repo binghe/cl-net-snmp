@@ -1,0 +1,4 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from ASN-SNMP:UCD-DEMO-MIB
+
+("snmpv2-smi" "ucd-snmp-mib")

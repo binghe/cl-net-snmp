@@ -1,4 +1,4 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:SNMP-TARGET-MIB
+;;;; Auto-generated from ASN-SNMP:NOTIFICATION-LOG-MIB
 
 ("snmpv2-smi" "snmpv2-tc" "snmp-framework-mib" "snmpv2-conf")

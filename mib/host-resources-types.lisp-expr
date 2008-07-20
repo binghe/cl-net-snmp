@@ -1,0 +1,4 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from ASN-SNMP:HOST-RESOURCES-TYPES
+
+("snmpv2-smi" "host-resources-mib")

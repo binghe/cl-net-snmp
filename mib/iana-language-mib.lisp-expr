@@ -1,0 +1,4 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from ASN-SNMP:IANA-LANGUAGE-MIB
+
+("snmpv2-smi")
