@@ -1,4 +1,4 @@
-;;;; Auto-generated from MIB:SNMP-PROXY-MIB
+;;;; Auto-generated from ASN-SNMP:SNMP-PROXY-MIB
 
 (IN-PACKAGE :ASN.1)
 (SETF *CURRENT-MODULE* 'SNMP-PROXY-MIB)
