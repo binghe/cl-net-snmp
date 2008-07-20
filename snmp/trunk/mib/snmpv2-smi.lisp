@@ -1,4 +1,4 @@
-;;;; Auto-generated from MIB:SNMPV2-SMI
+;;;; Auto-generated from ASN-SNMP:SNMPV2-SMI
 
 (IN-PACKAGE :ASN.1)
 (SETF *CURRENT-MODULE* '|SNMPv2-SMI|)
