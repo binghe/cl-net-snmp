@@ -1,42 +1,72 @@
 (in-package :snmp)
 
-(defvar *server-dispatch-table* (make-hash-table :test #'equal)
-  "SNMP server dispatch table")
+(defparameter *default-snmp-server-address* 0)
+(defparameter *default-snmp-server-port*    8161)
+(defvar       *default-snmp-server*         nil)
+(defvar       *default-dispatch-table*      (make-hash-table))
 
-#+ignore
-(defmacro defoid (oid (var) &body body)
-  (let ((h (gensym)) (o (*->oid oid)))
-    `(let ((,h #'(lambda (,var) ,@body)))
-       (setf (gethash ',(oid-revid o) *server-dispatch-table*) ,h))))
+(defclass snmp-server ()
+  ((process        :accessor server-process
+                   :type mp:process
+                   :documentation "Server process/thread")
+   (address        :accessor server-address
+                   :type (or string vector integer)
+                   :initarg :address
+                   :initform *default-snmp-server-address*
+                   :documentation "Server listening address")
+   (port           :accessor server-port
+                   :type (or string integer)
+                   :initarg :port
+                   :initform *default-snmp-server-port*
+                   :documentation "Server listening port")
+   (function       :accessor server-function
+                   :type (function (t) t)
+                   :initarg :function
+                   :initform #'snmp-server-function
+                   :documentation "Message processing function")
+   (dispatch-table :accessor server-dispatch-table
+                   :type hash-table
+                   :initarg :dispatch-table
+                   :initform *default-dispatch-table*
+                   :documentation "Object ID dispatch table"))
+  (:documentation "SNMP server class"))
 
-(defun undefine-oid-handler (revid)
-  (setf (gethash revid *server-dispatch-table*) nil))
+(defmethod print-object ((object snmp-server) stream)
+  (print-unreadable-object (object stream :type t)
+    (format stream "SNMP Server ~A:~D"
+            (server-address object) (server-port object))))
 
-#+ignore
-(defun process-oid-request (oid)
-  "Process a OID request, do the real server work and reply a result (not implemented)"
-  (declare (type object-id oid))
-  (process-oid (oid-revid oid)))
+(defmethod initialize-instance :after ((instance snmp-server)
+                                       &rest initargs &key &allow-other-keys)
+  (declare (ignore initargs))
+  (setf (server-process instance)
+        (comm:start-udp-server :address (server-address instance)
+                               :service (server-port instance)
+                               :announce nil
+                               :process-name (format nil "SNMP Server ~A:~D"
+                                                     (server-address instance)
+                                                     (server-port instance))
+                               :function (server-function instance)
+                               :arguments (list (server-dispatch-table instance)))))
+        
+(defun enable-snmp-service (&optional (port *default-snmp-server-port*))
+  (if (null *default-snmp-server*)
+      (setf *default-snmp-server*
+            (make-instance 'snmp-server :port port))))
 
-(defun process-oid (revid &optional (base revid))
-  (declare (type list revid))
-  (let ((handler (gethash revid *server-dispatch-table*)))
-    (if handler
-      (funcall handler base)
-      (process-oid (cdr revid) base))))
+(defun disable-snmp-service ()
+  (when *default-snmp-server*
+    (stop-udp-server (server-process *default-snmp-server*) :wait t)
+    (setf *default-snmp-server* nil)))
 
-(defvar *snmp-server-log* nil)
+(defvar *dispatch-table*)
 
-(defun snmp-server-function (input)
-  "Main function in UDP loop
-   accept input as vector, decode, call process-message, encode into vector and return"
-  (push (format nil "[~A] ~A:~A~%"
-                (get-universal-time) comm:*client-address* comm:*client-port*)
-        *snmp-server-log*)
-  (let ((output (process-message (ber-decode input))))
-    (when output
-      (coerce (ber-encode output)
-              '(simple-array (unsigned-byte 8) (*))))))
+(defun snmp-server-function (input dispatch-table)
+  "Main function in UDP loop"
+  (let ((*dispatch-table* dispatch-table))
+    (let ((output (process-message (ber-decode input))))
+      (when output
+        (ber-encode output)))))
 
 (defun process-message (message-list)
   "return a message sequence"
@@ -68,15 +98,16 @@
 
 (defmethod process-pdu ((pdu pdu))
   "Default PDU process function, as a fallback, we don't reply it"
+  (declare (ignore pdu))
   nil)
 
 (defmethod process-pdu ((pdu get-request-pdu))
   "Process SNMP Get-Request-PDU
    call oid handler and return a correct Response-PDU"
   (with-slots (request-id variable-bindings) pdu
-    (let ((vb (mapcar #'(lambda (vb) (list (car vb)
-                                           (process-oid-request (car vb))))
-                      variable-bindings)))
+    (let ((vb (mapcar #'(lambda (vb) (list (elt vb 0)
+                                           (process-object-id (elt vb 0) nil)))
+                      (coerce variable-bindings 'list))))
       (make-instance 'response-pdu
                      :request-id request-id
                      :variable-bindings vb))))
@@ -84,55 +115,43 @@
 (defmethod process-pdu ((pdu get-next-request-pdu))
   "Process SNMP Get-Next-Request-PDU
    search for next oid, call handler and return Response-PDU"
-  nil)
+  (declare (ignore pdu))
+  (error "not implemented"))
 
-(defclass snmp-server ()
-  ((process :accessor server-process
-            :initform nil)
-   (address :accessor server-address
-            :type (or string vector)
-            :initarg :address
-            :initform nil
-            :documentation "Server listening address, nil for add local address")
-   (port :accessor server-port
-         :type (or string integer)
-         :initarg :port
-         :initform 8161
-         :documentation "Server listening UDP service/port")
-   (function :accessor server-function
-             :type (function ((simple-array (unsigned-byte 8) (*)))
-                             (simple-array (unsigned-byte 8) (*)))
-             :initarg :function
-             :initform #'snmp-server-function))
-  (:documentation "SNMP Server"))
+(defgeneric process-object-id (oid original))
 
-(defvar *snmp-server* nil)
+(defmethod process-object-id ((oid object-id) original)
+  (process-object-id oid oid))
 
-(defmethod control ((server snmp-server) (action (eql :start)))
-  "SNMP server start"
-  (with-slots (process address port function) server
-    (unless process
-      (setf process (comm:start-udp-server :address address
-                                           :service port
-                                           :announce nil
-                                           :process-name (format nil "SNMP Server (~A:~A)"
-                                                                 (or address "*") port)
-                                           :function function)))))
+(defmethod process-object-id ((oid object-id) (original object-id))
+  (if (not (oid-parent-p oid))
+      original
+    (let ((handler (gethash oid *dispatch-table*)))
+      (if handler
+          (funcall handler original)
+        (process-object-id (oid-parent oid) original)))))
 
-(defmethod control ((server snmp-server) (action (eql :stop)))
-  "SNMP server stop"
-  (with-slots (process) server
-    (when process
-      (comm:stop-udp-server process :wait t)
-      (setf process nil))))
+(defun export-object-id (oid function &optional (dispatch-table *default-dispatch-table*))
+  (setf (gethash oid dispatch-table) function))
 
-(defun enable-snmp-service (&optional (port 8161))
-  (unless *snmp-server*
-    (let ((snmpd (make-instance 'snmp-server :port port)))
-      (control snmpd :start)
-      (setf *snmp-server* snmpd))))
+(defun unexport-object-id (oid &optional (dispatch-table *default-dispatch-table*))
+  (setf (gethash oid dispatch-table) nil))
 
-(defun disable-snmp-service ()
-  (when *snmp-server*
-    (control *snmp-server* :stop)
-    (setf *snmp-server* nil)))
+(defmacro define-object-id (name (o) &body body)
+  (declare (ignore o))
+  (let ((oid (gensym)))
+    `(let ((,oid (oid ,name)))
+       (export-object-id ,oid #'(lambda (o) (declare (ignorable o)) ,@body)))))
+
+(eval-when (:load-toplevel :execute)
+  ;; sysDescr
+  (define-object-id "sysDescr" (o)
+    (format nil "~A ~A"
+            (lisp-implementation-type) (lisp-implementation-version)))
+  ;; sysContact
+  (define-object-id "sysContact" (o) *phone-home*)
+  ;; sysName
+  (define-object-id "sysName" (o) (long-site-name))
+  ;; sysLocation
+  (define-object-id "sysLocation" (o)
+    (format nil "~A ~A ~A" (machine-instance) (machine-type) (machine-version))))
