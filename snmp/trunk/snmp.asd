@@ -11,22 +11,22 @@
                #+lispworks :lispworks-udp
                #-lispworks :usocket-udp
                #-lispworks :split-sequence)
-  :serial t
   :components ((:file "package")
-	       (:file "constants")
-               (:file "utility")
-               (:file "condition")
-	       (:file "pdu")
-               (:file "keytool")
-	       (:file "session")
-               (:file "message")
-               (:file "network")
-               (:file "report")
-               (:file "snmp-get")
-               (:file "snmp-set")
-               (:file "snmp-smi")
-               (:file "snmp-walk")
-               (:module "mib"
+	       (:file "constants" :depends-on ("package"))
+               (:file "utility" :depends-on ("package"))
+               (:file "condition" :depends-on ("package"))
+	       (:file "pdu" :depends-on ("package"))
+               (:file "keytool" :depends-on ("package"))
+	       (:file "session" :depends-on ("keytool"))
+               (:file "message" :depends-on ("constants" "session" "pdu"))
+               (:file "network" :depends-on ("utility" "session" "message"))
+               (:file "report" :depends-on ("network" "session" "message"))
+               (:file "snmp-get" :depends-on ("report" "session" "message" "pdu" "network"))
+               (:file "snmp-set" :depends-on ("report" "session" "message" "pdu" "network"))
+               (:file "snmp-smi" :depends-on ("package"))
+               (:file "snmp-walk" :depends-on ("report" "session" "message"
+                                               "network" "pdu" "snmp-smi"))
+               (:module "mib" :depends-on ("package")
                 :components #.(with-open-file
                                   (s (let ((file (merge-pathnames
 						  (make-pathname :name "mib"
@@ -37,8 +37,9 @@
                                 (let ((mibs (read s)))
                                   (pprint mibs)
                                   mibs)))
-               (:file "snmp-trap")
+               (:file "snmp-trap" :depends-on ("mib" "report" "session"
+						     "message" "pdu"))
                #+lispworks
-               (:file "snmp-server")
+               (:file "snmp-server" :depends-on ("utility" "mib" "message" "pdu"))
 	       #+lispworks
-               (:file "update-mib")))
+               (:file "update-mib" :depends-on ("mib"))))

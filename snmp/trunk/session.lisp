@@ -3,9 +3,11 @@
 (defconstant +snmp-version-1+  0)
 (defconstant +snmp-version-2c+ 1)
 (defconstant +snmp-version-3+  3)
-(defparameter *default-version* +snmp-version-2c+)
-(defparameter *default-port* 161)
-(defparameter *default-community* "public")
+
+(defparameter *default-snmp-version* +snmp-version-2c+)
+(defparameter *default-snmp-port* 161)
+(defparameter *default-snmp-community* "public")
+
 (defparameter *default-auth-protocol* :md5)
 (defparameter *default-priv-protocol* :des)
 
@@ -29,7 +31,7 @@
   ((community         :type string
 		      :accessor community-of
 		      :initarg :community
-		      :initform *default-community*)
+		      :initform *default-snmp-community*)
    (version           :type integer
                       :accessor version-of
                       :initarg :version
@@ -105,18 +107,18 @@
         (gethash +snmp-version-2c+ *snmp-class-table*) 'v2c-session
         (gethash +snmp-version-3+ *snmp-class-table*) 'v3-session))
 
-(defun open-session (host &key (port *default-port*) (version *default-version*)
-                               (community *default-community*) user auth priv)
+(defun open-session (host &key (port *default-snmp-port*) (version *default-snmp-version*)
+                               (community *default-snmp-community*) user auth priv)
   ;; first, what version we are talking about if version not been set?
   (let* ((real-version (or version
-                           (if user +snmp-version-3+ *default-version*)))
+                           (if user +snmp-version-3+ *default-snmp-version*)))
          (socket #+lispworks (open-udp-socket :errorp t)
                  #-lispworks (socket-connect/udp nil nil))
          (args (list (gethash real-version *snmp-class-table*)
                      :socket socket :host host :port port)))
     (if (/= real-version +snmp-version-3+)
       ;; for SNMPv1 and v2c, only set the community
-      (nconc args (list :community (or community *default-community*)))
+      (nconc args (list :community (or community *default-snmp-community*)))
       ;; for SNMPv3, we detect the auth and priv parameters
       (progn
         (nconc args (list :security-name user))
@@ -151,7 +153,7 @@
     (apply #'make-instance args)))
 
 (defmethod close-session ((session session))
-  #+lispworks (comm::close-socket (socket-of session))
+  #+lispworks (comm:close-socket (socket-of session))
   #-lispworks (socket-close (socket-of session)))
 
 (defmacro with-open-session ((session &rest args) &body body)

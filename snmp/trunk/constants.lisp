@@ -16,4 +16,3 @@
 (defconstant +snmp-stat-success+ 0)
 (defconstant +snmp-stat-error+ 1)
 (defconstant +snmp-stat-timeout+ 2)
-
