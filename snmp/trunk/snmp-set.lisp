@@ -1,18 +1,3 @@
-;;;; -*- Mode: lisp; Syntax: ansi-common-lisp; Base: 10; Package: snmp; -*-
-
-#|
-<DOCUMENTATION>
- <DESCRIPTION>
-  SNMP SET
-  </DESCRIPTION>
- <COPYRIGHT YEAR='2007-2008' AUTHOR='Chun Tian (binghe)' MARK='(C)'
-            HREF='https://cl-net-snmp.svn.sourceforge.net/svnroot/cl-net-snmp/snmp/trunk/snmp-set.lisp'/>
- <CHRONOLOGY>
-  <DELTA DATE='20080317'>bugfix: SNMP-SET's vars format contain value data, not nil</DELTA>
-  </CHRONOLOGY>
- </DOCUMENTATION>
-|#
-
 (in-package :snmp)
 
 (defgeneric snmp-set (object vars &key)
@@ -26,7 +11,7 @@
 (defmethod snmp-set ((session session) (vars list) &key (context ""))
   "SNMP SET for v1, v2c and v3"
   (when vars
-    (let ((vb (mapcar #'(lambda (x) (list (*->oid (car x)) (cdr x))) vars)))
+    (let ((vb (mapcar #'(lambda (x) (list (oid (car x)) (cdr x))) vars)))
       ;; Set a report first if the session is new created
       (when (and (= +snmp-version-3+ (version-of session))
                  (need-report-p session))
@@ -46,5 +31,3 @@
 
 (defmethod snmp-set ((host string) (var object-id) &key (context ""))
   (car (snmp-set host (list var) :context context)))
-
-:eof
