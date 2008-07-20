@@ -1,4 +1,4 @@
-;;;; Auto-generated from MIB:SNMP-MPD-MIB
+;;;; Auto-generated from ASN-SNMP:SNMP-MPD-MIB
 
 (IN-PACKAGE :ASN.1)
 (SETF *CURRENT-MODULE* 'SNMP-MPD-MIB)
