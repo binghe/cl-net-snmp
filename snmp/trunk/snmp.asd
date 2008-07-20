@@ -28,16 +28,17 @@
                (:file "snmp-walk")
                (:module "mib"
                 :components #.(with-open-file
-                                  (s (let ((file (merge-pathnames (make-pathname :name "mib"
-                                                                                 :type "lisp-expr")
-                                                                  *load-pathname*)))
+                                  (s (let ((file (merge-pathnames
+						  (make-pathname :name "mib"
+								 :type "lisp-expr")
+						  *load-pathname*)))
                                        (format t ";; Load MIB list from ~A~%" file)
                                        file) :direction :input)
                                 (let ((mibs (read s)))
                                   (pprint mibs)
                                   mibs)))
                (:file "snmp-trap")
-               #+ignore
+               #+lispworks
                (:file "snmp-server")
 	       #+lispworks
                (:file "update-mib")))
