@@ -1,0 +1,17 @@
+;;;; Auto-generated from ASN-SNMP:IPV6-UDP-MIB
+
+(IN-PACKAGE :ASN.1)
+(SETF *CURRENT-MODULE* 'IPV6-UDP-MIB)
+(DEFOID |ipv6UdpMIB| (|experimental| 87))
+(DEFOID |udp| (|mib-2| 7))
+(DEFOID |ipv6UdpTable| (|udp| 6))
+(DEFOID |ipv6UdpEntry| (|ipv6UdpTable| 1))
+(DEFUNKNOWN :TYPE-ASSIGNMENT)
+(DEFOID |ipv6UdpLocalAddress| (|ipv6UdpEntry| 1))
+(DEFOID |ipv6UdpLocalPort| (|ipv6UdpEntry| 2))
+(DEFOID |ipv6UdpIfIndex| (|ipv6UdpEntry| 3))
+(DEFOID |ipv6UdpConformance| (|ipv6UdpMIB| 2))
+(DEFOID |ipv6UdpCompliances| (|ipv6UdpConformance| 1))
+(DEFOID |ipv6UdpGroups| (|ipv6UdpConformance| 2))
+(DEFUNKNOWN 'MODULE-COMPLIANCE)
+(DEFOID |ipv6UdpGroup| (|ipv6UdpGroups| 1))
