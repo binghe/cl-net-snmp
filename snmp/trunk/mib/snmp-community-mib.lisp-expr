@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:SNMP-COMMUNITY-MIB
+;;;; Auto-generated from ASN-SNMP:SNMP-COMMUNITY-MIB
 
 ("snmpv2-smi"
  "snmpv2-tc"
