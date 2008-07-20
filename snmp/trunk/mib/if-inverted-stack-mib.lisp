@@ -1,0 +1,15 @@
+;;;; Auto-generated from ASN-SNMP:IF-INVERTED-STACK-MIB
+
+(IN-PACKAGE :ASN.1)
+(SETF *CURRENT-MODULE* 'IF-INVERTED-STACK-MIB)
+(DEFOID |ifInvertedStackMIB| (|mib-2| 77))
+(DEFOID |ifInvMIBObjects| (|ifInvertedStackMIB| 1))
+(DEFOID |ifInvStackTable| (|ifInvMIBObjects| 1))
+(DEFOID |ifInvStackEntry| (|ifInvStackTable| 1))
+(DEFUNKNOWN :TYPE-ASSIGNMENT)
+(DEFOID |ifInvStackStatus| (|ifInvStackEntry| 1))
+(DEFOID |ifInvConformance| (|ifInvMIBObjects| 2))
+(DEFOID |ifInvGroups| (|ifInvConformance| 1))
+(DEFOID |ifInvCompliances| (|ifInvConformance| 2))
+(DEFUNKNOWN 'MODULE-COMPLIANCE)
+(DEFOID |ifInvStackGroup| (|ifInvGroups| 1))
