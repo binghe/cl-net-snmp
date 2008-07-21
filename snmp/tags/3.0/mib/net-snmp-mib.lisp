@@ -1,0 +1,18 @@
+;;;; Auto-generated from ASN-SNMP:NET-SNMP-MIB
+
+(IN-PACKAGE :ASN.1)
+(SETF *CURRENT-MODULE* 'NET-SNMP-MIB)
+(DEFOID |netSnmp| (|enterprises| 8072))
+(DEFOID |netSnmpObjects| (|netSnmp| 1))
+(DEFOID |netSnmpEnumerations| (|netSnmp| 3))
+(DEFOID |netSnmpModuleIDs| (|netSnmpEnumerations| 1))
+(DEFOID |netSnmpAgentOIDs| (|netSnmpEnumerations| 2))
+(DEFOID |netSnmpDomains| (|netSnmpEnumerations| 3))
+(DEFOID |netSnmpExperimental| (|netSnmp| 9999))
+(DEFOID |netSnmpPlaypen| (|netSnmpExperimental| 9999))
+(DEFOID |netSnmpNotificationPrefix| (|netSnmp| 4))
+(DEFOID |netSnmpNotifications| (|netSnmpNotificationPrefix| 0))
+(DEFOID |netSnmpNotificationObjects| (|netSnmpNotificationPrefix| 1))
+(DEFOID |netSnmpConformance| (|netSnmp| 5))
+(DEFOID |netSnmpCompliances| (|netSnmpConformance| 1))
+(DEFOID |netSnmpGroups| (|netSnmpConformance| 2))

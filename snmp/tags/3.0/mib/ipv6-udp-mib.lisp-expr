@@ -1,0 +1,4 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from ASN-SNMP:IPV6-UDP-MIB
+
+("snmpv2-conf" "snmpv2-smi" "ipv6-tc")

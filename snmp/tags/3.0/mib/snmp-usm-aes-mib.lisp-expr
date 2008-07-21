@@ -1,0 +1,4 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from ASN-SNMP:SNMP-USM-AES-MIB
+
+("snmpv2-smi" "snmp-framework-mib")

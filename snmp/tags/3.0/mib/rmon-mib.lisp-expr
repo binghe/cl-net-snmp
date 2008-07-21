@@ -1,0 +1,4 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from ASN-SNMP:RMON-MIB
+
+("snmpv2-smi" "snmpv2-tc" "snmpv2-conf")

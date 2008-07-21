@@ -1,0 +1,4 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from ASN-SNMP:RFC1213-MIB
+
+("rfc1155-smi" "rfc-1212")

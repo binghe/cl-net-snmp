@@ -1,0 +1,10 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from ASN-SNMP:IP-FORWARD-MIB
+
+("snmpv2-smi"
+ "snmpv2-tc"
+ "snmpv2-conf"
+ "if-mib"
+ "ip-mib"
+ "iana-rtproto-mib"
+ "inet-address-mib")

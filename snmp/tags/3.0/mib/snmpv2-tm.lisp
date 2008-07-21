@@ -1,0 +1,16 @@
+;;;; Auto-generated from ASN-SNMP:SNMPV2-TM
+
+(IN-PACKAGE :ASN.1)
+(SETF *CURRENT-MODULE* '|SNMPv2-TM|)
+(DEFOID |snmpv2tm| (|snmpModules| 19))
+(DEFOID |snmpUDPDomain| (|snmpDomains| 1))
+(DEFUNKNOWN :TYPE-ASSIGNMENT)
+(DEFOID |snmpCLNSDomain| (|snmpDomains| 2))
+(DEFOID |snmpCONSDomain| (|snmpDomains| 3))
+(DEFUNKNOWN :TYPE-ASSIGNMENT)
+(DEFOID |snmpDDPDomain| (|snmpDomains| 4))
+(DEFUNKNOWN :TYPE-ASSIGNMENT)
+(DEFOID |snmpIPXDomain| (|snmpDomains| 5))
+(DEFUNKNOWN :TYPE-ASSIGNMENT)
+(DEFOID |rfc1157Proxy| (|snmpProxys| 1))
+(DEFOID |rfc1157Domain| (|rfc1157Proxy| 1))
