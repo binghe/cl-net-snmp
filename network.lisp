@@ -7,7 +7,6 @@
 
 (defgeneric send-snmp-message (session message &key &allow-other-keys))
 
-#-(and lispworks win32)
 (defun send-until (action socket &key (times *snmp-send-times*) (wait-time *snmp-wait-timeout*))
   (loop with result = nil
         for i from 0 below times
@@ -16,7 +15,7 @@
              (when (plusp i)
                (format t "resend times: ~A at ~A.~%" i (get-internal-real-time)))
              (funcall action)
-             (setf result (wait-for-input (list socket) :timeout wait-time)))
+             (setf result (wait-for-input socket :timeout wait-time)))
         finally (return result)))
 
 (defun recv-until (action stop-reason)
@@ -29,21 +28,21 @@
   (let ((socket (socket-of session))
         (data (coerce (ber-encode message) '(simple-array (unsigned-byte 8) (*)))))
     (labels ((send ()
-               #+lispworks (send-message socket data (length data)
-                                         (host-of session) (port-of session))
-               #-lispworks (socket-send socket data (length data)
-                                        :address (host-of session)
-                                        :port (port-of session)))
+	       (let ((result
+		      (socket-send socket data (length data)
+				   :address (host-of session)
+				   :port (port-of session))))
+                 (declare (ignorable result))
+                 #+ignore
+		 (format t "socket-send result: ~A~%" result)))
              (recv ()
-               (decode-message session #+lispworks (receive-message socket)
-                                       #-lispworks (socket-receive socket nil 65507))))
+               (decode-message session (socket-receive socket nil 65507))))
       (if receive
         ;; receive = t
-        (if #-(and lispworks win32) (send-until #'send socket)
-            #+(and lispworks win32) (send)
-          (recv-until #'recv #'(lambda (x) (= (request-id-of (pdu-of message))
-                                              (request-id-of (pdu-of x)))))
-          (error "cannot got a reply"))
+        (if (send-until #'send socket)
+	    (recv-until #'recv #'(lambda (x) (= (request-id-of (pdu-of message))
+						(request-id-of (pdu-of x)))))
+	    (error "cannot got a reply"))
         ;; receive = nil
         (if report
           (unless (send-until #'send socket)

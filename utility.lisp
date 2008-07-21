@@ -1,20 +1,5 @@
 (in-package :snmp)
 
-;;; wait-for-input from USOCKET
-
-#+(and lispworks (not win32))
-(defun wait-for-input (sockets &key timeout)
-  (dolist (x sockets)
-    (mp:notice-fd x))
-  (mp:process-wait-with-timeout "Waiting for a socket to become active"
-                                (truncate timeout)
-                                #'(lambda (socks)
-                                    (some #'comm::socket-listen socks))
-                                sockets)
-  (dolist (x sockets)
-    (mp:unnotice-fd x))
-  (remove nil (mapcar #'comm::socket-listen sockets)))
-
 ;;; dbind from Paul Graham's On Lisp
 
 (defmacro dbind (pat seq &body body)

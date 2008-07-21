@@ -56,7 +56,7 @@
 
 (defun disable-snmp-service ()
   (when *default-snmp-server*
-    (stop-udp-server (server-process *default-snmp-server*) :wait t)
+    (comm:stop-udp-server (server-process *default-snmp-server*) :wait t)
     (setf *default-snmp-server* nil)))
 
 (defvar *dispatch-table*)
