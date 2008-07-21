@@ -1,40 +1,34 @@
-;;;; -*- Mode: lisp -*-
-
 (in-package :cl-user)
 
 (defpackage snmp
   (:use #+genera :future-common-lisp
         #-genera :common-lisp
-        #+lispworks :harlequin-common-lisp
-        #+lispworks :lispworks
-        #+lispworks :comm
-        #-lispworks :usocket
         :trivial-gray-streams
+        :usocket
         :asn.1)
-  (:export ;; constants
-           #:+snmp-version-1+
-           #:+snmp-version-2c+
-           #:+snmp-version-3+
-           ;; snmp session
-           #:open-session
+  (:export #:*default-snmp-community*
+           #:*default-snmp-port*
+           #:*default-snmp-server-address*
+           #:*default-snmp-server-port*
+           #:*default-snmp-server*
+           #:*default-snmp-version*
            #:close-session
-           #:with-open-session
-           ;; snmp operation
-   	   #:snmp-get
-           #:snmp-set
-           #:snmp-get-next
-           #:snmp-walk
-           #:snmp-bulk
-           #:snmp-trap
-           #:snmp-inform
-           ;; server
-           #:snmp-server
-           #:enable-snmp-service
+           #:define-object-id
            #:disable-snmp-service
+           #:enable-snmp-service
            #:export-object-id
+           #:open-session
+           #:snmp-bulk
+   	   #:snmp-get
+           #:snmp-get-next
+           #:snmp-inform
+           #:snmp-set
+           #:snmp-server
+           #:snmp-trap
+           #:snmp-walk
            #:unexport-object-id
-           ;; other
-           #:update-mib))
+           #:update-mib
+           #:with-open-session))
 
 (in-package :snmp)
 

@@ -12,8 +12,7 @@
 (defparameter *default-priv-protocol* :des)
 
 (defclass session ()
-  ((socket            :type #+lispworks integer
-                            #-lispworks datagram-usocket
+  ((socket            :type datagram-usocket
 		      :accessor socket-of
 		      :initarg :socket)
    (host              :type string
@@ -107,13 +106,26 @@
         (gethash +snmp-version-2c+ *snmp-class-table*) 'v2c-session
         (gethash +snmp-version-3+ *snmp-class-table*) 'v3-session))
 
+(defvar *snmp-version-table* (make-hash-table))
+
+(eval-when (:load-toplevel :execute)
+  (mapcar #'(lambda (x)
+	      (setf (gethash (car x) *snmp-version-table*) (cdr x)))
+	  '((:v1         . +snmp-version-1+)
+	    (:v2         . +snmp-version-2c+)
+	    (:v2c        . +snmp-version-2c+)
+	    (:v3         . +snmp-version-3+)
+	    (:version-1  . +snmp-version-1+)
+	    (:version-2  . +snmp-version-2c+)
+	    (:version-2c . +snmp-version-2c+)
+	    (:version-3  . +snmp-version-3+))))
+
 (defun open-session (host &key (port *default-snmp-port*) (version *default-snmp-version*)
                                (community *default-snmp-community*) user auth priv)
   ;; first, what version we are talking about if version not been set?
-  (let* ((real-version (or version
+  (let* ((real-version (or (gethash version *snmp-version-table* version)
                            (if user +snmp-version-3+ *default-snmp-version*)))
-         (socket #+lispworks (open-udp-socket :errorp t)
-                 #-lispworks (socket-connect/udp nil nil))
+         (socket (socket-connect/udp nil nil :element-type '(unsigned-byte 8) :stream nil))
          (args (list (gethash real-version *snmp-class-table*)
                      :socket socket :host host :port port)))
     (if (/= real-version +snmp-version-3+)
@@ -153,8 +165,7 @@
     (apply #'make-instance args)))
 
 (defmethod close-session ((session session))
-  #+lispworks (comm:close-socket (socket-of session))
-  #-lispworks (socket-close (socket-of session)))
+  (socket-close (socket-of session)))
 
 (defmacro with-open-session ((session &rest args) &body body)
   `(let ((,session (open-session ,@args)))
