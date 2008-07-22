@@ -8,7 +8,8 @@
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
   :depends-on (:asn.1        ; Standalone ASN.1 support
 	       :ironclad     ; SNMPv3 authentication/encryption support
-               :usocket-udp) ; Portable UDP networking
+               :usocket-udp  ; Portable UDP networking
+               :bordeaux-threads)
   :components ((:file "package")
 	       (:file "constants" :depends-on ("package"))
                (:file "utility" :depends-on ("package"))
@@ -37,7 +38,6 @@
                                   mibs)))
                (:file "snmp-trap" :depends-on ("mib" "report" "session"
 						     "message" "pdu"))
-               #+lispworks
                (:file "snmp-server" :depends-on ("utility" "mib" "message" "pdu"))
 	       #+lispworks
                (:file "update-mib" :depends-on ("mib"))))
