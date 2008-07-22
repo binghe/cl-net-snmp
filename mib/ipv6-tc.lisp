@@ -1,9 +1,10 @@
+;;;; -*- Mode: Lisp -*-
 ;;;; Auto-generated from ASN-SNMP:IPV6-TC
 
-(IN-PACKAGE :ASN.1)
-(SETF *CURRENT-MODULE* 'IPV6-TC)
-(DEFUNKNOWN :TYPE-ASSIGNMENT)
-(DEFUNKNOWN :TYPE-ASSIGNMENT)
-(DEFUNKNOWN :TYPE-ASSIGNMENT)
-(DEFUNKNOWN :TYPE-ASSIGNMENT)
-(DEFUNKNOWN :TYPE-ASSIGNMENT)
+(in-package :asn.1)
+(setf *current-module* 'ipv6-tc)
+(deftype |Ipv6Address| () 't)
+(deftype |Ipv6AddressPrefix| () 't)
+(deftype |Ipv6AddressIfIdentifier| () 't)
+(deftype |Ipv6IfIndex| () 't)
+(deftype |Ipv6IfIndexOrZero| () 't)

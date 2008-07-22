@@ -1,6 +1,11 @@
+;;;; -*- Mode: Lisp -*-
 ;;;; Auto-generated from ASN-SNMP:IANA-ADDRESS-FAMILY-NUMBERS-MIB
 
-(IN-PACKAGE :ASN.1)
-(SETF *CURRENT-MODULE* 'IANA-ADDRESS-FAMILY-NUMBERS-MIB)
-(DEFOID |ianaAddressFamilyNumbers| (|mib-2| 72))
-(DEFUNKNOWN :TYPE-ASSIGNMENT)
+(in-package :asn.1)
+(setf *current-module* 'iana-address-family-numbers-mib)
+(defoid |ianaAddressFamilyNumbers| (|mib-2| 72)
+  (:type 'module-identity)
+  (:description
+   "The MIB module defines the AddressFamilyNumbers
+          textual convention."))
+(deftype |AddressFamilyNumbers| () 't)

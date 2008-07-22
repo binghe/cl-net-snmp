@@ -1,7 +1,13 @@
+;;;; -*- Mode: Lisp -*-
 ;;;; Auto-generated from ASN-SNMP:IANAIFTYPE-MIB
 
-(IN-PACKAGE :ASN.1)
-(SETF *CURRENT-MODULE* '|IANAifType-MIB|)
-(DEFOID |ianaifType| (|mib-2| 30))
-(DEFUNKNOWN :TYPE-ASSIGNMENT)
-(DEFUNKNOWN :TYPE-ASSIGNMENT)
+(in-package :asn.1)
+(setf *current-module* '|IANAifType-MIB|)
+(defoid |ianaifType| (|mib-2| 30)
+  (:type 'module-identity)
+  (:description
+   "This MIB module defines the IANAifType Textual
+                     Convention, and thus the enumerated values of
+                     the ifType object defined in MIB-II's ifTable."))
+(deftype |IANAifType| () 't)
+(deftype |IANAtunnelType| () 't)
