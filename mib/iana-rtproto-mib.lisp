@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'iana-rtproto-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'iana-rtproto-mib *mib-modules*))
 (defoid |ianaRtProtoMIB| (|mib-2| 84)
   (:type 'module-identity)
   (:description

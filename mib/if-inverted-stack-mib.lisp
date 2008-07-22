@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'if-inverted-stack-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'if-inverted-stack-mib *mib-modules*))
 (defoid |ifInvertedStackMIB| (|mib-2| 77)
   (:type 'module-identity)
   (:description

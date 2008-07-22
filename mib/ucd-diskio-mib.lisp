@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'ucd-diskio-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'ucd-diskio-mib *mib-modules*))
 (defoid |ucdDiskIOMIB| (|ucdExperimental| 15)
   (:type 'module-identity)
   (:description

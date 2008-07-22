@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'snmp-view-based-acm-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'snmp-view-based-acm-mib *mib-modules*))
 (defoid |snmpVacmMIB| (|snmpModules| 16)
   (:type 'module-identity)
   (:description

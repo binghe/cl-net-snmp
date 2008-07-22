@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'ucd-dlmod-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'ucd-dlmod-mib *mib-modules*))
 (defoid |ucdDlmodMIB| (|ucdExperimental| 14)
   (:type 'module-identity)
   (:description

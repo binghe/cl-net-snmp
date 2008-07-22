@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'source-routing-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'source-routing-mib *mib-modules*))
 (defoid |dot1dPortPair| (|dot1dBridge| 10) (:type 'object-identity))
 (defoid |dot1dSrPortTable| (|dot1dSr| 1)
   (:type 'object-type)

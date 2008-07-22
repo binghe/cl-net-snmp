@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'notification-log-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'notification-log-mib *mib-modules*))
 (defoid |notificationLogMIB| (|mib-2| 92)
   (:type 'module-identity)
   (:description

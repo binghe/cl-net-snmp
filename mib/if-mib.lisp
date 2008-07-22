@@ -3,6 +3,7 @@
 
 (in-package :asn.1)
 (setf *current-module* 'if-mib)
+(eval-when (:load-toplevel :execute) (pushnew 'if-mib *mib-modules*))
 (defoid |ifMIB| (|mib-2| 31)
   (:type 'module-identity)
   (:description

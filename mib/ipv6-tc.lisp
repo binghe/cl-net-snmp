@@ -3,6 +3,7 @@
 
 (in-package :asn.1)
 (setf *current-module* 'ipv6-tc)
+(eval-when (:load-toplevel :execute) (pushnew 'ipv6-tc *mib-modules*))
 (deftype |Ipv6Address| () 't)
 (deftype |Ipv6AddressPrefix| () 't)
 (deftype |Ipv6AddressIfIdentifier| () 't)

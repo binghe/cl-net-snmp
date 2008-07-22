@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* '|SNMPv2-TM|)
+(eval-when (:load-toplevel :execute)
+  (pushnew '|SNMPv2-TM| *mib-modules*))
 (defoid |snmpv2tm| (|snmpModules| 19)
   (:type 'module-identity)
   (:description

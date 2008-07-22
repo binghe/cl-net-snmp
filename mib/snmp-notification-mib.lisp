@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'snmp-notification-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'snmp-notification-mib *mib-modules*))
 (defoid |snmpNotificationMIB| (|snmpModules| 13)
   (:type 'module-identity)
   (:description

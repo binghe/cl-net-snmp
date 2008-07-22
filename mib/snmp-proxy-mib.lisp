@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'snmp-proxy-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'snmp-proxy-mib *mib-modules*))
 (defoid |snmpProxyMIB| (|snmpModules| 14)
   (:type 'module-identity)
   (:description

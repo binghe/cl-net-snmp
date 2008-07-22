@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'ospf-trap-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'ospf-trap-mib *mib-modules*))
 (defoid |ospfTrap| (|ospf| 16)
   (:type 'module-identity)
   (:description

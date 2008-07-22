@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'rfc1155-smi)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'rfc1155-smi *mib-modules*))
 (defoid |internet| (|dod| 1) (:type 'object-identity))
 (defoid |directory| (|internet| 1) (:type 'object-identity))
 (defoid |mgmt| (|internet| 2) (:type 'object-identity))

@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'ip-forward-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'ip-forward-mib *mib-modules*))
 (defoid |ipForward| (|ip| 24)
   (:type 'module-identity)
   (:description

@@ -3,6 +3,7 @@
 
 (in-package :asn.1)
 (setf *current-module* 'ospf-mib)
+(eval-when (:load-toplevel :execute) (pushnew 'ospf-mib *mib-modules*))
 (defoid |ospf| (|mib-2| 14)
   (:type 'module-identity)
   (:description

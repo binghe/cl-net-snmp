@@ -3,6 +3,7 @@
 
 (in-package :asn.1)
 (setf *current-module* 'bgp4-mib)
+(eval-when (:load-toplevel :execute) (pushnew 'bgp4-mib *mib-modules*))
 (defoid |bgp| (|mib-2| 15)
   (:type 'module-identity)
   (:description "The MIB module for BGP-4."))

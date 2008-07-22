@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'iana-language-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'iana-language-mib *mib-modules*))
 (defoid |ianaLanguages| (|mib-2| 73)
   (:type 'module-identity)
   (:description
