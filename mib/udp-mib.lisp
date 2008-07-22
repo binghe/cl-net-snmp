@@ -3,6 +3,7 @@
 
 (in-package :asn.1)
 (setf *current-module* 'udp-mib)
+(eval-when (:load-toplevel :execute) (pushnew 'udp-mib *mib-modules*))
 (defoid |udpMIB| (|mib-2| 50)
   (:type 'module-identity)
   (:description

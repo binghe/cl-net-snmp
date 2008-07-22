@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'net-snmp-tc)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'net-snmp-tc *mib-modules*))
 (defoid |netSnmpTCs| (|netSnmpModuleIDs| 1)
   (:type 'module-identity)
   (:description

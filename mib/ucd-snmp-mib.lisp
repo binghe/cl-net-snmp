@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'ucd-snmp-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'ucd-snmp-mib *mib-modules*))
 (defoid |ucdavis| (|enterprises| 2021)
   (:type 'module-identity)
   (:description

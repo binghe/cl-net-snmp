@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'ipv6-udp-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'ipv6-udp-mib *mib-modules*))
 (defoid |ipv6UdpMIB| (|experimental| 87)
   (:type 'module-identity)
   (:description

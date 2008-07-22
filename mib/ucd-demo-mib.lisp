@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'ucd-demo-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'ucd-demo-mib *mib-modules*))
 (defoid |ucdDemoMIB| (|ucdavis| 14)
   (:type 'module-identity)
   (:description "The UCD-SNMP Demonstration MIB."))

@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* '|RIPv2-MIB|)
+(eval-when (:load-toplevel :execute)
+  (pushnew '|RIPv2-MIB| *mib-modules*))
 (defoid |rip2| (|mib-2| 23)
   (:type 'module-identity)
   (:description

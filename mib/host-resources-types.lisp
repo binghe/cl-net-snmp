@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'host-resources-types)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'host-resources-types *mib-modules*))
 (defoid |hostResourcesTypesModule| (|hrMIBAdminInfo| 4)
   (:type 'module-identity)
   (:description

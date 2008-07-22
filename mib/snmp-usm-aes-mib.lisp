@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'snmp-usm-aes-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'snmp-usm-aes-mib *mib-modules*))
 (defoid |snmpUsmAesMIB| (|snmpModules| 20)
   (:type 'module-identity)
   (:description

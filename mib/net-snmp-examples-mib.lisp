@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'net-snmp-examples-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'net-snmp-examples-mib *mib-modules*))
 (defoid |netSnmpExamples| (|netSnmp| 2)
   (:type 'module-identity)
   (:description

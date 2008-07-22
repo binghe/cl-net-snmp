@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'disman-event-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'disman-event-mib *mib-modules*))
 (defoid |dismanEventMIB| (|mib-2| 88)
   (:type 'module-identity)
   (:description

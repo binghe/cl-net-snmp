@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* '|SNMPv2-SMI|)
+(eval-when (:load-toplevel :execute)
+  (pushnew '|SNMPv2-SMI| *mib-modules*))
 (defoid |org| (|iso| 3) (:type 'object-identity))
 (defoid |dod| (|org| 6) (:type 'object-identity))
 (defoid |internet| (|dod| 1) (:type 'object-identity))

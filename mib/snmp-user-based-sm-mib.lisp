@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'snmp-user-based-sm-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'snmp-user-based-sm-mib *mib-modules*))
 (defoid |snmpUsmMIB| (|snmpModules| 15)
   (:type 'module-identity)
   (:description

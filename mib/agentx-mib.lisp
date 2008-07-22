@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'agentx-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'agentx-mib *mib-modules*))
 (defoid |agentxMIB| (|mib-2| 74)
   (:type 'module-identity)
   (:description

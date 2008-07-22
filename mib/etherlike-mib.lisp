@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* '|EtherLike-MIB|)
+(eval-when (:load-toplevel :execute)
+  (pushnew '|EtherLike-MIB| *mib-modules*))
 (defoid |etherMIB| (|mib-2| 35)
   (:type 'module-identity)
   (:description
