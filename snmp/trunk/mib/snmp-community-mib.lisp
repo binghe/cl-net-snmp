@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'snmp-community-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'snmp-community-mib *mib-modules*))
 (defoid |snmpCommunityMIB| (|snmpModules| 18)
   (:type 'module-identity)
   (:description

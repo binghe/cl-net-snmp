@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'disman-script-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'disman-script-mib *mib-modules*))
 (defoid |scriptMIB| (|mib-2| 64)
   (:type 'module-identity)
   (:description

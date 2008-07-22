@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'net-snmp-extend-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'net-snmp-extend-mib *mib-modules*))
 (defoid |netSnmpExtendMIB| (|nsExtensions| 1)
   (:type 'module-identity)
   (:description

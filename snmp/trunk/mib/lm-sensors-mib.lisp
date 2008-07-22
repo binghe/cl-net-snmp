@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'lm-sensors-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'lm-sensors-mib *mib-modules*))
 (defoid |lmSensors| (|ucdExperimental| 16) (:type 'object-identity))
 (defoid |lmSensorsMIB| (|lmSensors| 1)
   (:type 'module-identity)

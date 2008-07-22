@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'snmp-usm-dh-objects-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'snmp-usm-dh-objects-mib *mib-modules*))
 (defoid |snmpUsmDHObjectsMIB| (|experimental| 101)
   (:type 'module-identity)
   (:description

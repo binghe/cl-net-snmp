@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'snmp-framework-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'snmp-framework-mib *mib-modules*))
 (defoid |snmpFrameworkMIB| (|snmpModules| 10)
   (:type 'module-identity)
   (:description

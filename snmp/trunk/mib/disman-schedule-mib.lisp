@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'disman-schedule-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'disman-schedule-mib *mib-modules*))
 (defoid |schedMIB| (|mib-2| 63)
   (:type 'module-identity)
   (:description

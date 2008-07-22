@@ -3,6 +3,7 @@
 
 (in-package :asn.1)
 (setf *current-module* 'hcnum-tc)
+(eval-when (:load-toplevel :execute) (pushnew 'hcnum-tc *mib-modules*))
 (defoid |hcnumTC| (|mib-2| 78)
   (:type 'module-identity)
   (:description

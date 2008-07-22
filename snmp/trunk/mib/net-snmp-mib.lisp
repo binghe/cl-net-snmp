@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'net-snmp-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'net-snmp-mib *mib-modules*))
 (defoid |netSnmp| (|enterprises| 8072)
   (:type 'module-identity)
   (:description

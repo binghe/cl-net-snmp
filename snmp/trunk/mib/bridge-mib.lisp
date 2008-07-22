@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'bridge-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'bridge-mib *mib-modules*))
 (deftype |MacAddress| () 't)
 (deftype |BridgeId| () 't)
 (deftype |Timeout| () ':integer)

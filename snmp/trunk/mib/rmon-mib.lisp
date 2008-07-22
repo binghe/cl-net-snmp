@@ -3,6 +3,7 @@
 
 (in-package :asn.1)
 (setf *current-module* 'rmon-mib)
+(eval-when (:load-toplevel :execute) (pushnew 'rmon-mib *mib-modules*))
 (defoid |rmon| (|mib-2| 16) (:type 'object-identity))
 (deftype |OwnerString| () 't)
 (deftype |EntryStatus| () 't)

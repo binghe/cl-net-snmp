@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'net-snmp-vacm-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'net-snmp-vacm-mib *mib-modules*))
 (defoid |netSnmpVacmMIB| (|netSnmpObjects| 9)
   (:type 'module-identity)
   (:description

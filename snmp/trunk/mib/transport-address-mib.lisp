@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'transport-address-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'transport-address-mib *mib-modules*))
 (defoid |transportAddressMIB| (|mib-2| 100)
   (:type 'module-identity)
   (:description

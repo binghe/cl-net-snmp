@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'inet-address-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'inet-address-mib *mib-modules*))
 (defoid |inetAddressMIB| (|mib-2| 76)
   (:type 'module-identity)
   (:description

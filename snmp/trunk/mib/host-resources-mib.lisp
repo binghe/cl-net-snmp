@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'host-resources-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'host-resources-mib *mib-modules*))
 (defoid |host| (|mib-2| 25) (:type 'object-identity))
 (defoid |hrSystem| (|host| 1) (:type 'object-identity))
 (defoid |hrStorage| (|host| 2) (:type 'object-identity))

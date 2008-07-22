@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'ucd-ipfwacc-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'ucd-ipfwacc-mib *mib-modules*))
 (defoid |ucdIpFwAccMIB| (|ucdExperimental| 1)
   (:type 'module-identity)
   (:description

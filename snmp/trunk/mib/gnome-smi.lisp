@@ -3,6 +3,7 @@
 
 (in-package :asn.1)
 (setf *current-module* 'gnome-smi)
+(eval-when (:load-toplevel :execute) (pushnew 'gnome-smi *mib-modules*))
 (defoid |gnome| (|enterprises| 3319)
   (:type 'module-identity)
   (:description "The Structure of GNOME."))

@@ -3,6 +3,8 @@
 
 (in-package :asn.1)
 (setf *current-module* 'rfc1213-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'rfc1213-mib *mib-modules*))
 (defoid |mib-2| (|mgmt| 1) (:type 'object-identity))
 (deftype |DisplayString| () 't)
 (deftype |PhysAddress| () 't)
