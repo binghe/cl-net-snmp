@@ -1,59 +1,296 @@
+;;;; -*- Mode: Lisp -*-
 ;;;; Auto-generated from ASN-SNMP:HOST-RESOURCES-TYPES
 
-(IN-PACKAGE :ASN.1)
-(SETF *CURRENT-MODULE* 'HOST-RESOURCES-TYPES)
-(DEFOID |hostResourcesTypesModule| (|hrMIBAdminInfo| 4))
-(DEFOID |hrStorageTypes| (|hrStorage| 1))
-(DEFOID |hrStorageOther| (|hrStorageTypes| 1))
-(DEFOID |hrStorageRam| (|hrStorageTypes| 2))
-(DEFOID |hrStorageVirtualMemory| (|hrStorageTypes| 3))
-(DEFOID |hrStorageFixedDisk| (|hrStorageTypes| 4))
-(DEFOID |hrStorageRemovableDisk| (|hrStorageTypes| 5))
-(DEFOID |hrStorageFloppyDisk| (|hrStorageTypes| 6))
-(DEFOID |hrStorageCompactDisc| (|hrStorageTypes| 7))
-(DEFOID |hrStorageRamDisk| (|hrStorageTypes| 8))
-(DEFOID |hrStorageFlashMemory| (|hrStorageTypes| 9))
-(DEFOID |hrStorageNetworkDisk| (|hrStorageTypes| 10))
-(DEFOID |hrDeviceTypes| (|hrDevice| 1))
-(DEFOID |hrDeviceOther| (|hrDeviceTypes| 1))
-(DEFOID |hrDeviceUnknown| (|hrDeviceTypes| 2))
-(DEFOID |hrDeviceProcessor| (|hrDeviceTypes| 3))
-(DEFOID |hrDeviceNetwork| (|hrDeviceTypes| 4))
-(DEFOID |hrDevicePrinter| (|hrDeviceTypes| 5))
-(DEFOID |hrDeviceDiskStorage| (|hrDeviceTypes| 6))
-(DEFOID |hrDeviceVideo| (|hrDeviceTypes| 10))
-(DEFOID |hrDeviceAudio| (|hrDeviceTypes| 11))
-(DEFOID |hrDeviceCoprocessor| (|hrDeviceTypes| 12))
-(DEFOID |hrDeviceKeyboard| (|hrDeviceTypes| 13))
-(DEFOID |hrDeviceModem| (|hrDeviceTypes| 14))
-(DEFOID |hrDeviceParallelPort| (|hrDeviceTypes| 15))
-(DEFOID |hrDevicePointing| (|hrDeviceTypes| 16))
-(DEFOID |hrDeviceSerialPort| (|hrDeviceTypes| 17))
-(DEFOID |hrDeviceTape| (|hrDeviceTypes| 18))
-(DEFOID |hrDeviceClock| (|hrDeviceTypes| 19))
-(DEFOID |hrDeviceVolatileMemory| (|hrDeviceTypes| 20))
-(DEFOID |hrDeviceNonVolatileMemory| (|hrDeviceTypes| 21))
-(DEFOID |hrFSTypes| (|hrDevice| 9))
-(DEFOID |hrFSOther| (|hrFSTypes| 1))
-(DEFOID |hrFSUnknown| (|hrFSTypes| 2))
-(DEFOID |hrFSBerkeleyFFS| (|hrFSTypes| 3))
-(DEFOID |hrFSSys5FS| (|hrFSTypes| 4))
-(DEFOID |hrFSFat| (|hrFSTypes| 5))
-(DEFOID |hrFSHPFS| (|hrFSTypes| 6))
-(DEFOID |hrFSHFS| (|hrFSTypes| 7))
-(DEFOID |hrFSMFS| (|hrFSTypes| 8))
-(DEFOID |hrFSNTFS| (|hrFSTypes| 9))
-(DEFOID |hrFSVNode| (|hrFSTypes| 10))
-(DEFOID |hrFSJournaled| (|hrFSTypes| 11))
-(DEFOID |hrFSiso9660| (|hrFSTypes| 12))
-(DEFOID |hrFSRockRidge| (|hrFSTypes| 13))
-(DEFOID |hrFSNFS| (|hrFSTypes| 14))
-(DEFOID |hrFSNetware| (|hrFSTypes| 15))
-(DEFOID |hrFSAFS| (|hrFSTypes| 16))
-(DEFOID |hrFSDFS| (|hrFSTypes| 17))
-(DEFOID |hrFSAppleshare| (|hrFSTypes| 18))
-(DEFOID |hrFSRFS| (|hrFSTypes| 19))
-(DEFOID |hrFSDGCFS| (|hrFSTypes| 20))
-(DEFOID |hrFSBFS| (|hrFSTypes| 21))
-(DEFOID |hrFSFAT32| (|hrFSTypes| 22))
-(DEFOID |hrFSLinuxExt2| (|hrFSTypes| 23))
+(in-package :asn.1)
+(setf *current-module* 'host-resources-types)
+(defoid |hostResourcesTypesModule| (|hrMIBAdminInfo| 4)
+  (:type 'module-identity)
+  (:description
+   "This MIB module registers type definitions for
+      storage types, device types, and file system types.
+
+      After the initial revision, this module will be
+      maintained by IANA."))
+(defoid |hrStorageTypes| (|hrStorage| 1) (:type 'object-identity))
+(defoid |hrStorageOther| (|hrStorageTypes| 1)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The storage type identifier used when no other defined
+        type is appropriate."))
+(defoid |hrStorageRam| (|hrStorageTypes| 2)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description "The storage type identifier used for RAM."))
+(defoid |hrStorageVirtualMemory| (|hrStorageTypes| 3)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The storage type identifier used for virtual memory,
+        temporary storage of swapped or paged memory."))
+(defoid |hrStorageFixedDisk| (|hrStorageTypes| 4)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The storage type identifier used for non-removable
+        rigid rotating magnetic storage devices."))
+(defoid |hrStorageRemovableDisk| (|hrStorageTypes| 5)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The storage type identifier used for removable rigid
+        rotating magnetic storage devices."))
+(defoid |hrStorageFloppyDisk| (|hrStorageTypes| 6)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The storage type identifier used for non-rigid rotating
+        magnetic storage devices."))
+(defoid |hrStorageCompactDisc| (|hrStorageTypes| 7)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The storage type identifier used for read-only rotating
+        optical storage devices."))
+(defoid |hrStorageRamDisk| (|hrStorageTypes| 8)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The storage type identifier used for a file system that
+        is stored in RAM."))
+(defoid |hrStorageFlashMemory| (|hrStorageTypes| 9)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description "The storage type identifier used for flash memory."))
+(defoid |hrStorageNetworkDisk| (|hrStorageTypes| 10)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The storage type identifier used for a
+        networked file system."))
+(defoid |hrDeviceTypes| (|hrDevice| 1) (:type 'object-identity))
+(defoid |hrDeviceOther| (|hrDeviceTypes| 1)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The device type identifier used when no other defined
+        type is appropriate."))
+(defoid |hrDeviceUnknown| (|hrDeviceTypes| 2)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The device type identifier used when the device type is
+        unknown."))
+(defoid |hrDeviceProcessor| (|hrDeviceTypes| 3)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description "The device type identifier used for a CPU."))
+(defoid |hrDeviceNetwork| (|hrDeviceTypes| 4)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The device type identifier used for a network interface."))
+(defoid |hrDevicePrinter| (|hrDeviceTypes| 5)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description "The device type identifier used for a printer."))
+(defoid |hrDeviceDiskStorage| (|hrDeviceTypes| 6)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description "The device type identifier used for a disk drive."))
+(defoid |hrDeviceVideo| (|hrDeviceTypes| 10)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description "The device type identifier used for a video device."))
+(defoid |hrDeviceAudio| (|hrDeviceTypes| 11)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description "The device type identifier used for an audio device."))
+(defoid |hrDeviceCoprocessor| (|hrDeviceTypes| 12)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description "The device type identifier used for a co-processor."))
+(defoid |hrDeviceKeyboard| (|hrDeviceTypes| 13)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The device type identifier used for a keyboard device."))
+(defoid |hrDeviceModem| (|hrDeviceTypes| 14)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description "The device type identifier used for a modem."))
+(defoid |hrDeviceParallelPort| (|hrDeviceTypes| 15)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description "The device type identifier used for a parallel port."))
+(defoid |hrDevicePointing| (|hrDeviceTypes| 16)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The device type identifier used for a pointing device
+        (e.g., a mouse)."))
+(defoid |hrDeviceSerialPort| (|hrDeviceTypes| 17)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description "The device type identifier used for a serial port."))
+(defoid |hrDeviceTape| (|hrDeviceTypes| 18)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The device type identifier used for a tape storage device."))
+(defoid |hrDeviceClock| (|hrDeviceTypes| 19)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description "The device type identifier used for a clock device."))
+(defoid |hrDeviceVolatileMemory| (|hrDeviceTypes| 20)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The device type identifier used for a volatile memory
+        storage device."))
+(defoid |hrDeviceNonVolatileMemory| (|hrDeviceTypes| 21)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The device type identifier used for a non-volatile memory
+
+        storage device."))
+(defoid |hrFSTypes| (|hrDevice| 9) (:type 'object-identity))
+(defoid |hrFSOther| (|hrFSTypes| 1)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The file system type identifier used when no other
+        defined type is appropriate."))
+(defoid |hrFSUnknown| (|hrFSTypes| 2)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The file system type identifier used when the type of
+        file system is unknown."))
+(defoid |hrFSBerkeleyFFS| (|hrFSTypes| 3)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The file system type identifier used for the
+        Berkeley Fast File System."))
+(defoid |hrFSSys5FS| (|hrFSTypes| 4)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The file system type identifier used for the
+        System V File System."))
+(defoid |hrFSFat| (|hrFSTypes| 5)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The file system type identifier used for
+        DOS's FAT file system."))
+(defoid |hrFSHPFS| (|hrFSTypes| 6)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The file system type identifier used for OS/2's
+        High Performance File System."))
+(defoid |hrFSHFS| (|hrFSTypes| 7)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The file system type identifier used for the
+        Macintosh Hierarchical File System."))
+(defoid |hrFSMFS| (|hrFSTypes| 8)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The file system type identifier used for the
+        Macintosh File System."))
+(defoid |hrFSNTFS| (|hrFSTypes| 9)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The file system type identifier used for the
+        Windows NT File System."))
+(defoid |hrFSVNode| (|hrFSTypes| 10)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The file system type identifier used for the
+        VNode File System."))
+(defoid |hrFSJournaled| (|hrFSTypes| 11)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The file system type identifier used for the
+        Journaled File System."))
+(defoid |hrFSiso9660| (|hrFSTypes| 12)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The file system type identifier used for the
+        ISO 9660 File System for CD's."))
+(defoid |hrFSRockRidge| (|hrFSTypes| 13)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The file system type identifier used for the
+        RockRidge File System for CD's."))
+(defoid |hrFSNFS| (|hrFSTypes| 14)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The file system type identifier used for the
+        NFS File System."))
+(defoid |hrFSNetware| (|hrFSTypes| 15)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The file system type identifier used for the
+        Netware File System."))
+(defoid |hrFSAFS| (|hrFSTypes| 16)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The file system type identifier used for the
+        Andrew File System."))
+(defoid |hrFSDFS| (|hrFSTypes| 17)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The file system type identifier used for the
+        OSF DCE Distributed File System."))
+(defoid |hrFSAppleshare| (|hrFSTypes| 18)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The file system type identifier used for the
+        AppleShare File System."))
+(defoid |hrFSRFS| (|hrFSTypes| 19)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The file system type identifier used for the
+        RFS File System."))
+(defoid |hrFSDGCFS| (|hrFSTypes| 20)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The file system type identifier used for the
+        Data General DGCFS."))
+(defoid |hrFSBFS| (|hrFSTypes| 21)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The file system type identifier used for the
+        SVR4 Boot File System."))
+(defoid |hrFSFAT32| (|hrFSTypes| 22)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The file system type identifier used for the
+        Windows FAT32 File System."))
+(defoid |hrFSLinuxExt2| (|hrFSTypes| 23)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "The file system type identifier used for the
+        Linux EXT2 File System."))

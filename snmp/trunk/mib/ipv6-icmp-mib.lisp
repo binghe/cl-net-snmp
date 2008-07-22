@@ -1,48 +1,344 @@
+;;;; -*- Mode: Lisp -*-
 ;;;; Auto-generated from ASN-SNMP:IPV6-ICMP-MIB
 
-(IN-PACKAGE :ASN.1)
-(SETF *CURRENT-MODULE* 'IPV6-ICMP-MIB)
-(DEFOID |ipv6IcmpMIB| (|mib-2| 56))
-(DEFOID |ipv6IcmpMIBObjects| (|ipv6IcmpMIB| 1))
-(DEFOID |ipv6IfIcmpTable| (|ipv6IcmpMIBObjects| 1))
-(DEFOID |ipv6IfIcmpEntry| (|ipv6IfIcmpTable| 1))
-(DEFUNKNOWN :TYPE-ASSIGNMENT)
-(DEFOID |ipv6IfIcmpInMsgs| (|ipv6IfIcmpEntry| 1))
-(DEFOID |ipv6IfIcmpInErrors| (|ipv6IfIcmpEntry| 2))
-(DEFOID |ipv6IfIcmpInDestUnreachs| (|ipv6IfIcmpEntry| 3))
-(DEFOID |ipv6IfIcmpInAdminProhibs| (|ipv6IfIcmpEntry| 4))
-(DEFOID |ipv6IfIcmpInTimeExcds| (|ipv6IfIcmpEntry| 5))
-(DEFOID |ipv6IfIcmpInParmProblems| (|ipv6IfIcmpEntry| 6))
-(DEFOID |ipv6IfIcmpInPktTooBigs| (|ipv6IfIcmpEntry| 7))
-(DEFOID |ipv6IfIcmpInEchos| (|ipv6IfIcmpEntry| 8))
-(DEFOID |ipv6IfIcmpInEchoReplies| (|ipv6IfIcmpEntry| 9))
-(DEFOID |ipv6IfIcmpInRouterSolicits| (|ipv6IfIcmpEntry| 10))
-(DEFOID |ipv6IfIcmpInRouterAdvertisements| (|ipv6IfIcmpEntry| 11))
-(DEFOID |ipv6IfIcmpInNeighborSolicits| (|ipv6IfIcmpEntry| 12))
-(DEFOID |ipv6IfIcmpInNeighborAdvertisements| (|ipv6IfIcmpEntry| 13))
-(DEFOID |ipv6IfIcmpInRedirects| (|ipv6IfIcmpEntry| 14))
-(DEFOID |ipv6IfIcmpInGroupMembQueries| (|ipv6IfIcmpEntry| 15))
-(DEFOID |ipv6IfIcmpInGroupMembResponses| (|ipv6IfIcmpEntry| 16))
-(DEFOID |ipv6IfIcmpInGroupMembReductions| (|ipv6IfIcmpEntry| 17))
-(DEFOID |ipv6IfIcmpOutMsgs| (|ipv6IfIcmpEntry| 18))
-(DEFOID |ipv6IfIcmpOutErrors| (|ipv6IfIcmpEntry| 19))
-(DEFOID |ipv6IfIcmpOutDestUnreachs| (|ipv6IfIcmpEntry| 20))
-(DEFOID |ipv6IfIcmpOutAdminProhibs| (|ipv6IfIcmpEntry| 21))
-(DEFOID |ipv6IfIcmpOutTimeExcds| (|ipv6IfIcmpEntry| 22))
-(DEFOID |ipv6IfIcmpOutParmProblems| (|ipv6IfIcmpEntry| 23))
-(DEFOID |ipv6IfIcmpOutPktTooBigs| (|ipv6IfIcmpEntry| 24))
-(DEFOID |ipv6IfIcmpOutEchos| (|ipv6IfIcmpEntry| 25))
-(DEFOID |ipv6IfIcmpOutEchoReplies| (|ipv6IfIcmpEntry| 26))
-(DEFOID |ipv6IfIcmpOutRouterSolicits| (|ipv6IfIcmpEntry| 27))
-(DEFOID |ipv6IfIcmpOutRouterAdvertisements| (|ipv6IfIcmpEntry| 28))
-(DEFOID |ipv6IfIcmpOutNeighborSolicits| (|ipv6IfIcmpEntry| 29))
-(DEFOID |ipv6IfIcmpOutNeighborAdvertisements| (|ipv6IfIcmpEntry| 30))
-(DEFOID |ipv6IfIcmpOutRedirects| (|ipv6IfIcmpEntry| 31))
-(DEFOID |ipv6IfIcmpOutGroupMembQueries| (|ipv6IfIcmpEntry| 32))
-(DEFOID |ipv6IfIcmpOutGroupMembResponses| (|ipv6IfIcmpEntry| 33))
-(DEFOID |ipv6IfIcmpOutGroupMembReductions| (|ipv6IfIcmpEntry| 34))
-(DEFOID |ipv6IcmpConformance| (|ipv6IcmpMIB| 2))
-(DEFOID |ipv6IcmpCompliances| (|ipv6IcmpConformance| 1))
-(DEFOID |ipv6IcmpGroups| (|ipv6IcmpConformance| 2))
-(DEFUNKNOWN 'MODULE-COMPLIANCE)
-(DEFOID |ipv6IcmpGroup| (|ipv6IcmpGroups| 1))
+(in-package :asn.1)
+(setf *current-module* 'ipv6-icmp-mib)
+(defoid |ipv6IcmpMIB| (|mib-2| 56)
+  (:type 'module-identity)
+  (:description
+   "The MIB module for entities implementing
+        the ICMPv6."))
+(defoid |ipv6IcmpMIBObjects| (|ipv6IcmpMIB| 1) (:type 'object-identity))
+(defoid |ipv6IfIcmpTable| (|ipv6IcmpMIBObjects| 1)
+  (:type 'object-type)
+  (:syntax 't)
+  (:max-access '|not-accessible|)
+  (:status '|current|)
+  (:description
+   "IPv6 ICMP statistics. This table contains statistics
+      of ICMPv6 messages that are received and sourced by
+      the entity."))
+(defoid |ipv6IfIcmpEntry| (|ipv6IfIcmpTable| 1)
+  (:type 'object-type)
+  (:syntax '|Ipv6IfIcmpEntry|)
+  (:max-access '|not-accessible|)
+  (:status '|current|)
+  (:description
+   "An ICMPv6 statistics entry containing
+      objects at a particular IPv6 interface.
+
+      Note that a receiving interface is
+      the interface to which a given ICMPv6 message
+      is addressed which may not be necessarily
+      the input interface for the message.
+
+      Similarly,  the sending interface is
+      the interface that sources a given
+      ICMP message which is usually but not
+      necessarily the output interface for the message."))
+(deftype |Ipv6IfIcmpEntry| () 't)
+(defoid |ipv6IfIcmpInMsgs| (|ipv6IfIcmpEntry| 1)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The total number of ICMP messages received
+      by the interface which includes all those
+      counted by ipv6IfIcmpInErrors. Note that this
+      interface is the interface to which the
+      ICMP messages were addressed which may not be
+      necessarily the input interface for the messages."))
+(defoid |ipv6IfIcmpInErrors| (|ipv6IfIcmpEntry| 2)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The number of ICMP messages which the interface
+      received but determined as having ICMP-specific
+      errors (bad ICMP checksums, bad length, etc.)."))
+(defoid |ipv6IfIcmpInDestUnreachs| (|ipv6IfIcmpEntry| 3)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The number of ICMP Destination Unreachable
+      messages received by the interface."))
+(defoid |ipv6IfIcmpInAdminProhibs| (|ipv6IfIcmpEntry| 4)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The number of ICMP destination
+      unreachable/communication administratively
+      prohibited messages received by the interface."))
+(defoid |ipv6IfIcmpInTimeExcds| (|ipv6IfIcmpEntry| 5)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The number of ICMP Time Exceeded messages
+       received by the interface."))
+(defoid |ipv6IfIcmpInParmProblems| (|ipv6IfIcmpEntry| 6)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The number of ICMP Parameter Problem messages
+       received by the interface."))
+(defoid |ipv6IfIcmpInPktTooBigs| (|ipv6IfIcmpEntry| 7)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The number of ICMP Packet Too Big messages
+      received by the interface."))
+(defoid |ipv6IfIcmpInEchos| (|ipv6IfIcmpEntry| 8)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The number of ICMP Echo (request) messages
+       received by the interface."))
+(defoid |ipv6IfIcmpInEchoReplies| (|ipv6IfIcmpEntry| 9)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The number of ICMP Echo Reply messages received
+      by the interface."))
+(defoid |ipv6IfIcmpInRouterSolicits| (|ipv6IfIcmpEntry| 10)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The number of ICMP Router Solicit messages
+       received by the interface."))
+(defoid |ipv6IfIcmpInRouterAdvertisements| (|ipv6IfIcmpEntry| 11)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The number of ICMP Router Advertisement messages
+      received by the interface."))
+(defoid |ipv6IfIcmpInNeighborSolicits| (|ipv6IfIcmpEntry| 12)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The number of ICMP Neighbor Solicit messages
+       received by the interface."))
+(defoid |ipv6IfIcmpInNeighborAdvertisements| (|ipv6IfIcmpEntry| 13)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The number of ICMP Neighbor Advertisement
+      messages received by the interface."))
+(defoid |ipv6IfIcmpInRedirects| (|ipv6IfIcmpEntry| 14)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The number of Redirect messages received
+      by the interface."))
+(defoid |ipv6IfIcmpInGroupMembQueries| (|ipv6IfIcmpEntry| 15)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The number of ICMPv6 Group Membership Query
+      messages received by the interface."))
+(defoid |ipv6IfIcmpInGroupMembResponses| (|ipv6IfIcmpEntry| 16)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The number of ICMPv6 Group Membership Response messages
+      received by the interface."))
+(defoid |ipv6IfIcmpInGroupMembReductions| (|ipv6IfIcmpEntry| 17)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The number of ICMPv6 Group Membership Reduction messages
+      received by the interface."))
+(defoid |ipv6IfIcmpOutMsgs| (|ipv6IfIcmpEntry| 18)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The total number of ICMP messages which this
+      interface attempted to send.  Note that this counter
+      includes all those counted by icmpOutErrors."))
+(defoid |ipv6IfIcmpOutErrors| (|ipv6IfIcmpEntry| 19)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The number of ICMP messages which this interface did
+      not send due to problems discovered within ICMP
+      such as a lack of buffers.  This value should not
+      include errors discovered outside the ICMP layer
+      such as the inability of IPv6 to route the resultant
+      datagram.  In some implementations there may be no
+      types of error which contribute to this counter's
+      value."))
+(defoid |ipv6IfIcmpOutDestUnreachs| (|ipv6IfIcmpEntry| 20)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The number of ICMP Destination Unreachable
+
+      messages sent by the interface."))
+(defoid |ipv6IfIcmpOutAdminProhibs| (|ipv6IfIcmpEntry| 21)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "Number of ICMP dest unreachable/communication
+       administratively prohibited messages sent."))
+(defoid |ipv6IfIcmpOutTimeExcds| (|ipv6IfIcmpEntry| 22)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The number of ICMP Time Exceeded messages sent
+      by the interface."))
+(defoid |ipv6IfIcmpOutParmProblems| (|ipv6IfIcmpEntry| 23)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The number of ICMP Parameter Problem messages
+      sent by the interface."))
+(defoid |ipv6IfIcmpOutPktTooBigs| (|ipv6IfIcmpEntry| 24)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The number of ICMP Packet Too Big messages sent
+      by the interface."))
+(defoid |ipv6IfIcmpOutEchos| (|ipv6IfIcmpEntry| 25)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The number of ICMP Echo (request) messages sent
+      by the interface."))
+(defoid |ipv6IfIcmpOutEchoReplies| (|ipv6IfIcmpEntry| 26)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The number of ICMP Echo Reply messages sent
+      by the interface."))
+(defoid |ipv6IfIcmpOutRouterSolicits| (|ipv6IfIcmpEntry| 27)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The number of ICMP Router Solicitation messages
+       sent by the interface."))
+(defoid |ipv6IfIcmpOutRouterAdvertisements| (|ipv6IfIcmpEntry| 28)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The number of ICMP Router Advertisement messages
+      sent by the interface."))
+(defoid |ipv6IfIcmpOutNeighborSolicits| (|ipv6IfIcmpEntry| 29)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The number of ICMP Neighbor Solicitation
+       messages sent by the interface."))
+(defoid |ipv6IfIcmpOutNeighborAdvertisements| (|ipv6IfIcmpEntry| 30)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The number of ICMP Neighbor Advertisement
+      messages sent by the interface."))
+(defoid |ipv6IfIcmpOutRedirects| (|ipv6IfIcmpEntry| 31)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The number of Redirect messages sent. For
+      a host, this object will always be zero,
+      since hosts do not send redirects."))
+(defoid |ipv6IfIcmpOutGroupMembQueries| (|ipv6IfIcmpEntry| 32)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The number of ICMPv6 Group Membership Query
+      messages sent."))
+(defoid |ipv6IfIcmpOutGroupMembResponses| (|ipv6IfIcmpEntry| 33)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The number of ICMPv6 Group Membership Response
+      messages sent."))
+(defoid |ipv6IfIcmpOutGroupMembReductions| (|ipv6IfIcmpEntry| 34)
+  (:type 'object-type)
+  (:syntax '|Counter32|)
+  (:max-access '|read-only|)
+  (:status '|current|)
+  (:description
+   "The number of ICMPv6 Group Membership Reduction
+      messages sent."))
+(defoid |ipv6IcmpConformance| (|ipv6IcmpMIB| 2)
+  (:type 'object-identity))
+(defoid |ipv6IcmpCompliances| (|ipv6IcmpConformance| 1)
+  (:type 'object-identity))
+(defoid |ipv6IcmpGroups| (|ipv6IcmpConformance| 2)
+  (:type 'object-identity))
+(defoid |ipv6IcmpCompliance| (|ipv6IcmpCompliances| 1)
+  (:type 'module-compliance)
+  (:status '|current|)
+  (:description
+   "The compliance statement for SNMPv2 entities which
+      implement ICMPv6."))
+(defoid |ipv6IcmpGroup| (|ipv6IcmpGroups| 1)
+  (:type 'object-group)
+  (:status '|current|)
+  (:description
+   "The ICMPv6 group of objects providing information
+          specific to ICMPv6."))
