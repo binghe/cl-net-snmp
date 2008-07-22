@@ -7,7 +7,6 @@
 
 (defclass snmp-server ()
   ((process        :accessor server-process
-                   :type mp:process
                    :documentation "Server process/thread")
    (address        :accessor server-address
                    :type (or string vector integer)
@@ -40,14 +39,14 @@
                                        &rest initargs &key &allow-other-keys)
   (declare (ignore initargs))
   (setf (server-process instance)
-        (comm:start-udp-server :address (server-address instance)
-                               :service (server-port instance)
-                               :announce nil
-                               :process-name (format nil "SNMP Server ~A:~D"
-                                                     (server-address instance)
-                                                     (server-port instance))
-                               :function (server-function instance)
-                               :arguments (list (server-dispatch-table instance)))))
+        (bt:make-thread #'(lambda ()
+                            (socket-server (server-address instance)
+                                           (server-port instance)
+                                           (server-function instance)
+                                           (list (server-dispatch-table instance))))
+                        :name (format nil "SNMP Server at ~A:~D"
+                                      (server-address instance)
+                                      (server-port instance)))))
         
 (defun enable-snmp-service (&optional (port *default-snmp-server-port*))
   (if (null *default-snmp-server*)
@@ -56,7 +55,7 @@
 
 (defun disable-snmp-service ()
   (when *default-snmp-server*
-    (comm:stop-udp-server (server-process *default-snmp-server*) :wait t)
+    (bt:destroy-thread (server-process *default-snmp-server*))
     (setf *default-snmp-server* nil)))
 
 (defvar *dispatch-table*)
@@ -121,6 +120,7 @@
 (defgeneric process-object-id (oid original))
 
 (defmethod process-object-id ((oid object-id) original)
+  (declare (ignore original))
   (process-object-id oid oid))
 
 (defmethod process-object-id ((oid object-id) (original object-id))
@@ -149,7 +149,7 @@
     (format nil "~A ~A"
             (lisp-implementation-type) (lisp-implementation-version)))
   ;; sysContact
-  (define-object-id "sysContact" (o) lispworks:*phone-home*)
+  (define-object-id "sysContact" (o) "Chun Tian (binghe) <binghe.lisp@gmail.com>")
   ;; sysName
   (define-object-id "sysName" (o) (long-site-name))
   ;; sysLocation

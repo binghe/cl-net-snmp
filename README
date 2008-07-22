@@ -8,7 +8,7 @@ FEATURES
  * support MIB and ASN.1 object id names
  * Fast BER encode/decode based on CLOS
  * UDP retransmit support
- * [LispWorks] Simple SNMP Server
+ * SNMP Server (no auth, no v3)
  * [LispWorks] GUI MIB Browser
 
 API
