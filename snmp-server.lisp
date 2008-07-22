@@ -149,7 +149,7 @@
     (format nil "~A ~A"
             (lisp-implementation-type) (lisp-implementation-version)))
   ;; sysContact
-  (define-object-id "sysContact" (o) *phone-home*)
+  (define-object-id "sysContact" (o) lispworks:*phone-home*)
   ;; sysName
   (define-object-id "sysName" (o) (long-site-name))
   ;; sysLocation
