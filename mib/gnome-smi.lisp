@@ -1,10 +1,38 @@
+;;;; -*- Mode: Lisp -*-
 ;;;; Auto-generated from ASN-SNMP:GNOME-SMI
 
-(IN-PACKAGE :ASN.1)
-(SETF *CURRENT-MODULE* 'GNOME-SMI)
-(DEFOID |gnome| (|enterprises| 3319))
-(DEFOID |gnomeProducts| (|gnome| 1))
-(DEFOID |gnomeMgmt| (|gnome| 2))
-(DEFOID |gnomeTest| (|gnome| 3))
-(DEFOID |gnomeSysadmin| (|gnome| 4))
-(DEFOID |gnomeLDAP| (|gnome| 5))
+(in-package :asn.1)
+(setf *current-module* 'gnome-smi)
+(defoid |gnome| (|enterprises| 3319)
+  (:type 'module-identity)
+  (:description "The Structure of GNOME."))
+(defoid |gnomeProducts| (|gnome| 1)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "gnomeProducts is the root OBJECT IDENTIFIER from
+		which sysObjectID values are assigned."))
+(defoid |gnomeMgmt| (|gnome| 2)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "gnomeMgmt defines the subtree for production GNOME related
+		MIB registrations."))
+(defoid |gnomeTest| (|gnome| 3)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "gnomeTest defines the subtree for testing GNOME related
+		MIB registrations."))
+(defoid |gnomeSysadmin| (|gnome| 4)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "gnomeSysadmin defines the subtree for GNOME related Sysadmin
+		MIB registrations."))
+(defoid |gnomeLDAP| (|gnome| 5)
+  (:type 'object-identity)
+  (:status '|current|)
+  (:description
+   "gnomeLDAP defines the subtree for GNOME related LDAP
+		registrations."))
