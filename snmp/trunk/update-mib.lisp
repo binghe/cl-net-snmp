@@ -88,10 +88,11 @@
       (format t "; Compiling ~A~%" i)
       (compile-asn.1 i :to (lisp-file i))
       (let ((depends (with-open-file (s (expr-file i) :direction :input)
-                       (read s))))
-        (push `(:file ,(string-downcase
-                        (pathname-name (lisp-file i)))
-                :depends-on ,depends)
+                       (read s)))
+            (name (string-downcase (pathname-name (lisp-file i)))))
+        (push (if depends
+                  `(:file ,name :depends-on ,depends)
+                `(:file ,name))
               mib.lisp-expr)))
     (with-open-file (s *mib-list-file*
                        :direction :output
