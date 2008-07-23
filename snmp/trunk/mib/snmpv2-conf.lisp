@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:SNMPV2-CONF
+;;;; Auto-generated from MIB:NET-SNMP;SNMPV2-CONF.TXT
 
 (in-package :asn.1)
 (setf *current-module* '|SNMPv2-CONF|)

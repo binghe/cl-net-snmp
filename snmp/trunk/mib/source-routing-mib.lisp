@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:SOURCE-ROUTING-MIB
+;;;; Auto-generated from MIB:NET-SNMP;SOURCE-ROUTING-MIB.TXT
 
 (in-package :asn.1)
 (setf *current-module* 'source-routing-mib)

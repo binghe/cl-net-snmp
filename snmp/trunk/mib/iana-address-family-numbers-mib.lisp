@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:IANA-ADDRESS-FAMILY-NUMBERS-MIB
+;;;; Auto-generated from MIB:NET-SNMP;IANA-ADDRESS-FAMILY-NUMBERS-MIB.TXT
 
 (in-package :asn.1)
 (setf *current-module* 'iana-address-family-numbers-mib)

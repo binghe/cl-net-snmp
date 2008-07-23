@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:SNMPV2-TC
+;;;; Auto-generated from MIB:NET-SNMP;SNMPV2-TC.TXT
 
 (in-package :asn.1)
 (setf *current-module* '|SNMPv2-TC|)

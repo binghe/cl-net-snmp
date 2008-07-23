@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:SNMP-VIEW-BASED-ACM-MIB
+;;;; Auto-generated from MIB:NET-SNMP;SNMP-VIEW-BASED-ACM-MIB.TXT
 
 (in-package :asn.1)
 (setf *current-module* 'snmp-view-based-acm-mib)

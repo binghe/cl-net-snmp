@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:DISMAN-EVENT-MIB
+;;;; Auto-generated from MIB:NET-SNMP;DISMAN-EVENT-MIB.TXT
 
 (in-package :asn.1)
 (setf *current-module* 'disman-event-mib)

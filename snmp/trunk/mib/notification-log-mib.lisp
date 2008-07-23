@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:NOTIFICATION-LOG-MIB
+;;;; Auto-generated from MIB:NET-SNMP;NOTIFICATION-LOG-MIB.TXT
 
 (in-package :asn.1)
 (setf *current-module* 'notification-log-mib)

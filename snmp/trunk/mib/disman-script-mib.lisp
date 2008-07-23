@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:DISMAN-SCRIPT-MIB
+;;;; Auto-generated from MIB:NET-SNMP;DISMAN-SCRIPT-MIB.TXT
 
 (in-package :asn.1)
 (setf *current-module* 'disman-script-mib)

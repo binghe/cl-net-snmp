@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:RIPV2-MIB
+;;;; Auto-generated from MIB:NET-SNMP;RIPV2-MIB.TXT
 
 (in-package :asn.1)
 (setf *current-module* '|RIPv2-MIB|)

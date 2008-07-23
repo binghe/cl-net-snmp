@@ -1,4 +1,4 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:OSPF-MIB
+;;;; Auto-generated from MIB:NET-SNMP;OSPF-MIB.TXT
 
 ("snmpv2-smi" "snmpv2-tc" "snmpv2-conf" "rfc1213-mib")

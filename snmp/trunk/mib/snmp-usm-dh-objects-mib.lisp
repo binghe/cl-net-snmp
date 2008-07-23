@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:SNMP-USM-DH-OBJECTS-MIB
+;;;; Auto-generated from MIB:NET-SNMP;SNMP-USM-DH-OBJECTS-MIB.TXT
 
 (in-package :asn.1)
 (setf *current-module* 'snmp-usm-dh-objects-mib)

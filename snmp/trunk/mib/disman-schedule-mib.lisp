@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:DISMAN-SCHEDULE-MIB
+;;;; Auto-generated from MIB:NET-SNMP;DISMAN-SCHEDULE-MIB.TXT
 
 (in-package :asn.1)
 (setf *current-module* 'disman-schedule-mib)

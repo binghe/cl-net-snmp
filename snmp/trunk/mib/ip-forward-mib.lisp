@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:IP-FORWARD-MIB
+;;;; Auto-generated from MIB:NET-SNMP;IP-FORWARD-MIB.TXT
 
 (in-package :asn.1)
 (setf *current-module* 'ip-forward-mib)

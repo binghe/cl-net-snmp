@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:SNMP-PROXY-MIB
+;;;; Auto-generated from MIB:NET-SNMP;SNMP-PROXY-MIB.TXT
 
 (in-package :asn.1)
 (setf *current-module* 'snmp-proxy-mib)

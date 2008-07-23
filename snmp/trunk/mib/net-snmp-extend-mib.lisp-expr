@@ -1,4 +1,4 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:NET-SNMP-EXTEND-MIB
+;;;; Auto-generated from MIB:NET-SNMP;NET-SNMP-EXTEND-MIB.TXT
 
 ("net-snmp-agent-mib" "snmpv2-smi" "snmpv2-conf" "snmpv2-tc")

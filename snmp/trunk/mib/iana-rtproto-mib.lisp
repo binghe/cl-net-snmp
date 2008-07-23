@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:IANA-RTPROTO-MIB
+;;;; Auto-generated from MIB:NET-SNMP;IANA-RTPROTO-MIB.TXT
 
 (in-package :asn.1)
 (setf *current-module* 'iana-rtproto-mib)
