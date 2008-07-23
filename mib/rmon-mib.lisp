@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:RMON-MIB
+;;;; Auto-generated from MIB:NET-SNMP;RMON-MIB.TXT
 
 (in-package :asn.1)
 (setf *current-module* 'rmon-mib)

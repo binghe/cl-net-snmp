@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:SNMP-USER-BASED-SM-MIB
+;;;; Auto-generated from MIB:NET-SNMP;SNMP-USER-BASED-SM-MIB.TXT
 
 (in-package :asn.1)
 (setf *current-module* 'snmp-user-based-sm-mib)

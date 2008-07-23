@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:BRIDGE-MIB
+;;;; Auto-generated from MIB:NET-SNMP;BRIDGE-MIB.TXT
 
 (in-package :asn.1)
 (setf *current-module* 'bridge-mib)

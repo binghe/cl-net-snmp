@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:ETHERLIKE-MIB
+;;;; Auto-generated from MIB:NET-SNMP;ETHERLIKE-MIB.TXT
 
 (in-package :asn.1)
 (setf *current-module* '|EtherLike-MIB|)

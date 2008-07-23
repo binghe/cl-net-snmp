@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:UCD-IPFWACC-MIB
+;;;; Auto-generated from MIB:NET-SNMP;UCD-IPFWACC-MIB.TXT
 
 (in-package :asn.1)
 (setf *current-module* 'ucd-ipfwacc-mib)

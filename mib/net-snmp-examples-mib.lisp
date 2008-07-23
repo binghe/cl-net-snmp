@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:NET-SNMP-EXAMPLES-MIB
+;;;; Auto-generated from MIB:NET-SNMP;NET-SNMP-EXAMPLES-MIB.TXT
 
 (in-package :asn.1)
 (setf *current-module* 'net-snmp-examples-mib)

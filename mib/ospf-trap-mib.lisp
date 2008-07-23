@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:OSPF-TRAP-MIB
+;;;; Auto-generated from MIB:NET-SNMP;OSPF-TRAP-MIB.TXT
 
 (in-package :asn.1)
 (setf *current-module* 'ospf-trap-mib)

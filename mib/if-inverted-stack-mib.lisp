@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:IF-INVERTED-STACK-MIB
+;;;; Auto-generated from MIB:NET-SNMP;IF-INVERTED-STACK-MIB.TXT
 
 (in-package :asn.1)
 (setf *current-module* 'if-inverted-stack-mib)

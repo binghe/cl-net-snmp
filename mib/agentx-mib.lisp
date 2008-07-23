@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:AGENTX-MIB
+;;;; Auto-generated from MIB:NET-SNMP;AGENTX-MIB.TXT
 
 (in-package :asn.1)
 (setf *current-module* 'agentx-mib)

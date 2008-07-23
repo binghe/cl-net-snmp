@@ -1,4 +1,4 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:RFC1155-SMI
+;;;; Auto-generated from MIB:NET-SNMP;RFC1155-SMI.TXT
 
 nil

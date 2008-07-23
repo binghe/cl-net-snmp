@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:HOST-RESOURCES-TYPES
+;;;; Auto-generated from MIB:NET-SNMP;HOST-RESOURCES-TYPES.TXT
 
 (in-package :asn.1)
 (setf *current-module* 'host-resources-types)

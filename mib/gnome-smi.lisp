@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:GNOME-SMI
+;;;; Auto-generated from MIB:NET-SNMP;GNOME-SMI.TXT
 
 (in-package :asn.1)
 (setf *current-module* 'gnome-smi)

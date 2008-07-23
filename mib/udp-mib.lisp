@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:UDP-MIB
+;;;; Auto-generated from MIB:NET-SNMP;UDP-MIB.TXT
 
 (in-package :asn.1)
 (setf *current-module* 'udp-mib)

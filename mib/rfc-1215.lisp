@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:RFC-1215
+;;;; Auto-generated from MIB:NET-SNMP;RFC-1215.TXT
 
 (in-package :asn.1)
 (setf *current-module* 'rfc-1215)
