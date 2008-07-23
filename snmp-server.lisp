@@ -9,25 +9,29 @@
   ((process        :accessor server-process
                    :documentation "Server process/thread")
    (address        :accessor server-address
-                   :type (or string vector integer)
+                   :type (or null string vector integer)
                    :initarg :address
-                   :initform *default-snmp-server-address*
                    :documentation "Server listening address")
    (port           :accessor server-port
                    :type (or string integer)
                    :initarg :port
-                   :initform *default-snmp-server-port*
                    :documentation "Server listening port")
    (function       :accessor server-function
-                   :type (function (t) t)
+                   :type function
                    :initarg :function
-                   :initform #'snmp-server-function
                    :documentation "Message processing function")
    (dispatch-table :accessor server-dispatch-table
                    :type hash-table
                    :initarg :dispatch-table
-                   :initform *default-dispatch-table*
-                   :documentation "Object ID dispatch table"))
+                   :documentation "Object ID dispatch table")
+   (engine-id      :reader server-engine-id
+                   :type string)
+   (engine-boots   :reader server-engine-boots
+                   :type integer
+                   :initform 0)
+   (engine-time    :reader server-engine-time
+                   :type integer
+                   :initform 0))
   (:documentation "SNMP server class"))
 
 (defmethod print-object ((object snmp-server) stream)
@@ -39,57 +43,78 @@
                                        &rest initargs &key &allow-other-keys)
   (declare (ignore initargs))
   (setf (server-process instance)
-        (bt:make-thread #'(lambda ()
-                            (socket-server (server-address instance)
-                                           (server-port instance)
-                                           (server-function instance)
-                                           (list (server-dispatch-table instance))))
-                        :name (format nil "SNMP Server at ~A:~D"
+        (portable-threads:spawn-thread
+	 (format nil "SNMP Server at ~A:~D"
                                       (server-address instance)
-                                      (server-port instance)))))
+                                      (server-port instance))
+	 #'(lambda ()
+	     (socket-server (server-address instance)
+			    (server-port instance)
+			    (server-function instance)
+			    (list instance))))))
         
 (defun enable-snmp-service (&optional (port *default-snmp-server-port*))
   (if (null *default-snmp-server*)
       (setf *default-snmp-server*
-            (make-instance 'snmp-server :port port))))
+            (make-instance 'snmp-server
+			   :address *default-snmp-server-address*
+			   :port port
+			   :function #'snmp-server-function
+			   :dispatch-table *default-dispatch-table*))))
 
 (defun disable-snmp-service ()
   (when *default-snmp-server*
-    (bt:destroy-thread (server-process *default-snmp-server*))
+    (portable-threads:kill-thread
+     (server-process *default-snmp-server*))
     (setf *default-snmp-server* nil)))
 
-(defvar *dispatch-table*)
+(defvar *server*)
 
-(defun snmp-server-function (input dispatch-table)
+(defun snmp-server-function (input server)
   "Main function in UDP loop"
-  (let ((*dispatch-table* dispatch-table))
+  (declare (type array input)
+           (type snmp-server))
+  (let ((*server* server))
     (let ((output (process-message (ber-decode input))))
       (when output
         (ber-encode output)))))
 
-(defun process-message (message-list)
+(defun process-message (message)
   "return a message sequence"
-  (process-message-internal (elt message-list 0) message-list))
+  (declare (type sequence message))
+  (process-message-internal (elt message 0) message))
 
-(defgeneric process-message-internal (version message-list)
+(defgeneric process-message-internal (version message)
   (:documentation "Process SNMP Message"))
 
-(defmethod process-message-internal ((version (eql +snmp-version-1+)) (message-list sequence))
+(defmethod process-message-internal ((version t) (message sequence))
+  "Process unknown message"
+  (declare (ignore version message))
+  nil)
+
+(defmethod process-message-internal ((version (eql +snmp-version-1+)) (message sequence))
   "Process SNMP v1 message"
-  (process-message-v1/v2c message-list))
+  (declare (ignore version))
+  (process-message-v1/v2c message))
 
-(defmethod process-message-internal ((version (eql +snmp-version-2c+)) (message-list sequence))
+(defmethod process-message-internal ((version (eql +snmp-version-2c+)) (message sequence))
   "Process SNMP v2c message"
-  (process-message-v1/v2c message-list))
+  (declare (ignore version))
+  (process-message-v1/v2c message))
 
-(defun process-message-v1/v2c (message-list)
-  (dbind (version community pdu) message-list
+(defmethod process-message-internal ((version (eql +snmp-version-3+)) (message sequence))
+  "Process SNMP v3 message"
+  (declare (ignore version))
+  (process-message-v3 message))
+
+(defun process-message-v1/v2c (message)
+  (dbind (version community pdu) message
     (let ((reply-pdu (process-pdu pdu)))
       (when reply-pdu
         (list version community reply-pdu)))))
 
-(defmethod process-message-internal ((version (eql +snmp-version-3+)) (message-list sequence))
-  "Process SNMP v3 message, not implemented"
+(defun process-message-v3 (message)
+  (declare (ignore message))
   nil)
 
 (defgeneric process-pdu (pdu)
@@ -126,7 +151,7 @@
 (defmethod process-object-id ((oid object-id) (original object-id))
   (if (not (oid-parent-p oid))
       original
-    (let ((handler (gethash oid *dispatch-table*)))
+    (let ((handler (gethash oid (server-dispatch-table *server*))))
       (if handler
           (funcall handler original)
         (process-object-id (oid-parent oid) original)))))
@@ -141,17 +166,7 @@
   (declare (ignore o))
   (let ((oid (gensym)))
     `(let ((,oid (oid ,name)))
-       (export-object-id ,oid #'(lambda (o) (declare (ignorable o)) ,@body)))))
-
-(eval-when (:load-toplevel :execute)
-  ;; sysDescr
-  (define-object-id "sysDescr" (o)
-    (format nil "~A ~A"
-            (lisp-implementation-type) (lisp-implementation-version)))
-  ;; sysContact
-  (define-object-id "sysContact" (o) "Chun Tian (binghe) <binghe.lisp@gmail.com>")
-  ;; sysName
-  (define-object-id "sysName" (o) (long-site-name))
-  ;; sysLocation
-  (define-object-id "sysLocation" (o)
-    (format nil "~A ~A ~A" (machine-instance) (machine-type) (machine-version))))
+       (export-object-id ,oid
+                         #'(lambda (o)
+                             (declare (ignorable o))
+                             ,@body)))))
