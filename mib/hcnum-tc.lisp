@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:HCNUM-TC
+;;;; Auto-generated from MIB:NET-SNMP;HCNUM-TC.TXT
 
 (in-package :asn.1)
 (setf *current-module* 'hcnum-tc)

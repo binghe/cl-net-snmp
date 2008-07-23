@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:IF-MIB
+;;;; Auto-generated from MIB:NET-SNMP;IF-MIB.TXT
 
 (in-package :asn.1)
 (setf *current-module* 'if-mib)

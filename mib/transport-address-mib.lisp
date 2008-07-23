@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:TRANSPORT-ADDRESS-MIB
+;;;; Auto-generated from MIB:NET-SNMP;TRANSPORT-ADDRESS-MIB.TXT
 
 (in-package :asn.1)
 (setf *current-module* 'transport-address-mib)

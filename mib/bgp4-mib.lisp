@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:BGP4-MIB
+;;;; Auto-generated from MIB:NET-SNMP;BGP4-MIB.TXT
 
 (in-package :asn.1)
 (setf *current-module* 'bgp4-mib)

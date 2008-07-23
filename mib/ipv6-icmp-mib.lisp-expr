@@ -1,4 +1,4 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:IPV6-ICMP-MIB
+;;;; Auto-generated from MIB:NET-SNMP;IPV6-ICMP-MIB.TXT
 
 ("snmpv2-smi" "snmpv2-conf" "ipv6-mib")

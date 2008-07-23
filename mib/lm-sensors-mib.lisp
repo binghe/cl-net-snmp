@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:LM-SENSORS-MIB
+;;;; Auto-generated from MIB:NET-SNMP;LM-SENSORS-MIB.TXT
 
 (in-package :asn.1)
 (setf *current-module* 'lm-sensors-mib)

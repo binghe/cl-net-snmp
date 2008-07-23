@@ -1,4 +1,4 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:SNMPV2-CONF
+;;;; Auto-generated from MIB:NET-SNMP;SNMPV2-CONF.TXT
 
 ("snmpv2-smi")

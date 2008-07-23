@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from ASN-SNMP:IPV6-TC
+;;;; Auto-generated from MIB:NET-SNMP;IPV6-TC.TXT
 
 (in-package :asn.1)
 (setf *current-module* 'ipv6-tc)
