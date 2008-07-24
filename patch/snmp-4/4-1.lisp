@@ -1,38 +1,23 @@
 (in-package :snmp)
 
-(defgeneric snmp-get (object vars &key &allow-other-keys)
-  (:documentation "SNMP Get"))
+(export '(+snmp-version-1+ +snmp-version-2c+ +snmp-version-3+))
 
-(defmethod snmp-get ((host string) (vars list) &key (context ""))
+(defmethod snmp-walk ((session session) (vars list) &key (context ""))
+  "SNMP Walk for v1, v2c and v3"
   (when vars
-    (with-open-session (s host)
-      (snmp-get s vars :context context))))
+    (let ((base-vars (mapcar #'oid vars)))
+      (labels ((iter (current-vars acc first-p)
+                 (let* ((temp (snmp-get-next session current-vars :context context))
+                        (new-vars (mapcar #'first temp))
+                        (new-values (mapcar #'second temp)))
+                   (if (or (some #'oid->= new-vars base-vars)
+                           (member :end-of-mibview new-values))
+                       (if first-p
+                         (snmp-get session vars)
+                         (mapcar #'nreverse acc))
+                     (iter new-vars (mapcar #'cons temp acc) nil)))))
+        (iter base-vars (make-list (length vars)) t)))))
 
-(defmethod snmp-get ((session session) (vars list) &key (context ""))
-  "SNMP GET for v1, v2c and v3"
-  (when vars
-    (let ((vb (mapcar #'(lambda (x) (list (oid x) nil)) vars)))
-      ;; Get a report first if the session is new created
-      (when (and (= +snmp-version-3+ (version-of session))
-                 (need-report-p session))
-        (snmp-report session))
-      (let ((message (make-instance (gethash (type-of session) *session->message*)
-                                    :session session
-                                    :context context
-                                    :pdu (make-instance 'get-request-pdu
-                                                        :variable-bindings vb))))
-        (let ((reply (send-snmp-message session message)))
-          (when reply
-            (map 'list #'(lambda (x) (elt x 1))
-                 (variable-bindings-of (pdu-of reply)))))))))
-
-(defmethod snmp-get ((host string) (var string) &key (context ""))
-  (car (snmp-get host (list var) :context context)))
-
-(defmethod snmp-get ((host string) (var object-id) &key (context ""))
-  (car (snmp-get host (list var) :context context)))
-
-;;; RFC 3416: 4.2.3. The GetBulkRequest-PDU
 (defun generate-table (vars vbs non-repeaters max-repetitions)
   (declare (type fixnum non-repeaters max-repetitions))
   (let* ((var-number (list-length vars))
@@ -54,18 +39,6 @@
               result-table)))
     (values (nreverse result-table)
             (mapcar #'oid vars))))
-
-(defgeneric snmp-bulk (object vars &key &allow-other-keys)
-  (:documentation "SNMP Get Bulk"))
-
-(defmethod snmp-bulk ((host string) (vars list) &key
-                      (non-repeaters 0) (max-repetitions 1) (context ""))
-  (when vars
-    (with-open-session (s host)
-      (snmp-bulk s vars
-                 :non-repeaters non-repeaters
-                 :max-repetitions max-repetitions
-                 :context context))))
 
 (defmethod snmp-bulk ((session session) (vars list) &key
                       (non-repeaters 0) (max-repetitions 1) (context ""))

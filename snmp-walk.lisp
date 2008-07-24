@@ -43,15 +43,17 @@
   "SNMP Walk for v1, v2c and v3"
   (when vars
     (let ((base-vars (mapcar #'oid vars)))
-      (labels ((iter (current-vars acc)
+      (labels ((iter (current-vars acc first-p)
                  (let* ((temp (snmp-get-next session current-vars :context context))
                         (new-vars (mapcar #'first temp))
                         (new-values (mapcar #'second temp)))
                    (if (or (some #'oid->= new-vars base-vars)
                            (member :end-of-mibview new-values))
-                     (mapcar #'nreverse acc)
-                     (iter new-vars (mapcar #'cons temp acc))))))
-        (iter base-vars (make-list (length vars)))))))
+                       (if first-p
+                         (snmp-get session vars)
+                         (mapcar #'nreverse acc))
+                     (iter new-vars (mapcar #'cons temp acc) nil)))))
+        (iter base-vars (make-list (length vars)) t)))))
 
 (defmethod snmp-walk (object (var string) &key (context ""))
   (car (snmp-walk object (list var) :context context)))
