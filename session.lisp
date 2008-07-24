@@ -7,7 +7,7 @@
 (defparameter *default-snmp-version* +snmp-version-2c+)
 (defparameter *default-snmp-port* 161)
 (defparameter *default-snmp-community* "public")
-
+(defparameter *default-context* "")
 (defparameter *default-auth-protocol* :md5)
 (defparameter *default-priv-protocol* :des)
 
