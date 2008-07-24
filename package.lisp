@@ -15,6 +15,7 @@
            #:*default-snmp-server-port*
            #:*default-snmp-server*
            #:*default-snmp-version*
+           #:*default-context*
            #:close-session
            #:define-object-id
            #:disable-snmp-service

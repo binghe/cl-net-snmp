@@ -15,7 +15,7 @@
                       &allow-other-keys)
   "SNMPv1 Trap PDU is different from v2c and v3, no request id"
   (declare (type integer generic-trap specific-trap)
-           (type base-string agent-addr))
+           (type string agent-addr))
   (let ((vb (if (null vars) #()
               (mapcar #'(lambda (x) (list (oid (car x)) (cdr x))) vars))))
     (let ((message (make-instance 'v1-message :session session
@@ -28,7 +28,8 @@
                                                       :timestamp (timeticks uptime)))))
       (send-snmp-message session message :receive nil))))
 
-(defun snmp-trap-internal (session vars uptime trap-oid inform &optional (context ""))
+(defun snmp-trap-internal (session vars uptime trap-oid inform
+                                   &optional (context *default-context*))
   (let ((vb (list* (list (oid "sysUpTime.0")
                          (make-instance 'timeticks :value uptime))
                    (list (oid "snmpTrapOID.0")
@@ -56,7 +57,7 @@
                                            #.(/ 100 internal-time-units-per-second))))
                       (trap-oid *default-trap-enterprise*)
                       (inform nil)
-                      (context "")
+                      (context *default-context*)
                       &allow-other-keys)
   (when (need-report-p session)
     (snmp-report session))
@@ -77,7 +78,7 @@
                         (uptime (truncate (* (get-internal-run-time)
                                              #.(/ 100 internal-time-units-per-second))))
                         (trap-oid *default-trap-enterprise*)
-                        (context "")
+                        (context *default-context*)
                         &allow-other-keys)
   "SNMPv3 Inform"
   (snmp-trap session vars :uptime uptime :trap-oid trap-oid :inform t :context context))
