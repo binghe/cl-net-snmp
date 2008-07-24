@@ -6,7 +6,10 @@
         :trivial-gray-streams
         :usocket
         :asn.1)
-  (:export #:*default-snmp-community*
+  (:export #:+snmp-version-1+
+           #:+snmp-version-2c+
+           #:+snmp-version-3+
+           #:*default-snmp-community*
            #:*default-snmp-port*
            #:*default-snmp-server-address*
            #:*default-snmp-server-port*
