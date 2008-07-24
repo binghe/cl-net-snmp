@@ -17,7 +17,7 @@
 
 (defsystem snmp
   :description "Simple Network Manangement Protocol"
-  :version "4.1"
+  :version "4.2"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
   :depends-on (:asn.1        ; Standalone ASN.1 support
 	       :ironclad     ; SNMPv3 authentication/encryption support

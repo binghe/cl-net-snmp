@@ -7,7 +7,7 @@
   (declare (type v3-session session))
   (zerop (engine-time-of session)))
 
-(defun snmp-report (session &key (context ""))
+(defun snmp-report (session &key (context *default-context*))
   (declare (type v3-session session))
   (let ((message (make-instance 'v3-message
                                 :report t
