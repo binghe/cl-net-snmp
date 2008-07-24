@@ -47,7 +47,8 @@
                (:module "mib"       :depends-on ("package")
                 :components #.*mib.lisp-expr*)
                (:module "vendor"
-                :components ((:file "portable-threads")))))
+                :components (#-portable-threads
+                             (:file "portable-threads")))))
 
 (defsystem snmp-server
   :description "SNMP Server"
