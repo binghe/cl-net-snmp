@@ -1,4 +1,8 @@
 ;;;; -*- Mode: Lisp -*-
 ;;;; Auto-generated from MIB:NET-SNMP;SNMP-VIEW-BASED-ACM-MIB.TXT
 
-("snmpv2-conf" "snmpv2-smi" "snmpv2-tc" "snmp-framework-mib")
+(snmp-view-based-acm-mib
+ |SNMPv2-CONF|
+ |SNMPv2-SMI|
+ |SNMPv2-TC|
+ snmp-framework-mib)
