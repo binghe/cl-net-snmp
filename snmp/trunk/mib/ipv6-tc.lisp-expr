@@ -1,4 +1,4 @@
 ;;;; -*- Mode: Lisp -*-
 ;;;; Auto-generated from MIB:NET-SNMP;IPV6-TC.TXT
 
-("snmpv2-smi" "snmpv2-tc")
+(ipv6-tc |SNMPv2-SMI| |SNMPv2-TC|)

@@ -1,4 +1,4 @@
 ;;;; -*- Mode: Lisp -*-
 ;;;; Auto-generated from MIB:MISC;SQUID-MIB.MIB
 
-("snmpv2-smi" "snmpv2-tc")
+(squid-mib |SNMPv2-SMI| |SNMPv2-TC|)

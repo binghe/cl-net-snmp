@@ -1,4 +1,4 @@
 ;;;; -*- Mode: Lisp -*-
 ;;;; Auto-generated from MIB:NET-SNMP;SMUX-MIB.TXT
 
-("rfc1155-smi")
+(smux-mib rfc1155-smi rfc1212)
