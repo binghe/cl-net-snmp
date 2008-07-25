@@ -1,4 +1,4 @@
 ;;;; -*- Mode: Lisp -*-
 ;;;; Auto-generated from MIB:NET-SNMP;ETHERLIKE-MIB.TXT
 
-("snmpv2-smi" "snmpv2-conf" "snmpv2-tc" "if-mib")
+(|EtherLike-MIB| |SNMPv2-SMI| |SNMPv2-CONF| |SNMPv2-TC| if-mib)

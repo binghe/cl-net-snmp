@@ -1,8 +1,9 @@
 ;;;; -*- Mode: Lisp -*-
 ;;;; Auto-generated from MIB:NET-SNMP;NET-SNMP-EXAMPLES-MIB.TXT
 
-("snmpv2-smi"
- "snmp-framework-mib"
- "net-snmp-mib"
- "snmpv2-tc"
- "inet-address-mib")
+(net-snmp-examples-mib
+ |SNMPv2-SMI|
+ snmp-framework-mib
+ net-snmp-mib
+ |SNMPv2-TC|
+ inet-address-mib)

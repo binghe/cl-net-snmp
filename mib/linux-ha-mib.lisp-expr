@@ -1,4 +1,4 @@
 ;;;; -*- Mode: Lisp -*-
 ;;;; Auto-generated from MIB:MISC;LINUX-HA-MIB.MIB
 
-("snmpv2-smi" "snmpv2-tc" "snmpv2-conf")
+(linux-ha-mib |SNMPv2-SMI| |SNMPv2-TC| |SNMPv2-CONF|)

@@ -1,4 +1,4 @@
 ;;;; -*- Mode: Lisp -*-
 ;;;; Auto-generated from MIB:NET-SNMP;INET-ADDRESS-MIB.TXT
 
-("snmpv2-smi" "snmpv2-tc")
+(inet-address-mib |SNMPv2-SMI| |SNMPv2-TC|)
