@@ -1,4 +1,6 @@
-(in-package :snmp)
+;;;; $Id$
+
+(in-package :snmp-system)
 
 ;;; dbind from Paul Graham's On Lisp
 

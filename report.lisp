@@ -1,4 +1,4 @@
-;;;; -*- Mode: lisp; -*-
+;;;; $Id$
 
 (in-package :snmp)
 
