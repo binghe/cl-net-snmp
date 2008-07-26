@@ -1,3 +1,5 @@
+;;;; $Id$
+
 (in-package :snmp)
 
 (defvar *default-trap-enterprise* asn.1::|enterprises| "enterprises")

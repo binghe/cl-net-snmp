@@ -1,9 +1,11 @@
 ;;;; -*- Mode: Lisp -*-
+;;;; $Id$
 
 (in-package :cl-user)
 
 (defpackage snmp-system
-  (:use :common-lisp :asdf))
+  (:use :common-lisp :asdf)
+  (:export #:dbind))
 
 (in-package :snmp-system)
 
@@ -24,14 +26,13 @@
                :usocket-udp) ; Portable UDP networking
   :components ((:file "package"     :depends-on ("vendor"))
 	       (:file "constants"   :depends-on ("package"))
-               (:file "utility"     :depends-on ("package"))
                (:file "condition"   :depends-on ("package"))
 	       (:file "pdu"         :depends-on ("package"))
                (:file "keytool"     :depends-on ("package"))
                (:file "snmp-smi"    :depends-on ("package"))
 	       (:file "session"     :depends-on ("keytool"))
                (:file "message"     :depends-on ("constants" "pdu" "session"))
-               (:file "network"     :depends-on ("message" "session" "utility"))
+               (:file "network"     :depends-on ("message" "session"))
                (:file "report"      :depends-on ("message" "network" "session"))
                (:file "snmp-get"    :depends-on ("message" "network" "pdu"
                                                  "session"))
@@ -50,7 +51,8 @@
                (:module "mib"       :depends-on ("package")
                 :components #.*mib.lisp-expr*)
                (:module "vendor"
-                :components (#-portable-threads
+                :components ((:file "onlisp")
+                             #-portable-threads
                              (:file "portable-threads")))))
 
 (defsystem snmp-server
