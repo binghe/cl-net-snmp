@@ -1,4 +1,4 @@
 ;;;; -*- Mode: Lisp -*-
 ;;;; Auto-generated from MIB:NET-SNMP;BRIDGE-MIB.TXT
 
-(bridge-mib rfc1155-smi rfc1213-mib rfc-1212 rfc-1215)
+(bridge-mib rfc1155-smi rfc1213-mib rfc-1215)

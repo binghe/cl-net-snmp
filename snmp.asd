@@ -22,7 +22,7 @@
   :depends-on (:asn.1        ; Standalone ASN.1 support
 	       :ironclad     ; SNMPv3 authentication/encryption support
                :usocket-udp) ; Portable UDP networking
-  :components ((:file "package")
+  :components ((:file "package"     :depends-on ("vendor"))
 	       (:file "constants"   :depends-on ("package"))
                (:file "utility"     :depends-on ("package"))
                (:file "condition"   :depends-on ("package"))
@@ -42,8 +42,11 @@
                                                  "snmp-smi"))
                (:file "snmp-trap"   :depends-on ("message" "mib" "network"
                                                  "pdu" "report" "session"))
+               (:file "worker"      :depends-on ("snmp-get" "snmp-set"
+                                                 "snmp-walk" "snmp-trap"))
 	       #+lispworks
                (:file "update-mib"  :depends-on ("mib"))
+               (:file "mib-depend"  :depends-on ("package"))
                (:module "mib"       :depends-on ("package")
                 :components #.*mib.lisp-expr*)
                (:module "vendor"

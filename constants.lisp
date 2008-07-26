@@ -1,5 +1,7 @@
 (in-package :snmp)
 
+(defconstant +max-snmp-packet-size+ 65507)
+
 (defconstant +usm-auth-ku-len+ 32)
 (defconstant +usm-priv-ku-len+ 32)
 

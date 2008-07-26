@@ -4,17 +4,17 @@
 (defconstant +snmp-version-2c+ 1)
 (defconstant +snmp-version-3+  3)
 
-(defparameter *default-snmp-version* +snmp-version-2c+)
-(defparameter *default-snmp-port* 161)
-(defparameter *default-snmp-community* "public")
-(defparameter *default-context* "")
-(defparameter *default-auth-protocol* :md5)
-(defparameter *default-priv-protocol* :des)
+(defvar *default-snmp-version* +snmp-version-2c+)
+(defvar *default-snmp-port* 161)
+(defvar *default-snmp-community* "public")
+(defvar *default-context* "")
+(defvar *default-auth-protocol* :md5)
+(defvar *default-priv-protocol* :des)
 
 (defclass session ()
   ((socket            :type datagram-usocket
-		      :accessor socket-of
-		      :initarg :socket)
+                      :accessor socket-of
+                      :initarg :socket)
    (host              :type string
                       :accessor host-of
                       :initarg :host)
@@ -120,14 +120,20 @@
 	    (:version-2c . +snmp-version-2c+)
 	    (:version-3  . +snmp-version-3+))))
 
-(defun open-session (host &key (port *default-snmp-port*) (version *default-snmp-version*)
-                               (community *default-snmp-community*) user auth priv)
+(defun open-session (host &key (port *default-snmp-port*)
+                               (version *default-snmp-version*)
+                               (community *default-snmp-community*)
+                               user auth priv
+                               (create-socket t))
   ;; first, what version we are talking about if version not been set?
   (let* ((real-version (or (gethash version *snmp-version-table* version)
                            (if user +snmp-version-3+ *default-snmp-version*)))
-         (socket (socket-connect/udp nil nil :element-type '(unsigned-byte 8) :stream nil))
          (args (list (gethash real-version *snmp-class-table*)
-                     :socket socket :host host :port port)))
+                     :host host :port port)))
+    (when create-socket
+      (nconc args (list :socket (socket-connect/udp nil nil
+                                                    :element-type '(unsigned-byte 8)
+                                                    :stream nil))))
     (if (/= real-version +snmp-version-3+)
       ;; for SNMPv1 and v2c, only set the community
       (nconc args (list :community (or community *default-snmp-community*)))
@@ -165,7 +171,8 @@
     (apply #'make-instance args)))
 
 (defmethod close-session ((session session))
-  (socket-close (socket-of session)))
+  (when (slot-boundp session 'socket)
+    (socket-close (socket-of session))))
 
 (defmacro with-open-session ((session &rest args) &body body)
   `(let ((,session (open-session ,@args)))
