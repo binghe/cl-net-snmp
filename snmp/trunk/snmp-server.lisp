@@ -43,7 +43,7 @@
                                        &rest initargs &key &allow-other-keys)
   (declare (ignore initargs))
   (setf (server-process instance)
-        (portable-threads:spawn-thread
+        (spawn-thread
 	 (format nil "SNMP Server at ~A:~D"
                                       (server-address instance)
                                       (server-port instance))
@@ -64,7 +64,7 @@
 
 (defun disable-snmp-service ()
   (when *default-snmp-server*
-    (portable-threads:kill-thread
+    (kill-thread
      (server-process *default-snmp-server*))
     (setf *default-snmp-server* nil)))
 

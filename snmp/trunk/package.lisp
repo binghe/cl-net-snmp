@@ -4,6 +4,7 @@
   (:use #+genera :future-common-lisp
         #-genera :common-lisp
         :trivial-gray-streams
+        :portable-threads
         :usocket
         :asn.1)
   (:export #:+snmp-version-1+
