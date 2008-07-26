@@ -1,17 +1,4 @@
-;;;; -*- Mode: lisp; Syntax: ansi-common-lisp; Base: 10; Package: snmp; -*-
-
-#|
-<DOCUMENTATION>
- <DESCRIPTION>
-  SNMP PDU Type support, as a special ASN.1 SEQUENCE.
-  </DESCRIPTION>
- <COPYRIGHT YEAR='2007-2008' AUTHOR='Chun Tian (binghe)' MARK='(C)'
-            HREF='https://cl-net-snmp.svn.sourceforge.net/svnroot/cl-net-snmp/snmp/trunk/pdu.lisp'/>
- <CHRONOLOGY>
-  <DELTA DATE='20080316'>create documentation for "pdu.lisp"</DELTA>
-  </CHRONOLOGY>
- </DOCUMENTATION>
-|#
+;;;; $Id$
 
 (in-package :snmp)
 

@@ -1,8 +1,11 @@
+;;;; $Id$
+
 (in-package :cl-user)
 
 (defpackage snmp
   (:use #+genera :future-common-lisp
         #-genera :common-lisp
+	:snmp-system
         :trivial-gray-streams
         :portable-threads
         :usocket

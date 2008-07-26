@@ -1,4 +1,4 @@
-;;;; -*- Mode: lisp; Syntax: ansi-common-lisp; Base: 10; Package: snmp; -*-
+;;;; $Id$
 
 #|
 <DOCUMENTATION>
