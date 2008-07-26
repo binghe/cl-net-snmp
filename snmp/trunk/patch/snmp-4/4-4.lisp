@@ -1,11 +1,6 @@
-;;;; -*- Mode: lisp; -*-
-
 (in-package :snmp)
 
-(defun need-report-p (session)
-  "return true if a SNMPv3 session has no engine infomation set"
-  (declare (type v3-session session))
-  (zerop (engine-time-of session)))
+;;; report.lisp
 
 (defun snmp-report (session &key (context *default-context*))
   (declare (type v3-session session))
