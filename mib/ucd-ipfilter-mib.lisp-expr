@@ -1,0 +1,4 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from MIB:NET-SNMP;UCD-IPFILTER-MIB.TXT
+
+(ucd-ipfilter-mib |SNMPv2-SMI| ucd-snmp-mib)

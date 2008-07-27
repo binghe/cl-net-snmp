@@ -89,6 +89,41 @@
   :DEPENDS-ON
   ("snmpv2-smi" "snmpv2-tc" "snmpv2-conf" "snmp-framework-mib"))
  (:FILE
+  "disman-ping-mib"
+  :DEPENDS-ON
+  ("snmpv2-smi"
+   "snmpv2-tc"
+   "snmpv2-conf"
+   "if-mib"
+   "snmp-framework-mib"
+   "inet-address-mib"))
+ (:FILE
+  "disman-expression-mib"
+  :DEPENDS-ON
+  ("snmpv2-smi"
+   "snmpv2-tc"
+   "snmpv2-mib"
+   "snmp-framework-mib"
+   "snmpv2-conf"))
+ (:FILE
+  "disman-traceroute-mib"
+  :DEPENDS-ON
+  ("snmpv2-smi"
+   "snmpv2-tc"
+   "snmpv2-conf"
+   "snmp-framework-mib"
+   "if-mib"
+   "inet-address-mib"
+   "disman-ping-mib"))
+ (:FILE
+  "disman-nslookup-mib"
+  :DEPENDS-ON
+  ("snmpv2-smi"
+   "snmpv2-tc"
+   "snmpv2-conf"
+   "snmp-framework-mib"
+   "inet-address-mib"))
+ (:FILE
   "etherlike-mib"
   :DEPENDS-ON
   ("snmpv2-smi" "snmpv2-conf" "snmpv2-tc" "if-mib"))
@@ -192,6 +227,14 @@
    "snmpv2-conf"
    "snmpv2-tc"))
  (:FILE
+  "net-snmp-system-mib"
+  :DEPENDS-ON
+  ("net-snmp-mib" "net-snmp-tc" "snmpv2-smi" "snmpv2-tc"))
+ (:FILE
+  "net-snmp-monitor-mib"
+  :DEPENDS-ON
+  ("net-snmp-mib" "snmpv2-smi" "snmpv2-tc"))
+ (:FILE
   "notification-log-mib"
   :DEPENDS-ON
   ("snmpv2-smi" "snmpv2-tc" "snmp-framework-mib" "snmpv2-conf"))
@@ -217,6 +260,10 @@
   "tcp-mib"
   :DEPENDS-ON
   ("snmpv2-smi" "snmpv2-conf" "inet-address-mib"))
+ (:FILE
+  "udp-mib"
+  :DEPENDS-ON
+  ("snmpv2-smi" "snmpv2-conf" "inet-address-mib"))
  (:FILE "transport-address-mib" :DEPENDS-ON ("snmpv2-smi" "snmpv2-tc"))
  (:FILE "ucd-demo-mib" :DEPENDS-ON ("snmpv2-smi" "ucd-snmp-mib"))
  (:FILE
@@ -232,15 +279,34 @@
   :DEPENDS-ON
   ("snmpv2-smi" "snmpv2-tc" "ucd-snmp-mib"))
  (:FILE "ucd-snmp-mib" :DEPENDS-ON ("snmpv2-smi" "snmpv2-tc"))
+ (:FILE "ucd-ipfilter-mib" :DEPENDS-ON ("snmpv2-smi" "ucd-snmp-mib"))
  (:FILE
-  "udp-mib"
+  "ucd-snmp-mib-old"
   :DEPENDS-ON
-  ("snmpv2-smi" "snmpv2-conf" "inet-address-mib"))
+  ("ucd-snmp-mib" "snmpv2-smi" "snmpv2-tc" "snmpv2-smi"))
  (:FILE "rfc-1215")
  (:FILE "rfc1155-smi")
  (:FILE "rfc1213-mib" :DEPENDS-ON ("rfc1155-smi"))
- (:FILE "squid-mib" :DEPENDS-ON ("snmpv2-smi" "snmpv2-tc"))
+ (:FILE "ipv6-flow-label-mib" :DEPENDS-ON ("snmpv2-smi" "snmpv2-tc"))
  (:FILE
-  "linux-ha-mib"
+  "network-services-mib"
   :DEPENDS-ON
-  ("snmpv2-smi" "snmpv2-tc" "snmpv2-conf")))
+  ("snmpv2-smi" "snmpv2-tc" "snmpv2-conf" "snmp-framework-mib"))
+ (:FILE
+  "mta-mib"
+  :DEPENDS-ON
+  ("snmpv2-smi"
+   "snmpv2-tc"
+   "snmpv2-conf"
+   "snmp-framework-mib"
+   "network-services-mib"))
+ (:FILE
+  "tunnel-mib"
+  :DEPENDS-ON
+  ("snmpv2-smi"
+   "snmpv2-tc"
+   "snmpv2-conf"
+   "inet-address-mib"
+   "ipv6-flow-label-mib"
+   "if-mib"
+   "ianaiftype-mib")))

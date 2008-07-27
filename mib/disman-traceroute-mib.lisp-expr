@@ -1,0 +1,11 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from MIB:NET-SNMP;DISMAN-TRACEROUTE-MIB.TXT
+
+(disman-traceroute-mib
+ |SNMPv2-SMI|
+ |SNMPv2-TC|
+ |SNMPv2-CONF|
+ snmp-framework-mib
+ if-mib
+ inet-address-mib
+ disman-ping-mib)
