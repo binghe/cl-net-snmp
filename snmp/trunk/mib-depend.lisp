@@ -7,16 +7,40 @@
               (SETF (GETHASH (CAR ASN.1::X)
                              ASN.1::*MIB-MODULE-DEPENDENCY*)
                     (CDR ASN.1::X)))
-          '((LINUX-HA-MIB |SNMPv2-SMI| |SNMPv2-TC| |SNMPv2-CONF|)
-            (SQUID-MIB |SNMPv2-SMI| |SNMPv2-TC|)
+          '((TUNNEL-MIB
+             |SNMPv2-SMI|
+             |SNMPv2-TC|
+             |SNMPv2-CONF|
+             INET-ADDRESS-MIB
+             IPV6-FLOW-LABEL-MIB
+             IF-MIB
+             |IANAifType-MIB|)
+            (MTA-MIB
+             |SNMPv2-SMI|
+             |SNMPv2-TC|
+             |SNMPv2-CONF|
+             SNMP-FRAMEWORK-MIB
+             NETWORK-SERVICES-MIB)
+            (NETWORK-SERVICES-MIB
+             |SNMPv2-SMI|
+             |SNMPv2-TC|
+             |SNMPv2-CONF|
+             SNMP-FRAMEWORK-MIB)
+            (IPV6-FLOW-LABEL-MIB |SNMPv2-SMI| |SNMPv2-TC|)
             (RFC1213-MIB RFC1155-SMI)
-            (UDP-MIB |SNMPv2-SMI| |SNMPv2-CONF| INET-ADDRESS-MIB)
+            (UCD-SNMP-MIB-OLD
+             UCD-SNMP-MIB
+             |SNMPv2-SMI|
+             |SNMPv2-TC|
+             |SNMPv2-SMI|)
+            (UCD-IPFILTER-MIB |SNMPv2-SMI| UCD-SNMP-MIB)
             (UCD-SNMP-MIB |SNMPv2-SMI| |SNMPv2-TC|)
             (UCD-IPFWACC-MIB |SNMPv2-SMI| |SNMPv2-TC| UCD-SNMP-MIB)
             (UCD-DLMOD-MIB |SNMPv2-SMI| |SNMPv2-TC| UCD-SNMP-MIB)
             (UCD-DISKIO-MIB |SNMPv2-SMI| |SNMPv2-TC| UCD-SNMP-MIB)
             (UCD-DEMO-MIB |SNMPv2-SMI| UCD-SNMP-MIB)
             (TRANSPORT-ADDRESS-MIB |SNMPv2-SMI| |SNMPv2-TC|)
+            (UDP-MIB |SNMPv2-SMI| |SNMPv2-CONF| INET-ADDRESS-MIB)
             (TCP-MIB |SNMPv2-SMI| |SNMPv2-CONF| INET-ADDRESS-MIB)
             (SOURCE-ROUTING-MIB RFC1155-SMI BRIDGE-MIB)
             (SMUX-MIB RFC1155-SMI)
@@ -37,6 +61,15 @@
              |SNMPv2-TC|
              SNMP-FRAMEWORK-MIB
              |SNMPv2-CONF|)
+            (NET-SNMP-MONITOR-MIB
+             NET-SNMP-MIB
+             |SNMPv2-SMI|
+             |SNMPv2-TC|)
+            (NET-SNMP-SYSTEM-MIB
+             NET-SNMP-MIB
+             NET-SNMP-TC
+             |SNMPv2-SMI|
+             |SNMPv2-TC|)
             (NET-SNMP-VACM-MIB
              SNMP-FRAMEWORK-MIB
              NET-SNMP-MIB
@@ -112,6 +145,33 @@
              |SNMPv2-CONF|
              |SNMPv2-TC|
              IF-MIB)
+            (DISMAN-NSLOOKUP-MIB
+             |SNMPv2-SMI|
+             |SNMPv2-TC|
+             |SNMPv2-CONF|
+             SNMP-FRAMEWORK-MIB
+             INET-ADDRESS-MIB)
+            (DISMAN-TRACEROUTE-MIB
+             |SNMPv2-SMI|
+             |SNMPv2-TC|
+             |SNMPv2-CONF|
+             SNMP-FRAMEWORK-MIB
+             IF-MIB
+             INET-ADDRESS-MIB
+             DISMAN-PING-MIB)
+            (DISMAN-EXPRESSION-MIB
+             |SNMPv2-SMI|
+             |SNMPv2-TC|
+             |SNMPv2-MIB|
+             SNMP-FRAMEWORK-MIB
+             |SNMPv2-CONF|)
+            (DISMAN-PING-MIB
+             |SNMPv2-SMI|
+             |SNMPv2-TC|
+             |SNMPv2-CONF|
+             IF-MIB
+             SNMP-FRAMEWORK-MIB
+             INET-ADDRESS-MIB)
             (DISMAN-SCRIPT-MIB
              |SNMPv2-SMI|
              |SNMPv2-TC|

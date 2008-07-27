@@ -1,0 +1,11 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from MIB:NET-SNMP;TUNNEL-MIB.TXT
+
+(tunnel-mib
+ |SNMPv2-SMI|
+ |SNMPv2-TC|
+ |SNMPv2-CONF|
+ inet-address-mib
+ ipv6-flow-label-mib
+ if-mib
+ |IANAifType-MIB|)
