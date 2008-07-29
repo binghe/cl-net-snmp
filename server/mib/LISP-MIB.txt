@@ -27,7 +27,7 @@ lisp MODULE-IDENTITY
     ::= { enterprises 26670 }
 
 common-lisp     OBJECT IDENTIFIER ::= { lisp 1 }
-scheme          OBJECT IDENTIGIER ::= { lisp 2 }
+scheme          OBJECT IDENTIFIER ::= { lisp 2 }
 
 -- lisp.3+ is for other dialets
 
@@ -36,63 +36,63 @@ cl-packages     OBJECT IDENTIFIER ::= { common-lisp 2 } -- (Small) Utility
 cl-applications OBJECT IDENTIFIER ::= { common-lisp 3 } -- (Big) Applications
 
 lispImplementationType OBJECT-TYPE
-    SYNTAX      OCTCT STRING
+    SYNTAX      OCTET STRING
     MAX-ACCESS  read-only
     STATUS      current
     DESCRIPTION "(lisp-implementation-type)"
     ::= { cl-system 1 }
 
 lispImplementationVersion OBJECT-TYPE
-    SYNTAX      OCTCT STRING
+    SYNTAX      OCTET STRING
     MAX-ACCESS  read-only
     STATUS      current
     DESCRIPTION "(lisp-implementation-version)"
     ::= { cl-system 2 }
 
 lispLongSiteName OBJECT-TYPE
-    SYNTAX      OCTCT STRING
+    SYNTAX      OCTET STRING
     MAX-ACCESS  read-write
     STATUS      current
     DESCRIPTION "(long-site-name)"
     ::= { cl-system 3 }
 
 lispShortSiteName OBJECT-TYPE
-    SYNTAX      OCTCT STRING
+    SYNTAX      OCTET STRING
     MAX-ACCESS  read-write
     STATUS      current
     DESCRIPTION "(short-site-name)"
     ::= { cl-system 4 }
 
 lispMachineInstance OBJECT-TYPE
-    SYNTAX      OCTCT STRING
+    SYNTAX      OCTET STRING
     MAX-ACCESS  read-only
     STATUS      current
     DESCRIPTION "(machine-instance)"
     ::= { cl-system 5 }
 
 lispMachineType OBJECT-TYPE
-    SYNTAX      OCTCT STRING
+    SYNTAX      OCTET STRING
     MAX-ACCESS  read-only
     STATUS      current
     DESCRIPTION "(machine-type)"
     ::= { cl-system 6 }
 
 lispMachineVersion OBJECT-TYPE
-    SYNTAX      OCTCT STRING
+    SYNTAX      OCTET STRING
     MAX-ACCESS  read-only
     STATUS      current
     DESCRIPTION "(machine-version)"
     ::= { cl-system 7 }
 
 lispSoftwareType OBJECT-TYPE
-    SYNTAX      OCTCT STRING
+    SYNTAX      OCTET STRING
     MAX-ACCESS  read-only
     STATUS      current
     DESCRIPTION "(software-type)"
     ::= { cl-system 8 }
 
 lispSoftwareVersion OBJECT-TYPE
-    SYNTAX      OCTCT STRING
+    SYNTAX      OCTET STRING
     MAX-ACCESS  read-only
     STATUS      current
     DESCRIPTION "(software-version)"
