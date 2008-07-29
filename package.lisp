@@ -20,6 +20,7 @@
            #:*default-snmp-server*
            #:*default-snmp-version*
            #:*default-context*
+           #:*snmp-readtable*
            #:close-session
            #:define-object-id
            #:disable-snmp-service
@@ -30,6 +31,7 @@
    	   #:snmp-get
            #:snmp-get-next
            #:snmp-inform
+           #:snmp-request
            #:snmp-set
            #:snmp-server
            #:snmp-trap
@@ -41,10 +43,9 @@
 (in-package :snmp)
 
 ;;; Logical Pathname Translations, learn from CL-HTTP source code
-
 (eval-when (:load-toplevel :execute)
   (let* ((defaults #+asdf (asdf:component-pathname (asdf:find-system :snmp))
-                   #-asdf *load-pathname*)
+                   #-asdf *load-truename*)
          (home (make-pathname :name :wild :type :wild
                               :directory (append (pathname-directory defaults)
                                                  '(:wild-inferiors))

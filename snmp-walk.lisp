@@ -2,46 +2,14 @@
 
 (in-package :snmp)
 
-(defgeneric snmp-get-next (object vars &key)
-  (:documentation "SNMP Get"))
-
-(defmethod snmp-get-next ((host string) (vars list) &key (context *default-context*))
-  (when vars
-    (with-open-session (s host)
-      (snmp-get-next s vars :context context))))
-
-(defmethod snmp-get-next ((session session) (vars list) &key (context *default-context*))
-  "SNMP Get-Next-Request for v1, v2c and v3"
-  (when vars
-    (let ((vb (mapcar #'(lambda (x) (list (oid x) nil)) vars)))
-      ;; Get a report first if the session is new created
-      (when (and (= +snmp-version-3+ (version-of session))
-                 (need-report-p session))
-        (snmp-report session))
-      (let ((message (make-instance (gethash (type-of session) *session->message*)
-                                    :session session
-                                    :context context
-                                    :pdu (make-instance 'get-next-request-pdu
-                                                        :variable-bindings vb))))
-        (let ((reply (send-snmp-message session message)))
-          (when reply
-            (map 'list #'(lambda (x) (coerce x 'list))
-                 (variable-bindings-of (pdu-of reply)))))))))
-
-(defmethod snmp-get-next ((host string) (var string) &key (context *default-context*))
-  (car (snmp-get-next host (list var) :context context)))
-
-(defmethod snmp-get-next ((host string) (var object-id) &key (context *default-context*))
-  (car (snmp-get-next host (list var) :context context)))
-
 (defgeneric snmp-walk (object vars &key)
-  (:documentation "SNMP Walk"))
+  (:documentation "SNMP Walk, only useful for debug"))
 
-(defmethod snmp-walk ((host string) (vars list) &key (context *default-context*))
+(defmethod snmp-walk ((host string) (vars list) &key context)
   (with-open-session (s host)
     (snmp-walk s vars :context context)))
 
-(defmethod snmp-walk ((session session) (vars list) &key (context *default-context*))
+(defmethod snmp-walk ((session session) (vars list) &key context)
   "SNMP Walk for v1, v2c and v3"
   (when vars
     (let ((base-vars (mapcar #'oid vars)))
@@ -57,8 +25,8 @@
                      (iter new-vars (mapcar #'cons temp acc) nil)))))
         (iter base-vars (make-list (length vars)) t)))))
 
-(defmethod snmp-walk (object (var string) &key (context *default-context*))
+(defmethod snmp-walk (object (var string) &key context)
   (car (snmp-walk object (list var) :context context)))
 
-(defmethod snmp-walk (object (var object-id) &key (context *default-context*))
+(defmethod snmp-walk (object (var object-id) &key context)
   (car (snmp-walk object (list var) :context context)))

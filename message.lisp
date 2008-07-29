@@ -9,9 +9,9 @@
    (pdu     :type pdu
             :initarg :pdu
             :accessor pdu-of)
-   (context        :type base-string
-                   :initarg :context
-                   :accessor context-of))
+   (context :type base-string
+            :initarg :context
+            :accessor context-of))
   (:documentation "SNMP message base class"))
 
 ;;; SNMPv1 and SNMPv2c
@@ -89,14 +89,17 @@
         ;; msgSecurityModel: USM (3)
         +snmp-sec-model-usm+))
 
+(defvar *default-context* "")
+
 ;;; SNMPv3 Message Encode
 (defmethod ber-encode ((message v3-message))
   (let* ((session (session-of message))
          (global-data (generate-global-data (msg-id-of message)
                                             (if (report-flag message) 0
                                               (security-level-of session))))
-         (msg-data (list (engine-id-of session) ; contextEngineID, not support yet.
-                         (context-of message)   ; contextName, not support yet.
+         (msg-data (list (engine-id-of session) ; contextEngineID
+                         (or (context-of message)
+                             *default-context*) ; contextName
                          (pdu-of message)))     ; PDU
          (need-auth-p (and (not (report-flag message))
                            (auth-protocol-of session)))
