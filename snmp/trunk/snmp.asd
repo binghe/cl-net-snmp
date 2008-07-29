@@ -19,13 +19,14 @@
 
 (defsystem snmp
   :description "Simple Network Manangement Protocol"
-  :version "4.5"
+  :version "4.6"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
   :depends-on (:asn.1        ; Standalone ASN.1 support
 	       :ironclad     ; SNMPv3 authentication/encryption support
                :usocket-udp) ; Portable UDP networking
   :components ((:file "package"     :depends-on ("vendor"))
 	       (:file "constants"   :depends-on ("package"))
+               #+ignore
                (:file "condition"   :depends-on ("package"))
 	       (:file "pdu"         :depends-on ("package"))
                (:file "keytool"     :depends-on ("package"))
@@ -33,18 +34,12 @@
 	       (:file "session"     :depends-on ("keytool"))
                (:file "message"     :depends-on ("constants" "pdu" "session"))
                (:file "network"     :depends-on ("message" "session"))
-               (:file "report"      :depends-on ("message" "network" "session"))
-               (:file "snmp-get"    :depends-on ("message" "network" "pdu"
-                                                 "session"))
-               (:file "snmp-set"    :depends-on ("message" "network" "pdu"
-                                                 "session"))
-               (:file "snmp-walk"   :depends-on ("message" "mib" "network"
-                                                 "pdu" "report" "session"
-                                                 "snmp-smi"))
-               (:file "snmp-trap"   :depends-on ("message" "mib" "network"
-                                                 "pdu" "report" "session"))
-               (:file "worker"      :depends-on ("snmp-get" "snmp-set"
-                                                 "snmp-walk" "snmp-trap"))
+               (:file "report"      :depends-on ("network"))
+               (:file "request"     :depends-on ("report" "pdu"))
+               (:file "snmp-get"    :depends-on ("request"))
+               (:file "snmp-walk"   :depends-on ("request" "snmp-smi"))
+               (:file "snmp-trap"   :depends-on ("request" "mib"))
+               (:file "worker")
 	       #+lispworks
                (:file "update-mib"  :depends-on ("mib"))
                (:file "mib-depend"  :depends-on ("package"))
@@ -61,4 +56,6 @@
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
   :depends-on (:snmp)
   :components ((:file "snmp-server")
-               (:file "server-base" :depends-on ("snmp-server"))))
+               (:file "server-base" :depends-on ("snmp-server"))
+               (:module "server"
+                :components ())))
