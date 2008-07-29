@@ -7,7 +7,14 @@
               (SETF (GETHASH (CAR ASN.1::X)
                              ASN.1::*MIB-MODULE-DEPENDENCY*)
                     (CDR ASN.1::X)))
-          '((TUNNEL-MIB
+          '((LISP-CL-HTTP-MIB |SNMPv2-SMI| LISP-MIB)
+            (LISP-CLOZURE-MIB |SNMPv2-SMI| LISP-MIB)
+            (LISP-SBCL-MIB |SNMPv2-SMI| LISP-MIB)
+            (LISP-CMUCL-MIB |SNMPv2-SMI| LISP-MIB)
+            (LISP-FRANZ-MIB |SNMPv2-SMI| LISP-MIB)
+            (LISP-LISPWORKS-MIB |SNMPv2-SMI| LISP-MIB)
+            (LISP-MIB |SNMPv2-SMI|)
+            (TUNNEL-MIB
              |SNMPv2-SMI|
              |SNMPv2-TC|
              |SNMPv2-CONF|

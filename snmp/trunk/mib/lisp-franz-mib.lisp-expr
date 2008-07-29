@@ -1,0 +1,4 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from SNMP:SERVER;MIB;LISP-FRANZ-MIB.TXT
+
+(lisp-franz-mib |SNMPv2-SMI| lisp-mib)
