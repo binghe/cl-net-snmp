@@ -9,7 +9,6 @@
 (defvar *default-snmp-version* +snmp-version-2c+)
 (defvar *default-snmp-port* 161)
 (defvar *default-snmp-community* "public")
-(defvar *default-context* "")
 (defvar *default-auth-protocol* :md5)
 (defvar *default-priv-protocol* :des)
 
