@@ -309,4 +309,11 @@
    "inet-address-mib"
    "ipv6-flow-label-mib"
    "if-mib"
-   "ianaiftype-mib")))
+   "ianaiftype-mib"))
+ (:FILE "lisp-mib" :DEPENDS-ON ("snmpv2-smi"))
+ (:FILE "lisp-lispworks-mib" :DEPENDS-ON ("snmpv2-smi" "lisp-mib"))
+ (:FILE "lisp-franz-mib" :DEPENDS-ON ("snmpv2-smi" "lisp-mib"))
+ (:FILE "lisp-cmucl-mib" :DEPENDS-ON ("snmpv2-smi" "lisp-mib"))
+ (:FILE "lisp-sbcl-mib" :DEPENDS-ON ("snmpv2-smi" "lisp-mib"))
+ (:FILE "lisp-clozure-mib" :DEPENDS-ON ("snmpv2-smi" "lisp-mib"))
+ (:FILE "lisp-cl-http-mib" :DEPENDS-ON ("snmpv2-smi" "lisp-mib")))

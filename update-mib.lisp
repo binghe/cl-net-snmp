@@ -79,7 +79,14 @@
     #p"MIB:NET-SNMP;IPV6-FLOW-LABEL-MIB.TXT"
     #p"MIB:NET-SNMP;NETWORK-SERVICES-MIB.TXT"
     #p"MIB:NET-SNMP;MTA-MIB.TXT"
-    #p"MIB:NET-SNMP;TUNNEL-MIB.TXT"))
+    #p"MIB:NET-SNMP;TUNNEL-MIB.TXT"
+    #p"SNMP:SERVER;MIB;LISP-MIB.TXT"
+    #p"SNMP:SERVER;MIB;LISP-LISPWORKS-MIB.TXT"
+    #p"SNMP:SERVER;MIB;LISP-FRANZ-MIB.TXT"
+    #p"SNMP:SERVER;MIB;LISP-CMUCL-MIB.TXT"
+    #p"SNMP:SERVER;MIB;LISP-SBCL-MIB.TXT"
+    #p"SNMP:SERVER;MIB;LISP-CLOZURE-MIB.TXT"
+    #p"SNMP:SERVER;MIB;LISP-CL-HTTP-MIB.TXT"))
 
 (defvar *mib-list-file* #p"SNMP:MIB.LISP-EXPR")
 (defvar *mib-dependency-file* #p"SNMP:MIB-DEPEND.LISP")
@@ -96,10 +103,10 @@
                                   :directory '(:relative "MIB"))
                    #p"SNMP:"))
 
-(defun update-mib ()
+(defun update-mib (&optional (mib-list *mib-list*))
   (let ((mib.lisp-expr '())
         (mib-depend.lisp '()))
-    (dolist (i *mib-list*)
+    (dolist (i mib-list)
       (format t "; Compiling ~A~%" i)
       (compile-asn.1 i :to (lisp-file i))
       (let ((depends (with-open-file (s (expr-file i) :direction :input)
