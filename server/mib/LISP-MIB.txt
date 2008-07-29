@@ -1,0 +1,140 @@
+-- $Id$
+
+LISP-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, OBJECT-IDENTITY,
+    NOTIFICATION-TYPE, enterprises
+        FROM SNMPv2-SMI;
+
+lisp MODULE-IDENTITY
+    LAST-UPDATED "200807290000Z" -- 29 July 2008
+    ORGANIZATION
+           "The cl-net-snmp Project
+	    http://common-lisp.net/projects/cl-net-snmp"
+    CONTACT-INFO
+           "Chun Tian (binghe)
+
+            Email: <binghe.lisp@gmail.com>
+
+            Send comments to
+              <cl-net-snmp-general@lists.sourceforge.net>"
+    DESCRIPTION
+           "The MIB module for Lisp."
+    REVISION "200807290000Z" -- 29 July 2008
+    DESCRIPTION
+           "The initial revision of this MIB module."
+    ::= { enterprises 26670 }
+
+common-lisp     OBJECT IDENTIFIER ::= { lisp 1 }
+scheme          OBJECT IDENTIGIER ::= { lisp 2 }
+
+-- lisp.3+ is for other dialets
+
+cl-system       OBJECT IDENTIFIER ::= { common-lisp 1 }
+cl-packages     OBJECT IDENTIFIER ::= { common-lisp 2 } -- (Small) Utility
+cl-applications OBJECT IDENTIFIER ::= { common-lisp 3 } -- (Big) Applications
+
+lispImplementationType OBJECT-TYPE
+    SYNTAX      OCTCT STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "(lisp-implementation-type)"
+    ::= { cl-system 1 }
+
+lispImplementationVersion OBJECT-TYPE
+    SYNTAX      OCTCT STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "(lisp-implementation-version)"
+    ::= { cl-system 2 }
+
+lispLongSiteName OBJECT-TYPE
+    SYNTAX      OCTCT STRING
+    MAX-ACCESS  read-write
+    STATUS      current
+    DESCRIPTION "(long-site-name)"
+    ::= { cl-system 3 }
+
+lispShortSiteName OBJECT-TYPE
+    SYNTAX      OCTCT STRING
+    MAX-ACCESS  read-write
+    STATUS      current
+    DESCRIPTION "(short-site-name)"
+    ::= { cl-system 4 }
+
+lispMachineInstance OBJECT-TYPE
+    SYNTAX      OCTCT STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "(machine-instance)"
+    ::= { cl-system 5 }
+
+lispMachineType OBJECT-TYPE
+    SYNTAX      OCTCT STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "(machine-type)"
+    ::= { cl-system 6 }
+
+lispMachineVersion OBJECT-TYPE
+    SYNTAX      OCTCT STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "(machine-version)"
+    ::= { cl-system 7 }
+
+lispSoftwareType OBJECT-TYPE
+    SYNTAX      OCTCT STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "(software-type)"
+    ::= { cl-system 8 }
+
+lispSoftwareVersion OBJECT-TYPE
+    SYNTAX      OCTCT STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "(software-version)"
+    ::= { cl-system 9 }
+
+lispInternalRealTime OBJECT-TYPE
+    SYNTAX      INTEGER
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "(get-internal-real-time)"
+    ::= { cl-system 10 }
+
+lispInternalRunTime OBJECT-TYPE
+    SYNTAX      INTEGER
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "(get-internal-run-time)"
+    ::= { cl-system 11 }
+
+lispUniversalTime OBJECT-TYPE
+    SYNTAX      INTEGER
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "(get-universal-time)"
+    ::= { cl-system 13 }
+
+/*
+
+lispInternalTimeUnitsPerSecond OBJECT-TYPE
+    SYNTAX      INTEGER
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "internal-time-units-per-second"
+    ::= { cl-system 12 }
+
+lispFeatures OBJECT-TYPE
+    SYNTAX      SEQUENCE OF OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "*features*"
+    ::= { cl-system 14 }
+
+*/
+
+END
