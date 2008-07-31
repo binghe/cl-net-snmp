@@ -5,6 +5,6 @@
 (setf *current-module* 'lisp-lispworks-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'lisp-lispworks-mib *mib-modules*))
-(defoid |lispworks| (|common-lisp| 4)
+(defoid |lispworks| (|common-lisp| 5)
   (:type 'module-identity)
   (:description "The MIB module for LispWorks."))

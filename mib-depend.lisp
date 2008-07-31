@@ -11,7 +11,7 @@
             (LISP-CLOZURE-MIB |SNMPv2-SMI| LISP-MIB)
             (LISP-SBCL-MIB |SNMPv2-SMI| LISP-MIB)
             (LISP-CMUCL-MIB |SNMPv2-SMI| LISP-MIB)
-            (LISP-FRANZ-MIB |SNMPv2-SMI| LISP-MIB)
+            (LISP-ALLEGRO-MIB |SNMPv2-SMI| LISP-MIB)
             (LISP-LISPWORKS-MIB |SNMPv2-SMI| LISP-MIB)
             (LISP-MIB |SNMPv2-SMI|)
             (TUNNEL-MIB

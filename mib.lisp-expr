@@ -312,7 +312,7 @@
    "ianaiftype-mib"))
  (:FILE "lisp-mib" :DEPENDS-ON ("snmpv2-smi"))
  (:FILE "lisp-lispworks-mib" :DEPENDS-ON ("snmpv2-smi" "lisp-mib"))
- (:FILE "lisp-franz-mib" :DEPENDS-ON ("snmpv2-smi" "lisp-mib"))
+ (:FILE "lisp-allegro-mib" :DEPENDS-ON ("snmpv2-smi" "lisp-mib"))
  (:FILE "lisp-cmucl-mib" :DEPENDS-ON ("snmpv2-smi" "lisp-mib"))
  (:FILE "lisp-sbcl-mib" :DEPENDS-ON ("snmpv2-smi" "lisp-mib"))
  (:FILE "lisp-clozure-mib" :DEPENDS-ON ("snmpv2-smi" "lisp-mib"))

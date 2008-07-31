@@ -1,6 +1,6 @@
--- $Id$
+-- $Id: LISP-FRANZ-MIB.txt 426 2008-07-29 15:21:03Z binghe $
 
-LISP-FRANZ-MIB DEFINITIONS ::= BEGIN
+LISP-ALLEGRO-MIB DEFINITIONS ::= BEGIN
 
 IMPORTS
     MODULE-IDENTITY, OBJECT-TYPE, OBJECT-IDENTITY,
@@ -9,7 +9,7 @@ IMPORTS
 
     common-lisp FROM LISP-MIB;
 
-franz MODULE-IDENTITY
+allegro MODULE-IDENTITY
     LAST-UPDATED "200807290000Z" -- 29 July 2008
     ORGANIZATION
            "The cl-net-snmp Project
@@ -22,10 +22,10 @@ franz MODULE-IDENTITY
             Send comments to
               <cl-net-snmp-general@lists.sourceforge.net>"
     DESCRIPTION
-           "The MIB module for Franz and Allegro CL"
+           "The MIB module for Allegro CL"
     REVISION "200807290000Z" -- 29 July 2008
     DESCRIPTION
            "The initial revision of this MIB module."
-    ::= { common-lisp 5 }
+    ::= { common-lisp 9 }
 
 END
