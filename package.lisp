@@ -22,6 +22,7 @@
            #:*default-context*
            #:*snmp-readtable*
            #:close-session
+           #:def-scalar-variable
            #:define-object-id
            #:disable-snmp-service
            #:enable-snmp-service

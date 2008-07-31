@@ -5,6 +5,6 @@
 (setf *current-module* 'lisp-cl-http-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'lisp-cl-http-mib *mib-modules*))
-(defoid |cl-http| (|cl-packages| 1)
+(defoid |cl-http| (|lispPackages| 2)
   (:type 'module-identity)
   (:description "The MIB module for CL-HTTP"))

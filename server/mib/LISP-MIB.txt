@@ -31,110 +31,263 @@ scheme          OBJECT IDENTIFIER ::= { lisp 2 }
 
 -- lisp.3+ is for other dialets
 
-cl-system       OBJECT IDENTIFIER ::= { common-lisp 1 }
-cl-packages     OBJECT IDENTIFIER ::= { common-lisp 2 } -- (Small) Utility
-cl-applications OBJECT IDENTIFIER ::= { common-lisp 3 } -- (Big) Applications
+lispSystem       OBJECT IDENTIFIER ::= { common-lisp 1 }
+lispConstants    OBJECT IDENTIFIER ::= { common-lisp 2 }
+lispPackages     OBJECT IDENTIFIER ::= { common-lisp 3 } -- (Small) Utility
+lispApplications OBJECT IDENTIFIER ::= { common-lisp 4 } -- (Big) Applications
 
 lispImplementationType OBJECT-TYPE
     SYNTAX      OCTET STRING
     MAX-ACCESS  read-only
     STATUS      current
     DESCRIPTION "(lisp-implementation-type)"
-    ::= { cl-system 1 }
+    ::= { lispSystem 1 }
 
 lispImplementationVersion OBJECT-TYPE
     SYNTAX      OCTET STRING
     MAX-ACCESS  read-only
     STATUS      current
     DESCRIPTION "(lisp-implementation-version)"
-    ::= { cl-system 2 }
+    ::= { lispSystem 2 }
 
 lispLongSiteName OBJECT-TYPE
     SYNTAX      OCTET STRING
     MAX-ACCESS  read-write
     STATUS      current
     DESCRIPTION "(long-site-name)"
-    ::= { cl-system 3 }
+    ::= { lispSystem 3 }
 
 lispShortSiteName OBJECT-TYPE
     SYNTAX      OCTET STRING
     MAX-ACCESS  read-write
     STATUS      current
     DESCRIPTION "(short-site-name)"
-    ::= { cl-system 4 }
+    ::= { lispSystem 4 }
 
 lispMachineInstance OBJECT-TYPE
     SYNTAX      OCTET STRING
     MAX-ACCESS  read-only
     STATUS      current
     DESCRIPTION "(machine-instance)"
-    ::= { cl-system 5 }
+    ::= { lispSystem 5 }
 
 lispMachineType OBJECT-TYPE
     SYNTAX      OCTET STRING
     MAX-ACCESS  read-only
     STATUS      current
     DESCRIPTION "(machine-type)"
-    ::= { cl-system 6 }
+    ::= { lispSystem 6 }
 
 lispMachineVersion OBJECT-TYPE
     SYNTAX      OCTET STRING
     MAX-ACCESS  read-only
     STATUS      current
     DESCRIPTION "(machine-version)"
-    ::= { cl-system 7 }
+    ::= { lispSystem 7 }
 
 lispSoftwareType OBJECT-TYPE
     SYNTAX      OCTET STRING
     MAX-ACCESS  read-only
     STATUS      current
     DESCRIPTION "(software-type)"
-    ::= { cl-system 8 }
+    ::= { lispSystem 8 }
 
 lispSoftwareVersion OBJECT-TYPE
     SYNTAX      OCTET STRING
     MAX-ACCESS  read-only
     STATUS      current
     DESCRIPTION "(software-version)"
-    ::= { cl-system 9 }
+    ::= { lispSystem 9 }
 
 lispInternalRealTime OBJECT-TYPE
     SYNTAX      INTEGER
     MAX-ACCESS  read-only
     STATUS      current
     DESCRIPTION "(get-internal-real-time)"
-    ::= { cl-system 10 }
+    ::= { lispSystem 10 }
 
 lispInternalRunTime OBJECT-TYPE
     SYNTAX      INTEGER
     MAX-ACCESS  read-only
     STATUS      current
     DESCRIPTION "(get-internal-run-time)"
-    ::= { cl-system 11 }
-
-lispUniversalTime OBJECT-TYPE
-    SYNTAX      INTEGER
-    MAX-ACCESS  read-only
-    STATUS      current
-    DESCRIPTION "(get-universal-time)"
-    ::= { cl-system 13 }
-
-/*
+    ::= { lispSystem 11 }
 
 lispInternalTimeUnitsPerSecond OBJECT-TYPE
     SYNTAX      INTEGER
     MAX-ACCESS  read-only
     STATUS      current
     DESCRIPTION "internal-time-units-per-second"
-    ::= { cl-system 12 }
+    ::= { lispSystem 12 }
+
+lispUniversalTime OBJECT-TYPE
+    SYNTAX      INTEGER
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "(get-universal-time)"
+    ::= { lispSystem 13 }
 
 lispFeatures OBJECT-TYPE
     SYNTAX      SEQUENCE OF OCTET STRING
     MAX-ACCESS  read-only
     STATUS      current
     DESCRIPTION "*features*"
-    ::= { cl-system 14 }
+    ::= { lispSystem 14 }
 
-*/
+lispMostPositiveShortFloat OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    ::= { lispConstants 1 }
+
+lispLeastPositiveShortFloat OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    ::= { lispConstants 2 }
+
+lispLeastPositiveNormalizedShortFloat OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    ::= { lispConstants 3 }
+
+lispMostPositiveDoubleFloat OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    ::= { lispConstants 4 }
+
+lispLeastPositiveDoubleFloat OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    ::= { lispConstants 5 }
+
+lispLeastPositiveNormalizedDoubleFloat OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    ::= { lispConstants 6 }
+
+lispMostPositiveLongFloat OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    ::= { lispConstants 7 }
+
+lispLeastPositiveLongFloat OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    ::= { lispConstants 8 }
+
+lispLeastPositiveNormalizedLongFloat OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    ::= { lispConstants 9 }
+
+lispMostPositiveSingleFloat OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    ::= { lispConstants 10 }
+
+lispLeastPositiveSingleFloat OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    ::= { lispConstants 11 }
+
+lispLeastPositiveNormalizedSingleFloat OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    ::= { lispConstants 12 }
+
+lispMostNegativeShortFloat OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    ::= { lispConstants 13 }
+
+lispLeastNegativeShortFloat OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    ::= { lispConstants 14 }
+
+lispLeastNegativeNormalizedShortFloat OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    ::= { lispConstants 15 }
+
+lispMostNegativeSingleFloat OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    ::= { lispConstants 16 }
+
+lispLeastNegativeSingleFloat OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    ::= { lispConstants 17 }
+
+lispLeastNegativeNormalizedSingleFloat OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    ::= { lispConstants 18 }
+
+lispMostNegativeDoubleFloat OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    ::= { lispConstants 19 }
+
+lispLeastNegativeDoubleFloat OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    ::= { lispConstants 20 }
+
+lispLeastNegativeNormalizedDoubleFloat OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    ::= { lispConstants 21 }
+
+lispMostNegativeLongFloat OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    ::= { lispConstants 22 }
+
+lispLeastNegativeLongFloat OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    ::= { lispConstants 23 }
+
+lispLeastNegativeNormalizedLongFloat OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    ::= { lispConstants 24 }
+
+cl-net-snmp             OBJECT IDENTIFIER ::= { lispPackages 1 }
+clNetSnmpObjects        OBJECT IDENTIFIER ::= { cl-net-snmp 1 }
+clNetSnmpEnumerations   OBJECT IDENTIFIER ::= { cl-net-snmp 2 }
+
+clNetSnmpAgentOIDs      OBJECT IDENTIFIER ::= { clNetSnmpEnumerations 1 }
+clNetSnmpAgent          OBJECT IDENTIFIER ::= { clNetSnmpAgentOIDs 1 }
+clNetSnmpAgentLispWorks OBJECT IDENTIFIER ::= { clNetSnmpAgentOIDs 5 }
+clNetSnmpAgentCMUCL     OBJECT IDENTIFIER ::= { clNetSnmpAgentOIDs 6 }
+clNetSnmpAgentSBCL      OBJECT IDENTIFIER ::= { clNetSnmpAgentOIDs 7 }
+clNetSnmpAgentClozure   OBJECT IDENTIFIER ::= { clNetSnmpAgentOIDs 8 }
+clNetSnmpAgentAllegroCL OBJECT IDENTIFIER ::= { clNetSnmpAgentOIDs 9 }
 
 END
