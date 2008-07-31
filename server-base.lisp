@@ -2,13 +2,12 @@
 
 (in-package :snmp)
 
-(defmacro def-scalar-variable (oid (arg) &body body)
-  (let* ((name (symbol-name oid))
-         (symbol (intern name (find-package :asn.1))))
+(defmacro def-scalar-variable (name (arg) &body body)
+  (let ((oid (intern name (find-package :asn.1))))
     `(progn
-       (defun ,symbol (,arg) (declare (ignorable ,arg)) ,@body)
-       (setf (gethash (oid ,name) *default-dispatch-table*)
-             #',symbol))))
+       (defun ,oid (,arg) (declare (ignorable ,arg)) ,@body)
+       (eval-when (:load-toplevel :execute)
+         (setf (gethash (oid ,name) *default-dispatch-table*) #',oid)))))
 
 (defmacro def-listy-mib-table (table-oid &rest keys)
   `(def-list-based-mib-table ,table-oid (,(gensym)) ,@keys))
