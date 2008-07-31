@@ -60,7 +60,7 @@
                (:file "server-base" :depends-on ("snmp-server"))
                (:file "trap-server" :depends-on ("snmp-server"))
                (:module "server"
-                :depends-on ("snmp-server")
+                :depends-on ("server-base")
                 :components ((:file "core")
                              #+lispworks (:file "lispworks")
                              #+cmu       (:file "cmucl")
