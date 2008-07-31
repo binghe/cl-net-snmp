@@ -7,7 +7,37 @@
 (defvar       *default-snmp-server*         nil)
 (defvar       *default-dispatch-table*      (make-hash-table))
 
-(defclass snmp-server ()
+(defclass snmp-agent-state ()
+  ((in-pkts                :type (unsigned-byte 32) :initform 0)
+   (out-pkts               :type (unsigned-byte 32) :initform 0)
+   (in-bad-versions        :type (unsigned-byte 32) :initform 0)
+   (in-bad-community-names :type (unsigned-byte 32) :initform 0)
+   (in-bad-community-uses  :type (unsigned-byte 32) :initform 0)
+   (in-asn-parse-errs      :type (unsigned-byte 32) :initform 0)
+   (in-too-bigs            :type (unsigned-byte 32) :initform 0)
+   (in-no-such-names       :type (unsigned-byte 32) :initform 0)
+   (in-bad-values          :type (unsigned-byte 32) :initform 0)
+   (in-read-onlys          :type (unsigned-byte 32) :initform 0)
+   (in-gen-errs            :type (unsigned-byte 32) :initform 0)
+   (in-total-req-vars      :type (unsigned-byte 32) :initform 0)
+   (in-total-set-vars      :type (unsigned-byte 32) :initform 0)
+   (in-get-requests        :type (unsigned-byte 32) :initform 0)
+   (in-get-nexts           :type (unsigned-byte 32) :initform 0)
+   (in-set-requests        :type (unsigned-byte 32) :initform 0)
+   (in-get-responses       :type (unsigned-byte 32) :initform 0)
+   (in-traps               :type (unsigned-byte 32) :initform 0)
+   (out-too-bigs           :type (unsigned-byte 32) :initform 0)
+   (out-no-such-names      :type (unsigned-byte 32) :initform 0)
+   (out-bad-values         :type (unsigned-byte 32) :initform 0)
+   (out-gen-errs           :type (unsigned-byte 32) :initform 0)
+   (out-get-requests       :type (unsigned-byte 32) :initform 0)
+   (out-get-nexts          :type (unsigned-byte 32) :initform 0)
+   (out-set-requests       :type (unsigned-byte 32) :initform 0)
+   (out-get-responses      :type (unsigned-byte 32) :initform 0)
+   (out-traps              :type (unsigned-byte 32) :initform 0))
+  (:documentation "SNMP Agent State"))
+
+(defclass snmp-server (snmp-agent-state)
   ((process        :accessor server-process
                    :documentation "Server process/thread")
    (address        :accessor server-address
@@ -157,18 +187,3 @@
       (if handler
           (funcall handler original)
         (process-object-id (oid-parent oid) original)))))
-
-(defun export-object-id (oid function &optional (dispatch-table *default-dispatch-table*))
-  (setf (gethash oid dispatch-table) function))
-
-(defun unexport-object-id (oid &optional (dispatch-table *default-dispatch-table*))
-  (setf (gethash oid dispatch-table) nil))
-
-(defmacro define-object-id (name (o) &body body)
-  (declare (ignore o))
-  (let ((oid (gensym)))
-    `(let ((,oid (oid ,name)))
-       (export-object-id ,oid
-                         #'(lambda (o)
-                             (declare (ignorable o))
-                             ,@body)))))
