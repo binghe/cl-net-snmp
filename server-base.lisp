@@ -2,6 +2,8 @@
 
 (in-package :snmp)
 
+(defvar *default-next-table* (make-hash-table))
+
 (defmacro def-scalar-variable (name (arg) &body body)
   (let ((oid (intern name (find-package :asn.1))))
     `(progn

@@ -244,5 +244,3 @@
   (install-asn.1-type :inform-request-pdu   2 1 +inform-request-pdu+)
   (install-asn.1-type :snmpv2-trap-pdu      2 1 +snmpv2-trap-pdu+)
   (install-asn.1-type :report-pdu           2 1 +report-pdu+))
-
-:eof

@@ -80,10 +80,12 @@
 				 (1- (pdu-error-index response))))))))))
 
 (define-condition snmp-no-such-name-error (snmp-response-specific-variable-error) ())
+
 (defmethod report-variable-error ((c snmp-no-such-name-error) s v)
   (format s "No such name: ~S" v))
 
 (define-condition snmp-read-only-error (snmp-response-specific-variable-error) ())
+
 (defmethod report-variable-error ((c snmp-read-only-error) s v)
   (format s "~S is read-only" v))
 
@@ -103,6 +105,7 @@
 		     (pdu-error-status (snmp-response-error-response c))))))
 
 (define-condition snmp-generic-error (snmp-response-specific-variable-error) ())
+
 (defmethod report-variable-error ((c snmp-generic-error) s v)
   (format s "Generic error~@[ for variable ~S~]" v v))
 
@@ -113,19 +116,18 @@
 		     (snmp-response-error-response c)
 		     (snmp-query-error-query c)))))
 
-#+ignore
 (defun make-snmp-response-error (session query response)
   (make-condition
    (case (pdu-error-status response)
-     ((#.error-status-too-big)
+     ((#.+error-status-too-big+)
       'snmp-too-big-error)
-     ((#.error-status-no-such-name)
+     ((#.+error-status-no-such-name+)
       'snmp-no-such-name-error)
-     ((#.error-status-bad-value)
+     ((#.+error-status-bad-value+)
       'snmp-bad-value-error)
-     ((#.error-status-read-only)
+     ((#.+error-status-read-only+)
       'snmp-read-only-error)
-     ((#.error-status-generic-error)
+     ((#.+error-status-generic-error+)
       'snmp-generic-error)
      (otherwise
       'snmp-unknown-error-status-error))

@@ -26,8 +26,7 @@
                :usocket-udp) ; Portable UDP networking
   :components ((:file "package"     :depends-on ("vendor"))
 	       (:file "constants"   :depends-on ("package"))
-               #+ignore
-               (:file "condition"   :depends-on ("package"))
+               (:file "condition"   :depends-on ("constants"))
 	       (:file "pdu"         :depends-on ("package"))
                (:file "keytool"     :depends-on ("package"))
                (:file "snmp-smi"    :depends-on ("package"))

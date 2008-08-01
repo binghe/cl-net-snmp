@@ -23,21 +23,17 @@
            #:*snmp-readtable*
            #:close-session
            #:def-scalar-variable
-           #:define-object-id
            #:disable-snmp-service
            #:enable-snmp-service
-           #:export-object-id
            #:open-session
            #:snmp-bulk
-   	   #:snmp-get
+           #:snmp-get
            #:snmp-get-next
            #:snmp-inform
-           #:snmp-request
            #:snmp-set
            #:snmp-server
            #:snmp-trap
            #:snmp-walk
-           #:unexport-object-id
            #:update-mib
            #:with-open-session))
 
