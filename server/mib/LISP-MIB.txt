@@ -24,7 +24,7 @@ lisp MODULE-IDENTITY
     REVISION "200807290000Z" -- 29 July 2008
     DESCRIPTION
            "The initial revision of this MIB module."
-    ::= { enterprises 26670 }
+    ::= { enterprises 31609 }
 
 common-lisp     OBJECT IDENTIFIER ::= { lisp 1 }
 scheme          OBJECT IDENTIFIER ::= { lisp 2 }
