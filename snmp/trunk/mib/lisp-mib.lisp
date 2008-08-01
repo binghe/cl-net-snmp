@@ -4,7 +4,7 @@
 (in-package :asn.1)
 (setf *current-module* 'lisp-mib)
 (eval-when (:load-toplevel :execute) (pushnew 'lisp-mib *mib-modules*))
-(defoid |lisp| (|enterprises| 26670)
+(defoid |lisp| (|enterprises| 31609)
   (:type 'module-identity)
   (:description "The MIB module for Lisp."))
 (defoid |common-lisp| (|lisp| 1) (:type 'object-identity))

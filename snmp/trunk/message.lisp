@@ -67,11 +67,13 @@
                    :accessor report-flag))
   (:documentation "User-based SNMP v3 Message"))
 
-(defmethod generate-msg-id ((message v3-message))
+(defun generate-msg-id (message)
+  (declare (type v3-message message))
   (with-slots (msg-id-counter) message
     (the (unsigned-byte 32) (logand (incf msg-id-counter) #xffffffff))))
 
-(defmethod generate-salt ((message v3-message))
+(defun generate-salt (message)
+  (declare (type v3-message message))
   (with-slots (salt-counter) message
     (the (unsigned-byte 32) (logand (incf salt-counter) #xffffffff))))
 
@@ -177,7 +179,8 @@
             (make-instance 'v3-message :session s :pdu pdu)))))))
 
 ;;; RFC 2574 (USM for SNMPv3), 8.1.1.1. DES key and Initialization Vector
-(defmethod generate-privacy-parameters ((message v3-message))
+(defun generate-privacy-parameters (message)
+  (declare (type v3-message message))
   "generate a 8-bytes privacy-parameters string for use by message encrypt"
   (let ((left  (engine-boots-of (session-of message))) ; octets 0~3
         (right (msg-id-of message)))                   ; octets 4~7 (we just reuse msgID)
@@ -188,8 +191,9 @@
         (setf salt (ash salt -8))))))
 
 ;;; Encrypt msgData
-(defmethod encrypt-message ((message v3-message)
-                            (msg-privacy-parameters list) (msg-data list))
+(defun encrypt-message (message msg-privacy-parameters msg-data)
+  (declare (type v3-message message)
+           (type list msg-privacy-parameters msg-data))
   (let ((salt (coerce msg-privacy-parameters '(simple-array (unsigned-byte 8) (*))))
         (pre-iv (subseq (priv-local-key-of (session-of message)) 8 16))
         (des-key (subseq (priv-local-key-of (session-of message)) 0 8))
