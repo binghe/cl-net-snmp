@@ -2,5 +2,5 @@
 
 (in-package :snmp)
 
-(def-scalar-variable |sysObjectID| (o)
+(def-scalar-variable "sysObjectID" (o)
   (oid "clNetSnmpAgentCMUCL"))
