@@ -161,8 +161,7 @@
   "Process SNMP Get-Request-PDU
    call oid handler and return a correct Response-PDU"
   (with-slots (request-id variable-bindings) pdu
-    (let ((vb (mapcar #'(lambda (vb) (list (elt vb 0)
-                                           (process-object-id (elt vb 0) nil)))
+    (let ((vb (mapcar #'(lambda (vb) (process-object-id (elt vb 0) :get))
                       (coerce variable-bindings 'list))))
       (make-instance 'response-pdu
                      :request-id request-id
@@ -171,19 +170,38 @@
 (defmethod process-pdu ((pdu get-next-request-pdu))
   "Process SNMP Get-Next-Request-PDU
    search for next oid, call handler and return Response-PDU"
-  (declare (ignore pdu))
-  (error "not implemented"))
+  (with-slots (request-id variable-bindings) pdu
+    (let ((vb (mapcar #'(lambda (vb) (process-object-id (elt vb 0) :get-next))
+                      (coerce variable-bindings 'list))))
+      (make-instance 'response-pdu
+                     :request-id request-id
+                     :variable-bindings vb))))
 
-(defgeneric process-object-id (oid original))
+(defgeneric process-object-id (oid flag))
 
-(defmethod process-object-id ((oid object-id) original)
-  (declare (ignore original))
-  (process-object-id oid oid))
+(defmethod process-object-id ((oid object-id) (flag (eql :get)))
+  (cond ((oid-scalar-variable-p oid)
+         (let ((handler (gethash (oid-parent oid) (server-dispatch-table *server*))))
+           (if handler
+               (list oid (funcall handler oid)))))
+        (t (list oid nil))))
 
-(defmethod process-object-id ((oid object-id) (original object-id))
-  (if (not (oid-parent-p oid))
-      original
-    (let ((handler (gethash oid (server-dispatch-table *server*))))
-      (if handler
-          (funcall handler original)
-        (process-object-id (oid-parent oid) original)))))
+(defmethod process-object-id ((oid object-id) (flag (eql :get-next)))
+  (labels ((find-next (oid)
+             (if (null oid)
+                 nil
+               (let ((next (oid-next oid)))
+                 (if (gethash next (server-dispatch-table *server*))
+                     next
+                   (find-next next))))))
+    (cond ((oid-leaf-p oid)
+           (let ((handler (gethash oid (server-dispatch-table *server*))))
+             (when (null handler) (setf handler (find-next oid)))
+             (if handler
+                 (let ((o (make-instance 'object-id :parent oid :value 0)))
+                   (list o (funcall handler o)))
+               (list (oid-next oid) :end-of-mibview))))
+          (t (let ((next-oid (find-next oid)))
+               (if next-oid
+                   (process-object-id next-oid :get-next)
+                 (list (oid-next oid) :end-of-mibview)))))))
