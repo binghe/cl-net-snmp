@@ -22,3 +22,24 @@
 
 (eval-when (:load-toplevel :execute)
   (install-asn.1-type :end-of-mibview 2 0 2))
+
+(defmethod plain-value ((object (eql :no-such-instance)))
+  (declare (ignore object))
+  :no-such-instance)
+
+(defmethod ber-equal ((a (eql :no-such-instance)) (b (eql :no-such-instance)))
+  (declare (ignore a b))
+  t)
+
+(defmethod ber-encode ((value (eql :no-such-instance)))
+  (declare (ignore value))
+  (concatenate 'vector
+               (ber-encode-type 2 0 1)
+               (ber-encode-length 0)))
+
+(defmethod ber-decode-value ((stream stream) (type (eql :no-such-instance)) length)
+  (declare (type fixnum length) (ignore type))
+  (dotimes (i length :no-such-instance) (read-byte stream)))
+
+(eval-when (:load-toplevel :execute)
+  (install-asn.1-type :no-such-instance 2 0 1))

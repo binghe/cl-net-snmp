@@ -26,6 +26,7 @@
            #:disable-snmp-service
            #:enable-snmp-service
            #:open-session
+           #:reload-snmp-service
            #:snmp-bulk
            #:snmp-get
            #:snmp-get-next

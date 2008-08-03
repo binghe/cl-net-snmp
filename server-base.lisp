@@ -2,14 +2,16 @@
 
 (in-package :snmp)
 
-(defvar *default-next-table* (make-hash-table))
-
-(defmacro def-scalar-variable (name (arg) &body body)
+(defmacro def-scalar-variable (name (agent) &body body)
   (let ((oid (intern name (find-package :asn.1))))
     `(progn
-       (defun ,oid (,arg) (declare (ignorable ,arg)) ,@body)
+       (defun ,oid (,agent)
+         (declare (ignorable ,agent))
+         ,@body)
        (eval-when (:load-toplevel :execute)
-         (setf (gethash (oid ,name) *default-dispatch-table*) #',oid)))))
+         (setf (gethash (oid ,name)
+                        *default-dispatch-table*)
+               #',oid)))))
 
 (defmacro def-listy-mib-table (table-oid &rest keys)
   `(def-list-based-mib-table ,table-oid (,(gensym)) ,@keys))
