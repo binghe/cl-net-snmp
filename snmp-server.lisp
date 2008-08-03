@@ -8,7 +8,8 @@
 (defvar       *default-dispatch-table*      (make-hash-table))
 
 (defclass snmp-agent-state ()
-  ((in-pkts                :type (unsigned-byte 32) :initform 0)
+  ((start-up-time          :type (unsigned-byte 32) :initform 0)
+   (in-pkts                :type (unsigned-byte 32) :initform 0)
    (out-pkts               :type (unsigned-byte 32) :initform 0)
    (in-bad-versions        :type (unsigned-byte 32) :initform 0)
    (in-bad-community-names :type (unsigned-byte 32) :initform 0)
@@ -69,7 +70,8 @@
 (defmethod print-object ((object snmp-server) stream)
   (print-unreadable-object (object stream :type t)
     (format stream "SNMP Server ~A:~D"
-            (server-address object) (server-port object))))
+            (hbo-to-dotted-quad (server-address object))
+            (server-port object))))
 
 (defmethod initialize-instance :after ((instance snmp-server)
                                        &rest initargs &key &allow-other-keys)
@@ -77,8 +79,8 @@
   (setf (server-process instance)
         (spawn-thread
 	 (format nil "SNMP Server at ~A:~D"
-                                      (server-address instance)
-                                      (server-port instance))
+                 (hbo-to-dotted-quad (server-address instance))
+                 (server-port instance))
 	 #'(lambda ()
 	     (socket-server (server-address instance)
 			    (server-port instance)
@@ -99,6 +101,11 @@
     (kill-thread
      (server-process *default-snmp-server*))
     (setf *default-snmp-server* nil)))
+
+(defun reload-snmp-service ()
+  (disable-snmp-service)
+  (sleep 1)
+  (enable-snmp-service))
 
 (defvar *server*)
 
@@ -181,10 +188,12 @@
 
 (defmethod process-object-id ((oid object-id) (flag (eql :get)))
   (cond ((oid-scalar-variable-p oid)
-         (let ((handler (gethash (oid-parent oid) (server-dispatch-table *server*))))
-           (if handler
-               (list oid (funcall handler oid)))))
-        (t (list oid nil))))
+         (list oid
+               (let ((handler (gethash (oid-parent oid) (server-dispatch-table *server*))))
+                 (if handler
+                     (funcall handler *server*)
+                   :no-such-instance))))
+        (t (list oid :no-such-instance))))
 
 (defmethod process-object-id ((oid object-id) (flag (eql :get-next)))
   (labels ((find-next (oid)
@@ -196,10 +205,14 @@
                    (find-next next))))))
     (cond ((oid-leaf-p oid)
            (let ((handler (gethash oid (server-dispatch-table *server*))))
-             (when (null handler) (setf handler (find-next oid)))
+             (when (null handler)
+               (let ((next (find-next oid)))
+                 (setf oid next
+                       handler (gethash next
+                                        (server-dispatch-table *server*)))))
              (if handler
                  (let ((o (make-instance 'object-id :parent oid :value 0)))
-                   (list o (funcall handler o)))
+                   (list o (funcall handler *server*)))
                (list (oid-next oid) :end-of-mibview))))
           (t (let ((next-oid (find-next oid)))
                (if next-oid
