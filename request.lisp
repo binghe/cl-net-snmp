@@ -43,9 +43,8 @@
     (if (consp bindings) result (car result))))
 
 (defun snmp-get-next (session bindings &key context)
-  (let ((result (mapcar #'second
-                        (snmp-request session 'get-next-request-pdu bindings
-                                      :context context))))
+  (let ((result (snmp-request session 'get-next-request-pdu bindings
+                              :context context)))
     (if (consp bindings) result (car result))))
 
 (defun snmp-set (session bindings &key context)
