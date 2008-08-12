@@ -72,9 +72,9 @@ should never be less than zero"
   (:report (lambda (c stream)
 	     (format stream "No such name for binding ~D (~D)"
 		     (snmp-agent-specific-variable-error-variable-index c)
-		     (pdu-request-id
+		     (request-id-of
 		      (snmp-agent-request-error-request c))))))
 
 (defmethod snmp-agent-specific-variable-error-error-status
            ((c snmp-agent-no-such-name-error))
-  error-status-no-such-name)
+  :no-such-name)
