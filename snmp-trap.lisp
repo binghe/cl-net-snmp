@@ -27,13 +27,13 @@
                                                       :agent-addr (ipaddress agent-addr)
                                                       :generic-trap generic-trap
                                                       :specific-trap specific-trap
-                                                      :timestamp (make-timeticks uptime)))))
+                                                      :timestamp (timeticks uptime)))))
       (send-snmp-message session message :receive nil))))
 
 (defun snmp-trap-internal (session vars uptime trap-oid inform
                                    &optional (context *default-context*))
   (let ((vb (list* (list (oid "sysUpTime.0")
-                         (make-timeticks uptime))
+                         (timeticks uptime))
                    (list (oid "snmpTrapOID.0")
                          trap-oid)
                    (mapcar #'(lambda (x) (list (oid (car x)) (cdr x))) vars))))
