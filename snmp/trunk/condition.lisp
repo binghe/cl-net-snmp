@@ -14,8 +14,7 @@
   ()
   (:report (lambda (c stream)
 	     (format stream "Timeout (~D) exceeded"
-		     (snmp-session-timeout
-		      (snmp-session-error-session c))))))
+                     (snmp-session-error-session c)))))
 
 (define-condition snmp-query-error (snmp-session-error)
   ((query :initarg :query
@@ -75,9 +74,9 @@
 	     (let ((response (snmp-response-error-response c)))
 	       (report-variable-error
 		c stream
-		(and (> (pdu-error-index response) 0)
-		     (first (elt (pdu-bindings response)
-				 (1- (pdu-error-index response))))))))))
+		(and (> (error-index-of response) 0)
+		     (first (elt (variable-bindings-of response)
+				 (1- (error-index-of response))))))))))
 
 (define-condition snmp-no-such-name-error (snmp-response-specific-variable-error) ())
 
@@ -93,8 +92,8 @@
   ()
   (:report (lambda (c stream)
 	     (let* ((response (snmp-response-error-response c))
-		    (binding (elt (pdu-bindings response)
-				  (pdu-error-index response))))
+		    (binding (elt (variable-bindings-of response)
+				  (error-index-of response))))
 	       (format stream "~S is a bad value for ~S"
 		       (second binding) (first binding))))))
 
@@ -102,7 +101,7 @@
   ()
   (:report (lambda (c stream)
 	     (format stream "Response with unknown error status ~S"
-		     (pdu-error-status (snmp-response-error-response c))))))
+		     (error-status-of (snmp-response-error-response c))))))
 
 (define-condition snmp-generic-error (snmp-response-specific-variable-error) ())
 
@@ -118,7 +117,7 @@
 
 (defun make-snmp-response-error (session query response)
   (make-condition
-   (case (pdu-error-status response)
+   (case (error-status-of response)
      ((#.+error-status-too-big+)
       'snmp-too-big-error)
      ((#.+error-status-no-such-name+)
