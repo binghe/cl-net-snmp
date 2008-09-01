@@ -22,12 +22,14 @@
            #:*default-context*
            #:*snmp-readtable*
            #:close-session
+           #:control-center
            #:def-scalar-variable
            #:disable-snmp-service
            #:enable-snmp-service
            #:open-session
            #:reload-snmp-service
            #:snmp-bulk
+           #:snmp-client
            #:snmp-get
            #:snmp-get-next
            #:snmp-inform
