@@ -2,7 +2,8 @@
 
 (in-package :snmp)
 
-(defvar *snmp-server-contact* "Chun Tian (binghe) <binghe.lisp@gmail.com>")
+(defvar *snmp-server-contact* "Chun Tian (binghe) <binghe.lisp@gmail.com>"
+  "Change it to yourself")
 
 ;;; system tree
 (def-scalar-variable "sysDescr" (agent)
@@ -37,7 +38,7 @@
 			   (zl:send interface :at-entries)))
 	       neti:*interfaces*)))
   (:index #'(lambda (at)
-	      (list* (car at) (car at)                ;???
+	      (list* (car at) (car at)
 		     (cadr at))))
   (:sort t)
   (:entry [atEntry])
@@ -45,7 +46,6 @@
    ([atIfIndex] (at) (car at))
    ([atPhysAddress] (at) (cddr at))
    ([atNetAddress] (at) (make-ip-address-from-list (cadr at)))))
-
 
 (def-listy-mib-table [ifTable] (:list neti:*interfaces*)
   (:entry [ifEntry])
