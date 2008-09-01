@@ -19,7 +19,7 @@
 
 (defsystem snmp
   :description "Simple Network Manangement Protocol"
-  :version "4.6"
+  :version "5.0"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
   :depends-on (:asn.1        ; Standalone ASN.1 support
 	       :ironclad     ; SNMPv3 authentication/encryption support
@@ -47,4 +47,7 @@
                (:module "vendor"
                 :components ((:file "onlisp")
                              #-portable-threads
-                             (:file "portable-threads")))))
+                             (:file "portable-threads")))
+               #+(and lispworks capi)
+               (:module "gui"
+                :components ((:file "snmp-client")))))

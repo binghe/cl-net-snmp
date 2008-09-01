@@ -7,7 +7,7 @@
 (defvar       *default-snmp-server*         nil)
 (defvar       *default-dispatch-table*      (make-hash-table))
 
-(defclass snmp-agent-state ()
+(defclass snmp-agent-state-mixin ()
   ((start-up-time          :type (unsigned-byte 32) :initform 0)
    (in-pkts                :type (unsigned-byte 32) :initform 0)
    (out-pkts               :type (unsigned-byte 32) :initform 0)
@@ -38,7 +38,22 @@
    (out-traps              :type (unsigned-byte 32) :initform 0))
   (:documentation "SNMP Agent State"))
 
-(defclass snmp-server (snmp-agent-state)
+;;; p.50, Solaris System Management Agent Administration Guide
+(defclass snmp-vacm-mixin ()
+  ((group-table   :type hash-table
+                  :initform (make-hash-table :test #'equal)
+                  :accessor snmp-vacm-group-table)
+   (context-table :type hash-table
+                  :initform (make-hash-table :test #'equal)
+                  :accessor snmp-vacm-context-table)
+   (access-table  :type hash-table
+                  :initform (make-hash-table :test #'equal)
+                  :accessor snmp-vacm-access-table)
+   (view-table    :type hash-table
+                  :initform (make-hash-table :test #'equal)
+                  :accessor snmp-vacm-view-table)))
+
+(defclass snmp-server (snmp-agent-state-mixin snmp-vacm-mixin)
   ((process        :accessor server-process
                    :documentation "Server process/thread")
    (address        :accessor server-address
