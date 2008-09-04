@@ -1,3 +1,4 @@
+;;;; -*- Mode: Lisp -*-
 ;;;; $Id$
 
 (in-package :snmp)
@@ -30,8 +31,7 @@
                                                       :timestamp (timeticks uptime)))))
       (send-snmp-message session message :receive nil))))
 
-(defun snmp-trap-internal (session vars uptime trap-oid inform
-                                   &optional (context *default-context*))
+(defun snmp-trap-internal (session vars uptime trap-oid inform &optional context)
   (let ((vb (list* (list (oid "sysUpTime.0")
                          (timeticks uptime))
                    (list (oid "snmpTrapOID.0")
@@ -39,7 +39,7 @@
                    (mapcar #'(lambda (x) (list (oid (car x)) (cdr x))) vars))))
     (let ((message (make-instance (gethash (type-of session) *session->message*)
                                   :session session
-                                  :context context
+                                  :context (or context *default-context*)
                                   :pdu (make-instance (if inform
                                                         'inform-request-pdu
                                                         'snmpv2-trap-pdu)
