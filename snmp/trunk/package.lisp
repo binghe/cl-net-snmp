@@ -1,3 +1,4 @@
+;;;; -*- Mode: Lisp -*-
 ;;;; $Id$
 
 (in-package :cl-user)

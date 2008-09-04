@@ -1,3 +1,4 @@
+;;;; -*- Mode: Lisp -*-
 ;;;; $Id$
 
 (in-package :snmp)
@@ -113,28 +114,24 @@
   (mapcar #'(lambda (x)
 	      (setf (gethash (car x) *snmp-version-table*) (cdr x)))
 	  `((:v1         . ,+snmp-version-1+)
-	    (:v2         . ,+snmp-version-2c+)
 	    (:v2c        . ,+snmp-version-2c+)
 	    (:v3         . ,+snmp-version-3+)
 	    (:version-1  . ,+snmp-version-1+)
-	    (:version-2  . ,+snmp-version-2c+)
 	    (:version-2c . ,+snmp-version-2c+)
 	    (:version-3  . ,+snmp-version-3+))))
 
 (defun open-session (host &key (port *default-snmp-port*)
                                (version *default-snmp-version*)
                                (community *default-snmp-community*)
-                               user auth priv
-                               (create-socket t))
+                               user auth priv)
   ;; first, what version we are talking about if version not been set?
   (let* ((real-version (or (gethash version *snmp-version-table* version)
                            (if user +snmp-version-3+ *default-snmp-version*)))
          (args (list (gethash real-version *snmp-class-table*)
                      :host host :port port)))
-    (when create-socket
-      (nconc args (list :socket (socket-connect/udp nil nil
-                                                    :element-type '(unsigned-byte 8)
-                                                    :stream nil))))
+    (nconc args (list :socket (socket-connect/udp nil nil
+                                                  :element-type '(unsigned-byte 8)
+                                                  :stream nil)))
     (if (/= real-version +snmp-version-3+)
       ;; for SNMPv1 and v2c, only set the community
       (nconc args (list :community (or community *default-snmp-community*)))

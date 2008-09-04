@@ -1,3 +1,4 @@
+;;;; -*- Mode: Lisp -*-
 ;;;; $Id$
 
 (in-package :snmp)
@@ -18,7 +19,7 @@
         (snmp-report session :context context))
       (let ((message (make-instance (gethash (type-of session) *session->message*)
                                     :session session
-                                    :context context
+                                    :context (or context *default-context*)
                                     :pdu (make-instance request
                                                         :variable-bindings vb))))
         (let ((reply (send-snmp-message session message)))
