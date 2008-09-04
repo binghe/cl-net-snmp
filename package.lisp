@@ -55,4 +55,7 @@
 			      :version :newest)))
     (setf (logical-pathname-translations "SNMP")
           `(("**;*.*.NEWEST" ,home)
-	    ("**;*.*" ,home)))))
+	    ("**;*.*" ,home))
+          (logical-pathname-translations "MIB")
+          `(("**;*.*.NEWEST" "SNMP:ASN;**;*.*")
+            ("**;*.*" "SNMP:ASN;**;*.*")))))
