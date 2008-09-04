@@ -1,3 +1,4 @@
+;;;; -*- Mode: Lisp -*-
 ;;;; $Id$
 
 (in-package :snmp)
@@ -64,7 +65,7 @@
    (report-flag    :type boolean
                    :initform nil
                    :initarg :report
-                   :accessor report-flag))
+                   :accessor report-flag-of))
   (:documentation "User-based SNMP v3 Message"))
 
 (defun generate-msg-id (message)
@@ -97,15 +98,15 @@
 (defmethod ber-encode ((message v3-message))
   (let* ((session (session-of message))
          (global-data (generate-global-data (msg-id-of message)
-                                            (if (report-flag message) 0
+                                            (if (report-flag-of message) 0
                                               (security-level-of session))))
          (msg-data (list (engine-id-of session) ; contextEngineID
                          (or (context-of message)
                              *default-context*) ; contextName
                          (pdu-of message)))     ; PDU
-         (need-auth-p (and (not (report-flag message))
+         (need-auth-p (and (not (report-flag-of message))
                            (auth-protocol-of session)))
-         (need-priv-p (and (not (report-flag message))
+         (need-priv-p (and (not (report-flag-of message))
                            (priv-protocol-of session)))
          ;; RFC 2574 (USM for SNMPv3), 7.3.1.
          ;; 1) The msgAuthenticationParameters field is set to the
@@ -129,7 +130,7 @@
                                  (ber-encode->string (list (engine-id-of session)
                                                            (engine-boots-of session)
                                                            (engine-time-of session)
-                                                           (if (report-flag message)
+                                                           (if (report-flag-of message)
                                                              ""
                                                              (security-name-of session))
                                                            auth
