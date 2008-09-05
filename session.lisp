@@ -72,20 +72,20 @@
                       :initarg :auth-protocol
                       :initform nil
                       :accessor auth-protocol-of)
-   (auth-key          :type (simple-array (unsigned-byte 8) (*))
+   (auth-key          :type octets
 		      :initarg :auth-key
 		      :accessor auth-key-of)
-   (auth-local-key    :type (simple-array (unsigned-byte 8) (*))
+   (auth-local-key    :type octets
                       :initarg :auth-local-key
                       :accessor auth-local-key-of)
    (priv-protocol     :type (member :des :aes nil)
                       :initarg :priv-protocol
                       :initform nil
                       :accessor priv-protocol-of)
-   (priv-key          :type (simple-array (unsigned-byte 8) (*))
+   (priv-key          :type octets
 		      :initarg :priv-key
 		      :accessor priv-key-of)
-   (priv-local-key    :type (simple-array (unsigned-byte 8) (*))
+   (priv-local-key    :type octets
                       :initarg :priv-local-key
                       :accessor priv-local-key-of))
   (:documentation "SNMP v3 session, user security model"))
@@ -143,29 +143,25 @@
             (nconc args (list :auth-protocol *default-auth-protocol*)
                    (if (stringp auth)
                      (list :auth-key (generate-ku auth :hash-type *default-auth-protocol*))
-                     (list :auth-local-key
-                           (coerce auth '(simple-array (unsigned-byte 8) (*))))))
+                     (list :auth-local-key (coerce auth 'octets))))
             (destructuring-bind (auth-protocol . auth-key) auth
               (nconc args (list :auth-protocol auth-protocol)
                      (let ((key (if (atom auth-key) auth-key (car auth-key))))
                        (if (stringp key)
                          (list :auth-key (generate-ku key :hash-type auth-protocol))
-                         (list :auth-local-key
-                               (coerce key '(simple-array (unsigned-byte 8) (*))))))))))
+                         (list :auth-local-key (coerce key 'octets))))))))
         (when priv
           (if (atom priv)
             (nconc args (list :priv-protocol *default-priv-protocol*)
                    (if (stringp auth)
                      (list :priv-key (generate-ku priv :hash-type :md5))
-                     (list :priv-local-key
-                           (coerce priv '(simple-array (unsigned-byte 8) (*))))))
+                     (list :priv-local-key (coerce priv 'octets))))
             (destructuring-bind (priv-protocol . priv-key) priv
               (nconc args (list :priv-protocol priv-protocol)
                      (let ((key (if (atom priv-key) priv-key (car priv-key))))
                        (if (stringp key)
                          (list :priv-key (generate-ku key :hash-type :md5))
-                         (list :priv-local-key
-                               (coerce key '(simple-array (unsigned-byte 8) (*))))))))))))
+                         (list :priv-local-key (coerce key 'octets))))))))))
     (apply #'make-instance args)))
 
 (defmethod close-session ((session session))

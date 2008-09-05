@@ -140,15 +140,14 @@
       (let ((unauth-data (encode-v3-message msg-authentication-parameters)))
         (if (not need-auth-p) unauth-data
           ;; authencate the encode-data and re-encode it
-          (encode-v3-message
-           (authenticate-message
-            (coerce unauth-data '(simple-array (unsigned-byte 8) (*)))
-            (coerce (auth-local-key-of session) '(simple-array (unsigned-byte 8) (*)))
-            (auth-protocol-of session))))))))
+          (encode-v3-message (authenticate-message
+                              (coerce unauth-data 'octets)
+                              (coerce (auth-local-key-of session) 'octets)
+                              (auth-protocol-of session))))))))
 
 ;;; need ironclad package for hmac/md5 and hmac/sha
 (defun authenticate-message (message key digest)
-  (declare (type (simple-array (unsigned-byte 8) (*)) message key)
+  (declare (type octets message key)
            (type (member :md5 :sha1) digest))
   (let ((hmac (ironclad:make-hmac key digest)))
     (ironclad:update-hmac hmac message)
@@ -164,13 +163,12 @@
       (let ((pdu (elt data 2)))
         (make-instance 'v3-message :session s :pdu pdu))
       ;;; decrypt message
-      (let ((salt (map '(simple-array (unsigned-byte 8) (*)) #'char-code
+      (let ((salt (map 'octets #'char-code
                        (elt (ber-decode<-string security-string) 5)))
             (des-key (subseq (priv-local-key-of s) 0 8))
             (pre-iv (subseq (priv-local-key-of s) 8 16))
-            (data (map '(simple-array (unsigned-byte 8) (*)) #'char-code data)))
-        (let* ((iv (map '(simple-array (unsigned-byte 8) (*)) #'logxor
-                        pre-iv salt))
+            (data (map 'octets #'char-code data)))
+        (let* ((iv (map 'octets #'logxor pre-iv salt))
                (cipher (ironclad:make-cipher :des ; (priv-protocol-of s)
                                              :mode :cbc
                                              :key des-key 
@@ -195,19 +193,17 @@
 (defun encrypt-message (message msg-privacy-parameters msg-data)
   (declare (type v3-message message)
            (type list msg-privacy-parameters msg-data))
-  (let ((salt (coerce msg-privacy-parameters '(simple-array (unsigned-byte 8) (*))))
+  (let ((salt (coerce msg-privacy-parameters 'octets))
         (pre-iv (subseq (priv-local-key-of (session-of message)) 8 16))
         (des-key (subseq (priv-local-key-of (session-of message)) 0 8))
-        (data (coerce (ber-encode msg-data) '(simple-array (unsigned-byte 8) (*)))))
-    (let ((iv (map '(simple-array (unsigned-byte 8) (*)) #'logxor pre-iv salt))
+        (data (coerce (ber-encode msg-data) 'octets)))
+    (let ((iv (map 'octets #'logxor pre-iv salt))
           (result-length (* (1+ (floor (length data) 8)) 8))) ;; extend length to (mod 8)
       (let ((cipher (ironclad:make-cipher :des ; (priv-protocol-of (session-of message))
                                           :key des-key
                                           :mode :cbc
                                           :initialization-vector iv))
-            (result-data (make-sequence '(simple-array (unsigned-byte 8) (*))
-                                        result-length
-                                        :initial-element 0)))
+            (result-data (make-sequence 'octets result-length :initial-element 0)))
         (replace result-data data)
         (ironclad:encrypt-in-place cipher result-data)
         (map 'string #'code-char result-data)))))
