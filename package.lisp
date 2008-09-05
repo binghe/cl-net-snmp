@@ -59,3 +59,6 @@
           (logical-pathname-translations "MIB")
           `(("**;*.*.NEWEST" "SNMP:ASN;**;*.*")
             ("**;*.*" "SNMP:ASN;**;*.*")))))
+
+;; octets type is commonly used by many files, define it here.
+(deftype octets () `(simple-array (unsigned-byte 8) (*)))
