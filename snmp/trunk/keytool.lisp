@@ -46,15 +46,14 @@
   (declare (optimize (speed 3) safety)
            (type string key-string)
            (type (member :md5 :sha1) hash-type))
-  (let ((password (map '(simple-array (unsigned-byte 8) (*)) #'char-code key-string))
+  (let ((password (map 'octets #'char-code key-string))
         (password-length (length key-string))
         (digest (ironclad:make-digest hash-type))
-        (password-buffer (make-sequence '(simple-array (unsigned-byte 8) (*))
+        (password-buffer (make-sequence 'octets
                                         (case hash-type (:md5 64) (:sha1 72))
                                         :initial-element 0))
         (password-index 0))
     (assert (>= password-length +usm-length-p-min+))
-    (format t "generating key ... ")
     (dotimes (i (/ +usm-length-expanded-passphrase+ +usm-length-ku-hashblock+))
       (loop for j fixnum from 0 below +usm-length-ku-hashblock+
             do (progn
@@ -63,13 +62,11 @@
                  (incf password-index)))
       ;;; UPDATE-DIGEST is too slow on 32bit lispworks
       (ironclad:update-digest digest password-buffer))
-    (format t "done.")
     (ironclad:produce-digest digest)))
 
 (defun generate-kul (engine-id ku &key (hash-type :md5))
-  (declare (type (simple-array (unsigned-byte 8) (*)) engine-id ku))
+  (declare (type octets engine-id ku))
   (let ((digest (ironclad:make-digest hash-type))
-        (password-buffer (concatenate '(simple-array (unsigned-byte 8) (*))
-                                      ku engine-id ku)))
+        (password-buffer (concatenate 'octets ku engine-id ku)))
     (ironclad:update-digest digest password-buffer)
     (ironclad:produce-digest digest)))
