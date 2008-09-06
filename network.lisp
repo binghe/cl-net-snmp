@@ -72,3 +72,14 @@
            (socket-send (socket-of session) data data-length
                         :address (host-of session)
                         :port (port-of session))))))
+
+(defun snmp-connect (host port)
+  (declare (ignorable host port))
+  #-win32
+  (socket-connect/udp nil nil   ; On Mac OS X, we must NOT connect()
+                      :element-type '(unsigned-byte 8)
+                      :stream nil)
+  #+win32
+  (socket-connect/udp host port ; On Win32, we must bind(), so we connect() instead
+                      :element-type '(unsigned-byte 8)
+                      :stream nil))

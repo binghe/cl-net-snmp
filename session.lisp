@@ -129,9 +129,7 @@
                            (if user +snmp-version-3+ *default-snmp-version*)))
          (args (list (gethash real-version *snmp-class-table*)
                      :host host :port port)))
-    (nconc args (list :socket (socket-connect/udp nil nil
-                                                  :element-type '(unsigned-byte 8)
-                                                  :stream nil)))
+    (nconc args (list :socket (snmp-connect host port)))
     (if (/= real-version +snmp-version-3+)
       ;; for SNMPv1 and v2c, only set the community
       (nconc args (list :community (or community *default-snmp-community*)))
