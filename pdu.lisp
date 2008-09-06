@@ -54,7 +54,7 @@
 
 (defmethod generate-request-id ((pdu common-pdu))
   (with-slots (request-id-counter) pdu
-    (incf request-id-counter)))
+    (atomic-incf request-id-counter)))
 
 (defmethod initialize-instance :after ((pdu common-pdu)
                                        &rest initargs &key &allow-other-keys)
