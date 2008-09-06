@@ -8,11 +8,11 @@
                         :version :v3
                         :user "md5"
                         :auth "vHunxJXPRdUyAzjY")
-    (snmp-get s "sysDescr.0")))
+    (snmp-walk s "system")))
 
 (defun v3-test-2 ()
   (with-open-session (s "localhost"
                         :version :v3
                         :user "readonly"
                         :auth "ABCDEFGHABCDEFGH")
-    (snmp-get s "sysContact.0")))
+    (snmp-walk s "system")))
