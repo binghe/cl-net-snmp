@@ -92,6 +92,16 @@
                                        &rest initargs &key &allow-other-keys)
   (declare (ignore initargs))
   (setf (server-process instance)
+        #+(and lispworks win32)
+        (comm:start-udp-server :process-name (format nil "SNMP Server at ~A:~D"
+                                                     (hbo-to-dotted-quad
+                                                      (server-address instance))
+                                                     (server-port instance))
+                               :function (server-function instance)
+                               :arguments (list instance)
+                               :address (server-address instance)
+                               :service (server-port instance))
+        #-(and lispworks win32)
         (spawn-thread
 	 (format nil "SNMP Server at ~A:~D"
                  (hbo-to-dotted-quad (server-address instance))
@@ -113,6 +123,9 @@
 
 (defun disable-snmp-service ()
   (when *default-snmp-server*
+    #+(and lispworks win32)
+    (comm:stop-udp-server (server-process *default-snmp-server*) :wait t)
+    #-(and lispworks win32)
     (kill-thread
      (server-process *default-snmp-server*))
     (setf *default-snmp-server* nil)))
@@ -127,7 +140,7 @@
 (defun snmp-server-function (input server)
   "Main function in UDP loop"
   (declare (type array input)
-           (type snmp-server))
+           (type snmp-server server))
   (let ((*server* server))
     (let ((output (process-message (ber-decode input))))
       (when output
