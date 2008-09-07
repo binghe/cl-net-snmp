@@ -1,4 +1,8 @@
+;;;; -*- Mode: Lisp -*-
 ;;;; $Id$
+
+;;;; This is a simple SNMP server implementation with no access control yet.
+;;;; It accepts any SNMPv2 and SNMPv2c request.
 
 (in-package :snmp)
 
@@ -51,7 +55,8 @@
                   :accessor snmp-vacm-access-table)
    (view-table    :type hash-table
                   :initform (make-hash-table :test #'equal)
-                  :accessor snmp-vacm-view-table)))
+                  :accessor snmp-vacm-view-table))
+  (:documentation "SNMP VACM access control tables"))
 
 (defclass snmp-server (snmp-agent-state-mixin snmp-vacm-mixin)
   ((process        :accessor server-process
@@ -82,7 +87,7 @@
 
 (defmethod print-object ((object snmp-server) stream)
   (print-unreadable-object (object stream :type t)
-    (format stream "SNMP Server ~A:~D"
+    (format stream "SNMP Server at ~A:~D"
             (server-address object)
             (server-port object))))
 
@@ -121,16 +126,21 @@
 (defun disable-snmp-service ()
   (when *default-snmp-server*
     #+(and lispworks win32)
-    (comm:stop-udp-server (server-process *default-snmp-server*) :wait t)
+    (comm:stop-udp-server (server-process *default-snmp-server*)
+                          :wait t)
     #-(and lispworks win32)
     (kill-thread
      (server-process *default-snmp-server*))
     (setf *default-snmp-server* nil)))
 
-(defun reload-snmp-service ()
+(defun reload-snmp-service (&optional (stream t))
+  (format stream "Restarting SNMP Service .")
   (disable-snmp-service)
+  (format stream ".")
   (sleep 1)
-  (enable-snmp-service))
+  (format stream ".")
+  (enable-snmp-service)
+  (format stream " Done.~%"))
 
 (defvar *server*)
 
@@ -222,8 +232,7 @@
 
 (defmethod process-object-id ((oid object-id) (flag (eql :get-next)))
   (labels ((find-next (oid)
-             (if (null oid)
-                 nil
+             (unless (null oid)
                (let ((next (oid-next oid)))
                  (if (gethash next (server-dispatch-table *server*))
                      next

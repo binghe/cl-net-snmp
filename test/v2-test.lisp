@@ -1,7 +1,7 @@
 ;;;; -*- Mode: Lisp -*-
 ;;;; $Id$
 
-(in-package :snmp)
+(in-package :snmp.test)
 
 (defun v2-test-1 ()
   (with-open-session (s "bend-10.space.163.org"
