@@ -2,10 +2,10 @@
 
 (in-package :snmp)
 
-(defparameter *default-snmp-server-address* 0)
-(defparameter *default-snmp-server-port*    8161)
-(defvar       *default-snmp-server*         nil)
-(defvar       *default-dispatch-table*      (make-hash-table))
+(defvar *default-snmp-server-address* "localhost")
+(defvar *default-snmp-server-port*    8161)
+(defvar *default-snmp-server*         nil)
+(defvar *default-dispatch-table*      (make-hash-table))
 
 (defclass snmp-agent-state-mixin ()
   ((start-up-time          :type (unsigned-byte 32) :initform 0)
@@ -57,11 +57,9 @@
   ((process        :accessor server-process
                    :documentation "Server process/thread")
    (address        :accessor server-address
-                   :type (or null string vector integer)
                    :initarg :address
                    :documentation "Server listening address")
    (port           :accessor server-port
-                   :type (or string integer)
                    :initarg :port
                    :documentation "Server listening port")
    (function       :accessor server-function
@@ -85,7 +83,7 @@
 (defmethod print-object ((object snmp-server) stream)
   (print-unreadable-object (object stream :type t)
     (format stream "SNMP Server ~A:~D"
-            (hbo-to-dotted-quad (server-address object))
+            (server-address object)
             (server-port object))))
 
 (defmethod initialize-instance :after ((instance snmp-server)
@@ -94,8 +92,7 @@
   (setf (server-process instance)
         #+(and lispworks win32)
         (comm:start-udp-server :process-name (format nil "SNMP Server at ~A:~D"
-                                                     (hbo-to-dotted-quad
-                                                      (server-address instance))
+                                                     (server-address instance)
                                                      (server-port instance))
                                :function (server-function instance)
                                :arguments (list instance)
@@ -104,7 +101,7 @@
         #-(and lispworks win32)
         (spawn-thread
 	 (format nil "SNMP Server at ~A:~D"
-                 (hbo-to-dotted-quad (server-address instance))
+                 (server-address instance)
                  (server-port instance))
 	 #'(lambda ()
 	     (socket-server (server-address instance)
