@@ -7,8 +7,10 @@
 
 ;;; system tree
 (def-scalar-variable "sysDescr" (agent)
-  (format nil "~A ~A"
-          (lisp-implementation-type) (lisp-implementation-version)))
+  (format nil "~A ~A on ~A"
+          (lisp-implementation-type)
+          (lisp-implementation-version)
+          (machine-instance)))
 
 (def-scalar-variable "sysUpTimeInstance" (agent)
   (timeticks (truncate (* #.(/ 100 internal-time-units-per-second)
