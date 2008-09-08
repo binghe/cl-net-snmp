@@ -1,0 +1,9 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from MIB:NET-SNMP;SNMP-USM-DH-OBJECTS-MIB.TXT
+
+(snmp-usm-dh-objects-mib
+ |SNMPv2-SMI|
+ |SNMPv2-TC|
+ |SNMPv2-CONF|
+ snmp-user-based-sm-mib
+ snmp-framework-mib)

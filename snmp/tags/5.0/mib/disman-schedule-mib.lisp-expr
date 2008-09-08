@@ -1,0 +1,8 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from MIB:NET-SNMP;DISMAN-SCHEDULE-MIB.TXT
+
+(disman-schedule-mib
+ |SNMPv2-SMI|
+ |SNMPv2-TC|
+ |SNMPv2-CONF|
+ snmp-framework-mib)

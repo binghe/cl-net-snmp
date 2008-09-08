@@ -1,0 +1,4 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from MIB:NET-SNMP;RFC1213-MIB.TXT
+
+(rfc1213-mib rfc1155-smi)

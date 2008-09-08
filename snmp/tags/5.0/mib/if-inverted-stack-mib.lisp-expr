@@ -1,0 +1,4 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from MIB:NET-SNMP;IF-INVERTED-STACK-MIB.TXT
+
+(if-inverted-stack-mib |SNMPv2-SMI| |SNMPv2-TC| |SNMPv2-CONF| if-mib)

@@ -1,0 +1,4 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from MIB:NET-SNMP;GNOME-SMI.TXT
+
+(gnome-smi |SNMPv2-SMI|)

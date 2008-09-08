@@ -1,0 +1,4 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from MIB:NET-SNMP;HOST-RESOURCES-TYPES.TXT
+
+(host-resources-types |SNMPv2-SMI| host-resources-mib)
