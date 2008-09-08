@@ -18,8 +18,6 @@
 
 7. Fix AES encryption support
 
-8. Auto-learn UDP retransmit support.
+8. [done] Auto-learn UDP retransmit support.
 
-9. Add more details in MIB Browser.
-
-
+9. [done] Add more details in MIB Browser.
