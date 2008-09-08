@@ -10,4 +10,4 @@
   :depends-on (:snmp :snmp-server)
   :components ((:module "test"
                 :components ((:file "package")
-                             (:file "server-test")))))
+                             (:file "server-test" :depends-on ("package"))))))
