@@ -16,6 +16,7 @@
                (:module "server"
                 :depends-on ("server-base")
                 :components ((:file "core")
+                             (:file "lisp-base")
                              #+lispworks (:file "lispworks")
                              #+cmu       (:file "cmucl")
                              #+sbcl      (:file "sbcl")

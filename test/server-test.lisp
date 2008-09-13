@@ -10,3 +10,11 @@
                           :version :2c
                           :community "public") ; actually community could be any string
       (snmp-walk s "system"))))
+
+(defun server-test-2 ()
+  (with-open-snmp-server ()
+    (with-open-session (s *default-snmp-server-address*
+                          :port *default-snmp-server-port*
+                          :version :2c
+                          :community "public") ; actually community could be any string
+      (snmp-walk s "common-lisp"))))
