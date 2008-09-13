@@ -5,9 +5,10 @@
 
 (defsystem snmp-server
   :description "SNMP Server"
-  :version "2.0"
+  :version "3.0"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
-  :depends-on (:snmp)
+  :depends-on (:asn.1 ; version >= 4.1
+               :snmp) ; version >= 5.0
   :components ((:file "server-condition")
                (:file "snmp-server" :depends-on ("server-condition"))
                (:file "server-base" :depends-on ("snmp-server"))
