@@ -1,3 +1,4 @@
+;;;; -*- Mode: Lisp -*-
 ;;;; $Id$
 
 (in-package :snmp)
@@ -159,3 +160,7 @@
   (counter32 0))
 (def-scalar-variable "snmpProxyDrops" (agent)
   (counter32 0))
+
+;;; .iso.org.dod.internet.private.enterprises.lisp.common-lisp.lispConstants
+(def-scalar-variable "lispMostPositiveShortFloat" (agent)
+  (format nil "~A" most-positive-short-float))
