@@ -10,6 +10,8 @@
 (defvar *default-snmp-server-port*    8161)
 (defvar *default-snmp-server*         nil)
 (defvar *default-dispatch-table*      (make-hash-table))
+(defvar *default-walk-table*          (make-hash-table))
+(defvar *default-walk-list*           nil)
 
 (defclass snmp-agent-state-mixin ()
   ((start-up-time          :type (unsigned-byte 32) :initform 0)
@@ -58,37 +60,6 @@
                   :accessor snmp-vacm-view-table))
   (:documentation "SNMP VACM access control tables"))
 
-(defclass snmp-server (snmp-agent-state-mixin snmp-vacm-mixin)
-  ((process        :accessor server-process
-                   :documentation "Server process/thread")
-   (address        :accessor server-address
-                   :initarg :address
-                   :documentation "Server listening address")
-   (port           :accessor server-port
-                   :initarg :port
-                   :documentation "Server listening port")
-   (function       :accessor server-function
-                   :type function
-                   :initarg :function
-                   :documentation "Message processing function")
-   (dispatch-table :accessor server-dispatch-table
-                   :type hash-table
-                   :initarg :dispatch-table
-                   :documentation "Object ID dispatch table")
-   (engine-id      :reader server-engine-id
-                   :type string)
-   (engine-boots   :reader server-engine-boots
-                   :type integer
-                   :initform 0)
-   (engine-time    :reader server-engine-time
-                   :type integer
-                   :initform 0))
-  (:documentation "SNMP server class"))
-
-(defmethod print-object ((object snmp-server) stream)
-  (print-unreadable-object (object stream :type t)
-    (format stream "SNMP Server at ~A:~D"
-            (server-address object)
             (server-port object))))
 
 (defmethod initialize-instance :after ((instance snmp-server)
@@ -121,7 +92,9 @@
 			   :address *default-snmp-server-address*
 			   :port port
 			   :function #'snmp-server-function
-			   :dispatch-table *default-dispatch-table*))))
+			   :dispatch-table *default-dispatch-table*
+                           :walk-table *default-walk-table*
+                           :walk-list *default-walk-list*))))
 
 (defun disable-snmp-service ()
   (when *default-snmp-server*
@@ -222,33 +195,33 @@
 (defgeneric process-object-id (oid flag))
 
 (defmethod process-object-id ((oid object-id) (flag (eql :get)))
-  (cond ((oid-scalar-variable-p oid)
-         (list oid
-               (let ((handler (gethash (oid-parent oid) (server-dispatch-table *server*))))
-                 (if handler
-                     (funcall handler *server*)
-                   :no-such-instance))))
-        (t (list oid :no-such-instance))))
+  (let* ((dispatch-table (server-dispatch-table *server*))
+         (handler (gethash oid dispatch-table)))
+    (list oid
+          (if handler
+              (funcall handler *server*)
+            :no-such-instance))))
 
-(defmethod process-object-id ((oid object-id) (flag (eql :get-next)))
-  (labels ((find-next (oid)
+(defun oid-find-next (oid &optional (dispatch-table *default-dispatch-table*))
+  "Find next dispatched object-id or nil"
+  (declare (type object-id oid)
+           (type hash-table dispatch-table))
+  (labels ((iter (oid)
              (unless (null oid)
                (let ((next (oid-next oid)))
-                 (if (gethash next (server-dispatch-table *server*))
+                 (if (gethash next dispatch-table)
                      next
-                   (find-next next))))))
-    (cond ((oid-leaf-p oid)
-           (let ((handler (gethash oid (server-dispatch-table *server*))))
-             (when (null handler)
-               (let ((next (find-next oid)))
-                 (setf oid next
-                       handler (gethash next
-                                        (server-dispatch-table *server*)))))
-             (if handler
-                 (let ((o (make-instance 'object-id :parent oid :value 0)))
-                   (list o (funcall handler *server*)))
-               (list (oid-next oid) :end-of-mibview))))
-          (t (let ((next-oid (find-next oid)))
-               (if next-oid
-                   (process-object-id next-oid :get-next)
-                 (list (oid-next oid) :end-of-mibview)))))))
+                   (iter next))))))
+    (iter oid)))
+
+(defmethod process-object-id ((oid object-id) (flag (eql :get-next)))
+  (let* ((dispatch-table (server-dispatch-table *server*))
+         (walk-table (server-walk-table *server*))
+         (walk-list (gethash oid walk-table)))
+    (let ((next-oid (if walk-list
+                        (cadr walk-list)
+                      (oid-find-next oid dispatch-table))))
+      (if next-oid
+          (list next-oid
+                (funcall (gethash next-oid dispatch-table) *server*))
+        (list oid :end-of-mibview)))))
