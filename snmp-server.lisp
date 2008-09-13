@@ -60,6 +60,43 @@
                   :accessor snmp-vacm-view-table))
   (:documentation "SNMP VACM access control tables"))
 
+(defclass snmp-server (snmp-agent-state-mixin snmp-vacm-mixin)
+  ((process        :accessor server-process
+                   :documentation "Server process/thread")
+   (address        :accessor server-address
+                   :initarg :address
+                   :documentation "Server listening address")
+   (port           :accessor server-port
+                   :initarg :port
+                   :documentation "Server listening port")
+   (function       :accessor server-function
+                   :type function
+                   :initarg :function
+                   :documentation "Message processing function")
+   (dispatch-table :accessor server-dispatch-table
+                   :type hash-table
+                   :initarg :dispatch-table
+                   :documentation "Object ID dispatch table")
+   (walk-table     :accessor server-walk-table
+                   :type hash-table
+                   :initarg :walk-table)
+   (walk-list      :accessor server-walk-list
+                   :type list
+                   :initarg :walk-list)
+   (engine-id      :reader server-engine-id
+                   :type string)
+   (engine-boots   :reader server-engine-boots
+                   :type integer
+                   :initform 0)
+   (engine-time    :reader server-engine-time
+                   :type integer
+                   :initform 0))
+  (:documentation "SNMP server class"))
+
+(defmethod print-object ((object snmp-server) stream)
+  (print-unreadable-object (object stream :type t)
+    (format stream "SNMP Server at ~A:~D"
+            (server-address object)
             (server-port object))))
 
 (defmethod initialize-instance :after ((instance snmp-server)
