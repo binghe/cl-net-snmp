@@ -19,9 +19,9 @@
 
 (defsystem snmp
   :description "Simple Network Manangement Protocol"
-  :version "5.0"
+  :version "5.2"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
-  :depends-on (:asn.1        ; Standalone ASN.1 support
+  :depends-on (:asn.1        ; version >= 4.0
 	       :ironclad     ; SNMPv3 authentication/encryption support
                :usocket-udp) ; Portable UDP networking
   :components ((:file "package"     :depends-on ("vendor"))
