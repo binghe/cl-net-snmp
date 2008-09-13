@@ -127,13 +127,6 @@ lispUniversalTime OBJECT-TYPE
     DESCRIPTION "(get-universal-time)"
     ::= { lispSystem 13 }
 
-lispFeatures OBJECT-TYPE
-    SYNTAX      SEQUENCE OF OCTET STRING
-    MAX-ACCESS  read-only
-    STATUS      current
-    DESCRIPTION "*features*"
-    ::= { lispSystem 14 }
-
 lispMostPositiveShortFloat OBJECT-TYPE
     SYNTAX      OCTET STRING
     MAX-ACCESS  read-only
