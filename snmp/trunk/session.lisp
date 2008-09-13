@@ -165,7 +165,8 @@
                          (list :priv-local-key (coerce key 'octets))))))))))
     (apply #'make-instance args)))
 
-(defmethod close-session ((session session))
+(defun close-session (session)
+  (declare (type session session))
   (when (slot-boundp session 'socket)
     (socket-close (socket-of session))))
 
