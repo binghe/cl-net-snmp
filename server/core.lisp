@@ -22,7 +22,8 @@
   *snmp-server-contact*)
 
 (def-scalar-variable "sysName" (agent)
-  (long-site-name))
+  (format nil "~A (~A)"
+          (long-site-name) (short-site-name)))
 
 (def-scalar-variable "sysLocation" (agent)
   (machine-instance))
@@ -160,7 +161,3 @@
   (counter32 0))
 (def-scalar-variable "snmpProxyDrops" (agent)
   (counter32 0))
-
-;;; .iso.org.dod.internet.private.enterprises.lisp.common-lisp.lispConstants
-(def-scalar-variable "lispMostPositiveShortFloat" (agent)
-  (format nil "~A" most-positive-short-float))
