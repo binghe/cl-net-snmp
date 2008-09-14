@@ -9,6 +9,7 @@
   (setf *default-walk-list* nil))
 
 (defun register-variable (oid function)
+  "This function won't be called at runtime, only LOAD-TIME."
   (declare (type object-id oid))
   ;; register process function into dispatch-table
   (setf (gethash oid *default-dispatch-table*) function)
@@ -48,20 +49,16 @@
        (eval-when (:load-toplevel :execute)
          (register-variable (oid (list (oid ,name) 0)) #',oid)))))
 
-#+ignore
-(defmacro def-listy-mib-table (table-oid &rest keys)
-  `(def-list-based-mib-table ,table-oid (,(gensym)) ,@keys))
+(defun register-mib-table (oid table-function)
+  "This function won't be called at runtime, only LOAD-TIME."
+  (declare (type object-id oid))
+  (let ((flist (funcall table-function )))
+    (dotimes (i (list-length flist))
+      (register-variable (oid (list oid (1+ i))) (nth i flist)))))
 
-#+ignore
-(defmacro def-list-based-mib-table (table-oid (arg) &rest keys)
-  (let ((list-form (cdr (assoc :list keys)))
-	(entry-oid (cdr (assoc :entry keys)))
-	(index-function (cadr (assoc :index keys)))
-	(test-if (cdr (assoc :test-if keys)))
-	(test-if-not (cdr (assoc :test-if-not keys)))
-	(key-fn (or (cdr (assoc :key keys)) #'identity)))
-    (declare (type (or null (function (t) t))
-		   test-if
-		   test-if-not
-		   key-fn))
-    ))
+(defmacro def-listy-mib-table (name () &body body)
+  (let ((oid (intern name (find-package :asn.1))))
+    `(progn
+       (defun ,oid () ,@body)
+       (eval-when (:load-toplevel :execute)
+         (register-mib-table (oid ,name) #',oid)))))
