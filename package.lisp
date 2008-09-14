@@ -25,6 +25,7 @@
            #:close-session
            #:control-center
            #:def-scalar-variable
+           #:def-listy-mib-table
            #:disable-snmp-service
            #:enable-snmp-service
            #:open-session
