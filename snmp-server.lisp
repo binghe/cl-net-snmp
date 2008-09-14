@@ -6,7 +6,7 @@
 
 (in-package :snmp)
 
-(defvar *default-snmp-server-address* "localhost")
+(defvar *default-snmp-server-address* nil)
 (defvar *default-snmp-server-port*    8161)
 (defvar *default-snmp-server*         nil)
 (defvar *default-dispatch-table*      (make-hash-table))
