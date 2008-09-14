@@ -31,6 +31,45 @@
 (def-scalar-variable "sysORLastChange" (agent)
   (timeticks 0))
 
+;;; OID Table definitions
+
+(def-listy-mib-table "sysORID" ()
+  (let ((id-list '("ifMIB"
+                   "snmpMIB"
+                   "tcpMIB"
+                   "ip"
+                   "udpMIB"
+                   "vacmBasicGroup"
+                   "snmpFrameworkMIBCompliance"
+                   "snmpMPDCompliance"
+                   "usmMIBCompliance")))
+    (mapcar #'(lambda (x)
+                #'(lambda (agent)
+                    (declare (ignore agent))
+                    (oid x)))
+            id-list)))
+
+(def-listy-mib-table "sysORDescr" ()
+  (let ((string-list
+         '("The MIB module to describe generic objects for network interface sub-layers"
+           "The MIB module for SNMPv2 entities"
+           "The MIB module for managing TCP implementations"
+           "The MIB module for managing IP and ICMP implementations"
+           "The MIB module for managing UDP implementations"
+           "View-based Access Control Model for SNMP."
+           "The SNMP Management Architecture MIB."
+           "The MIB for Message Processing and Dispatching."
+           "The management information definitions for the SNMP User-based Security Model.")))
+    (mapcar #'(lambda (x)
+                #'(lambda (agent)
+                    (declare (ignore agent))
+                    x))
+            string-list)))
+
+(def-listy-mib-table "sysORUpTime" ()
+  (let ((f #'(lambda (agent) (declare (ignore agent)) (timeticks 0))))
+    (list f f f f f f f f f)))
+
 ;;; |sysORID|, |sysORDescr|, |sysORUpTime| from 1 to 9 is not implemented.
 #|
 (def-listy-mib-table [atTable]
