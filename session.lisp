@@ -123,6 +123,14 @@
             (,+snmp-version-2c+ . ,+snmp-version-2c+)
             (,+snmp-version-3+ . ,+snmp-version-3+))))
 
+(defun snmp-connect (host port)
+  (declare (ignore host port))
+  (socket-connect/udp nil nil
+                      :element-type '(unsigned-byte 8)
+                      ;; On Win32, we must bind it to set socketopt
+                      #+win32 :local-port #+win32 0
+                      :stream nil))
+
 (defun open-session (host &key (port *default-snmp-port*)
                                (version *default-snmp-version*)
                                (community *default-snmp-community*)
