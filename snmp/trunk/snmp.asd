@@ -19,7 +19,7 @@
 
 (defsystem snmp
   :description "Simple Network Manangement Protocol"
-  :version "5.2"
+  :version "5.3"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
   :depends-on (:asn.1        ; version >= 4.0
 	       :ironclad     ; SNMPv3 authentication/encryption support
@@ -38,7 +38,7 @@
                (:file "snmp-get"    :depends-on ("request"))
                (:file "snmp-walk"   :depends-on ("request" "snmp-smi"))
                (:file "snmp-trap"   :depends-on ("request" "mib"))
-               (:file "worker")
+               (:file "worker"      :depends-on ("session"))
 	       #+lispworks
                (:file "update-mib"  :depends-on ("mib"))
                (:file "mib-depend"  :depends-on ("package"))
