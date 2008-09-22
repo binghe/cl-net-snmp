@@ -1,3 +1,5 @@
+cl-net-snmp's TODO List
+
 1. BER Encode/Decode Cache
 
 	(consider use weak hash)
@@ -14,10 +16,14 @@
 
 5. [done] KEY-tool is broken, test and fix it.
 
-6. Fix SHA1 keytool support, now I don't know way it cannot work
+6. Fix SHA1 keytool support, now I don't know why it cannot work
 
 7. Fix AES encryption support
 
 8. [done] Auto-learn UDP retransmit support.
 
 9. [done] Add more details in MIB Browser.
+
+10. SNMP-WALK support (GET-NEXT) for "MIB Table" in snmp-server.
+
+11. VACM support for snmp-server (classes already defined but not used)

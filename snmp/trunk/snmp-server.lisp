@@ -1,9 +1,6 @@
 ;;;; -*- Mode: Lisp -*-
 ;;;; $Id$
 
-;;;; This is a simple SNMP server implementation with no access control yet.
-;;;; It accepts any SNMPv2 and SNMPv2c request.
-
 (in-package :snmp)
 
 (defvar *default-snmp-server-address* nil)
@@ -112,15 +109,14 @@
                                :address (server-address instance)
                                :service (server-port instance))
         #-(and lispworks win32)
-        (spawn-thread
-	 (format nil "SNMP Server at ~A:~D"
-                 (server-address instance)
-                 (server-port instance))
-	 #'(lambda ()
-	     (socket-server (server-address instance)
-			    (server-port instance)
-			    (server-function instance)
-			    (list instance))))))
+        (spawn-thread (format nil "SNMP Server at ~A:~D"
+                              (server-address instance)
+                              (server-port instance))
+                      #'(lambda ()
+                          (socket-server (server-address instance)
+                                         (server-port instance)
+                                         (server-function instance)
+                                         (list instance))))))
         
 (defun enable-snmp-service (&optional (port *default-snmp-server-port*))
   (if (null *default-snmp-server*)
@@ -134,13 +130,13 @@
                            :walk-list *default-walk-list*))))
 
 (defun disable-snmp-service ()
+  "Kill server thread and clear variable"
   (when *default-snmp-server*
     #+(and lispworks win32)
-    (comm:stop-udp-server (server-process *default-snmp-server*)
-                          :wait t)
+    (comm:stop-udp-server (server-process *default-snmp-server*) :wait t)
     #-(and lispworks win32)
-    (kill-thread
-     (server-process *default-snmp-server*))
+    (kill-thread (server-process *default-snmp-server*))
+    ;; clear variable
     (setf *default-snmp-server* nil)))
 
 (defun reload-snmp-service (&optional (stream t))
@@ -229,15 +225,34 @@
                      :request-id request-id
                      :variable-bindings vb))))
 
+(defun oid-find-leaf (oid)
+  "Find the leaf node in a oid's all parents"
+  (declare (type object-id oid))
+  (unless (oid-trunk-p oid)
+    (labels ((iter (o acc)
+               (if (oid-leaf-p o)
+                   (values o acc)
+                 (let ((p (oid-parent o))
+                       (v (oid-value o)))
+                   (iter p (cons v acc))))))
+      (iter oid nil))))
+
 (defgeneric process-object-id (oid flag))
 
 (defmethod process-object-id ((oid object-id) (flag (eql :get)))
-  (let* ((dispatch-table (server-dispatch-table *server*))
-         (handler (gethash oid dispatch-table)))
-    (list oid
-          (if handler
-              (funcall handler *server*)
-            :no-such-instance))))
+  (let ((dispatch-table (server-dispatch-table *server*)))
+    (cond ((oid-scalar-variable-p oid)
+           (let ((handler (gethash (oid-parent oid) dispatch-table)))
+             (if handler
+                 (list oid (funcall handler *server*))
+               (list oid :no-such-instance))))
+          ((oid-trunk-p oid)) ; no value
+          (t (multiple-value-bind (leaf ids) (oid-find-leaf oid)
+               (if leaf
+                   (let ((handler (gethash leaf dispatch-table)))
+                     (if handler
+                         (list oid (funcall handler *server* ids))
+                       (list oid :no-such-instance)))))))))
 
 (defun oid-find-next (oid &optional (dispatch-table *default-dispatch-table*))
   "Find next dispatched object-id or nil"
@@ -252,13 +267,16 @@
     (iter oid)))
 
 (defmethod process-object-id ((oid object-id) (flag (eql :get-next)))
-  (let* ((dispatch-table (server-dispatch-table *server*))
-         (walk-table (server-walk-table *server*))
-         (walk-list (gethash oid walk-table)))
+  (let ((dispatch-table (server-dispatch-table *server*))
+        (walk-table (server-walk-table *server*))
+        walk-list)
+    (cond ((oid-scalar-variable-p oid)
+           (setf walk-list (gethash (oid-parent oid) walk-table)))
+          (t nil)) ; unimplemented
     (let ((next-oid (if walk-list
                         (cadr walk-list)
                       (oid-find-next oid dispatch-table))))
       (if next-oid
-          (list next-oid
+          (list (oid (list next-oid 0))
                 (funcall (gethash next-oid dispatch-table) *server*))
         (list oid :end-of-mibview)))))

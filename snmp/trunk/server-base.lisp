@@ -47,18 +47,13 @@
          (declare (ignorable ,agent))
          ,@body)
        (eval-when (:load-toplevel :execute)
-         (register-variable (oid (list (oid ,name) 0)) #',oid)))))
+         (register-variable (oid ,name) #',oid)))))
 
-(defun register-mib-table (oid table-function)
-  "This function won't be called at runtime, only LOAD-TIME."
-  (declare (type object-id oid))
-  (let ((flist (funcall table-function )))
-    (dotimes (i (list-length flist))
-      (register-variable (oid (list oid (1+ i))) (nth i flist)))))
-
-(defmacro def-listy-mib-table (name () &body body)
+(defmacro def-listy-mib-table (name (agent ids) &body body)
   (let ((oid (intern name (find-package :asn.1))))
     `(progn
-       (defun ,oid () ,@body)
+       (defun ,oid (,agent ,ids)
+         (declare (ignorable ,agent ,ids))
+         ,@body)
        (eval-when (:load-toplevel :execute)
-         (register-mib-table (oid ,name) #',oid)))))
+         (register-variable (oid ,name) #',oid)))))

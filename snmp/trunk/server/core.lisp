@@ -33,22 +33,23 @@
 
 ;;; OID Table definitions
 
-(def-listy-mib-table "sysORID" ()
-  (let ((id-list '("ifMIB"
-                   "snmpMIB"
-                   "tcpMIB"
-                   "ip"
-                   "udpMIB"
-                   "vacmBasicGroup"
-                   "snmpFrameworkMIBCompliance"
-                   "snmpMPDCompliance"
-                   "usmMIBCompliance")))
-    (mapcar #'(lambda (x)
-                #'(lambda (agent)
-                    (declare (ignore agent))
-                    (oid x)))
-            id-list)))
+(defvar *sys-orid-table* (coerce (mapcar #'oid '("ifMIB"
+                                                 "snmpMIB"
+                                                 "tcpMIB"
+                                                 "ip"
+                                                 "udpMIB"
+                                                 "vacmBasicGroup"
+                                                 "snmpFrameworkMIBCompliance"
+                                                 "snmpMPDCompliance"
+                                                 "usmMIBCompliance")) 'vector))
 
+(def-listy-mib-table "sysORID" (agent ids)
+  (if (null ids)
+      '(1 2 3 4 5 6 7 8 9)
+    (when (plusp (car ids))
+      (nth (1- (car ids)) *sys-orid-table*))))
+
+#+ignore
 (def-listy-mib-table "sysORDescr" ()
   (let ((string-list
          '("The MIB module to describe generic objects for network interface sub-layers"
@@ -66,6 +67,7 @@
                     x))
             string-list)))
 
+#+ignore
 (def-listy-mib-table "sysORUpTime" ()
   (let ((f #'(lambda (agent) (declare (ignore agent)) (timeticks 0))))
     (list f f f f f f f f f)))
