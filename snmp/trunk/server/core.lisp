@@ -33,21 +33,22 @@
 
 ;;; OID Table definitions
 
-(defvar *sys-orid-table* (coerce (mapcar #'oid '("ifMIB"
-                                                 "snmpMIB"
-                                                 "tcpMIB"
-                                                 "ip"
-                                                 "udpMIB"
-                                                 "vacmBasicGroup"
-                                                 "snmpFrameworkMIBCompliance"
-                                                 "snmpMPDCompliance"
-                                                 "usmMIBCompliance")) 'vector))
+(defvar *sys-orid-table*
+  (coerce (mapcar #'oid '("ifMIB"
+                          "snmpMIB"
+                          "tcpMIB"
+                          "ip"
+                          "udpMIB"
+                          "vacmBasicGroup"
+                          "snmpFrameworkMIBCompliance"
+                          "snmpMPDCompliance"
+                          "usmMIBCompliance")) 'vector))
 
 (def-listy-mib-table "sysORID" (agent ids)
   (if (null ids)
-      '(1 2 3 4 5 6 7 8 9)
+    9 ; equal as '(1 2 3 4 5 6 7 8 9), see documentation of DEF-LISTY-MIB-TABLE macro
     (when (plusp (car ids))
-      (nth (1- (car ids)) *sys-orid-table*))))
+      (elt *sys-orid-table* (1- (car ids))))))
 
 #+ignore
 (def-listy-mib-table "sysORDescr" ()
