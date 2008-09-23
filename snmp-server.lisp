@@ -225,13 +225,13 @@
                      :request-id request-id
                      :variable-bindings vb))))
 
-(defun oid-find-leaf (oid)
+(defun find-leaf (oid)
   "Find the leaf node in a oid's all parents"
   (declare (type object-id oid))
   (unless (oid-trunk-p oid)
     (labels ((iter (o acc)
                (if (oid-leaf-p o)
-                   (values o acc)
+                 (values o acc)
                  (let ((p (oid-parent o))
                        (v (oid-value o)))
                    (iter p (cons v acc))))))
@@ -244,39 +244,15 @@
     (cond ((oid-scalar-variable-p oid)
            (let ((handler (gethash (oid-parent oid) dispatch-table)))
              (if handler
-                 (list oid (funcall handler *server*))
+               (list oid (funcall handler *server* t))
                (list oid :no-such-instance))))
           ((oid-trunk-p oid)) ; no value
-          (t (multiple-value-bind (leaf ids) (oid-find-leaf oid)
+          ((oid-leaf-p oid)) ; no value
+          (t (multiple-value-bind (leaf ids) (find-leaf oid)
                (if leaf
-                   (let ((handler (gethash leaf dispatch-table)))
-                     (if handler
-                         (list oid (funcall handler *server* ids))
-                       (list oid :no-such-instance)))))))))
+                 (let ((handler (gethash leaf dispatch-table)))
+                   (if handler
+                     (list oid (funcall handler *server* ids))))
+                 (list oid :no-such-instance)))))))
 
-(defun oid-find-next (oid &optional (dispatch-table *default-dispatch-table*))
-  "Find next dispatched object-id or nil"
-  (declare (type object-id oid)
-           (type hash-table dispatch-table))
-  (labels ((iter (oid)
-             (unless (null oid)
-               (let ((next (oid-next oid)))
-                 (if (gethash next dispatch-table)
-                     next
-                   (iter next))))))
-    (iter oid)))
-
-(defmethod process-object-id ((oid object-id) (flag (eql :get-next)))
-  (let ((dispatch-table (server-dispatch-table *server*))
-        (walk-table (server-walk-table *server*))
-        walk-list)
-    (cond ((oid-scalar-variable-p oid)
-           (setf walk-list (gethash (oid-parent oid) walk-table)))
-          (t nil)) ; unimplemented
-    (let ((next-oid (if walk-list
-                        (cadr walk-list)
-                      (oid-find-next oid dispatch-table))))
-      (if next-oid
-          (list (oid (list next-oid 0))
-                (funcall (gethash next-oid dispatch-table) *server*))
-        (list oid :end-of-mibview)))))
+;;; note: since get-next support is too large, it's moved to server-walk.lisp

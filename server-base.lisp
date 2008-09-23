@@ -41,18 +41,25 @@
                (iter *default-walk-list* nil)))))))
 
 (defmacro def-scalar-variable (name (agent) &body body)
-  (let ((oid (intern name (find-package :asn.1))))
+  (let ((oid (intern name (find-package :asn.1)))
+        (ids (gensym)))
     `(progn
-       (defun ,oid (,agent)
+       (defun ,oid (,agent &optional ,ids)
          (declare (ignorable ,agent))
-         ,@body)
+         (if (null ,ids) 0
+           ,@body))
        (eval-when (:load-toplevel :execute)
          (register-variable (oid ,name) #',oid)))))
 
 (defmacro def-listy-mib-table (name (agent ids) &body body)
+  "The IDs argument is used for passing sub-ids of a MIB table, when called with NIL,
+   this user-defined OID handler function should return all possible keys to the table:
+   * single number n: means valid keys are number 1~n;
+   * list of numbers (1 2 3 ... n): means valid keys are numbers in the list;
+   * list of list of numbers ((1 2) (3 4) (5 6)): means valid keys are sub-ids in the list."
   (let ((oid (intern name (find-package :asn.1))))
     `(progn
-       (defun ,oid (,agent ,ids)
+       (defun ,oid (,agent &optional ,ids)
          (declare (ignorable ,agent ,ids))
          ,@body)
        (eval-when (:load-toplevel :execute)
