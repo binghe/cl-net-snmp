@@ -21,6 +21,9 @@ lisp MODULE-IDENTITY
               <cl-net-snmp-general@lists.sourceforge.net>"
     DESCRIPTION
            "The MIB module for Lisp."
+    REVISION "200809240000Z" -- 24 September 2008
+    DESCRIPTION
+           "Redefine lispFeatures as a MIB Table, add lispFeatureTable, lispPackageTable"
     REVISION "200807290000Z" -- 29 July 2008
     DESCRIPTION
            "The initial revision of this MIB module."
@@ -126,6 +129,82 @@ lispUniversalTime OBJECT-TYPE
     STATUS      current
     DESCRIPTION "(get-universal-time)"
     ::= { lispSystem 13 }
+
+lispFeatureTable OBJECT-TYPE
+    SYNTAX      SEQUENCE OF lispFeatureEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION "*features*"
+    ::= { lispSystem 14 }
+
+lispFeatureEntry OBJECT-TYPE
+    SYNTAX     LispFeatureEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+            "An entry (conceptual row) in the lispFeatureTable."
+    INDEX      { lispFeatureIndex }
+    ::= { lispFeatureTable 1 }
+
+LispFeatureEntry ::= SEQUENCE {
+    lispFeatureIndex INTEGER,
+    lispFeatureName  DisplayString
+}
+
+lispFeatureIndex OBJECT-TYPE
+    SYNTAX      INTEGER
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION
+            "The auxiliary variable used for identifying instances
+            of the columnar objects in the lispFeatureTable."
+    ::= { lispFeatureEntry 1 }
+
+lispFeatureName OBJECT-TYPE
+    SYNTAX      DisplayString
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "The string name of each element in *features*."
+    ::= { lispFeatureEntry 2 }
+
+lispPackageTable OBJECT-TYPE
+    SYNTAX      SEQUENCE OF lispPackageEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION "(list-all-packages)"
+    ::= { lispSystem 15 }
+
+lispPackageEntry OBJECT-TYPE
+    SYNTAX     LispPackageEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+            "An entry (conceptual row) in the lispPackageTable."
+    INDEX      { lispPackageIndex }
+    ::= { lispPackageTable 1 }
+
+LispPackageEntry ::= SEQUENCE {
+    lispPackageIndex INTEGER,
+    lispPackageName  DisplayString
+}
+
+lispPackageIndex OBJECT-TYPE
+    SYNTAX      INTEGER
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION
+            "The auxiliary variable used for identifying instances
+            of the columnar objects in the lispPackageTable."
+    ::= { lispPackageEntry 1 }
+
+lispPackageName OBJECT-TYPE
+    SYNTAX      DisplayString
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "The string name of each element in (list-all-packages)."
+    ::= { lispPackageEntry 2 }
 
 lispMostPositiveShortFloat OBJECT-TYPE
     SYNTAX      OCTET STRING
