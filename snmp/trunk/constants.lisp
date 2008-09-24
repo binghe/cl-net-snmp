@@ -3,6 +3,9 @@
 
 (in-package :snmp)
 
+;; octets type is commonly used by many files, define it here.
+(deftype octets () `(simple-array (unsigned-byte 8) (*)))
+
 (defconstant +max-snmp-packet-size+ 65507)
 
 (defconstant +usm-auth-ku-len+ 32)

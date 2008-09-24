@@ -61,5 +61,7 @@
           `(("**;*.*.NEWEST" "SNMP:ASN;**;*.*")
             ("**;*.*" "SNMP:ASN;**;*.*")))))
 
-;; octets type is commonly used by many files, define it here.
-(deftype octets () `(simple-array (unsigned-byte 8) (*)))
+(defparameter *version* 5.4)
+
+(eval-when (:load-toplevel :execute)
+  (assert (>= asn.1::*version* 4.5)))
