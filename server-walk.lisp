@@ -82,17 +82,17 @@
            (values oid dispatch-function t)))))))
 
 ;;; (C -> B)
-(defun find-next (oid)
+(defun find-next (oid &optional (dispatch-table
+                                 (server-dispatch-table *server*)))
   "Find next dispatched object-id or nil"
   (declare (type object-id oid))
-  (let ((dispatch-table (server-dispatch-table *server*)))
-    (labels ((iter (oid)
-               (unless (null oid)
-                 (let ((next (oid-next oid)))
-                   (if (gethash next dispatch-table)
-                     next
-                     (iter next))))))
-      (iter oid))))
+  (labels ((iter (oid)
+             (unless (null oid)
+               (let ((next (oid-next oid)))
+                 (if (gethash next dispatch-table)
+                   next
+                   (iter next))))))
+    (iter oid)))
 
 ;;; (G -> D) or (E -> H)
 (defun find-next-entry (oid)
@@ -103,13 +103,22 @@
         (if (null dispatch-function)
           (find-first (find-next leaf))
           (let* ((entries (funcall dispatch-function *server*))
-                 (next-entry (find-in-list ids entries)))
-            (if next-entry ; G -> D
-              (values (oid (cons oid next-entry))
-                      dispatch-function
-                      next-entry)
-              ;; E -> H
-              (find-first (find-sibling leaf)))))))))
+                 (current-entry (find-in-list ids entries)))
+            (if current-entry
+              ;; find in middle or last
+              (let ((next-entry (cadr current-entry)))
+                (if next-entry
+                  ;; find in middle: return next
+                  (values (oid (cons oid next-entry))
+                          dispatch-function
+                          next-entry)
+                  ;; find in last: byebye
+                  (find-first (find-sibling leaf))))
+              ;; invalid entry, just go first
+              (let ((first-entry (car entries)))
+                (values (oid (cons oid first-entry))
+                        dispatch-function
+                        first-entry)))))))))
 
 ;;; used by find-next-entry
 (defun find-in-list (current all)
@@ -117,6 +126,6 @@
              (if (null e)
                nil
                (if (equal (car e) current)
-                 (cadr e)
+                 e
                  (iter (cdr e))))))
     (iter all)))
