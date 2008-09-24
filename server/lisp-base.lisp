@@ -35,6 +35,24 @@
 (def-scalar-variable "lispUniversalTime" (agent)
   (get-universal-time))
 
+(def-listy-mib-table "lispFeatureName" (agent ids)
+  (let* ((features *features*)
+         (number-of-features (list-length features)))
+    (if (null ids)
+      number-of-features
+      (when (plusp (car ids))
+        (->string (nth (mod (1- (car ids)) number-of-features)
+                       features))))))
+
+(def-listy-mib-table "lispPackageName" (agent ids)
+  (let* ((packages (list-all-packages))
+         (number-of-packages (list-length packages)))
+    (if (null ids)
+      number-of-packages
+      (when (plusp (car ids))
+        (->string (package-name (nth (mod (1- (car ids)) number-of-packages)
+                                     packages)))))))
+
 ;;; .iso.org.dod.internet.private.enterprises.lisp.common-lisp.lispConstants
 (def-scalar-variable "lispMostPositiveShortFloat" (agent)
   #.(->string most-positive-short-float))
