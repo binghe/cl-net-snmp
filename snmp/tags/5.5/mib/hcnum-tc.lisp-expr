@@ -1,0 +1,4 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from MIB:NET-SNMP;HCNUM-TC.TXT
+
+(hcnum-tc |SNMPv2-SMI| |SNMPv2-TC|)
