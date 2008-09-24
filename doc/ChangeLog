@@ -1,2 +1,6 @@
-5.0
+snmp-5.0
 	Portable SNMP server
+
+snmp-5.5, snmp-server-3.0, asn.1-4.5
+	Full GET-NEXT support in SNMP Server, new lispFeatureTable and
+	lispPackageTable added.
