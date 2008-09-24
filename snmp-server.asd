@@ -11,8 +11,8 @@
                :snmp) ; version >= 5.0
   :components ((:file "server-condition")
                (:file "snmp-server" :depends-on ("server-condition"))
-               (:file "server-base" :depends-on ("snmp-server"))
                (:file "server-walk" :depends-on ("snmp-server"))
+               (:file "server-base" :depends-on ("server-walk"))
                (:file "trap-server" :depends-on ("snmp-server"))
                (:module "server"
                 :depends-on ("server-base")

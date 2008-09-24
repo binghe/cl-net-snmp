@@ -15,7 +15,7 @@
   (setf (gethash oid *default-dispatch-table*) function)
   ;; register oid into walk-table and walk-list (if haven't registed)
   (unless (gethash oid *default-walk-table*)
-    (let ((next-oid (oid-find-next oid)))
+    (let ((next-oid (find-next oid *default-dispatch-table*)))
       (cond ((or (null *default-walk-list*)
                  (eq next-oid (car *default-walk-list*)))
              ;; for null *default-walk-list*, we just add current one.
