@@ -44,3 +44,6 @@
                             binds)
                     body))))
 ) ;; eval-when
+
+(defun mklist (obj)
+  (if (listp obj) obj (list obj)))

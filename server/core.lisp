@@ -33,7 +33,7 @@
 
 ;;; OID Table definitions
 
-(defvar *sys-orid-table*
+(defvar *sys-or-id-table*
   (coerce (mapcar #'oid '("ifMIB"
                           "snmpMIB"
                           "tcpMIB"
@@ -48,30 +48,29 @@
   (if (null ids)
     9 ; equal as '(1 2 3 4 5 6 7 8 9), see documentation of DEF-LISTY-MIB-TABLE macro
     (when (plusp (car ids))
-      (elt *sys-orid-table* (1- (car ids))))))
+      (elt *sys-or-id-table* (mod (1- (car ids)) 9)))))
 
-#+ignore
-(def-listy-mib-table "sysORDescr" ()
-  (let ((string-list
-         '("The MIB module to describe generic objects for network interface sub-layers"
-           "The MIB module for SNMPv2 entities"
-           "The MIB module for managing TCP implementations"
-           "The MIB module for managing IP and ICMP implementations"
-           "The MIB module for managing UDP implementations"
-           "View-based Access Control Model for SNMP."
-           "The SNMP Management Architecture MIB."
-           "The MIB for Message Processing and Dispatching."
-           "The management information definitions for the SNMP User-based Security Model.")))
-    (mapcar #'(lambda (x)
-                #'(lambda (agent)
-                    (declare (ignore agent))
-                    x))
-            string-list)))
+(defvar *sys-or-descr-table*
+  #("The MIB module to describe generic objects for network interface sub-layers"
+    "The MIB module for SNMPv2 entities"
+    "The MIB module for managing TCP implementations"
+    "The MIB module for managing IP and ICMP implementations"
+    "The MIB module for managing UDP implementations"
+    "View-based Access Control Model for SNMP."
+    "The SNMP Management Architecture MIB."
+    "The MIB for Message Processing and Dispatching."
+    "The management information definitions for the SNMP User-based Security Model."))
 
-#+ignore
-(def-listy-mib-table "sysORUpTime" ()
-  (let ((f #'(lambda (agent) (declare (ignore agent)) (timeticks 0))))
-    (list f f f f f f f f f)))
+(def-listy-mib-table "sysORDescr" (agent ids)
+  (if (null ids)
+    '(1 2 3 4 5 6 7 8 9) ; equal to 9, here is for demo
+    (when (plusp (car ids))
+      (elt *sys-or-descr-table* (mod (1- (car ids)) 9)))))
+
+(def-listy-mib-table "sysORUpTime" (agent ids)
+  (if (null ids)
+    '((1) (2) (3) (4) (5) (6) (7) (8) (9)) ; equal to 9, here is for demo
+    (timeticks 0)))
 
 ;;; |sysORID|, |sysORDescr|, |sysORUpTime| from 1 to 9 is not implemented.
 #|
