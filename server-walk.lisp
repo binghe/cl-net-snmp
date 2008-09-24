@@ -35,11 +35,12 @@
 
 (defmethod process-object-id ((oid object-id) (flag (eql :get-next)))
   ;; First, find the target oid
-  (multiple-value-bind (next-oid dispatch-function args)
+  (destructuring-bind (next-oid dispatch-function args)
       (cond ((oid-scalar-variable-p oid) ; Type 1
              (find-first (find-sibling (oid-parent oid))))
             ((oid-leaf-p oid)            ; Type 2
-             (find-first (find-sibling oid)))
+             (or (find-first oid)
+                 (find-first (find-sibling oid))))
             ((oid-trunk-p oid)           ; Type 3
              (find-first (find-next oid)))
             (t (find-next-entry oid)))   ; Type 4 or 5
@@ -63,23 +64,21 @@
          (dispatch-function (gethash oid dispatch-table)))
     (unless (null dispatch-function)
       (let ((entries (funcall dispatch-function *server*)))
-        (typecase entries
+        (etypecase entries
           (integer
            (cond ((zerop entries) ; B -> A
-                  (values (oid (list oid 0))
-                          dispatch-function
-                          t))
+                  (list (oid (list oid 0))
+                        dispatch-function
+                        t))
                  (t               ; F -> G
-                  (values (oid (list oid 1))
-                          dispatch-function
-                          (list 1)))))
+                  (list (oid (list oid 1))
+                        dispatch-function
+                        (list 1)))))
           (list                   ; F -> G
-           (let ((first-entry (car entries)))
-             (values (oid (cons oid first-entry))
-                     dispatch-function
-                     first-entry)))
-          (otherwise
-           (values oid dispatch-function t)))))))
+           (let ((first-entry (mklist (car entries))))
+             (list (oid (cons oid first-entry))
+                   dispatch-function
+                   first-entry))))))))
 
 ;;; (C -> B)
 (defun find-next (oid &optional (dispatch-table
@@ -102,30 +101,39 @@
       (let ((dispatch-function (gethash leaf dispatch-table)))
         (if (null dispatch-function)
           (find-first (find-next leaf))
-          (let* ((entries (funcall dispatch-function *server*))
-                 (current-entry (find-in-list ids entries)))
-            (if current-entry
-              ;; find in middle or last
-              (let ((next-entry (cadr current-entry)))
-                (if next-entry
-                  ;; find in middle: return next
-                  (values (oid (cons oid next-entry))
-                          dispatch-function
-                          next-entry)
-                  ;; find in last: byebye
-                  (find-first (find-sibling leaf))))
-              ;; invalid entry, just go first
-              (let ((first-entry (car entries)))
-                (values (oid (cons oid first-entry))
-                        dispatch-function
-                        first-entry)))))))))
+          (let* ((entries (funcall dispatch-function *server*)))
+            (etypecase entries
+              (integer
+               (let ((current-entry (car ids)))
+                 (if (< current-entry entries)
+                   (let ((next-entry (1+ current-entry)))
+                     (list (oid (list leaf next-entry))
+                           dispatch-function
+                           (list next-entry)))
+                   (find-first (find-sibling leaf)))))
+              (list
+               (let ((current-entry (find-in-list ids entries)))
+                 (if current-entry
+                   ;; find in middle or last
+                   (let ((next-entry (mklist (cadr current-entry))))
+                     (if next-entry
+                       ;; find in middle: return next
+                       (list (oid (cons leaf next-entry))
+                             dispatch-function
+                             next-entry)
+                       ;; find in last: byebye
+                       (find-first (find-sibling leaf))))
+                   ;; invalid entry, just go first
+                   (find-first leaf)))))))))))
 
 ;;; used by find-next-entry
 (defun find-in-list (current all)
+  (declare (type list current all))
   (labels ((iter (e)
              (if (null e)
                nil
-               (if (equal (car e) current)
+               (if (equal (mklist (car e))
+                          current)
                  e
                  (iter (cdr e))))))
     (iter all)))

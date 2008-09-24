@@ -5,7 +5,7 @@
 
 (defpackage snmp-system
   (:use :common-lisp :asdf)
-  (:export #:dbind))
+  (:export #:dbind #:mklist))
 
 (in-package :snmp-system)
 
@@ -19,7 +19,7 @@
 
 (defsystem snmp
   :description "Simple Network Manangement Protocol"
-  :version "5.3"
+  :version "5.4"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
   :depends-on (:asn.1        ; version >= 4.0
 	       :ironclad     ; SNMPv3 authentication/encryption support
