@@ -108,7 +108,7 @@
 (defmethod report-variable-error ((c snmp-generic-error) s v)
   (format s "Generic error~@[ for variable ~S~]" v v))
 
-(define-condition snmp-reponse--match-error (snmp-response-error)
+(define-condition snmp-response-match-error (snmp-response-error)
   ()
   (:report (lambda (c stream)
 	     (format stream "Response ~S does not match query ~S"

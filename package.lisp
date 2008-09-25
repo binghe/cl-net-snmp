@@ -61,7 +61,7 @@
           `(("**;*.*.NEWEST" "SNMP:ASN;**;*.*")
             ("**;*.*" "SNMP:ASN;**;*.*")))))
 
-(defparameter *version* 5.5)
+(defparameter *version* 5.6)
 (defparameter *server-version* 3.1)
 
 (eval-when (:load-toplevel :execute)
