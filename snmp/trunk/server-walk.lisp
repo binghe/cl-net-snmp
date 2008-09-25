@@ -18,15 +18,19 @@
 ;;;
 ;;; 1. GetNext an "scalar-variable" (sysDescr.0):
 ;;;    we should walk from A to B, then call the dispatch function on sysDescr
+;;;
 ;;; 2. GetNext on "oid leaf" (sysDescr or sysORID):
-;;;    we should detect this leaf is a scalar-variable or table by call its dispatch on NIL,
-;;;    then decide return sysDescr.0 or sysORID.1
+;;;    we should detect this leaf is a scalar-variable or table by call its dispatch
+;;;    on NIL, then decide return sysDescr.0 or sysORID.1
+;;;
 ;;; 3. GetNext on "oid trunk" (system):
 ;;;    we should find next dispatched oid (from C to B), and then go to "Type 2"
+;;;
 ;;; 4. GetNext in a table (sysORID.1 or sysORID.2):
 ;;;    we should find its table leaf (sysORID) first, then list all its table enties
 ;;;    (by call leaf's dispatch on NIL), then find the next entry of current entry
 ;;;    and return it.
+;;;
 ;;; 5. GetNext in a table's last entry (sysORID.3):
 ;;;    To detect this case, we should use Type 4's method, when the next entry of current
 ;;;    entry is out of current table, we go to "Type 3"
@@ -59,10 +63,11 @@
 
 ;;; (B -> A) or (F -> G)
 (defun find-first (oid)
-  (declare (type object-id oid))
+  (declare (type (or object-id null) oid))
   (let* ((dispatch-table (server-dispatch-table *server*))
          (dispatch-function (gethash oid dispatch-table)))
-    (unless (null dispatch-function)
+    (if (null dispatch-function)
+      (list nil nil nil)
       (let ((entries (funcall dispatch-function *server*)))
         (etypecase entries
           (integer
