@@ -1,5 +1,7 @@
 (in-package :snmp)
 
+(defparameter *server-version* 3.3)
+
 (defun process-message-v1/v2c (message)
   (destructuring-bind (version community pdu) (coerce message 'list)
     (let ((reply-pdu (process-pdu pdu)))
