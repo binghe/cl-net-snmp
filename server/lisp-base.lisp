@@ -53,6 +53,15 @@
         (->string (package-name (nth (mod (1- (car ids)) number-of-packages)
                                      packages)))))))
 
+(def-listy-mib-table "lispModuleName" (agent ids)
+  (let* ((modules *modules*)
+         (number-of-modules (list-length modules)))
+    (if (null ids)
+      number-of-modules
+      (when (plusp (car ids))
+        (->string (nth (mod (1- (car ids)) number-of-modules)
+                       modules))))))
+
 ;;; .iso.org.dod.internet.private.enterprises.lisp.common-lisp.lispConstants
 (def-scalar-variable "lispMostPositiveShortFloat" (agent)
   #.(->string most-positive-short-float))
