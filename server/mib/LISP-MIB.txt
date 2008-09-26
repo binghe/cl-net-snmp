@@ -21,6 +21,9 @@ lisp MODULE-IDENTITY
               <cl-net-snmp-general@lists.sourceforge.net>"
     DESCRIPTION
            "The MIB module for Lisp."
+    REVISION "200809260000Z" -- 26 September 2008
+    DESCRIPTION
+           "Add lispModuleTable"
     REVISION "200809240000Z" -- 24 September 2008
     DESCRIPTION
            "Redefine lispFeatures as a MIB Table, add lispFeatureTable, lispPackageTable"
@@ -205,6 +208,44 @@ lispPackageName OBJECT-TYPE
     DESCRIPTION
             "The string name of each element in (list-all-packages)."
     ::= { lispPackageEntry 2 }
+
+lispModuleTable OBJECT-TYPE
+    SYNTAX      SEQUENCE OF lispModuleEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION "*modules*"
+    ::= { lispSystem 16 }
+
+lispModuleEntry OBJECT-TYPE
+    SYNTAX     LispModuleEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION
+            "An entry (conceptual row) in the lispModuleTable."
+    INDEX      { lispModuleIndex }
+    ::= { lispModuleTable 1 }
+
+LispModuleEntry ::= SEQUENCE {
+    lispModuleIndex INTEGER,
+    lispModuleName  DisplayString
+}
+
+lispModuleIndex OBJECT-TYPE
+    SYNTAX      INTEGER
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION
+            "The auxiliary variable used for identifying instances
+            of the columnar objects in the lispModuleTable."
+    ::= { lispModuleEntry 1 }
+
+lispModuleName OBJECT-TYPE
+    SYNTAX      DisplayString
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "The string name of each element in (list-all-packages)."
+    ::= { lispModuleEntry 2 }
 
 lispMostPositiveShortFloat OBJECT-TYPE
     SYNTAX      OCTET STRING
