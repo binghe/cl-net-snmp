@@ -1,7 +1,7 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; $Id: snmp.asd 434 2008-08-01 15:42:38Z binghe $
+;;;; $Id$
 
-(in-package :asdf)
+(in-package :snmp-system)
 
 (defsystem snmp-server
   :description "SNMP Server"
