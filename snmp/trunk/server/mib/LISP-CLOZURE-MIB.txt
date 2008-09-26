@@ -1,3 +1,4 @@
+-- -*- Mode: asn1 -*-
 -- $Id$
 
 LISP-CLOZURE-MIB DEFINITIONS ::= BEGIN
