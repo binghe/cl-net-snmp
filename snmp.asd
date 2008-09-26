@@ -4,8 +4,7 @@
 (in-package :cl-user)
 
 (defpackage snmp-system
-  (:use :common-lisp :asdf)
-  (:export #:dbind #:mklist))
+  (:use :common-lisp :asdf))
 
 (in-package :snmp-system)
 
@@ -45,8 +44,7 @@
                (:module "mib"       :depends-on ("package")
                 :components #.*mib.lisp-expr*)
                (:module "vendor"
-                :components ((:file "onlisp")
-                             #-portable-threads
+                :components (#-portable-threads
                              (:file "portable-threads")))
                #+(and lispworks capi)
                (:module "gui"
