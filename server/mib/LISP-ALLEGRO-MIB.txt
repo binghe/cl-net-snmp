@@ -1,3 +1,4 @@
+-- -*- Mode: asn1 -*-
 -- $Id: LISP-FRANZ-MIB.txt 426 2008-07-29 15:21:03Z binghe $
 
 LISP-ALLEGRO-MIB DEFINITIONS ::= BEGIN

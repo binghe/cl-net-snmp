@@ -1,3 +1,4 @@
+-- -*- Mode: asn1 -*-
 -- $Id$
 
 LISP-CL-HTTP-MIB DEFINITIONS ::= BEGIN
