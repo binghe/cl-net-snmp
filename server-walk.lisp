@@ -37,6 +37,9 @@
 
 (in-package :snmp)
 
+(defun mklist (obj)
+  (if (listp obj) obj (list obj)))
+
 (defmethod process-object-id ((oid object-id) (flag (eql :get-next)))
   ;; First, find the target oid
   (destructuring-bind (next-oid dispatch-function args)

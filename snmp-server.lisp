@@ -188,7 +188,7 @@
   (process-message-v3 message))
 
 (defun process-message-v1/v2c (message)
-  (dbind (version community pdu) message
+  (destructuring-bind (version community pdu) (coerce message 'list)
     (let ((reply-pdu (process-pdu pdu)))
       (when reply-pdu
         (list version community reply-pdu)))))
