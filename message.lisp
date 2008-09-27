@@ -73,11 +73,6 @@
   (with-slots (msg-id-counter) message
     (the (unsigned-byte 32) (logand (atomic-incf msg-id-counter) #xffffffff))))
 
-(defun generate-salt (message)
-  (declare (type v3-message message))
-  (with-slots (salt-counter) message
-    (the (unsigned-byte 32) (logand (atomic-incf salt-counter) #xffffffff))))
-
 (defmethod initialize-instance :after ((message v3-message) &rest initargs)
   (declare (ignore initargs))
   (unless (slot-boundp message 'msg-id)
@@ -158,24 +153,25 @@
 ;;; SNMPv3 Message Decode
 (defmethod decode-message ((s v3-session) (message-list list))
   (destructuring-bind (version global-data security-string data) message-list
-    (declare (ignore version global-data))
-    (if (not (priv-protocol-of s))
-      (let ((pdu (elt data 2)))
-        (make-instance 'v3-message :session s :pdu pdu))
-      ;;; decrypt message
-      (let ((salt (map 'octets #'char-code
-                       (elt (ber-decode<-string security-string) 5)))
-            (des-key (subseq (priv-local-key-of s) 0 8))
-            (pre-iv (subseq (priv-local-key-of s) 8 16))
-            (data (map 'octets #'char-code data)))
-        (let* ((iv (map 'octets #'logxor pre-iv salt))
-               (cipher (ironclad:make-cipher :des ; (priv-protocol-of s)
-                                             :mode :cbc
-                                             :key des-key 
-                                             :initialization-vector iv)))
-          (ironclad:decrypt-in-place cipher data)
-          (let ((pdu (elt (ber-decode data) 2)))
-            (make-instance 'v3-message :session s :pdu pdu)))))))
+    (declare (ignore version))
+    (let ((msg-id (elt global-data 0)))
+      (if (not (priv-protocol-of s))
+        (let ((pdu (elt data 2)))
+          (make-instance 'v3-message :session s :id msg-id :pdu pdu))
+        ;;; decrypt message
+        (let ((salt (map 'octets #'char-code
+                         (elt (ber-decode<-string security-string) 5)))
+              (des-key (subseq (priv-local-key-of s) 0 8))
+              (pre-iv (subseq (priv-local-key-of s) 8 16))
+              (data (map 'octets #'char-code data)))
+          (let* ((iv (map 'octets #'logxor pre-iv salt))
+                 (cipher (ironclad:make-cipher :des ; (priv-protocol-of s)
+                                               :mode :cbc
+                                               :key des-key 
+                                               :initialization-vector iv)))
+            (ironclad:decrypt-in-place cipher data)
+            (let ((pdu (elt (ber-decode data) 2)))
+              (make-instance 'v3-message :session s :id msg-id :pdu pdu))))))))
 
 ;;; RFC 2574 (USM for SNMPv3), 8.1.1.1. DES key and Initialization Vector
 (defun generate-privacy-parameters (message)
