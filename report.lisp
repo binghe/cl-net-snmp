@@ -8,7 +8,7 @@
   (let ((message (make-instance 'v3-message
                                 :report t
                                 :session session
-                                :context (or context *default-context*)
+                                :context context
                                 :pdu (make-instance 'get-request-pdu
                                                     :variable-bindings #()))))
     (let ((reply (send-snmp-message session message)))
