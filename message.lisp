@@ -85,8 +85,8 @@
 
 (defun generate-global-data (id level)
   (list id
-        ;; msgMaxSize (fixed 65507 from net-snmp)
-        65507
+        ;; msgMaxSize
+        +max-snmp-packet-size+
         ;; msgFlags: security-level + reportable flag
         (make-string 1 :initial-element (code-char (logior #b100 level)))
         ;; msgSecurityModel: USM (3)
