@@ -10,6 +10,8 @@
     (let ((msg-id (elt global-data 0))
           (report-flag (plusp (logand #b100 
                                       (char-code (elt (elt global-data 2) 0))))))
+      (when report-flag
+        (update-session-from-report s security-string))
       (when (and (not report-flag) (priv-protocol-of s))
         ;;; decrypt message
         (let ((salt (map 'octets #'char-code
