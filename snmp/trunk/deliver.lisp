@@ -1,3 +1,4 @@
+;;;; -*- Mode: Lisp -*-
 ;;;; $Id$
 
 (in-package :cl-user)
@@ -14,8 +15,7 @@
 (asdf:setup :snmp)
 
 ;;; Where we are going to deliver the image. 
-(defvar *delivered-image-name* #p"SNMP:MIBROWSER.BIN")
-
+(defvar *delivered-image-name* #p"SNMP:DIST;MIBROWSER.BIN")
 
 ;;; Deliver.
 (deliver 'asn.1:mibrowser *delivered-image-name* 5
