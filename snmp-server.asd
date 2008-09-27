@@ -1,7 +1,7 @@
 ;;;; -*- Mode: Lisp -*-
 ;;;; $Id$
 
-(in-package :snmp-system)
+(in-package :asdf)
 
 (defsystem snmp-server
   :description "SNMP Server"
