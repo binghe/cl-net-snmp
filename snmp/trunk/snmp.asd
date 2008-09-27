@@ -18,7 +18,7 @@
 
 (defsystem snmp
   :description "Simple Network Manangement Protocol"
-  :version "5.9"
+  :version "5.10"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
   :depends-on (:asn.1        ; version >= 4.0
 	       :ironclad     ; SNMPv3 authentication/encryption support
@@ -32,7 +32,7 @@
 	       (:file "session"     :depends-on ("keytool"))
                (:file "message"     :depends-on ("constants" "pdu" "session"))
                (:file "network"     :depends-on ("message" "session"))
-               (:file "report"      :depends-on ("network"))
+               (:file "report"      :depends-on ("network" "message"))
                (:file "request"     :depends-on ("report" "pdu"))
                (:file "snmp-get"    :depends-on ("request"))
                (:file "snmp-walk"   :depends-on ("request" "snmp-smi"))
