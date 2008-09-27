@@ -150,6 +150,11 @@
     (map 'string #'code-char
          (subseq (ironclad:hmac-digest hmac) 0 12))))
 
+(defun need-report-p (session)
+  "return true if a SNMPv3 session has no engine infomation set"
+  (declare (type v3-session session))
+  (zerop (engine-time-of session)))
+
 (defun update-session-from-report (session security-string)
   (declare (type v3-session session)
            (type string security-string))
@@ -175,11 +180,9 @@
   (destructuring-bind (version global-data security-string data) message-list
     (declare (ignore version))
     (let ((msg-id (elt global-data 0))
-          (report-flag (plusp (logand #b100 
-                                      (char-code (elt (elt global-data 2) 0))))))
-      (when report-flag
-        (update-session-from-report s security-string))
-      (when (and (not report-flag) (priv-protocol-of s))
+          (encrypt-flag (plusp (logand #b10
+                                       (char-code (elt (elt global-data 2) 0))))))
+      (when encrypt-flag
         ;;; decrypt message
         (let ((salt (map 'octets #'char-code
                          (elt (ber-decode<-string security-string) 5)))
@@ -193,8 +196,12 @@
                                                :initialization-vector iv)))
             (ironclad:decrypt-in-place cipher data)
             (setf data (ber-decode data)))))
-      (let ((context (elt data 1))
-            (pdu     (elt data 2)))
+      (let* ((context (elt data 1))
+             (pdu     (elt data 2))
+             (report-p (typep pdu 'report-pdu))
+             (report-flag (and (not (need-report-p s)) report-p)))
+        (when report-p
+          (update-session-from-report s security-string))
         (make-instance 'v3-message
                        :session s
                        :id msg-id
