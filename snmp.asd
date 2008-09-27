@@ -18,11 +18,11 @@
 
 (defsystem snmp
   :description "Simple Network Manangement Protocol"
-  :version "5.10"
+  :version "5.11"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
-  :depends-on (:asn.1        ; version >= 4.0
-	       :ironclad     ; SNMPv3 authentication/encryption support
-               :usocket-udp) ; Portable UDP networking
+  :depends-on (:asn.1
+	       :ironclad
+               :usocket-udp)
   :components ((:file "package"     :depends-on ("vendor"))
 	       (:file "constants"   :depends-on ("package"))
                (:file "condition"   :depends-on ("constants"))
@@ -36,7 +36,7 @@
                (:file "request"     :depends-on ("report" "pdu"))
                (:file "snmp-get"    :depends-on ("request"))
                (:file "snmp-walk"   :depends-on ("request" "snmp-smi"))
-               (:file "snmp-trap"   :depends-on ("request" "mib"))
+               (:file "snmp-trap"   :depends-on ("report" "mib"))
                (:file "worker"      :depends-on ("session"))
 	       #+lispworks
                (:file "update-mib"  :depends-on ("mib"))
