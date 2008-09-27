@@ -4,6 +4,26 @@
 
 (defparameter *version* 5.11)
 
+(defun update-session-from-report (session security-string)
+  (declare (type v3-session session)
+           (type string security-string))
+  (destructuring-bind (engine-id engine-boots engine-time user auth priv)
+      ;; security-data: 3rd field of message list
+      (coerce (ber-decode<-string security-string) 'list)
+    (declare (ignore user auth priv))
+    (setf (engine-id-of session) engine-id
+          (engine-boots-of session) engine-boots
+          (engine-time-of session) engine-time)
+    (when (and (auth-protocol-of session) (slot-boundp session 'auth-key))
+      (setf (auth-local-key-of session)
+            (generate-kul (map 'octets #'char-code engine-id)
+                          (auth-key-of session))))
+    (when (and (priv-protocol-of session) (slot-boundp session 'priv-key))
+      (setf (priv-local-key-of session)
+            (generate-kul (map 'octets #'char-code engine-id)
+                          (priv-key-of session))))
+    session))
+
 (defmethod decode-message ((s v3-session) (message-list list))
   (destructuring-bind (version global-data security-string data) message-list
     (declare (ignore version))
@@ -36,6 +56,43 @@
                        :report report-flag
                        :context context
                        :pdu pdu)))))
+
+;; change SEND-SNMP-MESSAGE from defun to defgeneric
+(fmakunbound 'send-snmp-message)
+(defgeneric send-snmp-message (session message &key))
+
+(defmethod send-snmp-message ((session v1-session) (message v1-message) &key (receive t))
+  "this new send-snmp-message is just a interface,
+   all UDP retransmit code are moved into usocket-udp project."
+  (cond (receive ; normal message
+         #-(and lispworks win32)
+         (socket-sync (socket-of session) message
+                      :address (host-of session)
+                      :port (port-of session)
+                      :encode-function #'(lambda (x)
+                                           (values (coerce (ber-encode x) 'octets)
+                                                   (request-id-of (pdu-of x))))
+                      :decode-function #'(lambda (x)
+                                           (let ((m (decode-message session x)))
+                                             (values m (request-id-of (pdu-of m)))))
+                      :max-receive-length +max-snmp-packet-size+)
+         #+(and lispworks win32)
+         (comm:sync-message (socket (socket-of session)) ; raw socket fd
+                            message
+                            (host-of session)
+                            (port-of session)
+                            :encode-function #'(lambda (x)
+                                                 (values (coerce (ber-encode x) 'octets)
+                                                         (request-id-of (pdu-of x))))
+                            :decode-function #'(lambda (x)
+                                                 (let ((m (decode-message session x)))
+                                                   (values m (request-id-of (pdu-of m)))))
+                            :max-receive-length +max-snmp-packet-size+))
+        (t (let* ((data (coerce (ber-encode message) 'octets))
+                  (data-length (length data)))
+             (socket-send (socket-of session) data data-length
+                          :address (host-of session)
+                          :port (port-of session))))))
 
 (defmethod send-snmp-message ((session v3-session) (message v3-message) &key (receive t))
   "this new send-snmp-message is just a interface,
