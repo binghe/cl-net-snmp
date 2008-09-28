@@ -22,8 +22,9 @@
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
   :depends-on (:asn.1
 	       :ironclad
-               :usocket-udp)
-  :components ((:file "package"     :depends-on ("vendor"))
+               :usocket-udp
+               :portable-threads) ; GBBopen's portable-threads
+  :components ((:file "package")
 	       (:file "constants"   :depends-on ("package"))
                (:file "condition"   :depends-on ("constants"))
 	       (:file "pdu"         :depends-on ("package"))
@@ -42,7 +43,4 @@
                (:file "update-mib"  :depends-on ("mib"))
                (:file "mib-depend"  :depends-on ("package"))
                (:module "mib"       :depends-on ("package")
-                :components #.*mib.lisp-expr*)
-               (:module "vendor"
-                :components (#-portable-threads
-                             (:file "portable-threads")))))
+                :components #.*mib.lisp-expr*)))
