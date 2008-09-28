@@ -1,4 +1,4 @@
 ;;;; -*- Mode: Lisp -*-
 ;;;; Auto-generated from MIB:NET-SNMP;SOURCE-ROUTING-MIB.TXT
 
-(source-routing-mib rfc1155-smi bridge-mib)
+(source-routing-mib snmpv2-smi bridge-mib)

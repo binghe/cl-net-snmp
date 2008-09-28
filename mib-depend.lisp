@@ -34,7 +34,6 @@
              |SNMPv2-CONF|
              SNMP-FRAMEWORK-MIB)
             (IPV6-FLOW-LABEL-MIB |SNMPv2-SMI| |SNMPv2-TC|)
-            (RFC1213-MIB RFC1155-SMI)
             (UCD-SNMP-MIB-OLD
              UCD-SNMP-MIB
              |SNMPv2-SMI|
@@ -49,20 +48,12 @@
             (TRANSPORT-ADDRESS-MIB |SNMPv2-SMI| |SNMPv2-TC|)
             (UDP-MIB |SNMPv2-SMI| |SNMPv2-CONF| INET-ADDRESS-MIB)
             (TCP-MIB |SNMPv2-SMI| |SNMPv2-CONF| INET-ADDRESS-MIB)
-            (SOURCE-ROUTING-MIB RFC1155-SMI BRIDGE-MIB)
-            (SMUX-MIB RFC1155-SMI)
+            (SOURCE-ROUTING-MIB SNMPV2-SMI BRIDGE-MIB)
+            (SMUX-MIB SNMPV2-SMI)
             (RMON-MIB |SNMPv2-SMI| |SNMPv2-TC| |SNMPv2-CONF|)
-            (|RIPv2-MIB|
-             |SNMPv2-SMI|
-             |SNMPv2-TC|
-             |SNMPv2-CONF|
-             RFC1213-MIB)
+            (|RIPv2-MIB| |SNMPv2-SMI| |SNMPv2-TC| |SNMPv2-CONF|)
             (OSPF-TRAP-MIB |SNMPv2-SMI| |SNMPv2-CONF| OSPF-MIB)
-            (OSPF-MIB
-             |SNMPv2-SMI|
-             |SNMPv2-TC|
-             |SNMPv2-CONF|
-             RFC1213-MIB)
+            (OSPF-MIB |SNMPv2-SMI| |SNMPv2-TC| |SNMPv2-CONF|)
             (NOTIFICATION-LOG-MIB
              |SNMPv2-SMI|
              |SNMPv2-TC|
@@ -196,7 +187,7 @@
              |SNMPv2-MIB|
              SNMP-TARGET-MIB
              SNMP-FRAMEWORK-MIB)
-            (BRIDGE-MIB RFC1155-SMI RFC1213-MIB RFC-1215)
+            (BRIDGE-MIB SNMPV2-SMI)
             (BGP4-MIB |SNMPv2-SMI| |SNMPv2-CONF|)
             (AGENTX-MIB
              |SNMPv2-SMI|

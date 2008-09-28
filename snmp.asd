@@ -18,7 +18,7 @@
 
 (defsystem snmp
   :description "Simple Network Manangement Protocol"
-  :version "5.11"
+  :version "5.12"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
   :depends-on (:asn.1
 	       :ironclad
