@@ -14,6 +14,13 @@
             (LISP-ALLEGRO-MIB |SNMPv2-SMI| LISP-MIB)
             (LISP-LISPWORKS-MIB |SNMPv2-SMI| LISP-MIB)
             (LISP-MIB |SNMPv2-SMI|)
+            (UDP-MIB |SNMPv2-SMI| |SNMPv2-CONF| INET-ADDRESS-MIB)
+            (UCD-IPFILTER-MIB |SNMPv2-SMI| UCD-SNMP-MIB)
+            (UCD-SNMP-MIB |SNMPv2-SMI| |SNMPv2-TC|)
+            (UCD-IPFWACC-MIB |SNMPv2-SMI| |SNMPv2-TC| UCD-SNMP-MIB)
+            (UCD-DLMOD-MIB |SNMPv2-SMI| |SNMPv2-TC| UCD-SNMP-MIB)
+            (UCD-DISKIO-MIB |SNMPv2-SMI| |SNMPv2-TC| UCD-SNMP-MIB)
+            (UCD-DEMO-MIB |SNMPv2-SMI| UCD-SNMP-MIB)
             (TUNNEL-MIB
              |SNMPv2-SMI|
              |SNMPv2-TC|
@@ -22,31 +29,7 @@
              IPV6-FLOW-LABEL-MIB
              IF-MIB
              |IANAifType-MIB|)
-            (MTA-MIB
-             |SNMPv2-SMI|
-             |SNMPv2-TC|
-             |SNMPv2-CONF|
-             SNMP-FRAMEWORK-MIB
-             NETWORK-SERVICES-MIB)
-            (NETWORK-SERVICES-MIB
-             |SNMPv2-SMI|
-             |SNMPv2-TC|
-             |SNMPv2-CONF|
-             SNMP-FRAMEWORK-MIB)
-            (IPV6-FLOW-LABEL-MIB |SNMPv2-SMI| |SNMPv2-TC|)
-            (UCD-SNMP-MIB-OLD
-             UCD-SNMP-MIB
-             |SNMPv2-SMI|
-             |SNMPv2-TC|
-             |SNMPv2-SMI|)
-            (UCD-IPFILTER-MIB |SNMPv2-SMI| UCD-SNMP-MIB)
-            (UCD-SNMP-MIB |SNMPv2-SMI| |SNMPv2-TC|)
-            (UCD-IPFWACC-MIB |SNMPv2-SMI| |SNMPv2-TC| UCD-SNMP-MIB)
-            (UCD-DLMOD-MIB |SNMPv2-SMI| |SNMPv2-TC| UCD-SNMP-MIB)
-            (UCD-DISKIO-MIB |SNMPv2-SMI| |SNMPv2-TC| UCD-SNMP-MIB)
-            (UCD-DEMO-MIB |SNMPv2-SMI| UCD-SNMP-MIB)
             (TRANSPORT-ADDRESS-MIB |SNMPv2-SMI| |SNMPv2-TC|)
-            (UDP-MIB |SNMPv2-SMI| |SNMPv2-CONF| INET-ADDRESS-MIB)
             (TCP-MIB |SNMPv2-SMI| |SNMPv2-CONF| INET-ADDRESS-MIB)
             (SOURCE-ROUTING-MIB SNMPV2-SMI BRIDGE-MIB)
             (SMUX-MIB SNMPV2-SMI)
@@ -59,6 +42,11 @@
              |SNMPv2-TC|
              SNMP-FRAMEWORK-MIB
              |SNMPv2-CONF|)
+            (NETWORK-SERVICES-MIB
+             |SNMPv2-SMI|
+             |SNMPv2-TC|
+             |SNMPv2-CONF|
+             SNMP-FRAMEWORK-MIB)
             (NET-SNMP-MONITOR-MIB
              NET-SNMP-MIB
              |SNMPv2-SMI|
@@ -94,12 +82,19 @@
              |SNMPv2-SMI|
              |SNMPv2-CONF|
              |SNMPv2-TC|)
+            (MTA-MIB
+             |SNMPv2-SMI|
+             |SNMPv2-TC|
+             |SNMPv2-CONF|
+             SNMP-FRAMEWORK-MIB
+             NETWORK-SERVICES-MIB)
             (LM-SENSORS-MIB |SNMPv2-SMI| |SNMPv2-TC| UCD-SNMP-MIB)
             (IPV6-UDP-MIB |SNMPv2-CONF| |SNMPv2-SMI| IPV6-TC)
             (IPV6-TCP-MIB |SNMPv2-CONF| |SNMPv2-SMI| IPV6-TC)
             (IPV6-TC |SNMPv2-SMI| |SNMPv2-TC|)
             (IPV6-MIB |SNMPv2-SMI| |SNMPv2-TC| |SNMPv2-CONF| IPV6-TC)
             (IPV6-ICMP-MIB |SNMPv2-SMI| |SNMPv2-CONF| IPV6-MIB)
+            (IPV6-FLOW-LABEL-MIB |SNMPv2-SMI| |SNMPv2-TC|)
             (IP-MIB
              |SNMPv2-SMI|
              |SNMPv2-TC|

@@ -18,7 +18,7 @@
 
 (defsystem snmp-base
   :description "SNMP Base"
-  :version "5.12"
+  :version "5.13"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
   :depends-on (:asn.1
 	       :ironclad
