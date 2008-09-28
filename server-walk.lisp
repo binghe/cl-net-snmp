@@ -105,7 +105,7 @@
 (defun find-next-entry (oid)
   (declare (type object-id oid))
   (let ((dispatch-table (server-dispatch-table *server*)))
-    (multiple-value-bind (leaf ids) (find-leaf oid)
+    (multiple-value-bind (leaf ids) (oid-find-leaf oid)
       (let ((dispatch-function (gethash leaf dispatch-table)))
         (if (null dispatch-function)
           (find-first (find-next leaf))

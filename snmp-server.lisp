@@ -225,18 +225,6 @@
                      :request-id request-id
                      :variable-bindings vb))))
 
-(defun find-leaf (oid)
-  "Find the leaf node in a oid's all parents"
-  (declare (type object-id oid))
-  (unless (oid-trunk-p oid)
-    (labels ((iter (o acc)
-               (if (oid-leaf-p o)
-                 (values o acc)
-                 (let ((p (oid-parent o))
-                       (v (oid-value o)))
-                   (iter p (cons v acc))))))
-      (iter oid nil))))
-
 (defgeneric process-object-id (oid flag))
 
 (defmethod process-object-id ((oid object-id) (flag (eql :get)))
@@ -250,7 +238,7 @@
            (list oid :no-such-instance)) ; no value
           ((oid-leaf-p oid)
            (list oid :no-such-instance)) ; no value
-          (t (multiple-value-bind (leaf ids) (find-leaf oid)
+          (t (multiple-value-bind (leaf ids) (oid-find-leaf oid)
                (if leaf
                  (let ((handler (gethash leaf dispatch-table)))
                    (if handler

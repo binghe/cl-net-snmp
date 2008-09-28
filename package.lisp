@@ -61,7 +61,7 @@
             ("**;*.*" "SNMP:ASN;**;*.*")))))
 
 (defparameter *version* 5.12)
-(defparameter *server-version* 3.4)
+(defparameter *server-version* 3.5)
 
 (eval-when (:load-toplevel :execute)
   (assert (>= asn.1::*version* 4.8)))
