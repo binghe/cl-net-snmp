@@ -7,8 +7,7 @@
   :description "SNMP Server"
   :version "3.4"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
-  :depends-on (:asn.1 ; version >= 4.1
-               :snmp) ; version >= 5.0
+  :depends-on (:snmp-base)
   :components ((:file "server-condition")
                (:file "snmp-server" :depends-on ("server-condition"))
                (:file "server-walk" :depends-on ("snmp-server"))
