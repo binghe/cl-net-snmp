@@ -60,8 +60,10 @@
           `(("**;*.*.NEWEST" "SNMP:ASN;**;*.*")
             ("**;*.*" "SNMP:ASN;**;*.*")))))
 
-(defparameter *version* 5.13)
-(defparameter *server-version* 3.5)
+(defvar *major-version* 5)
+(defvar *minor-version* 14)
 
 (eval-when (:load-toplevel :execute)
-  (assert (>= asn.1::*version* 4.8)))
+  (assert (or (> asn.1::*major-version* 4)
+              (and (= asn.1::*major-version* 4)
+                   (>= asn.1::*minor-version* 10)))))
