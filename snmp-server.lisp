@@ -246,8 +246,10 @@
              (if handler
                (list oid (funcall handler *server* t))
                (list oid :no-such-instance))))
-          ((oid-trunk-p oid)) ; no value
-          ((oid-leaf-p oid)) ; no value
+          ((oid-trunk-p oid)
+           (list oid :no-such-instance)) ; no value
+          ((oid-leaf-p oid)
+           (list oid :no-such-instance)) ; no value
           (t (multiple-value-bind (leaf ids) (find-leaf oid)
                (if leaf
                  (let ((handler (gethash leaf dispatch-table)))
