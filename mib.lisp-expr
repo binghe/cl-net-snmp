@@ -67,10 +67,7 @@
   :DEPENDS-ON
   ("snmpv2-smi" "snmp-framework-mib" "snmpv2-conf" "snmpv2-tc"))
  (:FILE "bgp4-mib" :DEPENDS-ON ("snmpv2-smi" "snmpv2-conf"))
- (:FILE
-  "bridge-mib"
-  :DEPENDS-ON
-  ("rfc1155-smi" "rfc1213-mib" "rfc-1215"))
+ (:FILE "bridge-mib" :DEPENDS-ON ("snmpv2-smi"))
  (:FILE
   "disman-event-mib"
   :DEPENDS-ON
@@ -241,7 +238,7 @@
  (:FILE
   "ospf-mib"
   :DEPENDS-ON
-  ("snmpv2-smi" "snmpv2-tc" "snmpv2-conf" "rfc1213-mib"))
+  ("snmpv2-smi" "snmpv2-tc" "snmpv2-conf"))
  (:FILE
   "ospf-trap-mib"
   :DEPENDS-ON
@@ -249,13 +246,13 @@
  (:FILE
   "ripv2-mib"
   :DEPENDS-ON
-  ("snmpv2-smi" "snmpv2-tc" "snmpv2-conf" "rfc1213-mib"))
+  ("snmpv2-smi" "snmpv2-tc" "snmpv2-conf"))
  (:FILE
   "rmon-mib"
   :DEPENDS-ON
   ("snmpv2-smi" "snmpv2-tc" "snmpv2-conf"))
- (:FILE "smux-mib" :DEPENDS-ON ("rfc1155-smi"))
- (:FILE "source-routing-mib" :DEPENDS-ON ("rfc1155-smi" "bridge-mib"))
+ (:FILE "smux-mib" :DEPENDS-ON ("snmpv2-smi"))
+ (:FILE "source-routing-mib" :DEPENDS-ON ("snmpv2-smi" "bridge-mib"))
  (:FILE
   "tcp-mib"
   :DEPENDS-ON
@@ -284,9 +281,6 @@
   "ucd-snmp-mib-old"
   :DEPENDS-ON
   ("ucd-snmp-mib" "snmpv2-smi" "snmpv2-tc" "snmpv2-smi"))
- (:FILE "rfc-1215")
- (:FILE "rfc1155-smi")
- (:FILE "rfc1213-mib" :DEPENDS-ON ("rfc1155-smi"))
  (:FILE "ipv6-flow-label-mib" :DEPENDS-ON ("snmpv2-smi" "snmpv2-tc"))
  (:FILE
   "network-services-mib"
