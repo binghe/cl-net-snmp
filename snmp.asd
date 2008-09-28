@@ -7,4 +7,6 @@
   :description "Simple Network Management Protocol"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
   :depends-on (:snmp-client
-	       :snmp-server))
+	       :snmp-server
+	       #+(and lispworks capi)
+	       :snmp-ui))
