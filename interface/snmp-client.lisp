@@ -21,4 +21,5 @@
    :title "SNMP Client Utility"))
 
 (defun snmp-client ()
+  (asn.1::make-switched-modules)
   (capi:display (make-instance 'snmp-client)))

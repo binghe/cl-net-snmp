@@ -168,6 +168,7 @@
   "ip-mib"
   :DEPENDS-ON
   ("snmpv2-smi" "snmpv2-tc" "snmpv2-conf" "inet-address-mib" "if-mib"))
+ (:FILE "ipv6-flow-label-mib" :DEPENDS-ON ("snmpv2-smi" "snmpv2-tc"))
  (:FILE
   "ipv6-icmp-mib"
   :DEPENDS-ON
@@ -189,6 +190,14 @@
   "lm-sensors-mib"
   :DEPENDS-ON
   ("snmpv2-smi" "snmpv2-tc" "ucd-snmp-mib"))
+ (:FILE
+  "mta-mib"
+  :DEPENDS-ON
+  ("snmpv2-smi"
+   "snmpv2-tc"
+   "snmpv2-conf"
+   "snmp-framework-mib"
+   "network-services-mib"))
  (:FILE
   "net-snmp-agent-mib"
   :DEPENDS-ON
@@ -232,6 +241,10 @@
   :DEPENDS-ON
   ("net-snmp-mib" "snmpv2-smi" "snmpv2-tc"))
  (:FILE
+  "network-services-mib"
+  :DEPENDS-ON
+  ("snmpv2-smi" "snmpv2-tc" "snmpv2-conf" "snmp-framework-mib"))
+ (:FILE
   "notification-log-mib"
   :DEPENDS-ON
   ("snmpv2-smi" "snmpv2-tc" "snmp-framework-mib" "snmpv2-conf"))
@@ -257,11 +270,17 @@
   "tcp-mib"
   :DEPENDS-ON
   ("snmpv2-smi" "snmpv2-conf" "inet-address-mib"))
- (:FILE
-  "udp-mib"
-  :DEPENDS-ON
-  ("snmpv2-smi" "snmpv2-conf" "inet-address-mib"))
  (:FILE "transport-address-mib" :DEPENDS-ON ("snmpv2-smi" "snmpv2-tc"))
+ (:FILE
+  "tunnel-mib"
+  :DEPENDS-ON
+  ("snmpv2-smi"
+   "snmpv2-tc"
+   "snmpv2-conf"
+   "inet-address-mib"
+   "ipv6-flow-label-mib"
+   "if-mib"
+   "ianaiftype-mib"))
  (:FILE "ucd-demo-mib" :DEPENDS-ON ("snmpv2-smi" "ucd-snmp-mib"))
  (:FILE
   "ucd-diskio-mib"
@@ -278,32 +297,9 @@
  (:FILE "ucd-snmp-mib" :DEPENDS-ON ("snmpv2-smi" "snmpv2-tc"))
  (:FILE "ucd-ipfilter-mib" :DEPENDS-ON ("snmpv2-smi" "ucd-snmp-mib"))
  (:FILE
-  "ucd-snmp-mib-old"
+  "udp-mib"
   :DEPENDS-ON
-  ("ucd-snmp-mib" "snmpv2-smi" "snmpv2-tc" "snmpv2-smi"))
- (:FILE "ipv6-flow-label-mib" :DEPENDS-ON ("snmpv2-smi" "snmpv2-tc"))
- (:FILE
-  "network-services-mib"
-  :DEPENDS-ON
-  ("snmpv2-smi" "snmpv2-tc" "snmpv2-conf" "snmp-framework-mib"))
- (:FILE
-  "mta-mib"
-  :DEPENDS-ON
-  ("snmpv2-smi"
-   "snmpv2-tc"
-   "snmpv2-conf"
-   "snmp-framework-mib"
-   "network-services-mib"))
- (:FILE
-  "tunnel-mib"
-  :DEPENDS-ON
-  ("snmpv2-smi"
-   "snmpv2-tc"
-   "snmpv2-conf"
-   "inet-address-mib"
-   "ipv6-flow-label-mib"
-   "if-mib"
-   "ianaiftype-mib"))
+  ("snmpv2-smi" "snmpv2-conf" "inet-address-mib"))
  (:FILE "lisp-mib" :DEPENDS-ON ("snmpv2-smi"))
  (:FILE "lisp-lispworks-mib" :DEPENDS-ON ("snmpv2-smi" "lisp-mib"))
  (:FILE "lisp-allegro-mib" :DEPENDS-ON ("snmpv2-smi" "lisp-mib"))
