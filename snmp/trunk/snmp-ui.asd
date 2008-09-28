@@ -11,5 +11,5 @@
   :version "1.0"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
   :depends-on (:snmp-client)
-  :components ((:module "gui"
+  :components ((:module "interface"
 	        :components ((:file "snmp-client")))))
