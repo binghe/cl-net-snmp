@@ -1,0 +1,11 @@
+ASN.1 41 > (oid "sys.1")
+
+Error: Unknown object id: sys, possible symbol: system
+  1 (continue) Use possible value: system
+  2 (abort) Return to level 0.
+  3 Return to top loop level 0.
+
+Type :b for backtrace, :c <option number> to proceed,  or :? for other options
+
+ASN.1 42 : 1 > :c 1
+#<OBJECT-ID SNMPv2-MIB::sysDescr (1) [0]>

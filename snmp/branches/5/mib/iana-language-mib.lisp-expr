@@ -1,0 +1,4 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from MIB:NET-SNMP;IANA-LANGUAGE-MIB.TXT
+
+(iana-language-mib |SNMPv2-SMI|)

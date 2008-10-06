@@ -1,0 +1,9 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from MIB:NET-SNMP;SNMP-PROXY-MIB.TXT
+
+(snmp-proxy-mib
+ |SNMPv2-SMI|
+ |SNMPv2-TC|
+ snmp-framework-mib
+ snmp-target-mib
+ |SNMPv2-CONF|)
