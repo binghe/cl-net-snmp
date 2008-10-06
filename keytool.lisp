@@ -23,8 +23,6 @@
   (with-slots (password-length) instance
     (setf password-length (length (ku-password instance)))))
 
-(defmethod stream-element-type ((stream ku-stream)) '(unsigned-byte 8))
-
 (defmethod stream-read-byte ((stream ku-stream))
   (with-slots (password password-length password-position stream-position) stream
     (if (= stream-position +usm-length-expanded-passphrase+) :eof
