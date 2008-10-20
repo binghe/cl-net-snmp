@@ -4,7 +4,7 @@
 (in-package :asdf)
 
 (defsystem snmp-client
-  :description "SNMP Client"
+  :description "High-level SNMP Client"
   :version "1.0"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
   :depends-on (:snmp-base)

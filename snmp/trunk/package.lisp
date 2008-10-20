@@ -6,7 +6,7 @@
 (defpackage snmp
   (:use #+genera :future-common-lisp
         #-genera :common-lisp
-        :trivial-gray-streams
+	#-scl :trivial-gray-streams
         :portable-threads
         :usocket
         :asn.1)
@@ -39,7 +39,16 @@
            #:snmp-trap
            #:snmp-walk
            #:update-mib
-           #:with-open-session))
+           #:with-open-session)
+  (:import-from :usocket
+           #:rtt-rtocalc
+           #:rtt-minmax
+           #:rtt-init
+           #:rtt-ts
+           #:rtt-start
+           #:rtt-stop
+           #:rtt-timeout
+           #:rtt-newpack))
 
 (in-package :snmp)
 
