@@ -17,7 +17,7 @@
   ((socket            :type datagram-usocket
                       :accessor socket-of
                       :initarg :socket)
-   (host              :type string
+   (host              :type (or string integer)
                       :accessor host-of
                       :initarg :host)
    (port              :type integer
@@ -113,23 +113,24 @@
 (eval-when (:load-toplevel :execute)
   (mapcar #'(lambda (x)
 	      (setf (gethash (car x) *snmp-version-table*) (cdr x)))
-	  `((:v1         . ,+snmp-version-1+)
-	    (:v2c        . ,+snmp-version-2c+)
-	    (:v3         . ,+snmp-version-3+)
-	    (:version-1  . ,+snmp-version-1+)
-	    (:version-2c . ,+snmp-version-2c+)
-	    (:version-3  . ,+snmp-version-3+)
-            (,+snmp-version-1+ . ,+snmp-version-1+)
+	  `((:v1                . ,+snmp-version-1+)
+	    (:v2c               . ,+snmp-version-2c+)
+	    (:v3                . ,+snmp-version-3+)
+	    (:version-1         . ,+snmp-version-1+)
+	    (:version-2c        . ,+snmp-version-2c+)
+	    (:version-3         . ,+snmp-version-3+)
+            (,+snmp-version-1+  . ,+snmp-version-1+)
             (,+snmp-version-2c+ . ,+snmp-version-2c+)
-            (,+snmp-version-3+ . ,+snmp-version-3+))))
+            (,+snmp-version-3+  . ,+snmp-version-3+))))
 
 (defun snmp-connect (host port)
   (declare (ignore host port))
-  (socket-connect/udp nil nil
-                      :element-type '(unsigned-byte 8)
-                      ;; On Win32, we must bind it to set socketopt
-                      #+win32 :local-port #+win32 0
-                      :stream nil))
+  (socket-connect nil nil
+                  :protocol :datagram
+                  :element-type '(unsigned-byte 8)
+                  ;; On Win32, we must bind it to set socketopt
+                  #+win32 #+win32
+                  :local-port *auto-port*))
 
 (defun open-session (host &key (port *default-snmp-port*)
                                (version *default-snmp-version*)

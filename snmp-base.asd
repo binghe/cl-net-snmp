@@ -22,7 +22,8 @@
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
   :depends-on (:asn.1
 	       :ironclad
-               :usocket-udp
+               :usocket ; experimental-udp branch
+               #+(and lispworks win32) :lispworks-udp
                :portable-threads) ; GBBopen's portable-threads
   :components ((:file "package")
 	       (:file "constants"   :depends-on ("package"))
