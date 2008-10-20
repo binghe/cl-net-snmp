@@ -59,11 +59,15 @@
 
 (defclass snmp-server (snmp-agent-state-mixin snmp-vacm-mixin)
   ((process        :accessor server-process
+                   :type (satisfies threadp)
+                   :initarg :process
                    :documentation "Server process/thread")
    (address        :accessor server-address
+                   :type (or string integer)
                    :initarg :address
                    :documentation "Server listening address")
    (port           :accessor server-port
+                   :type integer
                    :initarg :port
                    :documentation "Server listening port")
    (function       :accessor server-function
