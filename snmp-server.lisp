@@ -3,7 +3,7 @@
 
 (in-package :snmp)
 
-(defvar *default-snmp-server-address* nil)
+(defvar *default-snmp-server-address* "0.0.0.0")
 (defvar *default-snmp-server-port*    8161)
 (defvar *default-snmp-server*         nil)
 (defvar *default-dispatch-table*      (make-hash-table))
