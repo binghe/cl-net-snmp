@@ -4,9 +4,10 @@
 (in-package :asdf)
 
 (defsystem snmp-client
-  :description "SNMP Client"
-  :version "1.0"
+  :description "High-level SNMP Client"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
+  :licence "MIT"
+  :version "1.0"
   :depends-on (:snmp-base)
   :components ((:module "client"
 		:components ((:file "table")))))

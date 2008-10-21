@@ -3,13 +3,12 @@
 
 (in-package :asdf)
 
-#-(and lispworks capi)
-(error "SNMP-UI only support LispWorks/CAPI")
-
 (defsystem snmp-ui
-  :description "SNMP UI"
-  :version "1.0"
+  :description "SNMP GUI Utility"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
+  :version "1.0"
+  :licence "MIT"
   :depends-on (:snmp-client)
   :components ((:module "interface"
-	        :components ((:file "snmp-client")))))
+		:components (#+(and lispworks capi)
+			       (:file "lispworks-capi")))))

@@ -10,7 +10,8 @@
 
 ;;; BER Stream: make stream from sequence
 
-(defclass ku-stream (fundamental-binary-input-stream)
+(defclass ku-stream (#-scl fundamental-binary-input-stream
+		     #+scl ext:binary-input-stream)
   ((password :type simple-vector :initarg :password :reader ku-password)
    (password-length :type fixnum :initform 0)
    (password-position :type fixnum :initform 0)
@@ -23,7 +24,8 @@
   (with-slots (password-length) instance
     (setf password-length (length (ku-password instance)))))
 
-(defmethod stream-read-byte ((stream ku-stream))
+(defmethod #-scl stream-read-byte #+scl ext:stream-read-byte
+	   ((stream ku-stream))
   (with-slots (password password-length password-position stream-position) stream
     (if (= stream-position +usm-length-expanded-passphrase+) :eof
       (prog1 (svref password password-position)
