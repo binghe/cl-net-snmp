@@ -17,9 +17,10 @@
     (read s)))
 
 (defsystem snmp-base
-  :description "SNMP Base"
-  :version "5.14"
+  :description "SNMP Base System"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
+  :version "5.14"
+  :licence "MIT"
   :depends-on (:asn.1
 	       :ironclad
                :usocket ; experimental-udp branch
