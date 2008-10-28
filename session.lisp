@@ -126,8 +126,6 @@
 (defun snmp-connect (host port)
   (declare (ignore host port))
   (socket-connect/udp nil nil
-                      :stream nil
-                      :element-type '(unsigned-byte 8)
                       ;; On Win32, we must bind it to set socketopt
                       #+win32 #+win32
                       :local-port *auto-port*))

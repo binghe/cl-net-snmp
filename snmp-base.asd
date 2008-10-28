@@ -19,7 +19,7 @@
 (defsystem snmp-base
   :description "SNMP Base System"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
-  :version "5.14"
+  :version "5.15"
   :licence "MIT"
   :depends-on (:asn.1
 	       :ironclad
@@ -39,7 +39,6 @@
                (:file "snmp-get"    :depends-on ("request"))
                (:file "snmp-walk"   :depends-on ("request" "snmp-smi"))
                (:file "snmp-trap"   :depends-on ("report" "mib"))
-               (:file "worker"      :depends-on ("session"))
 	       #+lispworks
                (:file "update-mib"  :depends-on ("mib"))
                (:file "mib-depend"  :depends-on ("package"))
