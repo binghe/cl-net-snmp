@@ -3,7 +3,7 @@
 
 (in-package :snmp)
 
-(defgeneric send-snmp-message (session message &key))
+(defgeneric send-snmp-message (session message &key &allow-other-keys))
 
 (defmethod send-snmp-message ((session v1-session) (message v1-message) &key (receive t))
   "this new send-snmp-message is just a interface,
