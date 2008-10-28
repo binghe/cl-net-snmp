@@ -59,6 +59,7 @@
 
 (defclass snmp-server (snmp-agent-state-mixin snmp-vacm-mixin)
   ((process        :accessor server-process
+		   #-sbcl #-sbcl ;; bugs in sbcl
                    :type (satisfies threadp)
                    :initarg :process
                    :documentation "Server process/thread")

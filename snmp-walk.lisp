@@ -2,7 +2,7 @@
 
 (in-package :snmp)
 
-(defgeneric snmp-walk (object vars &key)
+(defgeneric snmp-walk (object vars &key &allow-other-keys)
   (:documentation "SNMP Walk, only useful for debug"))
 
 (defmethod snmp-walk ((host string) (vars list) &key context)
