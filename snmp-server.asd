@@ -13,7 +13,6 @@
                (:file "snmp-server" :depends-on ("server-condition"))
                (:file "server-walk" :depends-on ("snmp-server"))
                (:file "server-base" :depends-on ("server-walk"))
-               (:file "trap-server" :depends-on ("snmp-server"))
                (:module "server"
                 :depends-on ("server-base")
                 :components ((:file "core")

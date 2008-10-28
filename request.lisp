@@ -3,7 +3,7 @@
 
 (in-package :snmp)
 
-(defgeneric snmp-request (session request bindings &key context)
+(defgeneric snmp-request (session request bindings &key &allow-other-keys)
   (:documentation "General SNMP request operation"))
 
 (defmethod snmp-request ((session session) (request symbol) (bindings list)
