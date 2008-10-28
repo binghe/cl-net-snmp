@@ -1,0 +1,4 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from MIB:NET-SNMP;IPV6-UDP-MIB.TXT
+
+(ipv6-udp-mib |SNMPv2-CONF| |SNMPv2-SMI| ipv6-tc)

@@ -1,0 +1,14 @@
+snmp-5.0
+	Portable SNMP server
+
+snmp-5.5, snmp-server-3.0, asn.1-4.5
+	Full GET-NEXT support in SNMP Server, new lispFeatureTable and
+	lispPackageTable added.
+
+snmp-5.7, snmp-server-3.2
+	MIB change: add support for lispModuleTable
+
+snmp-5.11
+	SNMPv3 fix: re-send v3 message with corrent engine-id/time when
+	got a report on	normal v3 communication. This is very important
+        for long-lived v3 session (cross remote agent restart).

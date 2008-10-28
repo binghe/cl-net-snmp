@@ -1,0 +1,4 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from MIB:NET-SNMP;UCD-DISKIO-MIB.TXT
+
+(ucd-diskio-mib |SNMPv2-SMI| |SNMPv2-TC| ucd-snmp-mib)

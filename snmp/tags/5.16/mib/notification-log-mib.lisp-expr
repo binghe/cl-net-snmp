@@ -1,0 +1,8 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from MIB:NET-SNMP;NOTIFICATION-LOG-MIB.TXT
+
+(notification-log-mib
+ |SNMPv2-SMI|
+ |SNMPv2-TC|
+ snmp-framework-mib
+ |SNMPv2-CONF|)

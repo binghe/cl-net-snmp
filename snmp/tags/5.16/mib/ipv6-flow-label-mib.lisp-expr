@@ -1,0 +1,4 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from MIB:NET-SNMP;IPV6-FLOW-LABEL-MIB.TXT
+
+(ipv6-flow-label-mib |SNMPv2-SMI| |SNMPv2-TC|)

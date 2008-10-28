@@ -1,0 +1,9 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from MIB:NET-SNMP;DISMAN-EXPRESSION-MIB.TXT
+
+(disman-expression-mib
+ |SNMPv2-SMI|
+ |SNMPv2-TC|
+ |SNMPv2-MIB|
+ snmp-framework-mib
+ |SNMPv2-CONF|)
