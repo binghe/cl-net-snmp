@@ -6,7 +6,7 @@
 (defpackage snmp
   (:use #+genera :future-common-lisp
         #-genera :common-lisp
-	#-scl :trivial-gray-streams
+	:trivial-gray-streams
         :portable-threads
         :usocket
         :asn.1)
