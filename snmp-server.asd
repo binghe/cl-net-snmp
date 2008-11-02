@@ -11,6 +11,7 @@
   :depends-on (:snmp-base)
   :components ((:file "server-condition")
                (:file "snmp-server" :depends-on ("server-condition"))
+               (:file "server-vacm" :depends-on ("snmp-server"))
                (:file "server-walk" :depends-on ("snmp-server"))
                (:file "server-base" :depends-on ("server-walk"))
                (:file "trap-server" :depends-on ("snmp-server"))
