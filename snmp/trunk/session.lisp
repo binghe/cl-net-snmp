@@ -127,7 +127,6 @@
   (declare (ignore host port))
   (socket-connect nil nil
                   :protocol :datagram
-                  :element-type '(unsigned-byte 8)
                   ;; On Win32, we must bind it to set socketopt
                   #+win32 #+win32
                   :local-port *auto-port*))

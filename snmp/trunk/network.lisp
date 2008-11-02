@@ -3,7 +3,7 @@
 
 (in-package :snmp)
 
-(defgeneric send-snmp-message (session message &key))
+(defgeneric send-snmp-message (session message &key &allow-other-keys))
 
 (defmethod send-snmp-message ((session v1-session) (message v1-message) &key (receive t))
   "this new send-snmp-message is just a interface,
@@ -11,7 +11,7 @@
   (cond (receive ; normal message
          #-(and lispworks win32)
          (socket-sync (socket-of session) message
-                      :address (host-of session)
+                      :host (host-of session)
                       :port (port-of session)
                       :encode-function #'(lambda (x)
                                            (values (coerce (ber-encode x) 'octets)
@@ -35,7 +35,7 @@
         (t (let* ((data (coerce (ber-encode message) 'octets))
                   (data-length (length data)))
              (socket-send (socket-of session) data data-length
-                          :address (host-of session)
+                          :host (host-of session)
                           :port (port-of session))))))
 
 (defmethod send-snmp-message ((session v3-session) (message v3-message) &key (receive t))
@@ -51,7 +51,7 @@
                   (send ()
                     #-(and lispworks win32)
                     (socket-sync (socket-of session) message
-                                 :address (host-of session)
+                                 :host (host-of session)
                                  :port (port-of session)
                                  :encode-function #'encode-function
                                  :decode-function #'decode-function
@@ -72,5 +72,5 @@
         (t (let* ((data (coerce (ber-encode message) 'octets))
                   (data-length (length data)))
              (socket-send (socket-of session) data data-length
-                          :address (host-of session)
+                          :host (host-of session)
                           :port (port-of session))))))
