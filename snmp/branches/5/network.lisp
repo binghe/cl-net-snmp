@@ -9,7 +9,7 @@
   "this new send-snmp-message is just a interface,
    all UDP retransmit code are moved into usocket-udp project."
   (cond (receive ; normal message
-         #-(and lispworks win32)
+         #-(and lispworks mswindows)
          (socket-sync (socket-of session) message
                       :host (host-of session)
                       :port (port-of session)
@@ -20,7 +20,7 @@
                                            (let ((m (decode-message session x)))
                                              (values m (request-id-of (pdu-of m)))))
                       :max-receive-length +max-snmp-packet-size+)
-         #+(and lispworks win32)
+         #+(and lispworks mswindows)
          (comm:sync-message (socket (socket-of session)) ; raw socket fd
                             message
                             (host-of session)
@@ -49,14 +49,14 @@
                     (let ((m (decode-message session x)))
                       (values m (msg-id-of m))))
                   (send ()
-                    #-(and lispworks win32)
+                    #-(and lispworks mswindows)
                     (socket-sync (socket-of session) message
                                  :host (host-of session)
                                  :port (port-of session)
                                  :encode-function #'encode-function
                                  :decode-function #'decode-function
                                  :max-receive-length +max-snmp-packet-size+)
-                    #+(and lispworks win32)
+                    #+(and lispworks mswindows)
                     (comm:sync-message (socket (socket-of session)) ; raw socket fd
                                        message
                                        (host-of session)

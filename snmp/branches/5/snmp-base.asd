@@ -24,6 +24,8 @@
   :depends-on (:asn.1
 	       :ironclad
                :usocket-udp
+	       #+(and lispworks mswindows)
+	       :lispworks-udp
                :portable-threads) ; GBBopen's portable-threads
   :components ((:file "package")
 	       (:file "constants"   :depends-on ("package"))
