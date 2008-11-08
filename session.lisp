@@ -128,7 +128,7 @@
   (socket-connect nil nil
                   :protocol :datagram
                   ;; On Win32, we must bind it to set socketopt
-                  #+win32 #+win32
+                  #+mswindows #+mswindows
                   :local-port *auto-port*))
 
 (defun open-session (host &key (port *default-snmp-port*)
