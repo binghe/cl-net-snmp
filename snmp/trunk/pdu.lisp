@@ -62,14 +62,6 @@
   (unless (slot-boundp pdu 'request-id)
     (setf (slot-value pdu 'request-id) (generate-request-id pdu))))
 
-;;; generate error status
-(defconstant +no-error+     0)
-(defconstant +too-big+      1)
-(defconstant +no-such-name+ 2)
-(defconstant +bad-value+    3)
-(defconstant +read-only+    4)
-(defconstant +gen-err+      5)
-
 (defclass pdu (common-pdu)
   ((error-status :type (integer 0 5)
                  :accessor error-status-of
