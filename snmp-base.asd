@@ -24,7 +24,7 @@
   :depends-on (:asn.1
 	       :ironclad
                :usocket ; experimental-udp branch
-               :trivial-gray-streams
+               #-scl :trivial-gray-streams
                #+(and lispworks win32)
                :lispworks-udp
                :portable-threads) ; GBBopen's portable-threads
