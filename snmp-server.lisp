@@ -59,7 +59,6 @@
 
 (defclass snmp-server (snmp-agent-state-mixin snmp-vacm-mixin)
   ((process        :accessor server-process
-		   #-sbcl #-sbcl ;; bugs in sbcl
                    :type (satisfies threadp)
                    :initarg :process
                    :documentation "Server process/thread")
@@ -105,7 +104,7 @@
                                        &rest initargs &key &allow-other-keys)
   (declare (ignore initargs))
   (setf (server-process instance)
-        #+(and lispworks win32)
+        #+(and lispworks mswindows)
         (comm:start-udp-server :process-name (format nil "SNMP Server at ~A:~D"
                                                      (server-address instance)
                                                      (server-port instance))
@@ -113,7 +112,7 @@
                                :arguments (list instance)
                                :address (server-address instance)
                                :service (server-port instance))
-        #-(and lispworks win32)
+        #-(and lispworks mswindows)
         (spawn-thread (format nil "SNMP Server at ~A:~D"
                               (server-address instance)
                               (server-port instance))
@@ -137,9 +136,9 @@
 (defun disable-snmp-service ()
   "Kill server thread and clear variable"
   (when *default-snmp-server*
-    #+(and lispworks win32)
+    #+(and lispworks mswindows)
     (comm:stop-udp-server (server-process *default-snmp-server*) :wait t)
-    #-(and lispworks win32)
+    #-(and lispworks mswindows)
     (kill-thread (server-process *default-snmp-server*))
     ;; clear variable
     (setf *default-snmp-server* nil)))

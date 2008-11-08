@@ -5,7 +5,7 @@
 
 (load-all-patches)
 
-#-cocoa
+#+linux
 (require "capi-ps-lib")
 
 ;;; Load the "application".
@@ -14,11 +14,8 @@
 ;;; Load SNMP Package
 (asdf:setup :snmp)
 
-;;; Where we are going to deliver the image. 
-(defvar *delivered-image-name* #p"SNMP:DIST;MIBROWSER.BIN")
-
-;;; Deliver.
-(deliver 'asn.1:mibrowser *delivered-image-name* 5
+;;; Deliver the MIB Browser
+(deliver 'asn.1:mibrowser #p"SNMP:DIST;MIBROWSER.BIN" 5
          :interface :capi
          :keep-pretty-printer t
          :keep-symbol-names '(capi:graph-pane
