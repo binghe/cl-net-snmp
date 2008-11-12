@@ -5,7 +5,7 @@
 
 (defun server-test-1 ()
   (with-open-snmp-server ()
-    (with-open-session (s (or *default-snmp-server-address* "localhost")
+    (with-open-session (s "localhost"
                           :port *default-snmp-server-port*
                           :version :2c
                           :community "public") ; actually community could be any string
@@ -13,7 +13,7 @@
 
 (defun server-test-2 ()
   (with-open-snmp-server ()
-    (with-open-session (s (or *default-snmp-server-address* "localhost")
+    (with-open-session (s "localhost"
                           :port *default-snmp-server-port*
                           :version :2c
                           :community "public") ; actually community could be any string
@@ -22,7 +22,7 @@
 ;; This cannot work in snmp-server-3.0, fixed in 3.1
 (defun server-test-3 ()
   (with-open-snmp-server ()
-    (with-open-session (s (or *default-snmp-server-address* "localhost")
+    (with-open-session (s "localhost"
                           :port *default-snmp-server-port*
                           :version :2c
                           :community "public") ; actually community could be any string
