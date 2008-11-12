@@ -84,6 +84,5 @@
       (assert (or (> usocket::*major-version* 2)
                   (and (= usocket::*major-version* 2)
                        (>= usocket::*minor-version* 3))))
-    (if (and (asdf:find-system :usocket-udp)
-             (fboundp 'usocket::socket-send))
-        (error "Please use a newer version of USOCKET-UDP package (>= 2.3)"))))
+    (unless (fboundp 'usocket::socket-send)
+        (error "Please use USOCKET-UDP package (>= 2.3) or USOCKET with UDP support (0.5.x)"))))
