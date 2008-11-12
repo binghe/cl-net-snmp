@@ -8,6 +8,9 @@
 
 (in-package :snmp-system)
 
+#+(and lispworks4 win32)
+(pushnew :mswindows *features*)
+
 (defparameter *mib.lisp-expr*
   (with-open-file
       (s (merge-pathnames (make-pathname :name "mib"
@@ -25,7 +28,7 @@
 	       :ironclad
                :usocket ; experimental-udp branch
                #-scl :trivial-gray-streams
-               #+(and lispworks win32)
+               #+(and lispworks mswindows)
                :lispworks-udp
                :portable-threads) ; GBBopen's portable-threads
   :components ((:file "package")
