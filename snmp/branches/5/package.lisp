@@ -39,16 +39,7 @@
            #:snmp-trap
            #:snmp-walk
            #:update-mib
-           #:with-open-session)
-  (:import-from :usocket
-           #:rtt-rtocalc
-           #:rtt-minmax
-           #:rtt-init
-           #:rtt-ts
-           #:rtt-start
-           #:rtt-stop
-           #:rtt-timeout
-           #:rtt-newpack))
+           #:with-open-session))
 
 (in-package :snmp)
 
@@ -70,7 +61,7 @@
             ("**;*.*" "SNMP:ASN;**;*.*")))))
 
 (defparameter *major-version* 5)
-(defparameter *minor-version* 16)
+(defparameter *minor-version* 17)
 
 (eval-when (:load-toplevel :execute)
   (if (and (boundp 'asn.1::*major-version*)
@@ -84,6 +75,5 @@
       (assert (or (> usocket::*major-version* 2)
                   (and (= usocket::*major-version* 2)
                        (>= usocket::*minor-version* 3))))
-    (if (and (asdf:find-system :usocket-udp)
-             (fboundp 'usocket::socket-send))
-        (error "Please use a newer version of USOCKET-UDP package"))))
+    (if (fboundp 'usocket::socket-send)
+	(error "Please use a newer version of USOCKET-UDP package"))))

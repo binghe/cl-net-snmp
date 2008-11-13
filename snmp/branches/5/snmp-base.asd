@@ -19,7 +19,7 @@
 (defsystem snmp-base
   :description "SNMP Base System"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
-  :version "5.16"
+  :version "5.17"
   :licence "MIT"
   :depends-on (:asn.1
 	       :ironclad
