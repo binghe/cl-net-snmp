@@ -6,7 +6,7 @@
 (defsystem snmp-server
   :description "SNMP Server"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
-  :version "3.7"
+  :version "3.8"
   :licence "MIT"
   :depends-on (:snmp-base)
   :components ((:file "server-condition")
@@ -22,4 +22,5 @@
                              #+sbcl      (:file "sbcl")
                              #+allegro   (:file "allegro")
                              #+clozure   (:file "clozure")
-                             #+cl-http   (:file "cl-http")))))
+                             #+cl-http   (:file "cl-http")
+                             #+scl       (:file "scl")))))

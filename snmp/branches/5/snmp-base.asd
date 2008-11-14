@@ -35,7 +35,7 @@
                (:file "condition"   :depends-on ("constants"))
 	       (:file "pdu"         :depends-on ("package"))
                (:file "keytool"     :depends-on ("package"))
-               (:file "snmp-smi"    :depends-on ("package"))
+               (:file "snmp-smi"    :depends-on ("constants"))
 	       (:file "session"     :depends-on ("keytool"))
                (:file "message"     :depends-on ("constants" "pdu" "session"))
                (:file "network"     :depends-on ("message" "session"))
