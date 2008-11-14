@@ -3,13 +3,13 @@
 
 (in-package :cl-user)
 
+#+(and lispworks4 win32)
+(pushnew :mswindows *features*)
+
 (defpackage snmp-system
   (:use :common-lisp :asdf))
 
 (in-package :snmp-system)
-
-#+(and lispworks4 win32)
-(pushnew :mswindows *features*)
 
 (defparameter *mib.lisp-expr*
   (with-open-file
@@ -22,7 +22,7 @@
 (defsystem snmp-base
   :description "SNMP Base System"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
-  :version "6.0"
+  :version "6.0-devel"
   :licence "MIT"
   :depends-on (:asn.1
 	       :ironclad

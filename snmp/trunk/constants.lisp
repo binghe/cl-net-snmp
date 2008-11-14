@@ -42,3 +42,24 @@
 (defconstant +error-status-authorization-error+	 16)
 (defconstant +error-status-not-writable+	 17)
 (defconstant +error-status-inconsistent-name+	 18)
+
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (defconstant +smi-no-such-object+   0)
+  (defconstant +smi-no-such-instance+ 1)
+  (defconstant +smi-end-of-mibview+   2))
+
+(defvar *smi-value->symbol-table* (make-hash-table))
+(defvar *smi-symbol->value-table* (make-hash-table))
+
+(defvar *smi-map*
+  `((,+smi-no-such-object+   . :no-such-object)
+    (,+smi-no-such-instance+ . :no-such-instance)
+    (,+smi-end-of-mibview+   . :end-of-mibview)))
+
+(eval-when (:load-toplevel :execute)
+  (mapcar #'(lambda (x)
+	      (setf (gethash (car x) *smi-value->symbol-table*)
+                    (cdr x)
+                    (gethash (cdr x) *smi-symbol->value-table*)
+                    (car x)))
+          *smi-map*))
