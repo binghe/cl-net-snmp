@@ -4,9 +4,7 @@
 (in-package :cl-user)
 
 (defpackage snmp
-  (:use #+genera :future-common-lisp
-        #-genera :common-lisp
-	#-scl :trivial-gray-streams
+  (:use :common-lisp
         :portable-threads
         :usocket
         :asn.1)

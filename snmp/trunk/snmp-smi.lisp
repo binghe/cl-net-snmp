@@ -23,7 +23,6 @@
     (format stream "~A (~D)" (plain-value obj) (value-of obj))))
 
 (defmethod ber-encode ((value smi))
-  (declare (ignore value))
   (concatenate 'vector
                (ber-encode-type 2 0 (value-of value))
                (ber-encode-length 0)))
