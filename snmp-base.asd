@@ -3,7 +3,7 @@
 
 (in-package :cl-user)
 
-#+(lispworks4 win32)
+#+(and lispworks4 win32)
 (pushnew :mswindows *features*)
 
 (defpackage snmp-system
@@ -22,7 +22,7 @@
 (defsystem snmp-base
   :description "SNMP Base System"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
-  :version "5.17"
+  :version "5.18"
   :licence "MIT"
   :depends-on (:asn.1
 	       :ironclad
