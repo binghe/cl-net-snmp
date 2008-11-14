@@ -53,7 +53,7 @@
             (t (find-next-entry oid)))   ; Type 4 or 5
     (if next-oid
       (list next-oid (funcall dispatch-function *server* args))
-      (list oid :end-of-mibview))))
+      (list oid (smi :end-of-mibview)))))
 
 ;;; B -> F
 (defun find-sibling (oid)

@@ -3,44 +3,43 @@
 
 (in-package :snmp)
 
-(defmethod plain-value ((object (eql :end-of-mibview)))
-  (declare (ignore object))
-  :end-of-mibview)
+(defgeneric smi (object))
 
-(defmethod ber-equal ((a (eql :end-of-mibview)) (b (eql :end-of-mibview)))
-  (declare (ignore a b))
-  t)
+(defmethod smi ((value integer))
+  (make-instance 'smi :value value))
 
-(defmethod ber-encode ((value (eql :end-of-mibview)))
+(defmethod smi ((symbol symbol))
+  (let ((value (gethash symbol *smi-symbol->value-table*)))
+    (when value
+      (make-instance 'smi :value value))))
+
+(defclass smi (general-type) ())
+
+(defmethod plain-value ((object smi))
+  (gethash (value-of object) *smi-value->symbol-table*))
+
+(defmethod print-object ((obj smi) stream)
+  (print-unreadable-object (obj stream :type t)
+    (format stream "~A (~D)" (plain-value obj) (value-of obj))))
+
+(defmethod ber-encode ((value smi))
   (declare (ignore value))
   (concatenate 'vector
-               (ber-encode-type 2 0 2)
+               (ber-encode-type 2 0 (value-of value))
                (ber-encode-length 0)))
 
-(defmethod ber-decode-value ((stream stream) (type (eql :end-of-mibview)) length)
-  (declare (type fixnum length) (ignore type))
-  (dotimes (i length :end-of-mibview) (read-byte stream)))
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (defmacro def-smi (symbol value)
+    `(progn
+       (defmethod ber-decode-value ((stream stream) (type (eql ,symbol)) length)
+         (declare (type fixnum length) (ignore type))
+         (dotimes (i length (smi ,symbol))
+           (read-byte stream)))
+       (install-asn.1-type ,symbol 2 0 ,value))))
 
-(eval-when (:load-toplevel :execute)
-  (install-asn.1-type :end-of-mibview 2 0 2))
-
-(defmethod plain-value ((object (eql :no-such-instance)))
-  (declare (ignore object))
-  :no-such-instance)
-
-(defmethod ber-equal ((a (eql :no-such-instance)) (b (eql :no-such-instance)))
-  (declare (ignore a b))
-  t)
-
-(defmethod ber-encode ((value (eql :no-such-instance)))
-  (declare (ignore value))
-  (concatenate 'vector
-               (ber-encode-type 2 0 1)
-               (ber-encode-length 0)))
-
-(defmethod ber-decode-value ((stream stream) (type (eql :no-such-instance)) length)
-  (declare (type fixnum length) (ignore type))
-  (dotimes (i length :no-such-instance) (read-byte stream)))
-
-(eval-when (:load-toplevel :execute)
-  (install-asn.1-type :no-such-instance 2 0 1))
+(macrolet ((install-smi-value ()
+             `(progn
+                ,@(mapcar #'(lambda (x)
+                              `(def-smi ,(cdr x) ,(car x)))
+                          *smi-map*))))
+  (install-smi-value))

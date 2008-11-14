@@ -1,3 +1,4 @@
+;;;; -*- Mode: Lisp -*-
 ;;;; $Id$
 
 (in-package :snmp)
@@ -18,7 +19,8 @@
                         (new-vars (mapcar #'first temp))
                         (new-values (mapcar #'second temp)))
                    (if (or (some #'oid->= new-vars base-vars)
-                           (member :end-of-mibview new-values))
+                           (member (smi :end-of-mibview) new-values
+                                   :test #'ber-equal))
                        (if first-p
                          (snmp-get session vars)
                          (mapcar #'nreverse acc))
