@@ -4,9 +4,7 @@
 (in-package :cl-user)
 
 (defpackage snmp
-  (:use #+genera :future-common-lisp
-        #-genera :common-lisp
-	#-scl :trivial-gray-streams
+  (:use :common-lisp
         :portable-threads
         :usocket
         :asn.1)
@@ -61,7 +59,7 @@
             ("**;*.*" "SNMP:ASN;**;*.*")))))
 
 (defparameter *major-version* 5)
-(defparameter *minor-version* 18)
+(defparameter *minor-version* 19)
 
 (eval-when (:load-toplevel :execute)
   (if (and (boundp 'asn.1::*major-version*)

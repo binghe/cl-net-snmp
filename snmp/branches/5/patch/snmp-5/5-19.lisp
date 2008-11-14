@@ -1,12 +1,8 @@
-;;;; -*- Mode: Lisp -*-
-;;;; $Id$
+;;;; Patch 5.19: use no-stream version of GENERATE-KU to support all CL platform
 
 (in-package :snmp)
 
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (defconstant +usm-length-expanded-passphrase+ #.(* 1024 1024) "1M Bytes")
-  (defconstant +usm-length-ku-hashblock+ 64 "In bytes.")
-  (defconstant +usm-length-p-min+ 8 "In characters."))
+;;; keytool.lisp
 
 (defun generate-ku (key-string &key (hash-type :md5))
   (declare (optimize (speed 3) safety)
@@ -30,9 +26,18 @@
       (ironclad:update-digest digest password-buffer))
     (ironclad:produce-digest digest)))
 
-(defun generate-kul (engine-id ku &key (hash-type :md5))
-  (declare (type octets engine-id ku))
-  (let ((digest (ironclad:make-digest hash-type))
-        (password-buffer (concatenate 'octets ku engine-id ku)))
-    (ironclad:update-digest digest password-buffer)
-    (ironclad:produce-digest digest)))
+;;; report.lisp
+
+(defun snmp-report (session &key context)
+  (declare (type v3-session session))
+  (let ((message (make-instance 'v3-message
+                                :report t
+                                :session session
+                                :context (or context *default-context*)
+                                :pdu (make-instance 'get-request-pdu
+                                                    :variable-bindings #()))))
+    (let ((reply (send-snmp-message session message)))
+      (map 'list #'(lambda (x) (coerce x 'list))
+           (variable-bindings-of (pdu-of reply))))))
+
+(setf *minor-version* 19)

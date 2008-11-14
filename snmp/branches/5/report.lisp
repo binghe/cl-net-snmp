@@ -3,12 +3,12 @@
 
 (in-package :snmp)
 
-(defun snmp-report (session &key (context *default-context*))
+(defun snmp-report (session &key context)
   (declare (type v3-session session))
   (let ((message (make-instance 'v3-message
                                 :report t
                                 :session session
-                                :context context
+                                :context (or context *default-context*)
                                 :pdu (make-instance 'get-request-pdu
                                                     :variable-bindings #()))))
     (let ((reply (send-snmp-message session message)))
