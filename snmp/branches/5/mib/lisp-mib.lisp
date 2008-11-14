@@ -312,3 +312,5 @@
   (:type 'object-identity))
 (defoid |clNetSnmpAgentAllegroCL| (|clNetSnmpAgentOIDs| 9)
   (:type 'object-identity))
+(defoid |clNetSnmpAgentSCL| (|clNetSnmpAgentOIDs| 10)
+  (:type 'object-identity))
