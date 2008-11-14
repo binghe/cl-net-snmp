@@ -8,6 +8,7 @@
                              ASN.1::*MIB-MODULE-DEPENDENCY*)
                     (CDR ASN.1::X)))
           '((LISP-CL-HTTP-MIB |SNMPv2-SMI| LISP-MIB)
+            (LISP-SCL-MIB |SNMPv2-SMI| LISP-MIB)
             (LISP-CLOZURE-MIB |SNMPv2-SMI| LISP-MIB)
             (LISP-SBCL-MIB |SNMPv2-SMI| LISP-MIB)
             (LISP-CMUCL-MIB |SNMPv2-SMI| LISP-MIB)
