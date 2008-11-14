@@ -8,41 +8,7 @@
   (defconstant +usm-length-ku-hashblock+ 64 "In bytes.")
   (defconstant +usm-length-p-min+ 8 "In characters."))
 
-;;; BER Stream: make stream from sequence
-
-(defclass ku-stream (#-scl fundamental-binary-input-stream
-		     #+scl ext:binary-input-stream)
-  ((password :type simple-vector :initarg :password :reader ku-password)
-   (password-length :type fixnum :initform 0)
-   (password-position :type fixnum :initform 0)
-   (stream-position :type fixnum :initform 0))
-  (:documentation "A helper Gray Stream"))
-
-(defmethod initialize-instance :after ((instance ku-stream)
-                                       &rest initargs &key &allow-other-keys)
-  (declare (ignore initargs))
-  (with-slots (password-length) instance
-    (setf password-length (length (ku-password instance)))))
-
-(defmethod #-scl stream-read-byte #+scl ext:stream-read-byte
-	   ((stream ku-stream))
-  (with-slots (password password-length password-position stream-position) stream
-    (if (= stream-position +usm-length-expanded-passphrase+) :eof
-      (prog1 (svref password password-position)
-        (incf stream-position)
-        (incf password-position)
-        (if (= password-position password-length)
-          (setf password-position 0))))))
-
 (defun generate-ku (key-string &key (hash-type :md5))
-  (declare (optimize (speed 3) safety)
-           (type string key-string)
-           (type (member :md5 :sha1) hash-type))
-  (let ((password (make-instance 'ku-stream
-                                 :password (map 'simple-vector #'char-code key-string))))
-    (ironclad:digest-stream hash-type password)))
-
-(defun generate-ku-no-stream (key-string &key (hash-type :md5))
   (declare (optimize (speed 3) safety)
            (type string key-string)
            (type (member :md5 :sha1) hash-type))
