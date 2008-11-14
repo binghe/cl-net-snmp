@@ -403,5 +403,6 @@ clNetSnmpAgentCMUCL     OBJECT IDENTIFIER ::= { clNetSnmpAgentOIDs 6 }
 clNetSnmpAgentSBCL      OBJECT IDENTIFIER ::= { clNetSnmpAgentOIDs 7 }
 clNetSnmpAgentClozure   OBJECT IDENTIFIER ::= { clNetSnmpAgentOIDs 8 }
 clNetSnmpAgentAllegroCL OBJECT IDENTIFIER ::= { clNetSnmpAgentOIDs 9 }
+clNetSnmpAgentSCL       OBJECT IDENTIFIER ::= { clNetSnmpAgentOIDs 10 }
 
 END
