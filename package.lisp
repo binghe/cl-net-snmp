@@ -61,6 +61,9 @@
 (defparameter *major-version* 5)
 (defparameter *minor-version* 19)
 
+(defparameter *server-major-version* 3)
+(defparameter *server-minor-version* 9)
+
 (eval-when (:load-toplevel :execute)
   (if (and (boundp 'asn.1::*major-version*)
            (boundp 'asn.1::*minor-version*))
