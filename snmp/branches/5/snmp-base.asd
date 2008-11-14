@@ -3,6 +3,9 @@
 
 (in-package :cl-user)
 
+#+(lispworks4 win32)
+(pushnew :mswindows *features*)
+
 (defpackage snmp-system
   (:use :common-lisp :asdf))
 
