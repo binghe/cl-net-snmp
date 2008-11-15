@@ -122,7 +122,7 @@
                                          (server-function instance)
                                          (list instance))
                           #+scl (thread:thread-exit)))))
-        
+
 (defun enable-snmp-service (&optional (port *default-snmp-server-port*))
   (if (null *default-snmp-server*)
       (setf *default-snmp-server*
