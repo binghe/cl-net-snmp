@@ -6,6 +6,15 @@ New packages in this release:
   * asn.1 4.14
   * usocket-udp 2.4
 
+[Support Platforms]
+
+  * CMUCL (version >= 2008-08 snapshot)
+  * SBCL
+  * Clozure CL
+  * LispWorks (plus ASN.1 compiler and GUI tools)
+  * Allegro CL
+  * Scieneer CL (need a udp patch)
+
 [Download]
 
   * http://sourceforge.net/project/showfiles.php?group_id=209101
@@ -59,7 +68,7 @@ New packages in this release:
 4.14: Add a fallback BER-EQUAL to fix SNMP-WALK bug after SNMP 5.18,
       export VALUE-OF which used to access slot of GENERAL-TYPE.
 
-USOCKET-UDP 2.4:
+* USOCKET-UDP 2.4:
 
 2.4:  Fix for SCL, SOCKET-SERVER thread will exit automatically after
       (QUIT) be called in SCL. We start to look at
