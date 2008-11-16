@@ -238,16 +238,17 @@
            (let ((handler (gethash (oid-parent oid) dispatch-table)))
              (if handler
                (list oid (funcall handler *server* t))
-               (list oid (smi :no-such-instance)))))
+               (list oid (smi :no-such-object)))))
           ((oid-trunk-p oid)
-           (list oid (smi :no-such-instance))) ; no value
+           (list oid (smi :no-such-object))) ; no value
           ((oid-leaf-p oid)
-           (list oid (smi :no-such-instance))) ; no value
+           (list oid (smi :no-such-object))) ; no value
           (t (multiple-value-bind (leaf ids) (oid-find-leaf oid)
                (if leaf
                  (let ((handler (gethash leaf dispatch-table)))
                    (if handler
-                     (list oid (funcall handler *server* ids))))
-                 (list oid (smi :no-such-instance))))))))
+                     (list oid (funcall handler *server* ids))
+                     (list oid (smi :no-such-object))))
+                 (list oid (smi :no-such-object))))))))
 
 ;;; note: since get-next support is too large, it's moved to server-walk.lisp

@@ -64,7 +64,7 @@
 (defparameter *minor-version* 19)
 
 (defparameter *server-major-version* 3)
-(defparameter *server-minor-version* 10)
+(defparameter *server-minor-version* 11)
 
 ;;; version denpency check
 (eval-when (:load-toplevel :execute)
