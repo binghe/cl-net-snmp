@@ -1,35 +1,6 @@
-;;;; -*- Mode: Lisp -*-
-;;;; $Id$
+;;;; Patch 5.20: context fix for SNMP-BULK
 
 (in-package :snmp)
-
-;;; Note: snmp-get moved to request.lisp
-
-;;; RFC 3416: 4.2.3. The GetBulkRequest-PDU
-(defun generate-table (vars vbs non-repeaters max-repetitions)
-  (declare (type fixnum non-repeaters max-repetitions))
-  (let* ((var-number (list-length vars))
-         (n (min non-repeaters var-number))
-         (m max-repetitions)
-         (r (max (- var-number n) 0))
-         (real-vbs (mapcar #'(lambda (x) (coerce x 'list))
-                           (coerce vbs 'list)))
-         result-table)
-    ;; non-repeaters
-    (dotimes (i n)
-      (push (pop real-vbs) result-table))
-    ;; table
-    (when (and (plusp m) (plusp r))
-      (dotimes (i m)
-        (push (let (record)
-                (dotimes (j r (nreverse record))
-                  (push (pop real-vbs) record)))
-              result-table)))
-    (values (nreverse result-table)
-            (mapcar #'oid vars))))
-
-(defgeneric snmp-bulk (object vars &key &allow-other-keys)
-  (:documentation "SNMP Get Bulk"))
 
 (defmethod snmp-bulk ((host string) vars &key context
                       (non-repeaters 0) (max-repetitions 1))
@@ -73,3 +44,17 @@
 (defmethod snmp-bulk ((host session) (var vector) &key context)
   (multiple-value-bind (table header) (snmp-bulk host (list var) :context context)
     (values (car table) (car header))))
+
+;;; remove unused methods
+(eval-when (:load-toplevel :execute)
+  (ignore-errors
+    (let ((methods (mapcar #'(lambda (x)
+                               (find-method #'snmp-bulk '() (mapcar #'find-class x)))
+                           '((string list)
+                             (string object-id)
+                             (string string)))))
+      (mapcar #'(lambda (x)
+                  (remove-method #'snmp-bulk x))
+              methods))))
+
+(setf *minor-version* 20)
