@@ -19,6 +19,7 @@
            #:*default-snmp-version*
            #:*default-context*
            #:*snmp-readtable*
+           #:clean-default-dispatch
            #:close-session
            #:control-center
            #:def-scalar-variable
@@ -26,6 +27,7 @@
            #:disable-snmp-service
            #:enable-snmp-service
            #:open-session
+           #:register-variable
            #:reload-snmp-service
            #:snmp-bulk
            #:snmp-client
@@ -62,7 +64,7 @@
 (defparameter *minor-version* 19)
 
 (defparameter *server-major-version* 3)
-(defparameter *server-minor-version* 9)
+(defparameter *server-minor-version* 10)
 
 ;;; version denpency check
 (eval-when (:load-toplevel :execute)

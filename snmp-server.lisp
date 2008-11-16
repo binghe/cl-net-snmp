@@ -8,7 +8,7 @@
 (defvar *default-snmp-server*         nil)
 (defvar *default-dispatch-table*      (make-hash-table))
 (defvar *default-walk-table*          (make-hash-table))
-(defvar *default-walk-list*           nil)
+(defvar *default-walk-list*           (list nil))
 
 (defclass snmp-agent-state-mixin ()
   ((start-up-time          :type (unsigned-byte 32) :initform 0)
