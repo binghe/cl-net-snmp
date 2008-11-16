@@ -31,7 +31,7 @@
 (defgeneric snmp-bulk (object vars &key &allow-other-keys)
   (:documentation "SNMP Get Bulk"))
 
-(defmethod snmp-bulk ((host string) (vars list) &key context
+(defmethod snmp-bulk ((host string) vars &key context
                       (non-repeaters 0) (max-repetitions 1))
   (when vars
     (with-open-session (s host)
@@ -54,7 +54,7 @@
                                                         :non-repeaters non-repeaters
                                                         :max-repetitions max-repetitions
                                                         :variable-bindings vb)
-                                    :context context)))
+                                    :context (or context *default-context*))))
 
         (let ((reply (send-snmp-message session message)))
           (when reply
@@ -62,10 +62,14 @@
                             (variable-bindings-of (pdu-of reply))
                             non-repeaters max-repetitions)))))))
 
-(defmethod snmp-bulk ((host string) (var string) &key context)
+(defmethod snmp-bulk ((host session) (var string) &key context)
   (multiple-value-bind (table header) (snmp-bulk host (list var) :context context)
     (values (car table) (car header))))
 
-(defmethod snmp-bulk ((host string) (var object-id) &key context)
+(defmethod snmp-bulk ((host session) (var object-id) &key context)
+  (multiple-value-bind (table header) (snmp-bulk host (list var) :context context)
+    (values (car table) (car header))))
+
+(defmethod snmp-bulk ((host session) (var vector) &key context)
   (multiple-value-bind (table header) (snmp-bulk host (list var) :context context)
     (values (car table) (car header))))

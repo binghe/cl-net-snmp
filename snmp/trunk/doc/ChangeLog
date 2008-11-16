@@ -12,3 +12,8 @@ snmp-5.11
 	SNMPv3 fix: re-send v3 message with corrent engine-id/time when
 	got a report on	normal v3 communication. This is very important
         for long-lived v3 session (cross remote agent restart).
+
+snmp-5.15, snmp-server-3.6
+
+snmp-5.19, snmp-server-3.11
+
