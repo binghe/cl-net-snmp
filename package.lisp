@@ -19,6 +19,7 @@
            #:*default-snmp-version*
            #:*default-context*
            #:*snmp-readtable*
+           #:clean-default-dispatch
            #:close-session
            #:control-center
            #:def-scalar-variable
@@ -26,6 +27,7 @@
            #:disable-snmp-service
            #:enable-snmp-service
            #:open-session
+           #:register-variable
            #:reload-snmp-service
            #:snmp-bulk
            #:snmp-client

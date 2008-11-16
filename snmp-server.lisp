@@ -8,7 +8,7 @@
 (defvar *default-snmp-server*         nil)
 (defvar *default-dispatch-table*      (make-hash-table))
 (defvar *default-walk-table*          (make-hash-table))
-(defvar *default-walk-list*           nil)
+(defvar *default-walk-list*           (list nil))
 
 (defclass snmp-agent-state-mixin ()
   ((start-up-time          :type (unsigned-byte 32) :initform 0)
@@ -122,7 +122,7 @@
                                          (server-function instance)
                                          (list instance))
                           #+scl (thread:thread-exit)))))
-        
+
 (defun enable-snmp-service (&optional (port *default-snmp-server-port*))
   (if (null *default-snmp-server*)
       (setf *default-snmp-server*

@@ -3,32 +3,38 @@
 
 (in-package :snmp)
 
-(defun clear-default-dispatch ()
-  (clrhash *default-walk-table*)
+(defun clean-default-dispatch ()
   (clrhash *default-dispatch-table*)
-  (setf *default-walk-list* nil))
+  (clrhash *default-walk-table*)
+  (setf *default-walk-list* (list nil)))
 
-(defun register-variable (oid function)
+(defun register-variable (oid function &key
+                              (dispatch-table *default-dispatch-table*)
+                              (walk-table *default-walk-table*)
+                              (walk-list *default-walk-list*))
   "This function won't be called at runtime, only LOAD-TIME."
   (declare (type object-id oid))
   ;; register process function into dispatch-table
-  (setf (gethash oid *default-dispatch-table*) function)
+  (setf (gethash oid dispatch-table) function)
   ;; register oid into walk-table and walk-list (if haven't registed)
-  (unless (gethash oid *default-walk-table*)
-    (let ((next-oid (find-next oid *default-dispatch-table*)))
-      (cond ((or (null *default-walk-list*)
-                 (eq next-oid (car *default-walk-list*)))
-             ;; for null *default-walk-list*, we just add current one.
-             (push oid *default-walk-list*)
-             (setf (gethash oid *default-walk-table*)
-                   *default-walk-list*))
-            ((not (member next-oid *default-walk-list*))
-             ;; if none in *default-walk-list* is the next oid of current oid,
+  (unless (gethash oid walk-table)
+    (let ((next-oid (find-next oid dispatch-table)))
+      (cond ((null (car walk-list))
+             ;; for empty walk-list, add current one
+             (setf (car walk-list) oid
+                   (gethash oid walk-table) walk-list))
+            ((eq next-oid (car walk-list))
+             ;; if current node should be in head of walk-list, just push it
+             (push oid walk-list)
+             (setf (gethash oid walk-table)
+                   walk-list))
+            ((not (member next-oid walk-list))
+             ;; if none in walk-list is the next oid of current oid,
              ;; append current one to the last
-             (nconc *default-walk-list* (list oid))
-             (setf (gethash oid *default-walk-table*)
-                   (last *default-walk-list*)))
-            (t ; find the right node in *default-walk-list* and insert after it
+             (nconc walk-list (list oid))
+             (setf (gethash oid walk-table)
+                   (last walk-list)))
+            (t ; find the right node in walk-list and insert after it
              (labels ((iter (i l)
                         (if (null i)
                             (error "REGISTER-VARIABLE: impossible...")
@@ -36,9 +42,9 @@
                               ;; make a new node and insert into middle
                               (let ((new-i (cons oid i)))
                                 (setf (cdr l) new-i)
-                                (setf (gethash oid *default-walk-table*) new-i))
+                                (setf (gethash oid walk-table) new-i))
                             (iter (cdr i) i)))))
-               (iter *default-walk-list* nil)))))))
+               (iter walk-list nil)))))))
 
 (defmacro def-scalar-variable (name (agent) &body body)
   (let ((oid (intern name (find-package :asn.1)))
