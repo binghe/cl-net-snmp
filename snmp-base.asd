@@ -22,14 +22,13 @@
 (defsystem snmp-base
   :description "SNMP Base System"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
-  :version "6.0-devel"
+  :version "5.19"
   :licence "MIT"
   :depends-on (:asn.1
 	       :ironclad
-               :usocket ; experimental-udp branch
-               #-scl :trivial-gray-streams
-               #+(and lispworks mswindows)
-               :lispworks-udp
+               :usocket-udp
+	       #+(and lispworks mswindows)
+	       :lispworks-udp
                :portable-threads) ; GBBopen's portable-threads
   :components ((:file "package")
 	       (:file "constants"   :depends-on ("package"))
@@ -45,7 +44,6 @@
                (:file "snmp-get"    :depends-on ("request"))
                (:file "snmp-walk"   :depends-on ("request" "snmp-smi"))
                (:file "snmp-trap"   :depends-on ("report" "mib"))
-               (:file "worker"      :depends-on ("session"))
 	       #+lispworks
                (:file "update-mib"  :depends-on ("mib"))
                (:file "mib-depend"  :depends-on ("package"))

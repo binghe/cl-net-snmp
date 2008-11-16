@@ -22,15 +22,19 @@ lisp MODULE-IDENTITY
               <cl-net-snmp-general@lists.sourceforge.net>"
     DESCRIPTION
            "The MIB module for Lisp."
+
     REVISION "200809260000Z" -- 26 September 2008
     DESCRIPTION
            "Add lispModuleTable"
+
     REVISION "200809240000Z" -- 24 September 2008
     DESCRIPTION
            "Redefine lispFeatures as a MIB Table, add lispFeatureTable, lispPackageTable"
+
     REVISION "200807290000Z" -- 29 July 2008
     DESCRIPTION
            "The initial revision of this MIB module."
+
     ::= { enterprises 31609 }
 
 common-lisp     OBJECT IDENTIFIER ::= { lisp 1 }

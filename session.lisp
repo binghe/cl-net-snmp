@@ -125,11 +125,10 @@
 
 (defun snmp-connect (host port)
   (declare (ignore host port))
-  (socket-connect nil nil
-                  :protocol :datagram
-                  ;; On Win32, we must bind it to set socketopt
-                  #+mswindows #+mswindows
-                  :local-port *auto-port*))
+  (socket-connect/udp nil nil
+                      ;; On Win32, we must bind it to set socketopt
+                      #+mswindows #+mswindows
+                      :local-port *auto-port*))
 
 (defun open-session (host &key (port *default-snmp-port*)
                                (version *default-snmp-version*)

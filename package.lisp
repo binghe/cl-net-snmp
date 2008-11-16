@@ -39,16 +39,7 @@
            #:snmp-trap
            #:snmp-walk
            #:update-mib
-           #:with-open-session)
-  (:import-from :usocket
-           #:rtt-rtocalc
-           #:rtt-minmax
-           #:rtt-init
-           #:rtt-ts
-           #:rtt-start
-           #:rtt-stop
-           #:rtt-timeout
-           #:rtt-newpack))
+           #:with-open-session))
 
 (in-package :snmp)
 
@@ -69,8 +60,22 @@
           `(("**;*.*.NEWEST" "SNMP:ASN;**;*.*")
             ("**;*.*" "SNMP:ASN;**;*.*")))))
 
-(defparameter *major-version* 6)
-(defparameter *minor-version* 0)
+(defparameter *major-version* 5)
+(defparameter *minor-version* 19)
 
-(defparameter *server-major-version* 4)
-(defparameter *server-minor-version* 0)
+(defparameter *server-major-version* 3)
+(defparameter *server-minor-version* 11)
+
+;;; version denpency check
+(eval-when (:load-toplevel :execute)
+  (if (and (boundp 'asn.1::*major-version*)
+           (boundp 'asn.1::*minor-version*))
+      (assert (and (= asn.1::*major-version* 4)
+		    (>= asn.1::*minor-version* 14)))
+    (error "Please use a newer version of ASN.1 package (4.x, x>=14)"))
+
+  (if (and (boundp 'usocket::*major-version*)
+           (boundp 'usocket::*minor-version*))
+      (assert (and (= usocket::*major-version* 2)
+		    (>= usocket::*minor-version* #-scl 3 #+scl 4)))
+    (error "Please use a newer version of USOCKET-UDP package (>= 2.4)")))
