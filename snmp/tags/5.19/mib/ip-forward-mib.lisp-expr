@@ -1,0 +1,11 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from MIB:NET-SNMP;IP-FORWARD-MIB.TXT
+
+(ip-forward-mib
+ |SNMPv2-SMI|
+ |SNMPv2-TC|
+ |SNMPv2-CONF|
+ if-mib
+ ip-mib
+ iana-rtproto-mib
+ inet-address-mib)

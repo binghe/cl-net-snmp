@@ -1,0 +1,4 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from MIB:NET-SNMP;BGP4-MIB.TXT
+
+(bgp4-mib |SNMPv2-SMI| |SNMPv2-CONF|)
