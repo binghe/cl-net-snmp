@@ -1,15 +1,15 @@
 Common Lisp SNMP (cl-net-snmp) 5.19
 
-New version in this release:
+New packages in this release:
 
-  * snmp 5.19
-  * snmp-server 3.11
+  * snmp 5.19 (snmp-server 3.11)
   * asn.1 4.14
   * usocket-udp 2.4
 
-[Download] (ASDF-INSTALL is supported)
+[Download]
 
-    http://sourceforge.net/project/showfiles.php?group_id=209101
+  * http://sourceforge.net/project/showfiles.php?group_id=209101
+  * (ASDF-INSTALL:INSTALL :SNMP)
 
 [SVN Repository]
 
