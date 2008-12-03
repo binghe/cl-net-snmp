@@ -20,3 +20,5 @@
                      (list oid (funcall handler *server* ids))
                      (list oid (smi :no-such-object))))
                  (list oid (smi :no-such-object))))))))
+
+(setf *server-minor-version* 11)
