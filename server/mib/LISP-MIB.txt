@@ -9,7 +9,7 @@ IMPORTS
         FROM SNMPv2-SMI;
 
 lisp MODULE-IDENTITY
-    LAST-UPDATED "200807290000Z" -- 29 July 2008
+    LAST-UPDATED "200811160000Z" -- 16 November 2008
     ORGANIZATION
            "The cl-net-snmp Project
 	    http://common-lisp.net/projects/cl-net-snmp"
@@ -22,12 +22,15 @@ lisp MODULE-IDENTITY
               <cl-net-snmp-general@lists.sourceforge.net>"
     DESCRIPTION
            "The MIB module for Lisp."
+
     REVISION "200809260000Z" -- 26 September 2008
     DESCRIPTION
            "Add lispModuleTable"
+
     REVISION "200809240000Z" -- 24 September 2008
     DESCRIPTION
            "Redefine lispFeatures as a MIB Table, add lispFeatureTable, lispPackageTable"
+
     REVISION "200807290000Z" -- 29 July 2008
     DESCRIPTION
            "The initial revision of this MIB module."

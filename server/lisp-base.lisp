@@ -21,7 +21,7 @@
 (def-scalar-variable "lispMachineType" (agent)
   (machine-type))
 (def-scalar-variable "lispMachineVersion" (agent)
-  (machine-version))
+  (or (machine-version) ""))
 (def-scalar-variable "lispSoftwareType" (agent)
   (software-type))
 (def-scalar-variable "lispSoftwareVersion" (agent)
