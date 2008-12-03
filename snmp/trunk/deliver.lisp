@@ -15,9 +15,11 @@
 (asdf:setup :snmp)
 
 ;;; Deliver the MIB Browser
-(deliver 'asn.1:mibrowser #p"SNMP:DIST;MIBROWSER.BIN" 5
+(deliver 'asn.1:mibrowser #p"SNMP:DIST;MIBROWSER.EXE" 5
          :interface :capi
          :keep-pretty-printer t
+         :kill-dspec-table nil
+         :packages-to-keep-symbol-names '(asn.1)
          :keep-symbol-names '(capi:graph-pane
                               capi:text-input-pane
                               capi:display-pane
