@@ -5,4 +5,5 @@
 (def-scalar-variable "lispMachineVersion" (agent)
   (or (machine-version) ""))
 
-(setf *server-minor-version* 12)
+(defparameter *server-major-version* 3)
+(defparameter *server-minor-version* 12)
