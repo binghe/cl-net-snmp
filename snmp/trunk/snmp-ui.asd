@@ -10,8 +10,8 @@
   :version "1.0"
   :licence "MIT"
   :depends-on (:snmp-client)
-  :serial t
   :components ((:module "interface"
+                :serial t
 		:components ((:file "package")
                              (:file "mibrowser")
                              (:file "lispworks-capi")))))
