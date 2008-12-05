@@ -1,7 +1,7 @@
 ;;;; -*- Mode: Lisp -*-
 ;;;; $Id$
 
-(in-package :snmp)
+(in-package :snmp-ui)
 
 (capi:define-interface snmp-client (mibrowser)
   ()
@@ -9,7 +9,7 @@
    (main-tab-layout capi:tab-layout ()
                     :items '(("SNMP Get" snmp-get-layout)
                              ("SNMP Walk" snmp-walk-layout)
-                             ("MIB Browser" asn.1::mibrowser-layout))
+                             ("MIB Browser" mibrowser-layout))
                     :print-function 'first
                     :visible-child-function 'second)
    (snmp-get-layout capi:column-layout ())
@@ -21,5 +21,5 @@
    :title "SNMP Client Utility"))
 
 (defun snmp-client ()
-  (asn.1::make-switched-modules)
+  (make-switched-modules)
   (capi:display (make-instance 'snmp-client)))
