@@ -10,4 +10,4 @@
   :licence "MIT"
   :depends-on (:snmp-client
 	       :snmp-server
-	       :snmp-ui))
+	       #+(and lispworks capi) :snmp-ui))
