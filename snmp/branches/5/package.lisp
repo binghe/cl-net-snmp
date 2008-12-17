@@ -61,7 +61,7 @@
             ("**;*.*" "SNMP:ASN;**;*.*")))))
 
 (defparameter *major-version* 5)
-(defparameter *minor-version* 20)
+(defparameter *minor-version* 21)
 
 (defparameter *server-major-version* 3)
 (defparameter *server-minor-version* 12)
