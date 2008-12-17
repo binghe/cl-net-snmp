@@ -2,6 +2,16 @@
 
 (in-package :snmp)
 
+(declaim (inline session-socket-p))
+
+(defun session-socket-p (session)
+  (slot-boundp session 'socket))
+
+(defun close-session (session)
+  (declare (type session session))
+  (when (session-socket-p session)
+    (socket-close (socket-of session))))
+
 (defun open-session (host &key (port *default-snmp-port*)
                                (version *default-snmp-version*)
                                (community *default-snmp-community*)
