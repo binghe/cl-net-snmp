@@ -174,9 +174,14 @@
                          (list :priv-local-key (coerce key 'octets))))))))))
     (apply #'make-instance args)))
 
+(declaim (inline session-socket-p))
+
+(defun session-socket-p (session)
+  (slot-boundp session 'socket))
+
 (defun close-session (session)
   (declare (type session session))
-  (when (slot-boundp session 'socket)
+  (when (session-socket-p session)
     (socket-close (socket-of session))))
 
 (defmacro with-open-session ((session &rest args) &body body)
