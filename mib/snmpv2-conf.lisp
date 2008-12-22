@@ -2,9 +2,14 @@
 ;;;; Auto-generated from MIB:NET-SNMP;SNMPV2-CONF.TXT
 
 (in-package :asn.1)
-(setf *current-module* '|SNMPv2-CONF|)
 (eval-when (:load-toplevel :execute)
   (pushnew '|SNMPv2-CONF| *mib-modules*))
+(setf *current-module* '|SNMPv2-CONF|)
+(defpackage :|ASN.1/SNMPv2-CONF|
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| |ObjectName| |NotificationName|
+                |ObjectSyntax|))
+(in-package :|ASN.1/SNMPv2-CONF|)
 (defmacro object-group ())
 (defmacro notification-group ())
 (defmacro module-compliance ())

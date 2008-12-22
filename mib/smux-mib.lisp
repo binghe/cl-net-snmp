@@ -2,8 +2,12 @@
 ;;;; Auto-generated from MIB:NET-SNMP;SMUX-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'smux-mib)
 (eval-when (:load-toplevel :execute) (pushnew 'smux-mib *mib-modules*))
+(setf *current-module* 'smux-mib)
+(defpackage :asn.1/smux-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| |enterprises|))
+(in-package :asn.1/smux-mib)
 (defoid |unix| (|enterprises| 4) (:type 'object-identity))
 (defoid |smux| (|unix| 4) (:type 'object-identity))
 (defoid |smuxPeerTable| (|smux| 1)

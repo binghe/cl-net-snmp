@@ -2,9 +2,16 @@
 ;;;; Auto-generated from MIB:NET-SNMP;UCD-DISKIO-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'ucd-diskio-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'ucd-diskio-mib *mib-modules*))
+(setf *current-module* 'ucd-diskio-mib)
+(defpackage :asn.1/ucd-diskio-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
+                |Integer32| |Counter32| |Counter64|)
+  (:import-from :|ASN.1/SNMPv2-TC| |DisplayString|)
+  (:import-from :asn.1/ucd-snmp-mib |ucdExperimental|))
+(in-package :asn.1/ucd-diskio-mib)
 (defoid |ucdDiskIOMIB| (|ucdExperimental| 15)
   (:type 'module-identity)
   (:description

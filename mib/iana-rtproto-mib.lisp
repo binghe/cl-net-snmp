@@ -2,9 +2,14 @@
 ;;;; Auto-generated from MIB:NET-SNMP;IANA-RTPROTO-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'iana-rtproto-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'iana-rtproto-mib *mib-modules*))
+(setf *current-module* 'iana-rtproto-mib)
+(defpackage :asn.1/iana-rtproto-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity |mib-2|)
+  (:import-from :|ASN.1/SNMPv2-TC| textual-convention))
+(in-package :asn.1/iana-rtproto-mib)
 (defoid |ianaRtProtoMIB| (|mib-2| 84)
   (:type 'module-identity)
   (:description

@@ -2,9 +2,15 @@
 ;;;; Auto-generated from MIB:NET-SNMP;UCD-DEMO-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'ucd-demo-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'ucd-demo-mib *mib-modules*))
+(setf *current-module* 'ucd-demo-mib)
+(defpackage :asn.1/ucd-demo-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
+                |Integer32|)
+  (:import-from :asn.1/ucd-snmp-mib |ucdavis|))
+(in-package :asn.1/ucd-demo-mib)
 (defoid |ucdDemoMIB| (|ucdavis| 14)
   (:type 'module-identity)
   (:description "The UCD-SNMP Demonstration MIB."))

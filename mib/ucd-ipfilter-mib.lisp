@@ -2,9 +2,15 @@
 ;;;; Auto-generated from MIB:NET-SNMP;UCD-IPFILTER-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'ucd-ipfilter-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'ucd-ipfilter-mib *mib-modules*))
+(setf *current-module* 'ucd-ipfilter-mib)
+(defpackage :asn.1/ucd-ipfilter-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| object-type module-identity
+                |Counter32| |Integer32|)
+  (:import-from :asn.1/ucd-snmp-mib |ucdExperimental|))
+(in-package :asn.1/ucd-ipfilter-mib)
 (defoid |ucdIpFilter| (|ucdExperimental| 2)
   (:type 'module-identity)
   (:description

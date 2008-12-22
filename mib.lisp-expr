@@ -67,7 +67,6 @@
   :DEPENDS-ON
   ("snmpv2-smi" "snmp-framework-mib" "snmpv2-conf" "snmpv2-tc"))
  (:FILE "bgp4-mib" :DEPENDS-ON ("snmpv2-smi" "snmpv2-conf"))
- (:FILE "bridge-mib" :DEPENDS-ON ("snmpv2-smi"))
  (:FILE
   "disman-event-mib"
   :DEPENDS-ON
@@ -251,7 +250,7 @@
  (:FILE
   "ospf-mib"
   :DEPENDS-ON
-  ("snmpv2-smi" "snmpv2-tc" "snmpv2-conf"))
+  ("snmpv2-smi" "snmpv2-tc" "snmpv2-conf" "snmpv2-smi"))
  (:FILE
   "ospf-trap-mib"
   :DEPENDS-ON
@@ -259,13 +258,12 @@
  (:FILE
   "ripv2-mib"
   :DEPENDS-ON
-  ("snmpv2-smi" "snmpv2-tc" "snmpv2-conf"))
+  ("snmpv2-smi" "snmpv2-tc" "snmpv2-conf" "snmpv2-smi"))
  (:FILE
   "rmon-mib"
   :DEPENDS-ON
   ("snmpv2-smi" "snmpv2-tc" "snmpv2-conf"))
  (:FILE "smux-mib" :DEPENDS-ON ("snmpv2-smi"))
- (:FILE "source-routing-mib" :DEPENDS-ON ("snmpv2-smi" "bridge-mib"))
  (:FILE
   "tcp-mib"
   :DEPENDS-ON

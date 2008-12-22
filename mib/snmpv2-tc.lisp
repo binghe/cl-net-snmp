@@ -2,9 +2,13 @@
 ;;;; Auto-generated from MIB:NET-SNMP;SNMPV2-TC.TXT
 
 (in-package :asn.1)
-(setf *current-module* '|SNMPv2-TC|)
 (eval-when (:load-toplevel :execute)
   (pushnew '|SNMPv2-TC| *mib-modules*))
+(setf *current-module* '|SNMPv2-TC|)
+(defpackage :|ASN.1/SNMPv2-TC|
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| |TimeTicks|))
+(in-package :|ASN.1/SNMPv2-TC|)
 (defmacro textual-convention ())
 (deftype |DisplayString| () 't)
 (deftype |PhysAddress| () 't)

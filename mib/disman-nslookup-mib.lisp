@@ -2,9 +2,19 @@
 ;;;; Auto-generated from MIB:NET-SNMP;DISMAN-NSLOOKUP-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'disman-nslookup-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'disman-nslookup-mib *mib-modules*))
+(setf *current-module* 'disman-nslookup-mib)
+(defpackage :asn.1/disman-nslookup-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
+                |Unsigned32| |mib-2| |Integer32|)
+  (:import-from :|ASN.1/SNMPv2-TC| |RowStatus|)
+  (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
+  (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|)
+  (:import-from :asn.1/inet-address-mib |InetAddressType|
+                |InetAddress|))
+(in-package :asn.1/disman-nslookup-mib)
 (defoid |lookupMIB| (|mib-2| 82)
   (:type 'module-identity)
   (:description

@@ -2,9 +2,19 @@
 ;;;; Auto-generated from MIB:NET-SNMP;DISMAN-SCRIPT-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'disman-script-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'disman-script-mib *mib-modules*))
+(setf *current-module* 'disman-script-mib)
+(defpackage :asn.1/disman-script-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
+                notification-type |Integer32| |Unsigned32| |mib-2|)
+  (:import-from :|ASN.1/SNMPv2-TC| |RowStatus| |TimeInterval|
+                |DateAndTime| |StorageType| |DisplayString|)
+  (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group
+                notification-group)
+  (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|))
+(in-package :asn.1/disman-script-mib)
 (defoid |scriptMIB| (|mib-2| 64)
   (:type 'module-identity)
   (:description

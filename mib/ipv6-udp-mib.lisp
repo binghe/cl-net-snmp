@@ -2,9 +2,16 @@
 ;;;; Auto-generated from MIB:NET-SNMP;IPV6-UDP-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'ipv6-udp-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'ipv6-udp-mib *mib-modules*))
+(setf *current-module* 'ipv6-udp-mib)
+(defpackage :asn.1/ipv6-udp-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type |mib-2|
+                |experimental|)
+  (:import-from :asn.1/ipv6-tc |Ipv6Address| |Ipv6IfIndexOrZero|))
+(in-package :asn.1/ipv6-udp-mib)
 (defoid |ipv6UdpMIB| (|experimental| 87)
   (:type 'module-identity)
   (:description

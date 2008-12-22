@@ -2,9 +2,22 @@
 ;;;; Auto-generated from MIB:NET-SNMP;DISMAN-EVENT-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'disman-event-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'disman-event-mib *mib-modules*))
+(setf *current-module* 'disman-event-mib)
+(defpackage :asn.1/disman-event-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
+                |Integer32| |Unsigned32| notification-type |Counter32|
+                |Gauge32| |mib-2| |zeroDotZero|)
+  (:import-from :|ASN.1/SNMPv2-TC| textual-convention |RowStatus|
+                |TruthValue|)
+  (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group
+                notification-group)
+  (:import-from :|ASN.1/SNMPv2-MIB| |sysUpTime|)
+  (:import-from :asn.1/snmp-target-mib |SnmpTagValue|)
+  (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|))
+(in-package :asn.1/disman-event-mib)
 (defoid |dismanEventMIB| (|mib-2| 88)
   (:type 'module-identity)
   (:description

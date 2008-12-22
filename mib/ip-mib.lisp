@@ -2,8 +2,22 @@
 ;;;; Auto-generated from MIB:NET-SNMP;IP-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'ip-mib)
 (eval-when (:load-toplevel :execute) (pushnew 'ip-mib *mib-modules*))
+(setf *current-module* 'ip-mib)
+(defpackage :asn.1/ip-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
+                |Integer32| |Counter32| |IpAddress| |mib-2| |Unsigned32|
+                |Counter64| |zeroDotZero|)
+  (:import-from :|ASN.1/SNMPv2-TC| |PhysAddress| |TruthValue|
+                |TimeStamp| |RowPointer| textual-convention
+                |TestAndIncr| |RowStatus| |StorageType|)
+  (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
+  (:import-from :asn.1/inet-address-mib |InetAddress| |InetAddressType|
+                |InetAddressPrefixLength| |InetVersion|
+                |InetZoneIndex|)
+  (:import-from :asn.1/if-mib |InterfaceIndex|))
+(in-package :asn.1/ip-mib)
 (defoid |ipMIB| (|mib-2| 48)
   (:type 'module-identity)
   (:description

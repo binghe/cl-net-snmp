@@ -2,9 +2,19 @@
 ;;;; Auto-generated from MIB:NET-SNMP;SNMPV2-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* '|SNMPv2-MIB|)
 (eval-when (:load-toplevel :execute)
   (pushnew '|SNMPv2-MIB| *mib-modules*))
+(setf *current-module* '|SNMPv2-MIB|)
+(defpackage :|ASN.1/SNMPv2-MIB|
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
+                notification-type |TimeTicks| |Counter32| |snmpModules|
+                |mib-2|)
+  (:import-from :|ASN.1/SNMPv2-TC| |DisplayString| |TestAndIncr|
+                |TimeStamp|)
+  (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group
+                notification-group))
+(in-package :|ASN.1/SNMPv2-MIB|)
 (defoid |snmpMIB| (|snmpModules| 1)
   (:type 'module-identity)
   (:description

@@ -2,9 +2,21 @@
 ;;;; Auto-generated from MIB:NET-SNMP;SNMP-TARGET-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'snmp-target-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'snmp-target-mib *mib-modules*))
+(setf *current-module* 'snmp-target-mib)
+(defpackage :asn.1/snmp-target-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
+                |snmpModules| |Counter32| |Integer32|)
+  (:import-from :|ASN.1/SNMPv2-TC| textual-convention |TDomain|
+                |TAddress| |TimeInterval| |RowStatus| |StorageType|
+                |TestAndIncr|)
+  (:import-from :asn.1/snmp-framework-mib |SnmpSecurityModel|
+                |SnmpMessageProcessingModel| |SnmpSecurityLevel|
+                |SnmpAdminString|)
+  (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group))
+(in-package :asn.1/snmp-target-mib)
 (defoid |snmpTargetMIB| (|snmpModules| 12)
   (:type 'module-identity)
   (:description

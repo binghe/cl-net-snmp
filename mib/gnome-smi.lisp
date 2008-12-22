@@ -2,8 +2,13 @@
 ;;;; Auto-generated from MIB:NET-SNMP;GNOME-SMI.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'gnome-smi)
 (eval-when (:load-toplevel :execute) (pushnew 'gnome-smi *mib-modules*))
+(setf *current-module* 'gnome-smi)
+(defpackage :asn.1/gnome-smi
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-identity
+                |enterprises|))
+(in-package :asn.1/gnome-smi)
 (defoid |gnome| (|enterprises| 3319)
   (:type 'module-identity)
   (:description "The Structure of GNOME."))

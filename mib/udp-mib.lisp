@@ -2,8 +2,17 @@
 ;;;; Auto-generated from MIB:NET-SNMP;UDP-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'udp-mib)
 (eval-when (:load-toplevel :execute) (pushnew 'udp-mib *mib-modules*))
+(setf *current-module* 'udp-mib)
+(defpackage :asn.1/udp-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
+                |Integer32| |Counter32| |Counter64| |Unsigned32|
+                |IpAddress| |mib-2|)
+  (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
+  (:import-from :asn.1/inet-address-mib |InetAddress| |InetAddressType|
+                |InetPortNumber|))
+(in-package :asn.1/udp-mib)
 (defoid |udpMIB| (|mib-2| 50)
   (:type 'module-identity)
   (:description

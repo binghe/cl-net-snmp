@@ -6,11 +6,11 @@
 ;;; Empty and old MIB module
 (eval-when (:load-toplevel :execute)
   (setf *mib-name-map*
-        '((rfc1155-smi . snmpv2-smi)
-          (rfc1212 . nil)
-          (rfc-1212 . nil)
-          (rfc1213-mib . nil)
-          (rfc-1215 . nil)))
+        '((RFC1155-SMI . |SNMPv2-SMI|)
+          (RFC1212 . nil)
+          (RFC-1212 . nil)
+          (RFC1213-MIB . |SNMPv2-SMI|)
+          (RFC-1215 . nil)))
   (make-mib-name-map))
 
 (in-package :snmp)
@@ -33,7 +33,6 @@
     #p"MIB:NET-SNMP;SNMPv2-TM.TXT"
     #p"MIB:NET-SNMP;AGENTX-MIB.TXT"
     #p"MIB:NET-SNMP;BGP4-MIB.TXT"
-    #p"MIB:NET-SNMP;BRIDGE-MIB.TXT"
     #p"MIB:NET-SNMP;DISMAN-EVENT-MIB.TXT"
     #p"MIB:NET-SNMP;DISMAN-SCHEDULE-MIB.TXT"
     #p"MIB:NET-SNMP;DISMAN-SCRIPT-MIB.TXT"
@@ -78,7 +77,6 @@
     #p"MIB:NET-SNMP;RIPv2-MIB.TXT"
     #p"MIB:NET-SNMP;RMON-MIB.TXT"
     #p"MIB:NET-SNMP;SMUX-MIB.TXT"
-    #p"MIB:NET-SNMP;SOURCE-ROUTING-MIB.TXT"
     #p"MIB:NET-SNMP;TCP-MIB.TXT"
     #p"MIB:NET-SNMP;TRANSPORT-ADDRESS-MIB.TXT"
     #p"MIB:NET-SNMP;TUNNEL-MIB.TXT"

@@ -2,9 +2,21 @@
 ;;;; Auto-generated from MIB:NET-SNMP;DISMAN-EXPRESSION-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'disman-expression-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'disman-expression-mib *mib-modules*))
+(setf *current-module* 'disman-expression-mib)
+(defpackage :asn.1/disman-expression-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
+                |Integer32| |Gauge32| |Unsigned32| |Counter32|
+                |Counter64| |IpAddress| |TimeTicks| |mib-2|
+                |zeroDotZero|)
+  (:import-from :|ASN.1/SNMPv2-TC| |RowStatus| |TruthValue|
+                |TimeStamp|)
+  (:import-from :|ASN.1/SNMPv2-MIB| |sysUpTime|)
+  (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|)
+  (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group))
+(in-package :asn.1/disman-expression-mib)
 (defoid |dismanExpressionMIB| (|mib-2| 90)
   (:type 'module-identity)
   (:description
