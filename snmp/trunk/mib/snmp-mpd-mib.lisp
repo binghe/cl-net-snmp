@@ -2,9 +2,15 @@
 ;;;; Auto-generated from MIB:NET-SNMP;SNMP-MPD-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'snmp-mpd-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'snmp-mpd-mib *mib-modules*))
+(setf *current-module* 'snmp-mpd-mib)
+(defpackage :asn.1/snmp-mpd-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
+                |snmpModules| |Counter32|))
+(in-package :asn.1/snmp-mpd-mib)
 (defoid |snmpMPDMIB| (|snmpModules| 11)
   (:type 'module-identity)
   (:description

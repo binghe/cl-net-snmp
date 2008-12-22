@@ -2,8 +2,17 @@
 ;;;; Auto-generated from MIB:NET-SNMP;OSPF-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'ospf-mib)
 (eval-when (:load-toplevel :execute) (pushnew 'ospf-mib *mib-modules*))
+(setf *current-module* 'ospf-mib)
+(defpackage :asn.1/ospf-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
+                |Counter32| |Gauge32| |Integer32| |IpAddress|)
+  (:import-from :|ASN.1/SNMPv2-TC| textual-convention |TruthValue|
+                |RowStatus|)
+  (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
+  (:import-from :|ASN.1/SNMPv2-SMI| |mib-2|))
+(in-package :asn.1/ospf-mib)
 (defoid |ospf| (|mib-2| 14)
   (:type 'module-identity)
   (:description

@@ -2,9 +2,16 @@
 ;;;; Auto-generated from MIB:NET-SNMP;NET-SNMP-TC.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'net-snmp-tc)
 (eval-when (:load-toplevel :execute)
   (pushnew 'net-snmp-tc *mib-modules*))
+(setf *current-module* 'net-snmp-tc)
+(defpackage :asn.1/net-snmp-tc
+  (:use :cl :asn.1)
+  (:import-from :asn.1/net-snmp-mib |netSnmpModuleIDs|
+                |netSnmpAgentOIDs| |netSnmpDomains|)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity |Opaque|)
+  (:import-from :|ASN.1/SNMPv2-TC| textual-convention))
+(in-package :asn.1/net-snmp-tc)
 (defoid |netSnmpTCs| (|netSnmpModuleIDs| 1)
   (:type 'module-identity)
   (:description

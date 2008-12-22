@@ -2,9 +2,15 @@
 ;;;; Auto-generated from MIB:NET-SNMP;TRANSPORT-ADDRESS-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'transport-address-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'transport-address-mib *mib-modules*))
+(setf *current-module* 'transport-address-mib)
+(defpackage :asn.1/transport-address-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-identity
+                |mib-2|)
+  (:import-from :|ASN.1/SNMPv2-TC| textual-convention))
+(in-package :asn.1/transport-address-mib)
 (defoid |transportAddressMIB| (|mib-2| 100)
   (:type 'module-identity)
   (:description

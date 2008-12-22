@@ -2,9 +2,16 @@
 ;;;; Auto-generated from MIB:NET-SNMP;IPV6-ICMP-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'ipv6-icmp-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'ipv6-icmp-mib *mib-modules*))
+(setf *current-module* 'ipv6-icmp-mib)
+(defpackage :asn.1/ipv6-icmp-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
+                |Counter32| |mib-2|)
+  (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
+  (:import-from :asn.1/ipv6-mib |ipv6IfEntry|))
+(in-package :asn.1/ipv6-icmp-mib)
 (defoid |ipv6IcmpMIB| (|mib-2| 56)
   (:type 'module-identity)
   (:description

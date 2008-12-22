@@ -2,9 +2,20 @@
 ;;;; Auto-generated from MIB:NET-SNMP;NOTIFICATION-LOG-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'notification-log-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'notification-log-mib *mib-modules*))
+(setf *current-module* 'notification-log-mib)
+(defpackage :asn.1/notification-log-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
+                |Integer32| |Unsigned32| |TimeTicks| |Counter32|
+                |Counter64| |IpAddress| |Opaque| |mib-2|)
+  (:import-from :|ASN.1/SNMPv2-TC| |TimeStamp| |DateAndTime|
+                |StorageType| |RowStatus| |TAddress| |TDomain|)
+  (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|
+                |SnmpEngineID|)
+  (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group))
+(in-package :asn.1/notification-log-mib)
 (defoid |notificationLogMIB| (|mib-2| 92)
   (:type 'module-identity)
   (:description

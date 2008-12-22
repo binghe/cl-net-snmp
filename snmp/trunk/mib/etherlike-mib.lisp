@@ -2,9 +2,18 @@
 ;;;; Auto-generated from MIB:NET-SNMP;ETHERLIKE-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* '|EtherLike-MIB|)
 (eval-when (:load-toplevel :execute)
   (pushnew '|EtherLike-MIB| *mib-modules*))
+(setf *current-module* '|EtherLike-MIB|)
+(defpackage :|ASN.1/EtherLike-MIB|
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
+                object-identity |Integer32| |Counter32| |Counter64|
+                |mib-2| |transmission|)
+  (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
+  (:import-from :|ASN.1/SNMPv2-TC| |TruthValue|)
+  (:import-from :asn.1/if-mib |ifIndex| |InterfaceIndex|))
+(in-package :|ASN.1/EtherLike-MIB|)
 (defoid |etherMIB| (|mib-2| 35)
   (:type 'module-identity)
   (:description

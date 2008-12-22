@@ -2,9 +2,18 @@
 ;;;; Auto-generated from MIB:NET-SNMP;NET-SNMP-EXTEND-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'net-snmp-extend-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'net-snmp-extend-mib *mib-modules*))
+(setf *current-module* 'net-snmp-extend-mib)
+(defpackage :asn.1/net-snmp-extend-mib
+  (:use :cl :asn.1)
+  (:import-from :asn.1/net-snmp-agent-mib |nsExtensions|)
+  (:import-from :|ASN.1/SNMPv2-SMI| object-type notification-type
+                module-identity |Integer32|)
+  (:import-from :|ASN.1/SNMPv2-CONF| object-group notification-group)
+  (:import-from :|ASN.1/SNMPv2-TC| |DisplayString| |RowStatus|
+                |StorageType|))
+(in-package :asn.1/net-snmp-extend-mib)
 (defoid |netSnmpExtendMIB| (|nsExtensions| 1)
   (:type 'module-identity)
   (:description

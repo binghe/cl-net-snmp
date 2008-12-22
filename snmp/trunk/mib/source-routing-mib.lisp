@@ -2,9 +2,13 @@
 ;;;; Auto-generated from MIB:NET-SNMP;SOURCE-ROUTING-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'source-routing-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'source-routing-mib *mib-modules*))
+(defpackage :asn.1/source-routing-mib
+  (:use :cl :asn.1)
+  (:import-from :asn.1/snmpv2-smi |Counter| |Gauge|)
+  (:import-from :asn.1/bridge-mib |dot1dBridge| |dot1dSr|))
+(in-package :asn.1/source-routing-mib)
 (defoid |dot1dPortPair| (|dot1dBridge| 10) (:type 'object-identity))
 (defoid |dot1dSrPortTable| (|dot1dSr| 1)
   (:type 'object-type)

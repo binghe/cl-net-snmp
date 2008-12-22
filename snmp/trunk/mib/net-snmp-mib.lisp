@@ -2,9 +2,13 @@
 ;;;; Auto-generated from MIB:NET-SNMP;NET-SNMP-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'net-snmp-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'net-snmp-mib *mib-modules*))
+(setf *current-module* 'net-snmp-mib)
+(defpackage :asn.1/net-snmp-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity |enterprises|))
+(in-package :asn.1/net-snmp-mib)
 (defoid |netSnmp| (|enterprises| 8072)
   (:type 'module-identity)
   (:description

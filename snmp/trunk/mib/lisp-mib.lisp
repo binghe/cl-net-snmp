@@ -2,8 +2,13 @@
 ;;;; Auto-generated from SNMP:SERVER;MIB;LISP-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'lisp-mib)
 (eval-when (:load-toplevel :execute) (pushnew 'lisp-mib *mib-modules*))
+(setf *current-module* 'lisp-mib)
+(defpackage :asn.1/lisp-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
+                object-identity notification-type |enterprises|))
+(in-package :asn.1/lisp-mib)
 (defoid |lisp| (|enterprises| 31609)
   (:type 'module-identity)
   (:description "The MIB module for Lisp."))

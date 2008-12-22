@@ -2,9 +2,14 @@
 ;;;; Auto-generated from MIB:NET-SNMP;IANA-LANGUAGE-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'iana-language-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'iana-language-mib *mib-modules*))
+(setf *current-module* 'iana-language-mib)
+(defpackage :asn.1/iana-language-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-identity
+                |mib-2|))
+(in-package :asn.1/iana-language-mib)
 (defoid |ianaLanguages| (|mib-2| 73)
   (:type 'module-identity)
   (:description

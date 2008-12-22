@@ -2,9 +2,20 @@
 ;;;; Auto-generated from MIB:NET-SNMP;NET-SNMP-AGENT-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'net-snmp-agent-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'net-snmp-agent-mib *mib-modules*))
+(setf *current-module* 'net-snmp-agent-mib)
+(defpackage :asn.1/net-snmp-agent-mib
+  (:use :cl :asn.1)
+  (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|)
+  (:import-from :asn.1/net-snmp-mib |netSnmpObjects| |netSnmpModuleIDs|
+                |netSnmpNotifications| |netSnmpGroups|)
+  (:import-from :|ASN.1/SNMPv2-SMI| object-type notification-type
+                module-identity |Integer32| |Unsigned32|)
+  (:import-from :|ASN.1/SNMPv2-CONF| object-group notification-group)
+  (:import-from :|ASN.1/SNMPv2-TC| textual-convention |DisplayString|
+                |RowStatus| |TruthValue|))
+(in-package :asn.1/net-snmp-agent-mib)
 (defoid |netSnmpAgentMIB| (|netSnmpModuleIDs| 2)
   (:type 'module-identity)
   (:description

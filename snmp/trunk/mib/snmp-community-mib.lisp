@@ -2,9 +2,20 @@
 ;;;; Auto-generated from MIB:NET-SNMP;SNMP-COMMUNITY-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'snmp-community-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'snmp-community-mib *mib-modules*))
+(setf *current-module* 'snmp-community-mib)
+(defpackage :asn.1/snmp-community-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| |IpAddress| module-identity
+                object-type |Integer32| |snmpModules|)
+  (:import-from :|ASN.1/SNMPv2-TC| |RowStatus| |StorageType|)
+  (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|
+                |SnmpEngineID|)
+  (:import-from :asn.1/snmp-target-mib |SnmpTagValue|
+                |snmpTargetAddrEntry|)
+  (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group))
+(in-package :asn.1/snmp-community-mib)
 (defoid |snmpCommunityMIB| (|snmpModules| 18)
   (:type 'module-identity)
   (:description

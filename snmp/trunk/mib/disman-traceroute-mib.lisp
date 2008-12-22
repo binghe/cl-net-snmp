@@ -2,9 +2,24 @@
 ;;;; Auto-generated from MIB:NET-SNMP;DISMAN-TRACEROUTE-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'disman-traceroute-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'disman-traceroute-mib *mib-modules*))
+(setf *current-module* 'disman-traceroute-mib)
+(defpackage :asn.1/disman-traceroute-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
+                |Integer32| |Gauge32| |Unsigned32| |mib-2|
+                notification-type object-identity)
+  (:import-from :|ASN.1/SNMPv2-TC| |RowStatus| |StorageType|
+                |TruthValue| |DateAndTime|)
+  (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group
+                notification-group)
+  (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|)
+  (:import-from :asn.1/if-mib |InterfaceIndexOrZero|)
+  (:import-from :asn.1/inet-address-mib |InetAddressType|
+                |InetAddress|)
+  (:import-from :asn.1/disman-ping-mib |OperationResponseStatus|))
+(in-package :asn.1/disman-traceroute-mib)
 (defoid |traceRouteMIB| (|mib-2| 81)
   (:type 'module-identity)
   (:description

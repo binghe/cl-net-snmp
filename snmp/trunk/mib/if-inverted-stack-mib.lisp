@@ -2,9 +2,18 @@
 ;;;; Auto-generated from MIB:NET-SNMP;IF-INVERTED-STACK-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'if-inverted-stack-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'if-inverted-stack-mib *mib-modules*))
+(setf *current-module* 'if-inverted-stack-mib)
+(defpackage :asn.1/if-inverted-stack-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
+                |mib-2|)
+  (:import-from :|ASN.1/SNMPv2-TC| |RowStatus|)
+  (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
+  (:import-from :asn.1/if-mib |ifStackGroup2| |ifStackHigherLayer|
+                |ifStackLowerLayer|))
+(in-package :asn.1/if-inverted-stack-mib)
 (defoid |ifInvertedStackMIB| (|mib-2| 77)
   (:type 'module-identity)
   (:description

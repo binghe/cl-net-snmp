@@ -2,9 +2,18 @@
 ;;;; Auto-generated from MIB:NET-SNMP;NET-SNMP-SYSTEM-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'net-snmp-system-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'net-snmp-system-mib *mib-modules*))
+(setf *current-module* 'net-snmp-system-mib)
+(defpackage :asn.1/net-snmp-system-mib
+  (:use :cl :asn.1)
+  (:import-from :asn.1/net-snmp-mib |netSnmpObjects|
+                |netSnmpModuleIDs|)
+  (:import-from :asn.1/net-snmp-tc |Float|)
+  (:import-from :|ASN.1/SNMPv2-SMI| object-type notification-type
+                module-identity |Integer32| |Counter32|)
+  (:import-from :|ASN.1/SNMPv2-TC| |DisplayString|))
+(in-package :asn.1/net-snmp-system-mib)
 (defoid |netSnmpSystemMIB| (|netSnmpModuleIDs| 4)
   (:type 'module-identity)
   (:description "Characteristics of the current running system"))

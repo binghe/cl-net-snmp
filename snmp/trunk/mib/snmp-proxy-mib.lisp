@@ -2,9 +2,19 @@
 ;;;; Auto-generated from MIB:NET-SNMP;SNMP-PROXY-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'snmp-proxy-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'snmp-proxy-mib *mib-modules*))
+(setf *current-module* 'snmp-proxy-mib)
+(defpackage :asn.1/snmp-proxy-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
+                |snmpModules|)
+  (:import-from :|ASN.1/SNMPv2-TC| |RowStatus| |StorageType|)
+  (:import-from :asn.1/snmp-framework-mib |SnmpEngineID|
+                |SnmpAdminString|)
+  (:import-from :asn.1/snmp-target-mib |SnmpTagValue|)
+  (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group))
+(in-package :asn.1/snmp-proxy-mib)
 (defoid |snmpProxyMIB| (|snmpModules| 14)
   (:type 'module-identity)
   (:description

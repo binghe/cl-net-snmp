@@ -2,9 +2,22 @@
 ;;;; Auto-generated from MIB:NET-SNMP;OSPF-TRAP-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'ospf-trap-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'ospf-trap-mib *mib-modules*))
+(setf *current-module* 'ospf-trap-mib)
+(defpackage :asn.1/ospf-trap-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
+                notification-type |IpAddress|)
+  (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
+  (:import-from :asn.1/ospf-mib |ospfRouterId| |ospfIfIpAddress|
+                |ospfAddressLessIf| |ospfIfState| |ospfVirtIfAreaId|
+                |ospfVirtIfNeighbor| |ospfVirtIfState| |ospfNbrIpAddr|
+                |ospfNbrAddressLessIndex| |ospfNbrRtrId| |ospfNbrState|
+                |ospfVirtNbrArea| |ospfVirtNbrRtrId| |ospfVirtNbrState|
+                |ospfLsdbType| |ospfLsdbLsid| |ospfLsdbRouterId|
+                |ospfLsdbAreaId| |ospfExtLsdbLimit| |ospf|))
+(in-package :asn.1/ospf-trap-mib)
 (defoid |ospfTrap| (|ospf| 16)
   (:type 'module-identity)
   (:description

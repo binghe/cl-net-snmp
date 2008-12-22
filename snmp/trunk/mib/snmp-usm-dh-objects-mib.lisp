@@ -2,9 +2,18 @@
 ;;;; Auto-generated from MIB:NET-SNMP;SNMP-USM-DH-OBJECTS-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'snmp-usm-dh-objects-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'snmp-usm-dh-objects-mib *mib-modules*))
+(setf *current-module* 'snmp-usm-dh-objects-mib)
+(defpackage :asn.1/snmp-usm-dh-objects-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
+                |experimental| |Integer32|)
+  (:import-from :|ASN.1/SNMPv2-TC| textual-convention)
+  (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
+  (:import-from :asn.1/snmp-user-based-sm-mib |usmUserEntry|)
+  (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|))
+(in-package :asn.1/snmp-usm-dh-objects-mib)
 (defoid |snmpUsmDHObjectsMIB| (|experimental| 101)
   (:type 'module-identity)
   (:description
