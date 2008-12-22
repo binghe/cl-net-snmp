@@ -2,9 +2,11 @@
 ;;;; Auto-generated from MIB:NET-SNMP;SNMPV2-SMI.TXT
 
 (in-package :asn.1)
-(setf *current-module* '|SNMPv2-SMI|)
 (eval-when (:load-toplevel :execute)
   (pushnew '|SNMPv2-SMI| *mib-modules*))
+(setf *current-module* '|SNMPv2-SMI|)
+(defpackage :|ASN.1/SNMPv2-SMI| (:use :cl :asn.1))
+(in-package :|ASN.1/SNMPv2-SMI|)
 (defoid |org| (|iso| 3) (:type 'object-identity))
 (defoid |dod| (|org| 6) (:type 'object-identity))
 (defoid |internet| (|dod| 1) (:type 'object-identity))

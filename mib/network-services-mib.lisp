@@ -2,9 +2,17 @@
 ;;;; Auto-generated from MIB:NET-SNMP;NETWORK-SERVICES-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'network-services-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'network-services-mib *mib-modules*))
+(setf *current-module* 'network-services-mib)
+(defpackage :asn.1/network-services-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| object-type |Counter32| |Gauge32|
+                module-identity |mib-2|)
+  (:import-from :|ASN.1/SNMPv2-TC| |TimeStamp| textual-convention)
+  (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
+  (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|))
+(in-package :asn.1/network-services-mib)
 (defoid |application| (|mib-2| 27)
   (:type 'module-identity)
   (:description

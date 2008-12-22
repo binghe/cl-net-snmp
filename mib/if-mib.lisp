@@ -2,8 +2,21 @@
 ;;;; Auto-generated from MIB:NET-SNMP;IF-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'if-mib)
 (eval-when (:load-toplevel :execute) (pushnew 'if-mib *mib-modules*))
+(setf *current-module* 'if-mib)
+(defpackage :asn.1/if-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
+                |Counter32| |Gauge32| |Counter64| |Integer32|
+                |TimeTicks| |mib-2| notification-type)
+  (:import-from :|ASN.1/SNMPv2-TC| textual-convention |DisplayString|
+                |PhysAddress| |TruthValue| |RowStatus| |TimeStamp|
+                |AutonomousType| |TestAndIncr|)
+  (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group
+                notification-group)
+  (:import-from :|ASN.1/SNMPv2-MIB| |snmpTraps|)
+  (:import-from :|ASN.1/IANAifType-MIB| |IANAifType|))
+(in-package :asn.1/if-mib)
 (defoid |ifMIB| (|mib-2| 31)
   (:type 'module-identity)
   (:description

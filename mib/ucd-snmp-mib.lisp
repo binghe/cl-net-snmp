@@ -2,9 +2,17 @@
 ;;;; Auto-generated from MIB:NET-SNMP;UCD-SNMP-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'ucd-snmp-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'ucd-snmp-mib *mib-modules*))
+(setf *current-module* 'ucd-snmp-mib)
+(defpackage :asn.1/ucd-snmp-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| object-type notification-type
+                module-identity |Integer32| |Opaque| |enterprises|
+                |Counter32|)
+  (:import-from :|ASN.1/SNMPv2-TC| textual-convention |DisplayString|
+                |TruthValue|))
+(in-package :asn.1/ucd-snmp-mib)
 (defoid |ucdavis| (|enterprises| 2021)
   (:type 'module-identity)
   (:description

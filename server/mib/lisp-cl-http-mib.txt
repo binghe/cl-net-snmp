@@ -8,7 +8,7 @@ IMPORTS
     NOTIFICATION-TYPE, enterprises
         FROM SNMPv2-SMI
 
-    common-lisp FROM LISP-MIB;
+    lispPackages FROM LISP-MIB;
 
 cl-http MODULE-IDENTITY
     LAST-UPDATED "200807290000Z" -- 29 July 2008

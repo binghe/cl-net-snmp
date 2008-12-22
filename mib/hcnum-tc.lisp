@@ -2,8 +2,14 @@
 ;;;; Auto-generated from MIB:NET-SNMP;HCNUM-TC.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'hcnum-tc)
 (eval-when (:load-toplevel :execute) (pushnew 'hcnum-tc *mib-modules*))
+(setf *current-module* 'hcnum-tc)
+(defpackage :asn.1/hcnum-tc
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity |mib-2|
+                |Counter64|)
+  (:import-from :|ASN.1/SNMPv2-TC| textual-convention))
+(in-package :asn.1/hcnum-tc)
 (defoid |hcnumTC| (|mib-2| 78)
   (:type 'module-identity)
   (:description

@@ -2,9 +2,15 @@
 ;;;; Auto-generated from SNMP:SERVER;MIB;LISP-CMUCL-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'lisp-cmucl-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'lisp-cmucl-mib *mib-modules*))
+(setf *current-module* 'lisp-cmucl-mib)
+(defpackage :asn.1/lisp-cmucl-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
+                object-identity notification-type |enterprises|)
+  (:import-from :asn.1/lisp-mib |common-lisp|))
+(in-package :asn.1/lisp-cmucl-mib)
 (defoid |cmucl| (|common-lisp| 6)
   (:type 'module-identity)
   (:description "The MIB module for CMUCL"))

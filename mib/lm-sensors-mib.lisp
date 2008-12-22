@@ -2,9 +2,16 @@
 ;;;; Auto-generated from MIB:NET-SNMP;LM-SENSORS-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'lm-sensors-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'lm-sensors-mib *mib-modules*))
+(setf *current-module* 'lm-sensors-mib)
+(defpackage :asn.1/lm-sensors-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
+                |Integer32| |Gauge32|)
+  (:import-from :|ASN.1/SNMPv2-TC| |DisplayString|)
+  (:import-from :asn.1/ucd-snmp-mib |ucdExperimental|))
+(in-package :asn.1/lm-sensors-mib)
 (defoid |lmSensors| (|ucdExperimental| 16) (:type 'object-identity))
 (defoid |lmSensorsMIB| (|lmSensors| 1)
   (:type 'module-identity)

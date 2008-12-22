@@ -2,9 +2,12 @@
 ;;;; Auto-generated from MIB:NET-SNMP;BRIDGE-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'bridge-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'bridge-mib *mib-modules*))
+(defpackage :asn.1/bridge-mib
+  (:use :cl :asn.1)
+  (:import-from :asn.1/snmpv2-smi |Counter| |TimeTicks|))
+(in-package :asn.1/bridge-mib)
 (deftype |MacAddress| () 't)
 (deftype |BridgeId| () 't)
 (deftype |Timeout| () ':integer)

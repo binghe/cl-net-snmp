@@ -2,9 +2,21 @@
 ;;;; Auto-generated from MIB:NET-SNMP;TUNNEL-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'tunnel-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'tunnel-mib *mib-modules*))
+(setf *current-module* 'tunnel-mib)
+(defpackage :asn.1/tunnel-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
+                |transmission| |Integer32| |IpAddress|)
+  (:import-from :|ASN.1/SNMPv2-TC| |RowStatus| |StorageType|)
+  (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
+  (:import-from :asn.1/inet-address-mib |InetAddressType|
+                |InetAddress|)
+  (:import-from :asn.1/ipv6-flow-label-mib |IPv6FlowLabelOrAny|)
+  (:import-from :asn.1/if-mib |ifIndex| |InterfaceIndexOrZero|)
+  (:import-from :|ASN.1/IANAifType-MIB| |IANAtunnelType|))
+(in-package :asn.1/tunnel-mib)
 (defoid |tunnelMIB| (|transmission| 131)
   (:type 'module-identity)
   (:description

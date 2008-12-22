@@ -2,9 +2,23 @@
 ;;;; Auto-generated from MIB:NET-SNMP;DISMAN-PING-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'disman-ping-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'disman-ping-mib *mib-modules*))
+(setf *current-module* 'disman-ping-mib)
+(defpackage :asn.1/disman-ping-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
+                |Integer32| |Unsigned32| |Gauge32| |mib-2|
+                notification-type object-identity)
+  (:import-from :|ASN.1/SNMPv2-TC| textual-convention |RowStatus|
+                |StorageType| |DateAndTime| |TruthValue|)
+  (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group
+                notification-group)
+  (:import-from :asn.1/if-mib |InterfaceIndexOrZero|)
+  (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|)
+  (:import-from :asn.1/inet-address-mib |InetAddressType|
+                |InetAddress|))
+(in-package :asn.1/disman-ping-mib)
 (defoid |pingMIB| (|mib-2| 80)
   (:type 'module-identity)
   (:description

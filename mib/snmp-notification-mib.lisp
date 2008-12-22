@@ -2,9 +2,19 @@
 ;;;; Auto-generated from MIB:NET-SNMP;SNMP-NOTIFICATION-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'snmp-notification-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'snmp-notification-mib *mib-modules*))
+(setf *current-module* 'snmp-notification-mib)
+(defpackage :asn.1/snmp-notification-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
+                |snmpModules|)
+  (:import-from :|ASN.1/SNMPv2-TC| |RowStatus| |StorageType|)
+  (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|)
+  (:import-from :asn.1/snmp-target-mib |SnmpTagValue|
+                |snmpTargetParamsName|)
+  (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group))
+(in-package :asn.1/snmp-notification-mib)
 (defoid |snmpNotificationMIB| (|snmpModules| 13)
   (:type 'module-identity)
   (:description

@@ -2,9 +2,15 @@
 ;;;; Auto-generated from MIB:NET-SNMP;SNMP-USM-AES-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'snmp-usm-aes-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'snmp-usm-aes-mib *mib-modules*))
+(setf *current-module* 'snmp-usm-aes-mib)
+(defpackage :asn.1/snmp-usm-aes-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-identity
+                |snmpModules|)
+  (:import-from :asn.1/snmp-framework-mib |snmpPrivProtocols|))
+(in-package :asn.1/snmp-usm-aes-mib)
 (defoid |snmpUsmAesMIB| (|snmpModules| 20)
   (:type 'module-identity)
   (:description

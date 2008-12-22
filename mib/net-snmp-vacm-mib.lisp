@@ -2,9 +2,21 @@
 ;;;; Auto-generated from MIB:NET-SNMP;NET-SNMP-VACM-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'net-snmp-vacm-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'net-snmp-vacm-mib *mib-modules*))
+(setf *current-module* 'net-snmp-vacm-mib)
+(defpackage :asn.1/net-snmp-vacm-mib
+  (:use :cl :asn.1)
+  (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|)
+  (:import-from :asn.1/net-snmp-mib |netSnmpObjects| |netSnmpGroups|)
+  (:import-from :asn.1/snmp-view-based-acm-mib |vacmGroupName|
+                |vacmAccessContextPrefix| |vacmAccessSecurityModel|
+                |vacmAccessSecurityLevel|)
+  (:import-from :|ASN.1/SNMPv2-SMI| object-type module-identity)
+  (:import-from :|ASN.1/SNMPv2-CONF| object-group notification-group)
+  (:import-from :|ASN.1/SNMPv2-TC| textual-convention |DisplayString|
+                |RowStatus| |StorageType|))
+(in-package :asn.1/net-snmp-vacm-mib)
 (defoid |netSnmpVacmMIB| (|netSnmpObjects| 9)
   (:type 'module-identity)
   (:description

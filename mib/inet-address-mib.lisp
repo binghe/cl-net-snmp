@@ -2,9 +2,15 @@
 ;;;; Auto-generated from MIB:NET-SNMP;INET-ADDRESS-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'inet-address-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'inet-address-mib *mib-modules*))
+(setf *current-module* 'inet-address-mib)
+(defpackage :asn.1/inet-address-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity |mib-2|
+                |Unsigned32|)
+  (:import-from :|ASN.1/SNMPv2-TC| textual-convention))
+(in-package :asn.1/inet-address-mib)
 (defoid |inetAddressMIB| (|mib-2| 76)
   (:type 'module-identity)
   (:description

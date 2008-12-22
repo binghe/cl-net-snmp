@@ -2,9 +2,16 @@
 ;;;; Auto-generated from MIB:NET-SNMP;UCD-IPFWACC-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'ucd-ipfwacc-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'ucd-ipfwacc-mib *mib-modules*))
+(setf *current-module* 'ucd-ipfwacc-mib)
+(defpackage :asn.1/ucd-ipfwacc-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| object-type module-identity
+                |IpAddress| |Integer32| |Counter32|)
+  (:import-from :|ASN.1/SNMPv2-TC| |DisplayString|)
+  (:import-from :asn.1/ucd-snmp-mib |ucdExperimental|))
+(in-package :asn.1/ucd-ipfwacc-mib)
 (defoid |ucdIpFwAccMIB| (|ucdExperimental| 1)
   (:type 'module-identity)
   (:description

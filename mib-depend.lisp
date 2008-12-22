@@ -32,12 +32,19 @@
              |IANAifType-MIB|)
             (TRANSPORT-ADDRESS-MIB |SNMPv2-SMI| |SNMPv2-TC|)
             (TCP-MIB |SNMPv2-SMI| |SNMPv2-CONF| INET-ADDRESS-MIB)
-            (SOURCE-ROUTING-MIB SNMPV2-SMI BRIDGE-MIB)
-            (SMUX-MIB SNMPV2-SMI)
+            (SMUX-MIB |SNMPv2-SMI|)
             (RMON-MIB |SNMPv2-SMI| |SNMPv2-TC| |SNMPv2-CONF|)
-            (|RIPv2-MIB| |SNMPv2-SMI| |SNMPv2-TC| |SNMPv2-CONF|)
+            (|RIPv2-MIB|
+             |SNMPv2-SMI|
+             |SNMPv2-TC|
+             |SNMPv2-CONF|
+             |SNMPv2-SMI|)
             (OSPF-TRAP-MIB |SNMPv2-SMI| |SNMPv2-CONF| OSPF-MIB)
-            (OSPF-MIB |SNMPv2-SMI| |SNMPv2-TC| |SNMPv2-CONF|)
+            (OSPF-MIB
+             |SNMPv2-SMI|
+             |SNMPv2-TC|
+             |SNMPv2-CONF|
+             |SNMPv2-SMI|)
             (NOTIFICATION-LOG-MIB
              |SNMPv2-SMI|
              |SNMPv2-TC|
@@ -183,7 +190,6 @@
              |SNMPv2-MIB|
              SNMP-TARGET-MIB
              SNMP-FRAMEWORK-MIB)
-            (BRIDGE-MIB SNMPV2-SMI)
             (BGP4-MIB |SNMPv2-SMI| |SNMPv2-CONF|)
             (AGENTX-MIB
              |SNMPv2-SMI|

@@ -2,9 +2,19 @@
 ;;;; Auto-generated from MIB:NET-SNMP;NET-SNMP-EXAMPLES-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'net-snmp-examples-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'net-snmp-examples-mib *mib-modules*))
+(setf *current-module* 'net-snmp-examples-mib)
+(defpackage :asn.1/net-snmp-examples-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
+                |Integer32| notification-type)
+  (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|)
+  (:import-from :asn.1/net-snmp-mib |netSnmp|)
+  (:import-from :|ASN.1/SNMPv2-TC| |RowStatus| |StorageType|)
+  (:import-from :asn.1/inet-address-mib |InetAddressType|
+                |InetAddress|))
+(in-package :asn.1/net-snmp-examples-mib)
 (defoid |netSnmpExamples| (|netSnmp| 2)
   (:type 'module-identity)
   (:description

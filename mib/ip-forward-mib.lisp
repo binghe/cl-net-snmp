@@ -2,9 +2,21 @@
 ;;;; Auto-generated from MIB:NET-SNMP;IP-FORWARD-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'ip-forward-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'ip-forward-mib *mib-modules*))
+(setf *current-module* 'ip-forward-mib)
+(defpackage :asn.1/ip-forward-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
+                |IpAddress| |Integer32| |Gauge32| |Counter32|)
+  (:import-from :|ASN.1/SNMPv2-TC| |RowStatus|)
+  (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
+  (:import-from :asn.1/if-mib |InterfaceIndexOrZero|)
+  (:import-from :asn.1/ip-mib |ip|)
+  (:import-from :asn.1/iana-rtproto-mib |IANAipRouteProtocol|)
+  (:import-from :asn.1/inet-address-mib |InetAddress| |InetAddressType|
+                |InetAddressPrefixLength| |InetAutonomousSystemNumber|))
+(in-package :asn.1/ip-forward-mib)
 (defoid |ipForward| (|ip| 24)
   (:type 'module-identity)
   (:description

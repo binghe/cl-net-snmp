@@ -2,9 +2,15 @@
 ;;;; Auto-generated from MIB:NET-SNMP;HOST-RESOURCES-TYPES.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'host-resources-types)
 (eval-when (:load-toplevel :execute)
   (pushnew 'host-resources-types *mib-modules*))
+(setf *current-module* 'host-resources-types)
+(defpackage :asn.1/host-resources-types
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-identity)
+  (:import-from :asn.1/host-resources-mib |hrMIBAdminInfo| |hrStorage|
+                |hrDevice|))
+(in-package :asn.1/host-resources-types)
 (defoid |hostResourcesTypesModule| (|hrMIBAdminInfo| 4)
   (:type 'module-identity)
   (:description

@@ -2,9 +2,19 @@
 ;;;; Auto-generated from MIB:NET-SNMP;SNMP-VIEW-BASED-ACM-MIB.TXT
 
 (in-package :asn.1)
-(setf *current-module* 'snmp-view-based-acm-mib)
 (eval-when (:load-toplevel :execute)
   (pushnew 'snmp-view-based-acm-mib *mib-modules*))
+(setf *current-module* 'snmp-view-based-acm-mib)
+(defpackage :asn.1/snmp-view-based-acm-mib
+  (:use :cl :asn.1)
+  (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
+  (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
+                |snmpModules|)
+  (:import-from :|ASN.1/SNMPv2-TC| |TestAndIncr| |RowStatus|
+                |StorageType|)
+  (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|
+                |SnmpSecurityLevel| |SnmpSecurityModel|))
+(in-package :asn.1/snmp-view-based-acm-mib)
 (defoid |snmpVacmMIB| (|snmpModules| 16)
   (:type 'module-identity)
   (:description
