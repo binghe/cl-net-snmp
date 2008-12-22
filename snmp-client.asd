@@ -8,6 +8,8 @@
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
   :version "1.0"
   :licence "MIT"
-  :depends-on (:snmp-base)
-  :components ((:module "client"
+  :depends-on (:snmp-base
+               :snmp-mib)
+  :components ((:file "snmp-trap")
+               (:module "client"
 		:components ((:file "table")))))

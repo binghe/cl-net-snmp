@@ -1,23 +1,12 @@
 ;;;; -*- Mode: Lisp -*-
 ;;;; $Id$
 
-(in-package :cl-user)
+;;;; XX
+
+(in-package :asdf)
 
 #+(and lispworks4 win32)
 (pushnew :mswindows *features*)
-
-(defpackage snmp-system
-  (:use :common-lisp :asdf))
-
-(in-package :snmp-system)
-
-(defparameter *mib.lisp-expr*
-  (with-open-file
-      (s (merge-pathnames (make-pathname :name "mib"
-                                         :type "lisp-expr")
-                          *load-truename*)
-         :direction :input)
-    (read s)))
 
 (defsystem snmp-base
   :description "SNMP Base System"
@@ -44,8 +33,5 @@
                (:file "request"     :depends-on ("report" "pdu"))
                (:file "snmp-get"    :depends-on ("request"))
                (:file "snmp-walk"   :depends-on ("request" "snmp-smi"))
-               (:file "snmp-trap"   :depends-on ("report" "mib"))
-               (:file "worker"      :depends-on ("session"))
-               (:file "mib-depend"  :depends-on ("package"))
-               (:module "mib"       :depends-on ("package")
-                :components #.*mib.lisp-expr*)))
+               (:file "worker"      :depends-on ("session"))))
+

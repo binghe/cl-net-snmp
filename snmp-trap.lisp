@@ -3,7 +3,8 @@
 
 (in-package :snmp)
 
-(defvar *default-trap-enterprise* asn.1::|enterprises| "enterprises")
+(defvar *default-trap-enterprise*
+  |ASN.1/SNMPv2-SMI|::|enterprises| "enterprises")
 
 (defgeneric snmp-trap (session vars &key &allow-other-keys)
   (:documentation "SNMP Trap"))
