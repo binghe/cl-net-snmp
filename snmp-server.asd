@@ -8,7 +8,8 @@
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
   :version "4.0"
   :licence "MIT"
-  :depends-on (:snmp-base)
+  :depends-on (:snmp-base
+               :snmp-mib)
   :components ((:file "server-condition")
                (:file "snmp-server" :depends-on ("server-condition"))
                (:file "server-vacm" :depends-on ("snmp-server"))
