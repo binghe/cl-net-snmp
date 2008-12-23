@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from SNMP:SERVER;MIB;LISP-SBCL-MIB.TXT
+;;;; Auto-generated from MIB:LISP;LISP-SBCL-MIB.TXT
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)

@@ -1,4 +1,4 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from SNMP:SERVER;MIB;LISP-CLOZURE-MIB.TXT
+;;;; Auto-generated from MIB:LISP;LISP-CLOZURE-MIB.TXT
 
 (lisp-clozure-mib |SNMPv2-SMI| lisp-mib)

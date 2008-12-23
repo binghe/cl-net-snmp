@@ -1,4 +1,4 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from SNMP:SERVER;MIB;LISP-SBCL-MIB.TXT
+;;;; Auto-generated from MIB:LISP;LISP-SBCL-MIB.TXT
 
 (lisp-sbcl-mib |SNMPv2-SMI| lisp-mib)
