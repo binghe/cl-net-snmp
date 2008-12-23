@@ -57,19 +57,17 @@
   (let* ((defaults #+asdf (asdf:component-pathname (asdf:find-system :snmp))
                    #-asdf *load-truename*)
          (home (make-pathname :name :wild :type :wild
-                              :directory (append (pathname-directory defaults
-								     :case :common)
+                              :directory (append (pathname-directory defaults)
                                                  '(:wild-inferiors))
-                              :host (pathname-host defaults :case :common)
+                              :host (pathname-host defaults)
                               :defaults defaults
-			      :version :newest
-			      :case :common)))
+			      :version :newest)))
     (setf (logical-pathname-translations "SNMP")
           `(("**;*.*.NEWEST" ,home)
 	    ("**;*.*" ,home))
           (logical-pathname-translations "MIB")
-          `(("**;*.*.NEWEST" "SNMP:ASN;**;*.*")
-            ("**;*.*" "SNMP:ASN;**;*.*")))))
+          `(("**;*.*.NEWEST" "SNMP:ASN1;**;*.*")
+            ("**;*.*" "SNMP:ASN1;**;*.*")))))
 
 (defparameter *major-version* 6)
 (defparameter *minor-version* 0)
