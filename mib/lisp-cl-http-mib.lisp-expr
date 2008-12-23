@@ -1,4 +1,4 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from SNMP:SERVER;MIB;LISP-CL-HTTP-MIB.TXT
+;;;; Auto-generated from MIB:LISP;LISP-CL-HTTP-MIB.TXT
 
 (lisp-cl-http-mib |SNMPv2-SMI| lisp-mib)
