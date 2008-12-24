@@ -34,7 +34,8 @@
         (format nil "~D" value)))))
 
 (defun display-graph-selection (interface data)
-  (with-slots (display oid-type oid-syntax oid-max-access oid-status) interface
+  (with-slots (display oid-type oid-syntax oid-max-access oid-status oid-module)
+      interface
     (capi:with-atomic-redisplay ()
       (setf (capi:display-pane-text display)
             (format nil "~{.~A~} (~{.~D~})"
@@ -50,7 +51,10 @@
                 (format nil "~A" (asn.1::oid-max-access data)))
             (capi:display-pane-text oid-status)
             (if (slot-boundp data 'asn.1::status)
-                (format nil "~A" (asn.1::oid-status data)))))))
+                (format nil "~A" (asn.1::oid-status data)))
+            (capi:display-pane-text oid-module)
+            (if (slot-boundp data 'asn.1::module)
+                (format nil "~A" (asn.1::oid-module data)))))))
 
 (defun search-callback (interface data)
   (let ((g (mibrowser-mib-graph interface))
@@ -113,7 +117,9 @@
    (oid-max-access-label capi:title-pane :text "Max Access: ")
    (oid-max-access capi:display-pane :visible-min-width '(:character 20))
    (oid-status-label capi:title-pane :text "Status: ")
-   (oid-status capi:display-pane :visible-min-width '(:character 20)))
+   (oid-status capi:display-pane :visible-min-width '(:character 20))
+   (oid-module-label capi:title-pane :text "Module: ")
+   (oid-module capi:display-pane :visible-min-width '(:character 20)))
   (:layouts
    (mibrowser-layout capi:column-layout '(head-layout main-layout))
    (head-layout capi:row-layout '(search title display)
@@ -121,9 +127,11 @@
    (main-layout capi:row-layout '(module-list :divider mib-graph-and-oid))
    (mib-graph-and-oid capi:column-layout '(mib-graph oid-layout))
    (oid-layout capi:grid-layout '(oid-type-label oid-type
+                                  #+ignore #+ignore
                                   oid-syntax-label oid-syntax
                                   oid-max-access-label oid-max-access
-                                  oid-status-label oid-status)
+                                  oid-status-label oid-status
+                                  oid-module-label oid-module)
                :y-adjust :center
                :columns 4))
   (:menu-bar #+ignore application-menu file help)
