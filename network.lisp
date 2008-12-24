@@ -74,3 +74,23 @@
              (socket-send (socket-of session) data data-length
                           :host (host-of session)
                           :port (port-of session))))))
+
+;;; Send/receive multiple SNMP message once
+
+(defun send-snmp-messages (engine requests)
+  (declare (type list requests)
+           (ignore engine))
+  (let ((work-list (cons (list-length requests)
+                         (mapcar #'(lambda (x)
+                                     (destructuring-bind (session message) x
+                                       (make-instance 'snmp-operation
+                                                      :session session
+                                                      :message message)))
+                                 requests))))
+    ;; connect the list together
+    (nconc work-list work-list)
+    (sm-0 work-list)))
+
+(defun sm-0 (work-list)
+  (declare (type list work-list))
+  work-list)
