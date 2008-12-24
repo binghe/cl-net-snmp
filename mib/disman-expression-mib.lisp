@@ -1,12 +1,13 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;DISMAN-EXPRESSION-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;DISMAN-EXPRESSION-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'disman-expression-mib *mib-modules*))
-(setf *current-module* 'disman-expression-mib)
+  (pushnew 'disman-expression-mib *mib-modules*)
+  (setf *current-module* 'disman-expression-mib))
 (defpackage :asn.1/disman-expression-mib
-  (:use :cl :asn.1)
+  (:nicknames :disman-expression-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |Integer32| |Gauge32| |Unsigned32| |Counter32|
                 |Counter64| |IpAddress| |TimeTicks| |mib-2|
@@ -16,7 +17,7 @@
   (:import-from :|ASN.1/SNMPv2-MIB| |sysUpTime|)
   (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group))
-(in-package :asn.1/disman-expression-mib)
+(in-package :disman-expression-mib)
 (defoid |dismanExpressionMIB| (|mib-2| 90)
   (:type 'module-identity)
   (:description
@@ -945,3 +946,4 @@
   (:type 'object-group)
   (:status '|current|)
   (:description "Expression value."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

@@ -1,12 +1,13 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;NET-SNMP-VACM-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;NET-SNMP-VACM-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'net-snmp-vacm-mib *mib-modules*))
-(setf *current-module* 'net-snmp-vacm-mib)
+  (pushnew 'net-snmp-vacm-mib *mib-modules*)
+  (setf *current-module* 'net-snmp-vacm-mib))
 (defpackage :asn.1/net-snmp-vacm-mib
-  (:use :cl :asn.1)
+  (:nicknames :net-snmp-vacm-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|)
   (:import-from :asn.1/net-snmp-mib |netSnmpObjects| |netSnmpGroups|)
   (:import-from :asn.1/snmp-view-based-acm-mib |vacmGroupName|
@@ -16,7 +17,7 @@
   (:import-from :|ASN.1/SNMPv2-CONF| object-group notification-group)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention |DisplayString|
                 |RowStatus| |StorageType|))
-(in-package :asn.1/net-snmp-vacm-mib)
+(in-package :net-snmp-vacm-mib)
 (defoid |netSnmpVacmMIB| (|netSnmpObjects| 9)
   (:type 'module-identity)
   (:description
@@ -107,3 +108,4 @@
                  all nsVacmAccessEntries corresponding to a single
                  row of the vacmAccessTable.
                 "))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

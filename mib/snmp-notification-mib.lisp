@@ -1,12 +1,13 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;SNMP-NOTIFICATION-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;SNMP-NOTIFICATION-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'snmp-notification-mib *mib-modules*))
-(setf *current-module* 'snmp-notification-mib)
+  (pushnew 'snmp-notification-mib *mib-modules*)
+  (setf *current-module* 'snmp-notification-mib))
 (defpackage :asn.1/snmp-notification-mib
-  (:use :cl :asn.1)
+  (:nicknames :snmp-notification-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |snmpModules|)
   (:import-from :|ASN.1/SNMPv2-TC| |RowStatus| |StorageType|)
@@ -14,7 +15,7 @@
   (:import-from :asn.1/snmp-target-mib |SnmpTagValue|
                 |snmpTargetParamsName|)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group))
-(in-package :asn.1/snmp-notification-mib)
+(in-package :snmp-notification-mib)
 (defoid |snmpNotificationMIB| (|snmpModules| 13)
   (:type 'module-identity)
   (:description
@@ -346,3 +347,4 @@
   (:description
    "A collection of objects providing remote configuration
          of notification filters."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

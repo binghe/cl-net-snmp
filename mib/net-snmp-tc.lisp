@@ -1,17 +1,18 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;NET-SNMP-TC.TXT
+;;;; Auto-generated from MIB:NET-SNMP;NET-SNMP-TC.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'net-snmp-tc *mib-modules*))
-(setf *current-module* 'net-snmp-tc)
+  (pushnew 'net-snmp-tc *mib-modules*)
+  (setf *current-module* 'net-snmp-tc))
 (defpackage :asn.1/net-snmp-tc
-  (:use :cl :asn.1)
+  (:nicknames :net-snmp-tc)
+  (:use :common-lisp :asn.1)
   (:import-from :asn.1/net-snmp-mib |netSnmpModuleIDs|
                 |netSnmpAgentOIDs| |netSnmpDomains|)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity |Opaque|)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention))
-(in-package :asn.1/net-snmp-tc)
+(in-package :net-snmp-tc)
 (defoid |netSnmpTCs| (|netSnmpModuleIDs| 1)
   (:type 'module-identity)
   (:description
@@ -46,3 +47,4 @@
   (:type 'object-identity))
 (defoid |netSnmpCallbackDomain| (|netSnmpDomains| 6)
   (:type 'object-identity))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

@@ -1,15 +1,16 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;IANA-RTPROTO-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;IANA-RTPROTO-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'iana-rtproto-mib *mib-modules*))
-(setf *current-module* 'iana-rtproto-mib)
+  (pushnew 'iana-rtproto-mib *mib-modules*)
+  (setf *current-module* 'iana-rtproto-mib))
 (defpackage :asn.1/iana-rtproto-mib
-  (:use :cl :asn.1)
+  (:nicknames :iana-rtproto-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity |mib-2|)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention))
-(in-package :asn.1/iana-rtproto-mib)
+(in-package :iana-rtproto-mib)
 (defoid |ianaRtProtoMIB| (|mib-2| 84)
   (:type 'module-identity)
   (:description
@@ -26,3 +27,4 @@
             Area."))
 (deftype |IANAipRouteProtocol| () 't)
 (deftype |IANAipMRouteProtocol| () 't)
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

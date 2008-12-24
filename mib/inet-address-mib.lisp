@@ -1,16 +1,17 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;INET-ADDRESS-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;INET-ADDRESS-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'inet-address-mib *mib-modules*))
-(setf *current-module* 'inet-address-mib)
+  (pushnew 'inet-address-mib *mib-modules*)
+  (setf *current-module* 'inet-address-mib))
 (defpackage :asn.1/inet-address-mib
-  (:use :cl :asn.1)
+  (:nicknames :inet-address-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity |mib-2|
                 |Unsigned32|)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention))
-(in-package :asn.1/inet-address-mib)
+(in-package :inet-address-mib)
 (defoid |inetAddressMIB| (|mib-2| 76)
   (:type 'module-identity)
   (:description
@@ -38,3 +39,4 @@
 (deftype |InetScopeType| () 't)
 (deftype |InetZoneIndex| () 't)
 (deftype |InetVersion| () 't)
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

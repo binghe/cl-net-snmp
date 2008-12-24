@@ -1,12 +1,13 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;SNMP-COMMUNITY-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;SNMP-COMMUNITY-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'snmp-community-mib *mib-modules*))
-(setf *current-module* 'snmp-community-mib)
+  (pushnew 'snmp-community-mib *mib-modules*)
+  (setf *current-module* 'snmp-community-mib))
 (defpackage :asn.1/snmp-community-mib
-  (:use :cl :asn.1)
+  (:nicknames :snmp-community-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| |IpAddress| module-identity
                 object-type |Integer32| |snmpModules|)
   (:import-from :|ASN.1/SNMPv2-TC| |RowStatus| |StorageType|)
@@ -15,7 +16,7 @@
   (:import-from :asn.1/snmp-target-mib |SnmpTagValue|
                 |snmpTargetAddrEntry|)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group))
-(in-package :asn.1/snmp-community-mib)
+(in-package :snmp-community-mib)
 (defoid |snmpCommunityMIB| (|snmpModules| 18)
   (:type 'module-identity)
   (:description
@@ -260,3 +261,4 @@
          used to preserve SNMPv1-specific information when
 
          translating to SNMPv2c or SNMPv3."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

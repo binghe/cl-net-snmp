@@ -1,18 +1,20 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;MTA-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;MTA-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
-(eval-when (:load-toplevel :execute) (pushnew 'mta-mib *mib-modules*))
-(setf *current-module* 'mta-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'mta-mib *mib-modules*)
+  (setf *current-module* 'mta-mib))
 (defpackage :asn.1/mta-mib
-  (:use :cl :asn.1)
+  (:nicknames :mta-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| object-type |Counter32| |Gauge32|
                 module-identity |mib-2|)
   (:import-from :|ASN.1/SNMPv2-TC| |TimeInterval|)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
   (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|)
   (:import-from :asn.1/network-services-mib |applIndex| |URLString|))
-(in-package :asn.1/mta-mib)
+(in-package :mta-mib)
 (defoid |mta| (|mib-2| 28)
   (:type 'module-identity)
   (:description
@@ -776,3 +778,4 @@
    "A collection of objects providing monitoring of
       detailed MTA errors.  This is the appropriate group
       for RFC 2789 error monitoring."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

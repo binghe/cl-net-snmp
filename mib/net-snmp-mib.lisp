@@ -1,14 +1,15 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;NET-SNMP-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;NET-SNMP-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'net-snmp-mib *mib-modules*))
-(setf *current-module* 'net-snmp-mib)
+  (pushnew 'net-snmp-mib *mib-modules*)
+  (setf *current-module* 'net-snmp-mib))
 (defpackage :asn.1/net-snmp-mib
-  (:use :cl :asn.1)
+  (:nicknames :net-snmp-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity |enterprises|))
-(in-package :asn.1/net-snmp-mib)
+(in-package :net-snmp-mib)
 (defoid |netSnmp| (|enterprises| 8072)
   (:type 'module-identity)
   (:description
@@ -35,3 +36,4 @@
   (:type 'object-identity))
 (defoid |netSnmpGroups| (|netSnmpConformance| 2)
   (:type 'object-identity))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

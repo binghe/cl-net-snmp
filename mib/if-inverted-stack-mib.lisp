@@ -1,19 +1,20 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;IF-INVERTED-STACK-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;IF-INVERTED-STACK-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'if-inverted-stack-mib *mib-modules*))
-(setf *current-module* 'if-inverted-stack-mib)
+  (pushnew 'if-inverted-stack-mib *mib-modules*)
+  (setf *current-module* 'if-inverted-stack-mib))
 (defpackage :asn.1/if-inverted-stack-mib
-  (:use :cl :asn.1)
+  (:nicknames :if-inverted-stack-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |mib-2|)
   (:import-from :|ASN.1/SNMPv2-TC| |RowStatus|)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
   (:import-from :asn.1/if-mib |ifStackGroup2| |ifStackHigherLayer|
                 |ifStackLowerLayer|))
-(in-package :asn.1/if-inverted-stack-mib)
+(in-package :if-inverted-stack-mib)
 (defoid |ifInvertedStackMIB| (|mib-2| 77)
   (:type 'module-identity)
   (:description
@@ -104,3 +105,4 @@
   (:description
    "A collection of objects providing inverted information on
           the layering of MIB-II interfaces."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

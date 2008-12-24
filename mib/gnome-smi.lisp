@@ -1,14 +1,16 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;GNOME-SMI.TXT
+;;;; Auto-generated from MIB:NET-SNMP;GNOME-SMI.TXT by ASN.1 5.0
 
 (in-package :asn.1)
-(eval-when (:load-toplevel :execute) (pushnew 'gnome-smi *mib-modules*))
-(setf *current-module* 'gnome-smi)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'gnome-smi *mib-modules*)
+  (setf *current-module* 'gnome-smi))
 (defpackage :asn.1/gnome-smi
-  (:use :cl :asn.1)
+  (:nicknames :gnome-smi)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-identity
                 |enterprises|))
-(in-package :asn.1/gnome-smi)
+(in-package :gnome-smi)
 (defoid |gnome| (|enterprises| 3319)
   (:type 'module-identity)
   (:description "The Structure of GNOME."))
@@ -42,3 +44,4 @@
   (:description
    "gnomeLDAP defines the subtree for GNOME related LDAP
 		registrations."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

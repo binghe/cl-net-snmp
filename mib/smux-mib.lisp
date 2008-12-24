@@ -1,13 +1,15 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;SMUX-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;SMUX-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
-(eval-when (:load-toplevel :execute) (pushnew 'smux-mib *mib-modules*))
-(setf *current-module* 'smux-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'smux-mib *mib-modules*)
+  (setf *current-module* 'smux-mib))
 (defpackage :asn.1/smux-mib
-  (:use :cl :asn.1)
+  (:nicknames :smux-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| |enterprises|))
-(in-package :asn.1/smux-mib)
+(in-package :smux-mib)
 (defoid |unix| (|enterprises| 4) (:type 'object-identity))
 (defoid |smux| (|unix| 4) (:type 'object-identity))
 (defoid |smuxPeerTable| (|smux| 1)
@@ -98,3 +100,4 @@
             entries not currently in use.  Proper
             interpretation of such entries requires
             examination of the relative smuxTstatus object."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

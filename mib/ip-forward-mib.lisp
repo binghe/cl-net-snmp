@@ -1,12 +1,13 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;IP-FORWARD-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;IP-FORWARD-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'ip-forward-mib *mib-modules*))
-(setf *current-module* 'ip-forward-mib)
+  (pushnew 'ip-forward-mib *mib-modules*)
+  (setf *current-module* 'ip-forward-mib))
 (defpackage :asn.1/ip-forward-mib
-  (:use :cl :asn.1)
+  (:nicknames :ip-forward-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |IpAddress| |Integer32| |Gauge32| |Counter32|)
   (:import-from :|ASN.1/SNMPv2-TC| |RowStatus|)
@@ -16,7 +17,7 @@
   (:import-from :asn.1/iana-rtproto-mib |IANAipRouteProtocol|)
   (:import-from :asn.1/inet-address-mib |InetAddress| |InetAddressType|
                 |InetAddressPrefixLength| |InetAutonomousSystemNumber|))
-(in-package :asn.1/ip-forward-mib)
+(in-package :ip-forward-mib)
 (defoid |ipForward| (|ip| 24)
   (:type 'module-identity)
   (:description
@@ -869,3 +870,4 @@
   (:type 'object-group)
   (:status '|obsolete|)
   (:description "IP Multipath Route Table."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

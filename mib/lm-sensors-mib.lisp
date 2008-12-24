@@ -1,17 +1,18 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;LM-SENSORS-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;LM-SENSORS-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'lm-sensors-mib *mib-modules*))
-(setf *current-module* 'lm-sensors-mib)
+  (pushnew 'lm-sensors-mib *mib-modules*)
+  (setf *current-module* 'lm-sensors-mib))
 (defpackage :asn.1/lm-sensors-mib
-  (:use :cl :asn.1)
+  (:nicknames :lm-sensors-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |Integer32| |Gauge32|)
   (:import-from :|ASN.1/SNMPv2-TC| |DisplayString|)
   (:import-from :asn.1/ucd-snmp-mib |ucdExperimental|))
-(in-package :asn.1/lm-sensors-mib)
+(in-package :lm-sensors-mib)
 (defoid |lmSensors| (|ucdExperimental| 16) (:type 'object-identity))
 (defoid |lmSensorsMIB| (|lmSensors| 1)
   (:type 'module-identity)
@@ -142,3 +143,4 @@
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The value of this sensor."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

@@ -1,12 +1,13 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;DISMAN-EVENT-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;DISMAN-EVENT-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'disman-event-mib *mib-modules*))
-(setf *current-module* 'disman-event-mib)
+  (pushnew 'disman-event-mib *mib-modules*)
+  (setf *current-module* 'disman-event-mib))
 (defpackage :asn.1/disman-event-mib
-  (:use :cl :asn.1)
+  (:nicknames :disman-event-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |Integer32| |Unsigned32| notification-type |Counter32|
                 |Gauge32| |mib-2| |zeroDotZero|)
@@ -17,7 +18,7 @@
   (:import-from :|ASN.1/SNMPv2-MIB| |sysUpTime|)
   (:import-from :asn.1/snmp-target-mib |SnmpTagValue|)
   (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|))
-(in-package :asn.1/disman-event-mib)
+(in-package :disman-event-mib)
 (defoid |dismanEventMIB| (|mib-2| 88)
   (:type 'module-identity)
   (:description
@@ -1320,3 +1321,4 @@
   (:type 'notification-group)
   (:status '|current|)
   (:description "Notifications."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

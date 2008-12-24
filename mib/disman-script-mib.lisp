@@ -1,12 +1,13 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;DISMAN-SCRIPT-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;DISMAN-SCRIPT-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'disman-script-mib *mib-modules*))
-(setf *current-module* 'disman-script-mib)
+  (pushnew 'disman-script-mib *mib-modules*)
+  (setf *current-module* 'disman-script-mib))
 (defpackage :asn.1/disman-script-mib
-  (:use :cl :asn.1)
+  (:nicknames :disman-script-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 notification-type |Integer32| |Unsigned32| |mib-2|)
   (:import-from :|ASN.1/SNMPv2-TC| |RowStatus| |TimeInterval|
@@ -14,7 +15,7 @@
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group
                 notification-group)
   (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|))
-(in-package :asn.1/disman-script-mib)
+(in-package :disman-script-mib)
 (defoid |scriptMIB| (|mib-2| 64)
   (:type 'module-identity)
   (:description
@@ -1238,3 +1239,4 @@
   (:type 'notification-group)
   (:status '|deprecated|)
   (:description "The notifications emitted by the Script MIB."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

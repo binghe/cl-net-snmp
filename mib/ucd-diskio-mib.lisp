@@ -1,17 +1,18 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;UCD-DISKIO-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;UCD-DISKIO-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'ucd-diskio-mib *mib-modules*))
-(setf *current-module* 'ucd-diskio-mib)
+  (pushnew 'ucd-diskio-mib *mib-modules*)
+  (setf *current-module* 'ucd-diskio-mib))
 (defpackage :asn.1/ucd-diskio-mib
-  (:use :cl :asn.1)
+  (:nicknames :ucd-diskio-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |Integer32| |Counter32| |Counter64|)
   (:import-from :|ASN.1/SNMPv2-TC| |DisplayString|)
   (:import-from :asn.1/ucd-snmp-mib |ucdExperimental|))
-(in-package :asn.1/ucd-diskio-mib)
+(in-package :ucd-diskio-mib)
 (defoid |ucdDiskIOMIB| (|ucdExperimental| 15)
   (:type 'module-identity)
   (:description
@@ -102,3 +103,4 @@
   (:status '|current|)
   (:description
    "The number of bytes written to this device since boot."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

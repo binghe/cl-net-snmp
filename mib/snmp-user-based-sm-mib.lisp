@@ -1,12 +1,13 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;SNMP-USER-BASED-SM-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;SNMP-USER-BASED-SM-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'snmp-user-based-sm-mib *mib-modules*))
-(setf *current-module* 'snmp-user-based-sm-mib)
+  (pushnew 'snmp-user-based-sm-mib *mib-modules*)
+  (setf *current-module* 'snmp-user-based-sm-mib))
 (defpackage :asn.1/snmp-user-based-sm-mib
-  (:use :cl :asn.1)
+  (:nicknames :snmp-user-based-sm-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 object-identity |snmpModules| |Counter32|)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention |TestAndIncr|
@@ -15,7 +16,7 @@
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
   (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|
                 |SnmpEngineID| |snmpAuthProtocols| |snmpPrivProtocols|))
-(in-package :asn.1/snmp-user-based-sm-mib)
+(in-package :snmp-user-based-sm-mib)
 (defoid |snmpUsmMIB| (|snmpModules| 15)
   (:type 'module-identity)
   (:description
@@ -617,3 +618,4 @@
                  of an SNMP engine which implements the SNMP
                  User-based Security Model.
                 "))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

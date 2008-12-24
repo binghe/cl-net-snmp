@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;DISMAN-NSLOOKUP-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;DISMAN-NSLOOKUP-MIB.TXT by ASN.1 5.0
 
 (disman-nslookup-mib
  |SNMPv2-SMI|
