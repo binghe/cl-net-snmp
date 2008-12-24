@@ -4,6 +4,15 @@
 (in-package :snmp)
 
 (defclass snmp-operation ()
+  ((session :type session
+            :reader session-of
+            :initarg :session)
+   (message :type message
+            :reader message-of
+            :initarg :message)))
+
+#+ignore
+(defclass snmp-operation ()
   ((session   :type session
               :reader session-of
               :initarg :session)

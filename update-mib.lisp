@@ -148,5 +148,5 @@
                              ',mib-depend.lisp))))
         (pprint i s))
       (terpri s))
-    (load #p"SNMP:SNMP.ASD")
+    (load #p"SNMP:SNMP-MIB.ASD")
     (pprint mib.lisp-expr)))
