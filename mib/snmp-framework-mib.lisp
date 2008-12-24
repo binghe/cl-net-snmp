@@ -1,17 +1,18 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;SNMP-FRAMEWORK-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;SNMP-FRAMEWORK-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'snmp-framework-mib *mib-modules*))
-(setf *current-module* 'snmp-framework-mib)
+  (pushnew 'snmp-framework-mib *mib-modules*)
+  (setf *current-module* 'snmp-framework-mib))
 (defpackage :asn.1/snmp-framework-mib
-  (:use :cl :asn.1)
+  (:nicknames :snmp-framework-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 object-identity |snmpModules|)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group))
-(in-package :asn.1/snmp-framework-mib)
+(in-package :snmp-framework-mib)
 (defoid |snmpFrameworkMIB| (|snmpModules| 10)
   (:type 'module-identity)
   (:description
@@ -117,3 +118,4 @@
 
                  values of an SNMP engine.
                 "))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

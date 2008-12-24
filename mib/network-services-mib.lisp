@@ -1,18 +1,19 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;NETWORK-SERVICES-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;NETWORK-SERVICES-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'network-services-mib *mib-modules*))
-(setf *current-module* 'network-services-mib)
+  (pushnew 'network-services-mib *mib-modules*)
+  (setf *current-module* 'network-services-mib))
 (defpackage :asn.1/network-services-mib
-  (:use :cl :asn.1)
+  (:nicknames :network-services-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| object-type |Counter32| |Gauge32|
                 module-identity |mib-2|)
   (:import-from :|ASN.1/SNMPv2-TC| |TimeStamp| textual-convention)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
   (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|))
-(in-package :asn.1/network-services-mib)
+(in-package :network-services-mib)
 (defoid |application| (|mib-2| 27)
   (:type 'module-identity)
   (:description
@@ -395,3 +396,4 @@
        the appropriate group for RFC 2788."))
 (defoid |applTCPProtoID| (|application| 4) (:type 'object-identity))
 (defoid |applUDPProtoID| (|application| 5) (:type 'object-identity))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

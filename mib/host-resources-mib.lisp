@@ -1,19 +1,20 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;HOST-RESOURCES-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;HOST-RESOURCES-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'host-resources-mib *mib-modules*))
-(setf *current-module* 'host-resources-mib)
+  (pushnew 'host-resources-mib *mib-modules*)
+  (setf *current-module* 'host-resources-mib))
 (defpackage :asn.1/host-resources-mib
-  (:use :cl :asn.1)
+  (:nicknames :host-resources-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type |mib-2|
                 |Integer32| |Counter32| |Gauge32| |TimeTicks|)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention |DisplayString|
                 |TruthValue| |DateAndTime| |AutonomousType|)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
   (:import-from :asn.1/if-mib |InterfaceIndexOrZero|))
-(in-package :asn.1/host-resources-mib)
+(in-package :host-resources-mib)
 (defoid |host| (|mib-2| 25) (:type 'object-identity))
 (defoid |hrSystem| (|host| 1) (:type 'object-identity))
 (defoid |hrStorage| (|host| 2) (:type 'object-identity))
@@ -1017,3 +1018,4 @@
   (:type 'object-group)
   (:status '|current|)
   (:description "The Host Resources Installed Software Group."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

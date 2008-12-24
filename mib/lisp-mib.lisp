@@ -1,14 +1,16 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:LISP;LISP-MIB.TXT
+;;;; Auto-generated from MIB:LISP;LISP-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
-(eval-when (:load-toplevel :execute) (pushnew 'lisp-mib *mib-modules*))
-(setf *current-module* 'lisp-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'lisp-mib *mib-modules*)
+  (setf *current-module* 'lisp-mib))
 (defpackage :asn.1/lisp-mib
-  (:use :cl :asn.1)
+  (:nicknames :lisp-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 object-identity notification-type |enterprises|))
-(in-package :asn.1/lisp-mib)
+(in-package :lisp-mib)
 (defoid |lisp| (|enterprises| 31609)
   (:type 'module-identity)
   (:description "The MIB module for Lisp."))
@@ -319,3 +321,4 @@
   (:type 'object-identity))
 (defoid |clNetSnmpAgentSCL| (|clNetSnmpAgentOIDs| 10)
   (:type 'object-identity))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

@@ -1,12 +1,13 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;SNMP-TARGET-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;SNMP-TARGET-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'snmp-target-mib *mib-modules*))
-(setf *current-module* 'snmp-target-mib)
+  (pushnew 'snmp-target-mib *mib-modules*)
+  (setf *current-module* 'snmp-target-mib))
 (defpackage :asn.1/snmp-target-mib
-  (:use :cl :asn.1)
+  (:nicknames :snmp-target-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |snmpModules| |Counter32| |Integer32|)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention |TDomain|
@@ -16,7 +17,7 @@
                 |SnmpMessageProcessingModel| |SnmpSecurityLevel|
                 |SnmpAdminString|)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group))
-(in-package :asn.1/snmp-target-mib)
+(in-package :snmp-target-mib)
 (defoid |snmpTargetMIB| (|snmpModules| 12)
   (:type 'module-identity)
   (:description
@@ -352,3 +353,4 @@
   (:description
    "A collection of objects required for command responder
          applications, used for counting error conditions."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

@@ -1,12 +1,13 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;NET-SNMP-EXAMPLES-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;NET-SNMP-EXAMPLES-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'net-snmp-examples-mib *mib-modules*))
-(setf *current-module* 'net-snmp-examples-mib)
+  (pushnew 'net-snmp-examples-mib *mib-modules*)
+  (setf *current-module* 'net-snmp-examples-mib))
 (defpackage :asn.1/net-snmp-examples-mib
-  (:use :cl :asn.1)
+  (:nicknames :net-snmp-examples-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |Integer32| notification-type)
   (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|)
@@ -14,7 +15,7 @@
   (:import-from :|ASN.1/SNMPv2-TC| |RowStatus| |StorageType|)
   (:import-from :asn.1/inet-address-mib |InetAddressType|
                 |InetAddress|))
-(in-package :asn.1/net-snmp-examples-mib)
+(in-package :net-snmp-examples-mib)
 (defoid |netSnmpExamples| (|netSnmp| 2)
   (:type 'module-identity)
   (:description
@@ -211,3 +212,4 @@
   (:description
    "This object was improperly defined for its original purpose,
          and should no longer be used."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

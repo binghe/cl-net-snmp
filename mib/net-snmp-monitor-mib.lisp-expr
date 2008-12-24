@@ -1,4 +1,4 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;NET-SNMP-MONITOR-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;NET-SNMP-MONITOR-MIB.TXT by ASN.1 5.0
 
 (net-snmp-monitor-mib net-snmp-mib |SNMPv2-SMI| |SNMPv2-TC|)

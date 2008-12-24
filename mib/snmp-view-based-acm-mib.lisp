@@ -1,12 +1,13 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;SNMP-VIEW-BASED-ACM-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;SNMP-VIEW-BASED-ACM-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'snmp-view-based-acm-mib *mib-modules*))
-(setf *current-module* 'snmp-view-based-acm-mib)
+  (pushnew 'snmp-view-based-acm-mib *mib-modules*)
+  (setf *current-module* 'snmp-view-based-acm-mib))
 (defpackage :asn.1/snmp-view-based-acm-mib
-  (:use :cl :asn.1)
+  (:nicknames :snmp-view-based-acm-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |snmpModules|)
@@ -14,7 +15,7 @@
                 |StorageType|)
   (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|
                 |SnmpSecurityLevel| |SnmpSecurityModel|))
-(in-package :asn.1/snmp-view-based-acm-mib)
+(in-package :snmp-view-based-acm-mib)
 (defoid |snmpVacmMIB| (|snmpModules| 16)
   (:type 'module-identity)
   (:description
@@ -623,3 +624,4 @@
 
                  the SNMP View-based Access Control Model.
                 "))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

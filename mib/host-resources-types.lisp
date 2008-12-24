@@ -1,16 +1,17 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;HOST-RESOURCES-TYPES.TXT
+;;;; Auto-generated from MIB:NET-SNMP;HOST-RESOURCES-TYPES.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'host-resources-types *mib-modules*))
-(setf *current-module* 'host-resources-types)
+  (pushnew 'host-resources-types *mib-modules*)
+  (setf *current-module* 'host-resources-types))
 (defpackage :asn.1/host-resources-types
-  (:use :cl :asn.1)
+  (:nicknames :host-resources-types)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-identity)
   (:import-from :asn.1/host-resources-mib |hrMIBAdminInfo| |hrStorage|
                 |hrDevice|))
-(in-package :asn.1/host-resources-types)
+(in-package :host-resources-types)
 (defoid |hostResourcesTypesModule| (|hrMIBAdminInfo| 4)
   (:type 'module-identity)
   (:description
@@ -302,3 +303,4 @@
   (:description
    "The file system type identifier used for the
         Linux EXT2 File System."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

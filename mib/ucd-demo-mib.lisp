@@ -1,16 +1,17 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;UCD-DEMO-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;UCD-DEMO-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'ucd-demo-mib *mib-modules*))
-(setf *current-module* 'ucd-demo-mib)
+  (pushnew 'ucd-demo-mib *mib-modules*)
+  (setf *current-module* 'ucd-demo-mib))
 (defpackage :asn.1/ucd-demo-mib
-  (:use :cl :asn.1)
+  (:nicknames :ucd-demo-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |Integer32|)
   (:import-from :asn.1/ucd-snmp-mib |ucdavis|))
-(in-package :asn.1/ucd-demo-mib)
+(in-package :ucd-demo-mib)
 (defoid |ucdDemoMIB| (|ucdavis| 14)
   (:type 'module-identity)
   (:description "The UCD-SNMP Demonstration MIB."))
@@ -53,3 +54,4 @@
   (:description
    "The demo passphrase that ucdDemoResetKeys changes each 
 	 users localized key to based on the P->Ku->Kul transformation."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

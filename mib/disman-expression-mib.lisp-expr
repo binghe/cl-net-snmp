@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;DISMAN-EXPRESSION-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;DISMAN-EXPRESSION-MIB.TXT by ASN.1 5.0
 
 (disman-expression-mib
  |SNMPv2-SMI|

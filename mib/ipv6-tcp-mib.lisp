@@ -1,17 +1,18 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;IPV6-TCP-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;IPV6-TCP-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'ipv6-tcp-mib *mib-modules*))
-(setf *current-module* 'ipv6-tcp-mib)
+  (pushnew 'ipv6-tcp-mib *mib-modules*)
+  (setf *current-module* 'ipv6-tcp-mib))
 (defpackage :asn.1/ipv6-tcp-mib
-  (:use :cl :asn.1)
+  (:nicknames :ipv6-tcp-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type |mib-2|
                 |experimental|)
   (:import-from :asn.1/ipv6-tc |Ipv6Address| |Ipv6IfIndexOrZero|))
-(in-package :asn.1/ipv6-tcp-mib)
+(in-package :ipv6-tcp-mib)
 (defoid |ipv6TcpMIB| (|experimental| 86)
   (:type 'module-identity)
   (:description
@@ -138,3 +139,4 @@
   (:description
    "The group of objects providing management of
          TCP over IPv6."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

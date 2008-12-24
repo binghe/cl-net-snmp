@@ -1,19 +1,20 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;AGENTX-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;AGENTX-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'agentx-mib *mib-modules*))
-(setf *current-module* 'agentx-mib)
+  (pushnew 'agentx-mib *mib-modules*)
+  (setf *current-module* 'agentx-mib))
 (defpackage :asn.1/agentx-mib
-  (:use :cl :asn.1)
+  (:nicknames :agentx-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |Unsigned32| |mib-2|)
   (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention |TimeStamp|
                 |TruthValue| |TDomain|))
-(in-package :asn.1/agentx-mib)
+(in-package :agentx-mib)
 (defoid |agentxMIB| (|mib-2| 74)
   (:type 'module-identity)
   (:description
@@ -384,3 +385,4 @@
   (:description
    "All accessible objects in the AgentX MIB.
      "))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

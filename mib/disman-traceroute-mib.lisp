@@ -1,12 +1,13 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;DISMAN-TRACEROUTE-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;DISMAN-TRACEROUTE-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'disman-traceroute-mib *mib-modules*))
-(setf *current-module* 'disman-traceroute-mib)
+  (pushnew 'disman-traceroute-mib *mib-modules*)
+  (setf *current-module* 'disman-traceroute-mib))
 (defpackage :asn.1/disman-traceroute-mib
-  (:use :cl :asn.1)
+  (:nicknames :disman-traceroute-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |Integer32| |Gauge32| |Unsigned32| |mib-2|
                 notification-type object-identity)
@@ -19,7 +20,7 @@
   (:import-from :asn.1/inet-address-mib |InetAddressType|
                 |InetAddress|)
   (:import-from :asn.1/disman-ping-mib |OperationResponseStatus|))
-(in-package :asn.1/disman-traceroute-mib)
+(in-package :disman-traceroute-mib)
 (defoid |traceRouteMIB| (|mib-2| 81)
   (:type 'module-identity)
   (:description
@@ -938,3 +939,4 @@
   (:type 'object-group)
   (:status '|deprecated|)
   (:description "The group of DateAndTime objects."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

@@ -1,18 +1,19 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;RIPV2-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;RIPV2-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew '|RIPv2-MIB| *mib-modules*))
-(setf *current-module* '|RIPv2-MIB|)
+  (pushnew '|RIPv2-MIB| *mib-modules*)
+  (setf *current-module* '|RIPv2-MIB|))
 (defpackage :|ASN.1/RIPv2-MIB|
-  (:use :cl :asn.1)
+  (:nicknames :|RIPv2-MIB|)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |Counter32| |TimeTicks| |IpAddress|)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention |RowStatus|)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
   (:import-from :|ASN.1/SNMPv2-SMI| |mib-2|))
-(in-package :|ASN.1/RIPv2-MIB|)
+(in-package :|RIPv2-MIB|)
 (defoid |rip2| (|mib-2| 23)
   (:type 'module-identity)
   (:description
@@ -306,3 +307,4 @@
   (:status '|current|)
   (:description
    "This group defines peer information for RIP-II systems."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

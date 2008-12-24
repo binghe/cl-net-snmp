@@ -1,17 +1,18 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;UCD-DLMOD-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;UCD-DLMOD-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'ucd-dlmod-mib *mib-modules*))
-(setf *current-module* 'ucd-dlmod-mib)
+  (pushnew 'ucd-dlmod-mib *mib-modules*)
+  (setf *current-module* 'ucd-dlmod-mib))
 (defpackage :asn.1/ucd-dlmod-mib
-  (:use :cl :asn.1)
+  (:nicknames :ucd-dlmod-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| object-type module-identity
                 |Integer32|)
   (:import-from :|ASN.1/SNMPv2-TC| |DisplayString|)
   (:import-from :asn.1/ucd-snmp-mib |ucdExperimental|))
-(in-package :asn.1/ucd-dlmod-mib)
+(in-package :ucd-dlmod-mib)
 (defoid |ucdDlmodMIB| (|ucdExperimental| 14)
   (:type 'module-identity)
   (:description
@@ -69,3 +70,4 @@
   (:max-access '|read-write|)
   (:status '|current|)
   (:description "The current status of the loaded module."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

@@ -1,11 +1,13 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;IPV6-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;IPV6-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
-(eval-when (:load-toplevel :execute) (pushnew 'ipv6-mib *mib-modules*))
-(setf *current-module* 'ipv6-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'ipv6-mib *mib-modules*)
+  (setf *current-module* 'ipv6-mib))
 (defpackage :asn.1/ipv6-mib
-  (:use :cl :asn.1)
+  (:nicknames :ipv6-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 notification-type |mib-2| |Counter32| |Unsigned32|
                 |Integer32| |Gauge32|)
@@ -17,7 +19,7 @@
   (:import-from :asn.1/ipv6-tc |Ipv6IfIndex| |Ipv6Address|
                 |Ipv6AddressPrefix| |Ipv6AddressIfIdentifier|
                 |Ipv6IfIndexOrZero|))
-(in-package :asn.1/ipv6-mib)
+(in-package :ipv6-mib)
 (defoid |ipv6MIB| (|mib-2| 55)
   (:type 'module-identity)
   (:description
@@ -963,3 +965,4 @@
   (:description
    "The notification that an IPv6 entity is required
           to implement."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

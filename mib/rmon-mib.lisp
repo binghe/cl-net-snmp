@@ -1,18 +1,20 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;RMON-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;RMON-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
-(eval-when (:load-toplevel :execute) (pushnew 'rmon-mib *mib-modules*))
-(setf *current-module* 'rmon-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'rmon-mib *mib-modules*)
+  (setf *current-module* 'rmon-mib))
 (defpackage :asn.1/rmon-mib
-  (:use :cl :asn.1)
+  (:nicknames :rmon-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 object-identity notification-type |mib-2| |Counter32|
                 |Integer32| |TimeTicks|)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention |DisplayString|)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group
                 notification-group))
-(in-package :asn.1/rmon-mib)
+(in-package :rmon-mib)
 (defoid |rmon| (|mib-2| 16) (:type 'object-identity))
 (deftype |OwnerString| () 't)
 (deftype |EntryStatus| () 't)
@@ -2767,3 +2769,4 @@
   (:type 'notification-group)
   (:status '|current|)
   (:description "The RMON Notification Group."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

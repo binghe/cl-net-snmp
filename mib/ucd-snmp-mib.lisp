@@ -1,18 +1,19 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;UCD-SNMP-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;UCD-SNMP-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'ucd-snmp-mib *mib-modules*))
-(setf *current-module* 'ucd-snmp-mib)
+  (pushnew 'ucd-snmp-mib *mib-modules*)
+  (setf *current-module* 'ucd-snmp-mib))
 (defpackage :asn.1/ucd-snmp-mib
-  (:use :cl :asn.1)
+  (:nicknames :ucd-snmp-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| object-type notification-type
                 module-identity |Integer32| |Opaque| |enterprises|
                 |Counter32|)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention |DisplayString|
                 |TruthValue|))
-(in-package :asn.1/ucd-snmp-mib)
+(in-package :ucd-snmp-mib)
 (defoid |ucdavis| (|enterprises| 2021)
   (:type 'module-identity)
   (:description
@@ -1140,3 +1141,4 @@
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "message of regex precompilation"))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

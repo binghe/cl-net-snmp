@@ -1,16 +1,17 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;SNMPV2-TM.TXT
+;;;; Auto-generated from MIB:NET-SNMP;SNMPV2-TM.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew '|SNMPv2-TM| *mib-modules*))
-(setf *current-module* '|SNMPv2-TM|)
+  (pushnew '|SNMPv2-TM| *mib-modules*)
+  (setf *current-module* '|SNMPv2-TM|))
 (defpackage :|ASN.1/SNMPv2-TM|
-  (:use :cl :asn.1)
+  (:nicknames :|SNMPv2-TM|)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-identity
                 |snmpModules| |snmpDomains| |snmpProxys|)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention))
-(in-package :|ASN.1/SNMPv2-TM|)
+(in-package :|SNMPv2-TM|)
 (defoid |snmpv2tm| (|snmpModules| 19)
   (:type 'module-identity)
   (:description
@@ -65,3 +66,4 @@
    "The transport domain for SNMPv1 over UDP over IPv4.
             The corresponding transport address is of type
             SnmpUDPAddress."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

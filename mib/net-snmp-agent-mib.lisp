@@ -1,12 +1,13 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;NET-SNMP-AGENT-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;NET-SNMP-AGENT-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'net-snmp-agent-mib *mib-modules*))
-(setf *current-module* 'net-snmp-agent-mib)
+  (pushnew 'net-snmp-agent-mib *mib-modules*)
+  (setf *current-module* 'net-snmp-agent-mib))
 (defpackage :asn.1/net-snmp-agent-mib
-  (:use :cl :asn.1)
+  (:nicknames :net-snmp-agent-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|)
   (:import-from :asn.1/net-snmp-mib |netSnmpObjects| |netSnmpModuleIDs|
                 |netSnmpNotifications| |netSnmpGroups|)
@@ -15,7 +16,7 @@
   (:import-from :|ASN.1/SNMPv2-CONF| object-group notification-group)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention |DisplayString|
                 |RowStatus| |TruthValue|))
-(in-package :asn.1/net-snmp-agent-mib)
+(in-package :net-snmp-agent-mib)
 (defoid |netSnmpAgentMIB| (|netSnmpModuleIDs| 2)
   (:type 'module-identity)
   (:description
@@ -339,3 +340,4 @@
   (:status '|current|)
   (:description
    "The notifications relating to the basic operation of the Net-SNMP agent."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

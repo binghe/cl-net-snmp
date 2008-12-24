@@ -1,12 +1,13 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;DISMAN-PING-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;DISMAN-PING-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'disman-ping-mib *mib-modules*))
-(setf *current-module* 'disman-ping-mib)
+  (pushnew 'disman-ping-mib *mib-modules*)
+  (setf *current-module* 'disman-ping-mib))
 (defpackage :asn.1/disman-ping-mib
-  (:use :cl :asn.1)
+  (:nicknames :disman-ping-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |Integer32| |Unsigned32| |Gauge32| |mib-2|
                 notification-type object-identity)
@@ -18,7 +19,7 @@
   (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|)
   (:import-from :asn.1/inet-address-mib |InetAddressType|
                 |InetAddress|))
-(in-package :asn.1/disman-ping-mib)
+(in-package :disman-ping-mib)
 (defoid |pingMIB| (|mib-2| 80)
   (:type 'module-identity)
   (:description
@@ -784,3 +785,4 @@
   (:type 'object-group)
   (:status '|deprecated|)
   (:description "The group of DateAndTime objects."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))
