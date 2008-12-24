@@ -1,4 +1,4 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;SNMPV2-TC.TXT
+;;;; Auto-generated from MIB:NET-SNMP;SNMPV2-TC.TXT by ASN.1 5.0
 
 (|SNMPv2-TC| |SNMPv2-SMI|)

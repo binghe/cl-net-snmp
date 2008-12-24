@@ -1,16 +1,17 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;TRANSPORT-ADDRESS-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;TRANSPORT-ADDRESS-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'transport-address-mib *mib-modules*))
-(setf *current-module* 'transport-address-mib)
+  (pushnew 'transport-address-mib *mib-modules*)
+  (setf *current-module* 'transport-address-mib))
 (defpackage :asn.1/transport-address-mib
-  (:use :cl :asn.1)
+  (:nicknames :transport-address-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-identity
                 |mib-2|)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention))
-(in-package :asn.1/transport-address-mib)
+(in-package :transport-address-mib)
 (defoid |transportAddressMIB| (|mib-2| 100)
   (:type 'module-identity)
   (:description
@@ -153,3 +154,4 @@
 (deftype |TransportAddressIPv6z| () 't)
 (deftype |TransportAddressLocal| () 't)
 (deftype |TransportAddressDns| () 't)
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

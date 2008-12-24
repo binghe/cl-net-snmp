@@ -1,17 +1,18 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;IPV6-UDP-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;IPV6-UDP-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'ipv6-udp-mib *mib-modules*))
-(setf *current-module* 'ipv6-udp-mib)
+  (pushnew 'ipv6-udp-mib *mib-modules*)
+  (setf *current-module* 'ipv6-udp-mib))
 (defpackage :asn.1/ipv6-udp-mib
-  (:use :cl :asn.1)
+  (:nicknames :ipv6-udp-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type |mib-2|
                 |experimental|)
   (:import-from :asn.1/ipv6-tc |Ipv6Address| |Ipv6IfIndexOrZero|))
-(in-package :asn.1/ipv6-udp-mib)
+(in-package :ipv6-udp-mib)
 (defoid |ipv6UdpMIB| (|experimental| 87)
   (:type 'module-identity)
   (:description
@@ -94,3 +95,4 @@
   (:description
    "The group of objects providing management of
          UDP over IPv6."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

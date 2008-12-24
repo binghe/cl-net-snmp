@@ -1,17 +1,19 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;BGP4-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;BGP4-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
-(eval-when (:load-toplevel :execute) (pushnew 'bgp4-mib *mib-modules*))
-(setf *current-module* 'bgp4-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'bgp4-mib *mib-modules*)
+  (setf *current-module* 'bgp4-mib))
 (defpackage :asn.1/bgp4-mib
-  (:use :cl :asn.1)
+  (:nicknames :bgp4-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 notification-type |IpAddress| |Integer32| |Counter32|
                 |Gauge32| |mib-2|)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group
                 notification-group))
-(in-package :asn.1/bgp4-mib)
+(in-package :bgp4-mib)
 (defoid |bgp| (|mib-2| 15)
   (:type 'module-identity)
   (:description "The MIB module for BGP-4."))
@@ -605,3 +607,4 @@
   (:description
    "A collection of notifications for signaling
                     changes in BGP peer relationships."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

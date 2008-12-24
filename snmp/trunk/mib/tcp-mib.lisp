@@ -1,18 +1,20 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;TCP-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;TCP-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
-(eval-when (:load-toplevel :execute) (pushnew 'tcp-mib *mib-modules*))
-(setf *current-module* 'tcp-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'tcp-mib *mib-modules*)
+  (setf *current-module* 'tcp-mib))
 (defpackage :asn.1/tcp-mib
-  (:use :cl :asn.1)
+  (:nicknames :tcp-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |Integer32| |Unsigned32| |Gauge32| |Counter32|
                 |Counter64| |IpAddress| |mib-2|)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
   (:import-from :asn.1/inet-address-mib |InetAddress| |InetAddressType|
                 |InetPortNumber|))
-(in-package :asn.1/tcp-mib)
+(in-package :tcp-mib)
 (defoid |tcpMIB| (|mib-2| 49)
   (:type 'module-identity)
   (:description
@@ -572,3 +574,4 @@
   (:description
    "The group of objects providing for counters of high speed
             TCP implementations."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

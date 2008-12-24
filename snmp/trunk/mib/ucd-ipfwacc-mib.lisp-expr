@@ -1,4 +1,4 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;UCD-IPFWACC-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;UCD-IPFWACC-MIB.TXT by ASN.1 5.0
 
 (ucd-ipfwacc-mib |SNMPv2-SMI| |SNMPv2-TC| ucd-snmp-mib)

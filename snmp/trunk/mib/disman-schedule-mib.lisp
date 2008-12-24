@@ -1,12 +1,13 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;DISMAN-SCHEDULE-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;DISMAN-SCHEDULE-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'disman-schedule-mib *mib-modules*))
-(setf *current-module* 'disman-schedule-mib)
+  (pushnew 'disman-schedule-mib *mib-modules*)
+  (setf *current-module* 'disman-schedule-mib))
 (defpackage :asn.1/disman-schedule-mib
-  (:use :cl :asn.1)
+  (:nicknames :disman-schedule-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 notification-type |Integer32| |Unsigned32| |Counter32|
                 |mib-2| |zeroDotZero|)
@@ -15,7 +16,7 @@
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group
                 notification-group)
   (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|))
-(in-package :asn.1/disman-schedule-mib)
+(in-package :disman-schedule-mib)
 (defoid |schedMIB| (|mib-2| 63)
   (:type 'module-identity)
   (:description
@@ -398,3 +399,4 @@
   (:status '|deprecated|)
   (:description
    "A collection of objects providing scheduling capabilities."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

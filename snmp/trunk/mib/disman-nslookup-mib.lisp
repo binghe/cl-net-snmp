@@ -1,12 +1,13 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;DISMAN-NSLOOKUP-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;DISMAN-NSLOOKUP-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'disman-nslookup-mib *mib-modules*))
-(setf *current-module* 'disman-nslookup-mib)
+  (pushnew 'disman-nslookup-mib *mib-modules*)
+  (setf *current-module* 'disman-nslookup-mib))
 (defpackage :asn.1/disman-nslookup-mib
-  (:use :cl :asn.1)
+  (:nicknames :disman-nslookup-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |Unsigned32| |mib-2| |Integer32|)
   (:import-from :|ASN.1/SNMPv2-TC| |RowStatus|)
@@ -14,7 +15,7 @@
   (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|)
   (:import-from :asn.1/inet-address-mib |InetAddressType|
                 |InetAddress|))
-(in-package :asn.1/disman-nslookup-mib)
+(in-package :disman-nslookup-mib)
 (defoid |lookupMIB| (|mib-2| 82)
   (:type 'module-identity)
   (:description
@@ -348,3 +349,4 @@
   (:description
    "The group of objects that constitute the remote
        Lookup operation."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

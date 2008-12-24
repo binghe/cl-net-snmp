@@ -1,17 +1,18 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;UCD-IPFWACC-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;UCD-IPFWACC-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew 'ucd-ipfwacc-mib *mib-modules*))
-(setf *current-module* 'ucd-ipfwacc-mib)
+  (pushnew 'ucd-ipfwacc-mib *mib-modules*)
+  (setf *current-module* 'ucd-ipfwacc-mib))
 (defpackage :asn.1/ucd-ipfwacc-mib
-  (:use :cl :asn.1)
+  (:nicknames :ucd-ipfwacc-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| object-type module-identity
                 |IpAddress| |Integer32| |Counter32|)
   (:import-from :|ASN.1/SNMPv2-TC| |DisplayString|)
   (:import-from :asn.1/ucd-snmp-mib |ucdExperimental|))
-(in-package :asn.1/ucd-ipfwacc-mib)
+(in-package :ucd-ipfwacc-mib)
 (defoid |ucdIpFwAccMIB| (|ucdExperimental| 1)
   (:type 'module-identity)
   (:description
@@ -217,3 +218,4 @@
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "Port number 10."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

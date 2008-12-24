@@ -1,11 +1,13 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;IP-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;IP-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
-(eval-when (:load-toplevel :execute) (pushnew 'ip-mib *mib-modules*))
-(setf *current-module* 'ip-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'ip-mib *mib-modules*)
+  (setf *current-module* 'ip-mib))
 (defpackage :asn.1/ip-mib
-  (:use :cl :asn.1)
+  (:nicknames :ip-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |Integer32| |Counter32| |IpAddress| |mib-2| |Unsigned32|
                 |Counter64| |zeroDotZero|)
@@ -17,7 +19,7 @@
                 |InetAddressPrefixLength| |InetVersion|
                 |InetZoneIndex|)
   (:import-from :asn.1/if-mib |InterfaceIndex|))
-(in-package :asn.1/ip-mib)
+(in-package :ip-mib)
 (defoid |ipMIB| (|mib-2| 48)
   (:type 'module-identity)
   (:description
@@ -3732,3 +3734,4 @@
 
             As part of the version independence, this group has been
             deprecated.  "))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

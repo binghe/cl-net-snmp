@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;NET-SNMP-VACM-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;NET-SNMP-VACM-MIB.TXT by ASN.1 5.0
 
 (net-snmp-vacm-mib
  snmp-framework-mib

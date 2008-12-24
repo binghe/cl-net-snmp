@@ -1,4 +1,4 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;IPV6-ICMP-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;IPV6-ICMP-MIB.TXT by ASN.1 5.0
 
 (ipv6-icmp-mib |SNMPv2-SMI| |SNMPv2-CONF| ipv6-mib)

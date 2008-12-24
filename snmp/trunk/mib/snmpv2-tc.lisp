@@ -1,14 +1,15 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;SNMPV2-TC.TXT
+;;;; Auto-generated from MIB:NET-SNMP;SNMPV2-TC.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew '|SNMPv2-TC| *mib-modules*))
-(setf *current-module* '|SNMPv2-TC|)
+  (pushnew '|SNMPv2-TC| *mib-modules*)
+  (setf *current-module* '|SNMPv2-TC|))
 (defpackage :|ASN.1/SNMPv2-TC|
-  (:use :cl :asn.1)
+  (:nicknames :|SNMPv2-TC|)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| |TimeTicks|))
-(in-package :|ASN.1/SNMPv2-TC|)
+(in-package :|SNMPv2-TC|)
 (defmacro textual-convention ())
 (deftype |DisplayString| () 't)
 (deftype |PhysAddress| () 't)
@@ -26,3 +27,4 @@
 (deftype |StorageType| () 't)
 (deftype |TDomain| () 't)
 (deftype |TAddress| () 't)
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

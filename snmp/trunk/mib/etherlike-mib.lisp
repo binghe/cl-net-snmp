@@ -1,19 +1,20 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;ETHERLIKE-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;ETHERLIKE-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew '|EtherLike-MIB| *mib-modules*))
-(setf *current-module* '|EtherLike-MIB|)
+  (pushnew '|EtherLike-MIB| *mib-modules*)
+  (setf *current-module* '|EtherLike-MIB|))
 (defpackage :|ASN.1/EtherLike-MIB|
-  (:use :cl :asn.1)
+  (:nicknames :|EtherLike-MIB|)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 object-identity |Integer32| |Counter32| |Counter64|
                 |mib-2| |transmission|)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
   (:import-from :|ASN.1/SNMPv2-TC| |TruthValue|)
   (:import-from :asn.1/if-mib |ifIndex| |InterfaceIndex|))
-(in-package :|ASN.1/EtherLike-MIB|)
+(in-package :|EtherLike-MIB|)
 (defoid |etherMIB| (|mib-2| 35)
   (:type 'module-identity)
   (:description
@@ -1401,3 +1402,4 @@
    "A collection of objects providing information
                     about the Rate Control function on ethernet-like
                     interfaces."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

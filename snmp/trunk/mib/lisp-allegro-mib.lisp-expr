@@ -1,4 +1,4 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:LISP;LISP-ALLEGRO-MIB.TXT
+;;;; Auto-generated from MIB:LISP;LISP-ALLEGRO-MIB.TXT by ASN.1 5.0
 
 (lisp-allegro-mib |SNMPv2-SMI| lisp-mib)

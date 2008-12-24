@@ -1,18 +1,20 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;UDP-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;UDP-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
-(eval-when (:load-toplevel :execute) (pushnew 'udp-mib *mib-modules*))
-(setf *current-module* 'udp-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'udp-mib *mib-modules*)
+  (setf *current-module* 'udp-mib))
 (defpackage :asn.1/udp-mib
-  (:use :cl :asn.1)
+  (:nicknames :udp-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |Integer32| |Counter32| |Counter64| |Unsigned32|
                 |IpAddress| |mib-2|)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
   (:import-from :asn.1/inet-address-mib |InetAddress| |InetAddressType|
                 |InetPortNumber|))
-(in-package :asn.1/udp-mib)
+(in-package :udp-mib)
 (defoid |udpMIB| (|mib-2| 50)
   (:type 'module-identity)
   (:description
@@ -404,3 +406,4 @@
   (:description
    "The group of objects providing for the IP version
             independent management of UDP 'endpoints'."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

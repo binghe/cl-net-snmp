@@ -1,18 +1,20 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;OSPF-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;OSPF-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
-(eval-when (:load-toplevel :execute) (pushnew 'ospf-mib *mib-modules*))
-(setf *current-module* 'ospf-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'ospf-mib *mib-modules*)
+  (setf *current-module* 'ospf-mib))
 (defpackage :asn.1/ospf-mib
-  (:use :cl :asn.1)
+  (:nicknames :ospf-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |Counter32| |Gauge32| |Integer32| |IpAddress|)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention |TruthValue|
                 |RowStatus|)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
   (:import-from :|ASN.1/SNMPv2-SMI| |mib-2|))
-(in-package :asn.1/ospf-mib)
+(in-package :ospf-mib)
 (defoid |ospf| (|mib-2| 14)
   (:type 'module-identity)
   (:description
@@ -1474,3 +1476,4 @@
   (:type 'object-group)
   (:status '|current|)
   (:description "These objects are required for OSPF systems."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

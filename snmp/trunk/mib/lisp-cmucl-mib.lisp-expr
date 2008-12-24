@@ -1,4 +1,4 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:LISP;LISP-CMUCL-MIB.TXT
+;;;; Auto-generated from MIB:LISP;LISP-CMUCL-MIB.TXT by ASN.1 5.0
 
 (lisp-cmucl-mib |SNMPv2-SMI| lisp-mib)

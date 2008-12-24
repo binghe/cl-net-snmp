@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;IF-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;IF-MIB.TXT by ASN.1 5.0
 
 (if-mib
  |SNMPv2-SMI|

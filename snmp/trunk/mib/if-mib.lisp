@@ -1,11 +1,13 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;IF-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;IF-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
-(eval-when (:load-toplevel :execute) (pushnew 'if-mib *mib-modules*))
-(setf *current-module* 'if-mib)
+(eval-when (:load-toplevel :execute)
+  (pushnew 'if-mib *mib-modules*)
+  (setf *current-module* 'if-mib))
 (defpackage :asn.1/if-mib
-  (:use :cl :asn.1)
+  (:nicknames :if-mib)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |Counter32| |Gauge32| |Counter64| |Integer32|
                 |TimeTicks| |mib-2| notification-type)
@@ -16,7 +18,7 @@
                 notification-group)
   (:import-from :|ASN.1/SNMPv2-MIB| |snmpTraps|)
   (:import-from :|ASN.1/IANAifType-MIB| |IANAifType|))
-(in-package :asn.1/if-mib)
+(in-package :if-mib)
 (defoid |ifMIB| (|mib-2| 31)
   (:type 'module-identity)
   (:description
@@ -1209,3 +1211,4 @@
    "A compliance statement defined in a previous version of
             this MIB module, for SNMP entities which have network
             interfaces."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))

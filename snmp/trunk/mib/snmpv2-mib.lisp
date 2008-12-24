@@ -1,12 +1,13 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;SNMPV2-MIB.TXT
+;;;; Auto-generated from MIB:NET-SNMP;SNMPV2-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
 (eval-when (:load-toplevel :execute)
-  (pushnew '|SNMPv2-MIB| *mib-modules*))
-(setf *current-module* '|SNMPv2-MIB|)
+  (pushnew '|SNMPv2-MIB| *mib-modules*)
+  (setf *current-module* '|SNMPv2-MIB|))
 (defpackage :|ASN.1/SNMPv2-MIB|
-  (:use :cl :asn.1)
+  (:nicknames :|SNMPv2-MIB|)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 notification-type |TimeTicks| |Counter32| |snmpModules|
                 |mib-2|)
@@ -14,7 +15,7 @@
                 |TimeStamp|)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group
                 notification-group))
-(in-package :|ASN.1/SNMPv2-MIB|)
+(in-package :|SNMPv2-MIB|)
 (defoid |snmpMIB| (|snmpModules| 1)
   (:type 'module-identity)
   (:description
@@ -624,3 +625,4 @@
   (:description
    "A collection of objects from RFC 1213 made obsolete
             by this MIB module."))
+(eval-when (:load-toplevel :execute) (setf *current-module* nil))
