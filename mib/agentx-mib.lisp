@@ -2,9 +2,11 @@
 ;;;; Auto-generated from MIB:NET-SNMP;AGENTX-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'agentx-mib *mib-modules*)
   (setf *current-module* 'agentx-mib))
+
 (defpackage :asn.1/agentx-mib
   (:nicknames :agentx-mib)
   (:use :common-lisp :asn.1)
@@ -14,7 +16,9 @@
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention |TimeStamp|
                 |TruthValue| |TDomain|))
+
 (in-package :agentx-mib)
+
 (defoid |agentxMIB| (|mib-2| 74)
   (:type 'module-identity)
   (:description
@@ -22,13 +26,20 @@
      Protocol (AgentX).  This MIB module will be implemented by
      the master agent.
     "))
+
 (deftype |AgentxTAddress| () 't)
+
 (defoid |agentxObjects| (|agentxMIB| 1) (:type 'object-identity))
+
 (defoid |agentxGeneral| (|agentxObjects| 1) (:type 'object-identity))
+
 (defoid |agentxConnection| (|agentxObjects| 2) (:type 'object-identity))
+
 (defoid |agentxSession| (|agentxObjects| 3) (:type 'object-identity))
+
 (defoid |agentxRegistration| (|agentxObjects| 4)
   (:type 'object-identity))
+
 (defoid |agentxDefaultTimeout| (|agentxGeneral| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -50,6 +61,7 @@
       master agent to await a response to a dispatch from a
       given subagent.
      "))
+
 (defoid |agentxMasterAgentXVer| (|agentxGeneral| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -60,6 +72,7 @@
       The current protocol version is 1.  Note that the master agent
       must also allow interaction with earlier version subagents.
      "))
+
 (defoid |agentxConnTableLastChange| (|agentxConnection| 1)
   (:type 'object-type)
   (:syntax '|TimeStamp|)
@@ -69,6 +82,7 @@
    "The value of sysUpTime when the last row creation or deletion
       occurred in the agentxConnectionTable.
      "))
+
 (defoid |agentxConnectionTable| (|agentxConnection| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -79,6 +93,7 @@
       connections.  There may be zero, one, or more AgentX sessions
       carried on a given AgentX connection.
      "))
+
 (defoid |agentxConnectionEntry| (|agentxConnectionTable| 1)
   (:type 'object-type)
   (:syntax '|AgentxConnectionEntry|)
@@ -92,7 +107,9 @@
       created when a new transport connection is established,
       and is destroyed when the transport connection is terminated.
      "))
+
 (deftype |AgentxConnectionEntry| () 't)
+
 (defoid |agentxConnIndex| (|agentxConnectionEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -105,6 +122,7 @@
       not be re-used.  The value assigned to a given transport
       connection is constant for the lifetime of that connection.
      "))
+
 (defoid |agentxConnOpenTime| (|agentxConnectionEntry| 2)
   (:type 'object-type)
   (:syntax '|TimeStamp|)
@@ -114,6 +132,7 @@
    "The value of sysUpTime when this connection was established
       and, therefore, its value when this entry was added to the table.
      "))
+
 (defoid |agentxConnTransportDomain| (|agentxConnectionEntry| 3)
   (:type 'object-type)
   (:syntax '|TDomain|)
@@ -123,6 +142,7 @@
    "The transport protocol in use for this connection to the
       subagent.
      "))
+
 (defoid |agentxConnTransportAddress| (|agentxConnectionEntry| 4)
   (:type 'object-type)
   (:syntax '|AgentxTAddress|)
@@ -135,6 +155,7 @@
       addresses) since the subagent need not bind a filename to its
       local socket.
      "))
+
 (defoid |agentxSessionTableLastChange| (|agentxSession| 1)
   (:type 'object-type)
   (:syntax '|TimeStamp|)
@@ -144,6 +165,7 @@
    "The value of sysUpTime when the last row creation or deletion
       occurred in the agentxSessionTable.
      "))
+
 (defoid |agentxSessionTable| (|agentxSession| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -152,6 +174,7 @@
   (:description
    "A table of AgentX subagent sessions currently in effect.
      "))
+
 (defoid |agentxSessionEntry| (|agentxSessionTable| 1)
   (:type 'object-type)
   (:syntax '|AgentxSessionEntry|)
@@ -164,7 +187,9 @@
       and is destroyed either when the subagent transport connection
       has terminated or when the subagent session is closed.
      "))
+
 (deftype |AgentxSessionEntry| () 't)
+
 (defoid |agentxSessionIndex| (|agentxSessionEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -178,6 +203,7 @@
       A value of zero(0) is specifically allowed in order
       to be compatible with the definition of h.sessionId.
      "))
+
 (defoid |agentxSessionObjectID| (|agentxSessionEntry| 2)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -189,6 +215,7 @@
       not supporting the notion of an AgentX session object
       identifier.
      "))
+
 (defoid |agentxSessionDescr| (|agentxSessionEntry| 3)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
@@ -201,6 +228,7 @@
       This attribute will report a zero-length string value for
       subagents not supporting the notion of a session description.
      "))
+
 (defoid |agentxSessionAdminStatus| (|agentxSessionEntry| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -211,6 +239,7 @@
       the value to 'down(2)' closes the subagent session (with c.reason
       set to 'reasonByManager').
      "))
+
 (defoid |agentxSessionOpenTime| (|agentxSessionEntry| 5)
   (:type 'object-type)
   (:syntax '|TimeStamp|)
@@ -220,6 +249,7 @@
    "The value of sysUpTime when this session was opened and,
       therefore, its value when this entry was added to the table.
      "))
+
 (defoid |agentxSessionAgentXVer| (|agentxSessionEntry| 6)
   (:type 'object-type)
   (:syntax 't)
@@ -230,6 +260,7 @@
       session.  This must be less than or equal to the value of
       agentxMasterAgentXVer.
      "))
+
 (defoid |agentxSessionTimeout| (|agentxSessionEntry| 7)
   (:type 'object-type)
   (:syntax 't)
@@ -247,6 +278,7 @@
 
       (see agentxDefaultTimeout).
      "))
+
 (defoid |agentxRegistrationTableLastChange| (|agentxRegistration| 1)
   (:type 'object-type)
   (:syntax '|TimeStamp|)
@@ -256,6 +288,7 @@
    "The value of sysUpTime when the last row creation or deletion
       occurred in the agentxRegistrationTable.
      "))
+
 (defoid |agentxRegistrationTable| (|agentxRegistration| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -264,6 +297,7 @@
   (:description
    "A table of registered regions.
      "))
+
 (defoid |agentxRegistrationEntry| (|agentxRegistrationTable| 1)
   (:type 'object-type)
   (:syntax '|AgentxRegistrationEntry|)
@@ -276,7 +310,9 @@
       is unregistered by the session, the session is closed,
       or the subagent connection is closed.
      "))
+
 (deftype |AgentxRegistrationEntry| () 't)
+
 (defoid |agentxRegIndex| (|agentxRegistrationEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -286,6 +322,7 @@
    "agentxRegIndex uniquely identifies a registration entry.
       This value is constant for the lifetime of an entry.
      "))
+
 (defoid |agentxRegContext| (|agentxRegistrationEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -295,6 +332,7 @@
    "The context in which the session supports the objects in this
       region.  A zero-length context indicates the default context.
      "))
+
 (defoid |agentxRegStart| (|agentxRegistrationEntry| 3)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -307,6 +345,7 @@
       identify an object type, an object instance, or a partial object
       instance.
      "))
+
 (defoid |agentxRegRangeSubId| (|agentxRegistrationEntry| 4)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -320,6 +359,7 @@
       this entry's agentxRegUpperBound value is substituted in the
       OID for purposes of defining the region's upper bound.
      "))
+
 (defoid |agentxRegUpperBound| (|agentxRegistrationEntry| 5)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -332,6 +372,7 @@
      zero, this value is also zero and is not used to define an upper
      bound for this registration.
     "))
+
 (defoid |agentxRegPriority| (|agentxRegistrationEntry| 6)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -343,6 +384,7 @@
       Sessions should use the value of 127 for r.priority if a
       default value is desired.
      "))
+
 (defoid |agentxRegTimeout| (|agentxRegistrationEntry| 7)
   (:type 'object-type)
   (:syntax 't)
@@ -356,6 +398,7 @@
       be used.  This value is taken from the r.timeout field of
       the agentx-Register-PDU.
      "))
+
 (defoid |agentxRegInstance| (|agentxRegistrationEntry| 8)
   (:type 'object-type)
   (:syntax '|TruthValue|)
@@ -366,11 +409,15 @@
       registrations for which the INSTANCE_REGISTRATION
       was set, and is `false' for all other registrations.
      "))
+
 (defoid |agentxConformance| (|agentxMIB| 2) (:type 'object-identity))
+
 (defoid |agentxMIBGroups| (|agentxConformance| 1)
   (:type 'object-identity))
+
 (defoid |agentxMIBCompliances| (|agentxConformance| 2)
   (:type 'object-identity))
+
 (defoid |agentxMIBCompliance| (|agentxMIBCompliances| 1)
   (:type 'module-compliance)
   (:status '|current|)
@@ -379,10 +426,13 @@
       AgentX protocol.  Note that a compliant agent can implement all
       objects in this MIB module as read-only.
      "))
+
 (defoid |agentxMIBGroup| (|agentxMIBGroups| 1)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "All accessible objects in the AgentX MIB.
      "))
+
 (eval-when (:load-toplevel :execute) (setf *current-module* nil))
+

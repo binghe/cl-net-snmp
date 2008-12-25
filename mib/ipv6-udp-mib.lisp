@@ -2,9 +2,11 @@
 ;;;; Auto-generated from MIB:NET-SNMP;IPV6-UDP-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'ipv6-udp-mib *mib-modules*)
   (setf *current-module* 'ipv6-udp-mib))
+
 (defpackage :asn.1/ipv6-udp-mib
   (:nicknames :ipv6-udp-mib)
   (:use :common-lisp :asn.1)
@@ -12,12 +14,16 @@
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type |mib-2|
                 |experimental|)
   (:import-from :asn.1/ipv6-tc |Ipv6Address| |Ipv6IfIndexOrZero|))
+
 (in-package :ipv6-udp-mib)
+
 (defoid |ipv6UdpMIB| (|experimental| 87)
   (:type 'module-identity)
   (:description
    "The MIB module for entities implementing UDP over IPv6."))
+
 (defoid |udp| (|mib-2| 7) (:type 'object-identity))
+
 (defoid |ipv6UdpTable| (|udp| 6)
   (:type 'object-type)
   (:syntax 't)
@@ -26,6 +32,7 @@
   (:description
    "A table containing UDP listener information for
          UDP/IPv6 endpoints."))
+
 (defoid |ipv6UdpEntry| (|ipv6UdpTable| 1)
   (:type 'object-type)
   (:syntax '|Ipv6UdpEntry|)
@@ -38,7 +45,9 @@
          additional index object compared to udpTable, since
          IPv6 addresses are not guaranteed to be unique on the
          managed node."))
+
 (deftype |Ipv6UdpEntry| () 't)
+
 (defoid |ipv6UdpLocalAddress| (|ipv6UdpEntry| 1)
   (:type 'object-type)
   (:syntax '|Ipv6Address|)
@@ -50,12 +59,14 @@
          to accept datagrams for any IPv6 address
          associated with the managed node, the value ::0
          is used."))
+
 (defoid |ipv6UdpLocalPort| (|ipv6UdpEntry| 2)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The local port number for this UDP listener."))
+
 (defoid |ipv6UdpIfIndex| (|ipv6UdpEntry| 3)
   (:type 'object-type)
   (:syntax '|Ipv6IfIndexOrZero|)
@@ -78,21 +89,28 @@
 
          The value of this object must remain constant during
          the life of this UDP endpoint."))
+
 (defoid |ipv6UdpConformance| (|ipv6UdpMIB| 2) (:type 'object-identity))
+
 (defoid |ipv6UdpCompliances| (|ipv6UdpConformance| 1)
   (:type 'object-identity))
+
 (defoid |ipv6UdpGroups| (|ipv6UdpConformance| 2)
   (:type 'object-identity))
+
 (defoid |ipv6UdpCompliance| (|ipv6UdpCompliances| 1)
   (:type 'module-compliance)
   (:status '|current|)
   (:description
    "The compliance statement for SNMPv2 entities which
          implement UDP over IPv6."))
+
 (defoid |ipv6UdpGroup| (|ipv6UdpGroups| 1)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "The group of objects providing management of
          UDP over IPv6."))
+
 (eval-when (:load-toplevel :execute) (setf *current-module* nil))
+

@@ -2,9 +2,11 @@
 ;;;; Auto-generated from MIB:NET-SNMP;TUNNEL-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'tunnel-mib *mib-modules*)
   (setf *current-module* 'tunnel-mib))
+
 (defpackage :asn.1/tunnel-mib
   (:nicknames :tunnel-mib)
   (:use :common-lisp :asn.1)
@@ -17,7 +19,9 @@
   (:import-from :asn.1/ipv6-flow-label-mib |IPv6FlowLabelOrAny|)
   (:import-from :asn.1/if-mib |ifIndex| |InterfaceIndexOrZero|)
   (:import-from :|ASN.1/IANAifType-MIB| |IANAtunnelType|))
+
 (in-package :tunnel-mib)
+
 (defoid |tunnelMIB| (|transmission| 131)
   (:type 'module-identity)
   (:description
@@ -28,8 +32,11 @@
             Copyright (C) The Internet Society (2005).  This
             version of this MIB module is part of RFC 4087;  see
             the RFC itself for full legal notices."))
+
 (defoid |tunnelMIBObjects| (|tunnelMIB| 1) (:type 'object-identity))
+
 (defoid |tunnel| (|tunnelMIBObjects| 1) (:type 'object-identity))
+
 (defoid |tunnelIfTable| (|tunnel| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -38,6 +45,7 @@
   (:description
    "The (conceptual) table containing information on
             configured tunnels."))
+
 (defoid |tunnelIfEntry| (|tunnelIfTable| 1)
   (:type 'object-type)
   (:syntax '|TunnelIfEntry|)
@@ -46,7 +54,9 @@
   (:description
    "An entry (conceptual row) containing the information
             on a particular configured tunnel."))
+
 (deftype |TunnelIfEntry| () 't)
+
 (defoid |tunnelIfLocalAddress| (|tunnelIfEntry| 1)
   (:type 'object-type)
   (:syntax '|IpAddress|)
@@ -60,6 +70,7 @@
 
             Since this object does not support IPv6, it is
             deprecated in favor of tunnelIfLocalInetAddress."))
+
 (defoid |tunnelIfRemoteAddress| (|tunnelIfEntry| 2)
   (:type 'object-type)
   (:syntax '|IpAddress|)
@@ -77,12 +88,14 @@
 
             Since this object does not support IPv6, it is
             deprecated in favor of tunnelIfRemoteInetAddress."))
+
 (defoid |tunnelIfEncapsMethod| (|tunnelIfEntry| 3)
   (:type 'object-type)
   (:syntax '|IANAtunnelType|)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The encapsulation method used by the tunnel."))
+
 (defoid |tunnelIfHopLimit| (|tunnelIfEntry| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -92,6 +105,7 @@
    "The IPv4 TTL or IPv6 Hop Limit to use in the outer IP
             header.  A value of 0 indicates that the value is
             copied from the payload's header."))
+
 (defoid |tunnelIfSecurity| (|tunnelIfEntry| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -104,6 +118,7 @@
             encryption or both.  More specific security-related
             information may be available in a MIB module for the
             security protocol in use."))
+
 (defoid |tunnelIfTOS| (|tunnelIfEntry| 6)
   (:type 'object-type)
   (:syntax 't)
@@ -127,6 +142,7 @@
             would have been tunnelIfDSCPMethod, but the existing
             name appeared in RFC 2667 and existing objects cannot
             be renamed."))
+
 (defoid |tunnelIfFlowLabel| (|tunnelIfEntry| 7)
   (:type 'object-type)
   (:syntax '|IPv6FlowLabelOrAny|)
@@ -141,6 +157,7 @@
             available in a traffic conditioner MIB.  Any other
             value indicates that the Flow Label field is set to
             the indicated value."))
+
 (defoid |tunnelIfAddressType| (|tunnelIfEntry| 8)
   (:type 'object-type)
   (:syntax '|InetAddressType|)
@@ -150,6 +167,7 @@
    "The type of address in the corresponding
             tunnelIfLocalInetAddress and tunnelIfRemoteInetAddress
             objects."))
+
 (defoid |tunnelIfLocalInetAddress| (|tunnelIfEntry| 9)
   (:type 'object-type)
   (:syntax '|InetAddress|)
@@ -164,6 +182,7 @@
 
             0.0.0.0 for IPv4 or :: for IPv6.  The type of this
             object is given by tunnelIfAddressType."))
+
 (defoid |tunnelIfRemoteInetAddress| (|tunnelIfEntry| 10)
   (:type 'object-type)
   (:syntax '|InetAddress|)
@@ -177,6 +196,7 @@
             tunnel), the value is 0.0.0.0 for tunnels over IPv4 or
             :: for tunnels over IPv6.  The type of this object is
             given by tunnelIfAddressType."))
+
 (defoid |tunnelIfEncapsLimit| (|tunnelIfEntry| 11)
   (:type 'object-type)
   (:syntax 't)
@@ -187,6 +207,7 @@
             permitted for packets undergoing encapsulation at this
             node.  A value of -1 indicates that no limit is
             present (except as a result of the packet size)."))
+
 (defoid |tunnelConfigTable| (|tunnel| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -204,6 +225,7 @@
 
             Since this table does not support IPv6, it is
             deprecated in favor of tunnelInetConfigTable."))
+
 (defoid |tunnelConfigEntry| (|tunnelConfigTable| 1)
   (:type 'object-type)
   (:syntax '|TunnelConfigEntry|)
@@ -215,7 +237,9 @@
 
             Since this entry does not support IPv6, it is
             deprecated in favor of tunnelInetConfigEntry."))
+
 (deftype |TunnelConfigEntry| () 't)
+
 (defoid |tunnelConfigLocalAddress| (|tunnelConfigEntry| 1)
   (:type 'object-type)
   (:syntax '|IpAddress|)
@@ -228,6 +252,7 @@
 
             Since this object does not support IPv6, it is
             deprecated in favor of tunnelInetConfigLocalAddress."))
+
 (defoid |tunnelConfigRemoteAddress| (|tunnelConfigEntry| 2)
   (:type 'object-type)
   (:syntax '|IpAddress|)
@@ -238,6 +263,7 @@
 
             Since this object does not support IPv6, it is
             deprecated in favor of tunnelInetConfigRemoteAddress."))
+
 (defoid |tunnelConfigEncapsMethod| (|tunnelConfigEntry| 3)
   (:type 'object-type)
   (:syntax '|IANAtunnelType|)
@@ -248,6 +274,7 @@
 
             Since this object does not support IPv6, it is
             deprecated in favor of tunnelInetConfigEncapsMethod."))
+
 (defoid |tunnelConfigID| (|tunnelConfigEntry| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -267,6 +294,7 @@
 
             Since this object does not support IPv6, it is
             deprecated in favor of tunnelInetConfigID."))
+
 (defoid |tunnelConfigIfIndex| (|tunnelConfigEntry| 5)
   (:type 'object-type)
   (:syntax '|InterfaceIndexOrZero|)
@@ -281,6 +309,7 @@
 
             Since this object does not support IPv6, it is
             deprecated in favor of tunnelInetConfigIfIndex."))
+
 (defoid |tunnelConfigStatus| (|tunnelConfigEntry| 6)
   (:type 'object-type)
   (:syntax '|RowStatus|)
@@ -325,6 +354,7 @@
 
             Since this object does not support IPv6, it is
             deprecated in favor of tunnelInetConfigStatus."))
+
 (defoid |tunnelInetConfigTable| (|tunnel| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -339,6 +369,7 @@
             destination address should have a corresponding row in
             the tunnelInetConfigTable, regardless of whether it
             was created via SNMP."))
+
 (defoid |tunnelInetConfigEntry| (|tunnelInetConfigTable| 1)
   (:type 'object-type)
   (:syntax '|TunnelInetConfigEntry|)
@@ -359,7 +390,9 @@
             supported by an agent, care must be taken to ensure
             that the sum of the lengths do not cause the limit to
             be exceeded."))
+
 (deftype |TunnelInetConfigEntry| () 't)
+
 (defoid |tunnelInetConfigAddressType| (|tunnelInetConfigEntry| 1)
   (:type 'object-type)
   (:syntax '|InetAddressType|)
@@ -368,6 +401,7 @@
   (:description
    "The address type over which the tunnel encapsulates
             packets."))
+
 (defoid |tunnelInetConfigLocalAddress| (|tunnelInetConfigEntry| 2)
   (:type 'object-type)
   (:syntax '|InetAddress|)
@@ -378,18 +412,21 @@
             0.0.0.0 (for IPv4) or :: (for IPv6) if the device is
             free to choose any of its addresses at tunnel
             establishment time."))
+
 (defoid |tunnelInetConfigRemoteAddress| (|tunnelInetConfigEntry| 3)
   (:type 'object-type)
   (:syntax '|InetAddress|)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The address of the remote endpoint of the tunnel."))
+
 (defoid |tunnelInetConfigEncapsMethod| (|tunnelInetConfigEntry| 4)
   (:type 'object-type)
   (:syntax '|IANAtunnelType|)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The encapsulation method used by the tunnel."))
+
 (defoid |tunnelInetConfigID| (|tunnelInetConfigEntry| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -409,6 +446,7 @@
 
             conflict with an existing row, such as choosing a
             random number."))
+
 (defoid |tunnelInetConfigIfIndex| (|tunnelInetConfigEntry| 6)
   (:type 'object-type)
   (:syntax '|InterfaceIndexOrZero|)
@@ -420,6 +458,7 @@
             ifIndex corresponding to the tunnel interface.  A
             value of 0 is not legal in the active state, and means
             that the interface index has not yet been assigned."))
+
 (defoid |tunnelInetConfigStatus| (|tunnelInetConfigEntry| 7)
   (:type 'object-type)
   (:syntax '|RowStatus|)
@@ -464,6 +503,7 @@
             Deleting a row in this table will likewise delete the
             corresponding row in the ifTable and in the
             tunnelIfTable."))
+
 (defoid |tunnelInetConfigStorageType| (|tunnelInetConfigEntry| 8)
   (:type 'object-type)
   (:syntax '|StorageType|)
@@ -472,11 +512,15 @@
   (:description
    "The storage type of this row.  If the row is
             permanent(4), no objects in the row need be writable."))
+
 (defoid |tunnelMIBConformance| (|tunnelMIB| 2) (:type 'object-identity))
+
 (defoid |tunnelMIBCompliances| (|tunnelMIBConformance| 1)
   (:type 'object-identity))
+
 (defoid |tunnelMIBGroups| (|tunnelMIBConformance| 2)
   (:type 'object-identity))
+
 (defoid |tunnelMIBCompliance| (|tunnelMIBCompliances| 1)
   (:type 'module-compliance)
   (:status '|deprecated|)
@@ -487,16 +531,19 @@
             This is deprecated in favor of
             tunnelMIBInetFullCompliance and
             tunnelMIBInetReadOnlyCompliance."))
+
 (defoid |tunnelMIBInetFullCompliance| (|tunnelMIBCompliances| 2)
   (:type 'module-compliance)
   (:status '|current|)
   (:description "The full compliance statement for the IP Tunnel MIB."))
+
 (defoid |tunnelMIBInetReadOnlyCompliance| (|tunnelMIBCompliances| 3)
   (:type 'module-compliance)
   (:status '|current|)
   (:description
    "The read-only compliance statement for the IP Tunnel
             MIB."))
+
 (defoid |tunnelMIBBasicGroup| (|tunnelMIBGroups| 1)
   (:type 'object-group)
   (:status '|deprecated|)
@@ -508,10 +555,13 @@
             of IPv4 Tunnels.  Since this group cannot support
             IPv6, it is deprecated in favor of
             tunnelMIBInetGroup."))
+
 (defoid |tunnelMIBInetGroup| (|tunnelMIBGroups| 2)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "A collection of objects to support basic management
             of IPv4 and IPv6 Tunnels."))
+
 (eval-when (:load-toplevel :execute) (setf *current-module* nil))
+

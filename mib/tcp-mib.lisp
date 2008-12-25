@@ -2,9 +2,11 @@
 ;;;; Auto-generated from MIB:NET-SNMP;TCP-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'tcp-mib *mib-modules*)
   (setf *current-module* 'tcp-mib))
+
 (defpackage :asn.1/tcp-mib
   (:nicknames :tcp-mib)
   (:use :common-lisp :asn.1)
@@ -14,7 +16,9 @@
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
   (:import-from :asn.1/inet-address-mib |InetAddress| |InetAddressType|
                 |InetPortNumber|))
+
 (in-package :tcp-mib)
+
 (defoid |tcpMIB| (|mib-2| 49)
   (:type 'module-identity)
   (:description
@@ -23,7 +27,9 @@
             Copyright (C) The Internet Society (2005). This version
             of this MIB module is a part of RFC 4022; see the RFC
             itself for full legal notices."))
+
 (defoid |tcp| (|mib-2| 6) (:type 'object-identity))
+
 (defoid |tcpRtoAlgorithm| (|tcp| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -32,6 +38,7 @@
   (:description
    "The algorithm used to determine the timeout value used for
             retransmitting unacknowledged octets."))
+
 (defoid |tcpRtoMin| (|tcp| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -44,6 +51,7 @@
             on the algorithm used to determine the retransmission
             timeout; in particular, the IETF standard algorithm
             rfc2988(5) provides a minimum value."))
+
 (defoid |tcpRtoMax| (|tcp| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -57,6 +65,7 @@
             timeout; in particular, the IETF standard algorithm
             rfc2988(5) provides an upper bound (as part of an
             adaptive backoff algorithm)."))
+
 (defoid |tcpMaxConn| (|tcp| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -67,6 +76,7 @@
             can support.  In entities where the maximum number of
             connections is dynamic, this object should contain the
             value -1."))
+
 (defoid |tcpActiveOpens| (|tcp| 5)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -78,6 +88,7 @@
 
             Discontinuities in the value of this counter are
             indicated via discontinuities in the value of sysUpTime."))
+
 (defoid |tcpPassiveOpens| (|tcp| 6)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -89,6 +100,7 @@
 
             Discontinuities in the value of this counter are
             indicated via discontinuities in the value of sysUpTime."))
+
 (defoid |tcpAttemptFails| (|tcp| 7)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -103,6 +115,7 @@
 
             Discontinuities in the value of this counter are
             indicated via discontinuities in the value of sysUpTime."))
+
 (defoid |tcpEstabResets| (|tcp| 8)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -115,6 +128,7 @@
 
             Discontinuities in the value of this counter are
             indicated via discontinuities in the value of sysUpTime."))
+
 (defoid |tcpCurrEstab| (|tcp| 9)
   (:type 'object-type)
   (:syntax '|Gauge32|)
@@ -123,6 +137,7 @@
   (:description
    "The number of TCP connections for which the current state
             is either ESTABLISHED or CLOSE-WAIT."))
+
 (defoid |tcpInSegs| (|tcp| 10)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -135,6 +150,7 @@
 
             Discontinuities in the value of this counter are
             indicated via discontinuities in the value of sysUpTime."))
+
 (defoid |tcpOutSegs| (|tcp| 11)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -147,6 +163,7 @@
 
             Discontinuities in the value of this counter are
             indicated via discontinuities in the value of sysUpTime."))
+
 (defoid |tcpRetransSegs| (|tcp| 12)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -159,6 +176,7 @@
 
             Discontinuities in the value of this counter are
             indicated via discontinuities in the value of sysUpTime."))
+
 (defoid |tcpInErrs| (|tcp| 14)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -170,6 +188,7 @@
 
             Discontinuities in the value of this counter are
             indicated via discontinuities in the value of sysUpTime."))
+
 (defoid |tcpOutRsts| (|tcp| 15)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -180,6 +199,7 @@
 
             Discontinuities in the value of this counter are
             indicated via discontinuities in the value of sysUpTime."))
+
 (defoid |tcpHCInSegs| (|tcp| 17)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -194,6 +214,7 @@
 
             Discontinuities in the value of this counter are
             indicated via discontinuities in the value of sysUpTime."))
+
 (defoid |tcpHCOutSegs| (|tcp| 18)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -207,6 +228,7 @@
 
             Discontinuities in the value of this counter are
             indicated via discontinuities in the value of sysUpTime."))
+
 (defoid |tcpConnectionTable| (|tcp| 19)
   (:type 'object-type)
   (:syntax 't)
@@ -216,6 +238,7 @@
    "A table containing information about existing TCP
             connections.  Note that unlike earlier TCP MIBs, there
             is a separate table for connections in the LISTEN state."))
+
 (defoid |tcpConnectionEntry| (|tcpConnectionTable| 1)
   (:type 'object-type)
   (:syntax '|TcpConnectionEntry|)
@@ -227,13 +250,16 @@
             Each row of this table is transient in that it ceases to
             exist when (or soon after) the connection makes the
             transition to the CLOSED state."))
+
 (deftype |TcpConnectionEntry| () 't)
+
 (defoid |tcpConnectionLocalAddressType| (|tcpConnectionEntry| 1)
   (:type 'object-type)
   (:syntax '|InetAddressType|)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The address type of tcpConnectionLocalAddress."))
+
 (defoid |tcpConnectionLocalAddress| (|tcpConnectionEntry| 2)
   (:type 'object-type)
   (:syntax '|InetAddress|)
@@ -249,18 +275,21 @@
             careful not to create entries that would result in OIDs
             with more than 128 subidentifiers; otherwise the information
             cannot be accessed by using SNMPv1, SNMPv2c, or SNMPv3."))
+
 (defoid |tcpConnectionLocalPort| (|tcpConnectionEntry| 3)
   (:type 'object-type)
   (:syntax '|InetPortNumber|)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The local port number for this TCP connection."))
+
 (defoid |tcpConnectionRemAddressType| (|tcpConnectionEntry| 4)
   (:type 'object-type)
   (:syntax '|InetAddressType|)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The address type of tcpConnectionRemAddress."))
+
 (defoid |tcpConnectionRemAddress| (|tcpConnectionEntry| 5)
   (:type 'object-type)
   (:syntax '|InetAddress|)
@@ -276,12 +305,14 @@
             careful not to create entries that would result in OIDs
             with more than 128 subidentifiers; otherwise the information
             cannot be accessed by using SNMPv1, SNMPv2c, or SNMPv3."))
+
 (defoid |tcpConnectionRemPort| (|tcpConnectionEntry| 6)
   (:type 'object-type)
   (:syntax '|InetPortNumber|)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The remote port number for this TCP connection."))
+
 (defoid |tcpConnectionState| (|tcpConnectionEntry| 7)
   (:type 'object-type)
   (:syntax 't)
@@ -308,6 +339,7 @@
             As an implementation-specific option, a RST segment may be
             sent from the managed node to the other TCP endpoint (note,
             however, that RST segments are not sent reliably)."))
+
 (defoid |tcpConnectionProcess| (|tcpConnectionEntry| 8)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -319,6 +351,7 @@
             value is expected to be the same as HOST-RESOURCES-MIB::
             hrSWRunIndex or SYSAPPL-MIB::sysApplElmtRunIndex for some
             row in the appropriate tables."))
+
 (defoid |tcpListenerTable| (|tcp| 20)
   (:type 'object-type)
   (:syntax 't)
@@ -354,6 +387,7 @@
             application using IPv6 'sockets' to communicate via
             IPv4 between ::ffff:10.0.0.1 and ::ffff:10.0.0.2 would
             use InetAddressType ipv4(1))."))
+
 (defoid |tcpListenerEntry| (|tcpListenerTable| 1)
   (:type 'object-type)
   (:syntax '|TcpListenerEntry|)
@@ -362,7 +396,9 @@
   (:description
    "A conceptual row of the tcpListenerTable containing
             information about a particular TCP listener."))
+
 (deftype |TcpListenerEntry| () 't)
+
 (defoid |tcpListenerLocalAddressType| (|tcpListenerEntry| 1)
   (:type 'object-type)
   (:syntax '|InetAddressType|)
@@ -372,6 +408,7 @@
    "The address type of tcpListenerLocalAddress.  The value
             should be unknown (0) if connection initiations to all
             local IP addresses are accepted."))
+
 (defoid |tcpListenerLocalAddress| (|tcpListenerEntry| 2)
   (:type 'object-type)
   (:syntax '|InetAddress|)
@@ -407,12 +444,14 @@
             careful not to create entries that would result in OIDs
             with more than 128 subidentifiers; otherwise the information
             cannot be accessed, using SNMPv1, SNMPv2c, or SNMPv3."))
+
 (defoid |tcpListenerLocalPort| (|tcpListenerEntry| 3)
   (:type 'object-type)
   (:syntax '|InetPortNumber|)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The local port number for this TCP connection."))
+
 (defoid |tcpListenerProcess| (|tcpListenerEntry| 4)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -424,6 +463,7 @@
             value is expected to be the same as HOST-RESOURCES-MIB::
             hrSWRunIndex or SYSAPPL-MIB::sysApplElmtRunIndex for some
             row in the appropriate tables."))
+
 (defoid |tcpConnTable| (|tcp| 13)
   (:type 'object-type)
   (:syntax 't)
@@ -434,6 +474,7 @@
             TCP connections or listeners.  This table has been
             deprecated in favor of the version neutral
             tcpConnectionTable."))
+
 (defoid |tcpConnEntry| (|tcpConnTable| 1)
   (:type 'object-type)
   (:syntax '|TcpConnEntry|)
@@ -445,7 +486,9 @@
             of this table is transient in that it ceases to exist when
             (or soon after) the connection makes the transition to the
             CLOSED state."))
+
 (deftype |TcpConnEntry| () 't)
+
 (defoid |tcpConnState| (|tcpConnEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -468,6 +511,7 @@
             As an implementation-specific option, a RST segment may be
             sent from the managed node to the other TCP endpoint (note,
             however, that RST segments are not sent reliably)."))
+
 (defoid |tcpConnLocalAddress| (|tcpConnEntry| 2)
   (:type 'object-type)
   (:syntax '|IpAddress|)
@@ -478,28 +522,35 @@
             of a connection in the listen state willing to
             accept connections for any IP interface associated with the
             node, the value 0.0.0.0 is used."))
+
 (defoid |tcpConnLocalPort| (|tcpConnEntry| 3)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|read-only|)
   (:status '|deprecated|)
   (:description "The local port number for this TCP connection."))
+
 (defoid |tcpConnRemAddress| (|tcpConnEntry| 4)
   (:type 'object-type)
   (:syntax '|IpAddress|)
   (:max-access '|read-only|)
   (:status '|deprecated|)
   (:description "The remote IP address for this TCP connection."))
+
 (defoid |tcpConnRemPort| (|tcpConnEntry| 5)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|read-only|)
   (:status '|deprecated|)
   (:description "The remote port number for this TCP connection."))
+
 (defoid |tcpMIBConformance| (|tcpMIB| 2) (:type 'object-identity))
+
 (defoid |tcpMIBCompliances| (|tcpMIBConformance| 1)
   (:type 'object-identity))
+
 (defoid |tcpMIBGroups| (|tcpMIBConformance| 2) (:type 'object-identity))
+
 (defoid |tcpMIBCompliance2| (|tcpMIBCompliances| 2)
   (:type 'module-compliance)
   (:status '|current|)
@@ -536,6 +587,7 @@
             --     both IPv4 and IPv6 addresses on the device.
             --
            "))
+
 (defoid |tcpMIBCompliance| (|tcpMIBCompliances| 1)
   (:type 'module-compliance)
   (:status '|deprecated|)
@@ -546,32 +598,39 @@
             tcpMIBCompliance2.  However, agents are still encouraged
             to implement these objects in order to interoperate with
             the deployed base of managers."))
+
 (defoid |tcpGroup| (|tcpMIBGroups| 1)
   (:type 'object-group)
   (:status '|deprecated|)
   (:description
    "The tcp group of objects providing for management of TCP
             entities."))
+
 (defoid |tcpBaseGroup| (|tcpMIBGroups| 2)
   (:type 'object-group)
   (:status '|current|)
   (:description "The group of counters common to TCP entities."))
+
 (defoid |tcpConnectionGroup| (|tcpMIBGroups| 3)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "The group provides general information about TCP
             connections."))
+
 (defoid |tcpListenerGroup| (|tcpMIBGroups| 4)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "This group has objects providing general information about
             TCP listeners."))
+
 (defoid |tcpHCGroup| (|tcpMIBGroups| 5)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "The group of objects providing for counters of high speed
             TCP implementations."))
+
 (eval-when (:load-toplevel :execute) (setf *current-module* nil))
+

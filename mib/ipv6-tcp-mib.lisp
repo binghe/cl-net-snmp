@@ -2,9 +2,11 @@
 ;;;; Auto-generated from MIB:NET-SNMP;IPV6-TCP-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'ipv6-tcp-mib *mib-modules*)
   (setf *current-module* 'ipv6-tcp-mib))
+
 (defpackage :asn.1/ipv6-tcp-mib
   (:nicknames :ipv6-tcp-mib)
   (:use :common-lisp :asn.1)
@@ -12,12 +14,16 @@
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type |mib-2|
                 |experimental|)
   (:import-from :asn.1/ipv6-tc |Ipv6Address| |Ipv6IfIndexOrZero|))
+
 (in-package :ipv6-tcp-mib)
+
 (defoid |ipv6TcpMIB| (|experimental| 86)
   (:type 'module-identity)
   (:description
    "The MIB module for entities implementing TCP over IPv6."))
+
 (defoid |tcp| (|mib-2| 6) (:type 'object-identity))
+
 (defoid |ipv6TcpConnTable| (|tcp| 16)
   (:type 'object-type)
   (:syntax 't)
@@ -26,6 +32,7 @@
   (:description
    "A table containing TCP connection-specific information,
          for only those connections whose endpoints are IPv6 addresses."))
+
 (defoid |ipv6TcpConnEntry| (|ipv6TcpConnTable| 1)
   (:type 'object-type)
   (:syntax '|Ipv6TcpConnEntry|)
@@ -41,7 +48,9 @@
          Note that conceptual rows in this table require an additional
          index object compared to tcpConnTable, since IPv6 addresses
          are not guaranteed to be unique on the managed node."))
+
 (deftype |Ipv6TcpConnEntry| () 't)
+
 (defoid |ipv6TcpConnLocalAddress| (|ipv6TcpConnEntry| 1)
   (:type 'object-type)
   (:syntax '|Ipv6Address|)
@@ -53,24 +62,28 @@
          is willing to accept connections for any IPv6
          address associated with the managed node, the value
          ::0 is used."))
+
 (defoid |ipv6TcpConnLocalPort| (|ipv6TcpConnEntry| 2)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The local port number for this TCP connection."))
+
 (defoid |ipv6TcpConnRemAddress| (|ipv6TcpConnEntry| 3)
   (:type 'object-type)
   (:syntax '|Ipv6Address|)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The remote IPv6 address for this TCP connection."))
+
 (defoid |ipv6TcpConnRemPort| (|ipv6TcpConnEntry| 4)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The remote port number for this TCP connection."))
+
 (defoid |ipv6TcpConnIfIndex| (|ipv6TcpConnEntry| 5)
   (:type 'object-type)
   (:syntax '|Ipv6IfIndexOrZero|)
@@ -99,6 +112,7 @@
 
          The value of this object must remain constant during the life
          of the TCP connection."))
+
 (defoid |ipv6TcpConnState| (|ipv6TcpConnEntry| 6)
   (:type 'object-type)
   (:syntax 't)
@@ -122,21 +136,28 @@
          As an implementation-specific option, a RST segment may be
          sent from the managed node to the other TCP endpoint (note
          however that RST segments are not sent reliably)."))
+
 (defoid |ipv6TcpConformance| (|ipv6TcpMIB| 2) (:type 'object-identity))
+
 (defoid |ipv6TcpCompliances| (|ipv6TcpConformance| 1)
   (:type 'object-identity))
+
 (defoid |ipv6TcpGroups| (|ipv6TcpConformance| 2)
   (:type 'object-identity))
+
 (defoid |ipv6TcpCompliance| (|ipv6TcpCompliances| 1)
   (:type 'module-compliance)
   (:status '|current|)
   (:description
    "The compliance statement for SNMPv2 entities which
          implement TCP over IPv6."))
+
 (defoid |ipv6TcpGroup| (|ipv6TcpGroups| 1)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "The group of objects providing management of
          TCP over IPv6."))
+
 (eval-when (:load-toplevel :execute) (setf *current-module* nil))
+

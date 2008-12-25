@@ -2,9 +2,11 @@
 ;;;; Auto-generated from MIB:NET-SNMP;IP-FORWARD-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'ip-forward-mib *mib-modules*)
   (setf *current-module* 'ip-forward-mib))
+
 (defpackage :asn.1/ip-forward-mib
   (:nicknames :ip-forward-mib)
   (:use :common-lisp :asn.1)
@@ -17,7 +19,9 @@
   (:import-from :asn.1/iana-rtproto-mib |IANAipRouteProtocol|)
   (:import-from :asn.1/inet-address-mib |InetAddress| |InetAddressType|
                 |InetAddressPrefixLength| |InetAutonomousSystemNumber|))
+
 (in-package :ip-forward-mib)
+
 (defoid |ipForward| (|ip| 24)
   (:type 'module-identity)
   (:description
@@ -27,6 +31,7 @@
             Copyright (C) The Internet Society (2006).  This version
             of this MIB module is a part of RFC 4292; see the RFC
             itself for full legal notices."))
+
 (defoid |inetCidrRouteNumber| (|ipForward| 6)
   (:type 'object-type)
   (:syntax '|Gauge32|)
@@ -35,6 +40,7 @@
   (:description
    "The number of current inetCidrRouteTable entries that
             are not invalid."))
+
 (defoid |inetCidrRouteDiscards| (|ipForward| 8)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -46,12 +52,14 @@
             appear in the inetCidrRouteTable.  One possible reason
             for discarding an entry would be to free-up buffer space
             for other route table entries."))
+
 (defoid |inetCidrRouteTable| (|ipForward| 7)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "This entity's IP Routing table."))
+
 (defoid |inetCidrRouteEntry| (|inetCidrRouteTable| 1)
   (:type 'object-type)
   (:syntax '|InetCidrRouteEntry|)
@@ -71,7 +79,9 @@
             instances in this table will have more than 128 sub-
             identifiers and cannot be accessed using SNMPv1,
             SNMPv2c, or SNMPv3."))
+
 (deftype |InetCidrRouteEntry| () 't)
+
 (defoid |inetCidrRouteDestType| (|inetCidrRouteEntry| 1)
   (:type 'object-type)
   (:syntax '|InetAddressType|)
@@ -83,6 +93,7 @@
 
             Only those address types that may appear in an actual
             routing table are allowed as values of this object."))
+
 (defoid |inetCidrRouteDest| (|inetCidrRouteEntry| 2)
   (:type 'object-type)
   (:syntax '|InetAddress|)
@@ -103,6 +114,7 @@
             equal to x.  If not, then the index pair is not
             consistent and an inconsistentName error must be
             returned on SET or CREATE requests."))
+
 (defoid |inetCidrRoutePfxLen| (|inetCidrRouteEntry| 3)
   (:type 'object-type)
   (:syntax '|InetAddressPrefixLength|)
@@ -126,6 +138,7 @@
             equal to x.  If not, then the index pair is not
             consistent and an inconsistentName error must be
             returned on SET or CREATE requests."))
+
 (defoid |inetCidrRoutePolicy| (|inetCidrRouteEntry| 4)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -137,6 +150,7 @@
             index that may delineate between multiple entries to
             the same destination.  The value { 0 0 } shall be used
             as the default value for this object."))
+
 (defoid |inetCidrRouteNextHopType| (|inetCidrRouteEntry| 5)
   (:type 'object-type)
   (:syntax '|InetAddressType|)
@@ -151,6 +165,7 @@
 
             Only those address types that may appear in an actual
             routing table are allowed as values of this object."))
+
 (defoid |inetCidrRouteNextHop| (|inetCidrRouteEntry| 6)
   (:type 'object-type)
   (:syntax '|InetAddress|)
@@ -165,6 +180,7 @@
 
             The type of this address is determined by the value of
             the inetCidrRouteNextHopType object."))
+
 (defoid |inetCidrRouteIfIndex| (|inetCidrRouteEntry| 7)
   (:type 'object-type)
   (:syntax '|InterfaceIndexOrZero|)
@@ -175,6 +191,7 @@
             through which the next hop of this route should be
             reached.  A value of 0 is valid and represents the
             scenario where no interface is specified."))
+
 (defoid |inetCidrRouteType| (|inetCidrRouteEntry| 8)
   (:type 'object-type)
   (:syntax 't)
@@ -198,6 +215,7 @@
 
             blackhole(5) refers to a route that, if matched,
             discards the message silently."))
+
 (defoid |inetCidrRouteProto| (|inetCidrRouteEntry| 9)
   (:type 'object-type)
   (:syntax '|IANAipRouteProtocol|)
@@ -208,6 +226,7 @@
             Inclusion of values for gateway routing protocols is
             not intended to imply that hosts should support those
             protocols."))
+
 (defoid |inetCidrRouteAge| (|inetCidrRouteEntry| 10)
   (:type 'object-type)
   (:syntax '|Gauge32|)
@@ -219,6 +238,7 @@
             semantics of 'too old' can be implied, except through
             knowledge of the routing protocol by which the route
             was learned."))
+
 (defoid |inetCidrRouteNextHopAS| (|inetCidrRouteEntry| 11)
   (:type 'object-type)
   (:syntax '|InetAutonomousSystemNumber|)
@@ -230,6 +250,7 @@
             protocol specified in the route's inetCidrRouteProto
             value.  When this object is unknown or not relevant, its
             value should be set to zero."))
+
 (defoid |inetCidrRouteMetric1| (|inetCidrRouteEntry| 12)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -241,6 +262,7 @@
             protocol specified in the route's inetCidrRouteProto
             value.  If this metric is not used, its value should be
             set to -1."))
+
 (defoid |inetCidrRouteMetric2| (|inetCidrRouteEntry| 13)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -252,6 +274,7 @@
             protocol specified in the route's inetCidrRouteProto
             value.  If this metric is not used, its value should be
             set to -1."))
+
 (defoid |inetCidrRouteMetric3| (|inetCidrRouteEntry| 14)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -263,6 +286,7 @@
             protocol specified in the route's inetCidrRouteProto
             value.  If this metric is not used, its value should be
             set to -1."))
+
 (defoid |inetCidrRouteMetric4| (|inetCidrRouteEntry| 15)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -274,6 +298,7 @@
             protocol specified in the route's inetCidrRouteProto
             value.  If this metric is not used, its value should be
             set to -1."))
+
 (defoid |inetCidrRouteMetric5| (|inetCidrRouteEntry| 16)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -288,6 +313,7 @@
             protocol specified in the route's inetCidrRouteProto
             value.  If this metric is not used, its value should be
             set to -1."))
+
 (defoid |inetCidrRouteStatus| (|inetCidrRouteEntry| 17)
   (:type 'object-type)
   (:syntax '|RowStatus|)
@@ -299,11 +325,15 @@
 
             A row entry cannot be modified when the status is
             marked as active(1)."))
+
 (defoid |ipForwardConformance| (|ipForward| 5) (:type 'object-identity))
+
 (defoid |ipForwardGroups| (|ipForwardConformance| 1)
   (:type 'object-identity))
+
 (defoid |ipForwardCompliances| (|ipForwardConformance| 2)
   (:type 'object-identity))
+
 (defoid |ipForwardFullCompliance| (|ipForwardCompliances| 3)
   (:type 'module-compliance)
   (:status '|current|)
@@ -346,6 +376,7 @@
             --     This MIB requires support for global and
             --     non-global IPv4 and IPv6 addresses.
             "))
+
 (defoid |ipForwardReadOnlyCompliance| (|ipForwardCompliances| 4)
   (:type 'module-compliance)
   (:status '|current|)
@@ -353,10 +384,12 @@
    "When this MIB is implemented without support for read-
             create (i.e., in read-only mode), the implementation can
             claim read-only compliance."))
+
 (defoid |inetForwardCidrRouteGroup| (|ipForwardGroups| 4)
   (:type 'object-group)
   (:status '|current|)
   (:description "The IP version-independent CIDR Route Table."))
+
 (defoid |ipCidrRouteNumber| (|ipForward| 3)
   (:type 'object-type)
   (:syntax '|Gauge32|)
@@ -366,6 +399,7 @@
    "The number of current ipCidrRouteTable entries that are
             not invalid.  This object is deprecated in favor of
             inetCidrRouteNumber and the inetCidrRouteTable."))
+
 (defoid |ipCidrRouteTable| (|ipForward| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -375,6 +409,7 @@
    "This entity's IP Routing table.  This table has been
             deprecated in favor of the IP version neutral
             inetCidrRouteTable."))
+
 (defoid |ipCidrRouteEntry| (|ipCidrRouteTable| 1)
   (:type 'object-type)
   (:syntax '|IpCidrRouteEntry|)
@@ -386,7 +421,9 @@
 
 
             particular policy."))
+
 (deftype |IpCidrRouteEntry| () 't)
+
 (defoid |ipCidrRouteDest| (|ipCidrRouteEntry| 1)
   (:type 'object-type)
   (:syntax '|IpAddress|)
@@ -403,6 +440,7 @@
             bitwise logical-AND of x with the value of the
             corresponding instance of the ipCidrRouteMask object is
             not equal to x."))
+
 (defoid |ipCidrRouteMask| (|ipCidrRouteEntry| 2)
   (:type 'object-type)
   (:syntax '|IpAddress|)
@@ -421,6 +459,7 @@
             bitwise logical-AND of x with the value of the
             corresponding instance of the ipCidrRouteDest object is
             not equal to ipCidrRouteDest."))
+
 (defoid |ipCidrRouteTos| (|ipCidrRouteEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -452,6 +491,7 @@
 
                1 1 0 0  ==>  24      1 1 0 1  ==>  26
                1 1 1 0  ==>  28      1 1 1 1  ==>  30"))
+
 (defoid |ipCidrRouteNextHop| (|ipCidrRouteEntry| 4)
   (:type 'object-type)
   (:syntax '|IpAddress|)
@@ -460,6 +500,7 @@
   (:description
    "On remote routes, the address of the next system en
             route; Otherwise, 0.0.0.0."))
+
 (defoid |ipCidrRouteIfIndex| (|ipCidrRouteEntry| 5)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -469,6 +510,7 @@
    "The ifIndex value that identifies the local interface
             through which the next hop of this route should be
             reached."))
+
 (defoid |ipCidrRouteType| (|ipCidrRouteEntry| 6)
   (:type 'object-type)
   (:syntax 't)
@@ -488,6 +530,7 @@
             discards the message as unreachable.  This is used in
             some protocols as a means of correctly aggregating
             routes."))
+
 (defoid |ipCidrRouteProto| (|ipCidrRouteEntry| 7)
   (:type 'object-type)
   (:syntax 't)
@@ -498,6 +541,7 @@
             Inclusion of values for gateway routing protocols is
             not intended to imply that hosts should support those
             protocols."))
+
 (defoid |ipCidrRouteAge| (|ipCidrRouteEntry| 8)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -509,6 +553,7 @@
             semantics of `too old' can be implied, except through
             knowledge of the routing protocol by which the route
             was learned."))
+
 (defoid |ipCidrRouteInfo| (|ipCidrRouteEntry| 9)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -524,6 +569,7 @@
             object identifier, and any implementation conforming to
             ASN.1 and the Basic Encoding Rules must be able to
             generate and recognize this value."))
+
 (defoid |ipCidrRouteNextHopAS| (|ipCidrRouteEntry| 10)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -535,6 +581,7 @@
             protocol specified in the route's ipCidrRouteProto
             value.  When this object is unknown or not relevant, its
             value should be set to zero."))
+
 (defoid |ipCidrRouteMetric1| (|ipCidrRouteEntry| 11)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -546,6 +593,7 @@
             protocol specified in the route's ipCidrRouteProto
             value.  If this metric is not used, its value should be
             set to -1."))
+
 (defoid |ipCidrRouteMetric2| (|ipCidrRouteEntry| 12)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -560,6 +608,7 @@
 
 
             set to -1."))
+
 (defoid |ipCidrRouteMetric3| (|ipCidrRouteEntry| 13)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -571,6 +620,7 @@
             protocol specified in the route's ipCidrRouteProto
             value.  If this metric is not used, its value should be
             set to -1."))
+
 (defoid |ipCidrRouteMetric4| (|ipCidrRouteEntry| 14)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -582,6 +632,7 @@
             protocol specified in the route's ipCidrRouteProto
             value.  If this metric is not used, its value should be
             set to -1."))
+
 (defoid |ipCidrRouteMetric5| (|ipCidrRouteEntry| 15)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -593,6 +644,7 @@
             protocol specified in the route's ipCidrRouteProto
             value.  If this metric is not used, its value should be
             set to -1."))
+
 (defoid |ipCidrRouteStatus| (|ipCidrRouteEntry| 16)
   (:type 'object-type)
   (:syntax '|RowStatus|)
@@ -601,6 +653,7 @@
   (:description
    "The row status variable, used according to row
             installation and removal conventions."))
+
 (defoid |ipForwardCompliance| (|ipForwardCompliances| 1)
   (:type 'module-compliance)
   (:status '|deprecated|)
@@ -611,6 +664,7 @@
             This compliance statement has been deprecated and
             replaced with ipForwardFullCompliance and
             ipForwardReadOnlyCompliance."))
+
 (defoid |ipForwardCidrRouteGroup| (|ipForwardGroups| 3)
   (:type 'object-group)
   (:status '|deprecated|)
@@ -619,6 +673,7 @@
 
             This group has been deprecated and replaced with
             inetForwardCidrRouteGroup."))
+
 (defoid |ipForwardNumber| (|ipForward| 1)
   (:type 'object-type)
   (:syntax '|Gauge32|)
@@ -627,12 +682,14 @@
   (:description
    "The number of current ipForwardTable entries that are
             not invalid."))
+
 (defoid |ipForwardTable| (|ipForward| 2)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|obsolete|)
   (:description "This entity's IP Routing table."))
+
 (defoid |ipForwardEntry| (|ipForwardTable| 1)
   (:type 'object-type)
   (:syntax '|IpForwardEntry|)
@@ -641,7 +698,9 @@
   (:description
    "A particular route to a particular destination, under a
             particular policy."))
+
 (deftype |IpForwardEntry| () 't)
+
 (defoid |ipForwardDest| (|ipForwardEntry| 1)
   (:type 'object-type)
   (:syntax '|IpAddress|)
@@ -659,6 +718,7 @@
             bitwise logical-AND of x with the value of the
             corresponding instance of the ipForwardMask object is
             not equal to x."))
+
 (defoid |ipForwardMask| (|ipForwardEntry| 2)
   (:type 'object-type)
   (:syntax '|IpAddress|)
@@ -677,6 +737,7 @@
             bitwise logical-AND of x with the value of the
             corresponding instance of the ipForwardDest object is
             not equal to ipForwardDest."))
+
 (defoid |ipForwardPolicy| (|ipForwardEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -720,6 +781,7 @@
             this object or must implement an integer-instanced
             policy table for which this object's
             value acts as an index."))
+
 (defoid |ipForwardNextHop| (|ipForwardEntry| 4)
   (:type 'object-type)
   (:syntax '|IpAddress|)
@@ -728,6 +790,7 @@
   (:description
    "On remote routes, the address of the next system en
             route; otherwise, 0.0.0.0."))
+
 (defoid |ipForwardIfIndex| (|ipForwardEntry| 5)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -737,6 +800,7 @@
    "The ifIndex value that identifies the local interface
             through which the next hop of this route should be
             reached."))
+
 (defoid |ipForwardType| (|ipForwardEntry| 6)
   (:type 'object-type)
   (:syntax 't)
@@ -760,6 +824,7 @@
             corresponds to entries not currently in use.  Proper
             interpretation of such entries requires examination of
             the relevant ipForwardType object."))
+
 (defoid |ipForwardProto| (|ipForwardEntry| 7)
   (:type 'object-type)
   (:syntax 't)
@@ -770,6 +835,7 @@
             Inclusion of values for gateway routing protocols is
             not intended to imply that hosts should support those
             protocols."))
+
 (defoid |ipForwardAge| (|ipForwardEntry| 8)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -781,6 +847,7 @@
             semantics of `too old' can be implied except through
             knowledge of the routing protocol by which the route
             was learned."))
+
 (defoid |ipForwardInfo| (|ipForwardEntry| 9)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -796,6 +863,7 @@
             object identifier, and any implementation conforming to
             ASN.1 and the Basic Encoding Rules must be able to
             generate and recognize this value."))
+
 (defoid |ipForwardNextHopAS| (|ipForwardEntry| 10)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -805,6 +873,7 @@
    "The Autonomous System Number of the Next Hop.  When
             this is unknown or not relevant to the protocol
             indicated by ipForwardProto, zero."))
+
 (defoid |ipForwardMetric1| (|ipForwardEntry| 11)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -816,6 +885,7 @@
             protocol specified in the route's ipForwardProto value.
             If this metric is not used, its value should be set to
             -1."))
+
 (defoid |ipForwardMetric2| (|ipForwardEntry| 12)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -827,6 +897,7 @@
             protocol specified in the route's ipForwardProto value.
             If this metric is not used, its value should be set to
             -1."))
+
 (defoid |ipForwardMetric3| (|ipForwardEntry| 13)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -838,6 +909,7 @@
             protocol specified in the route's ipForwardProto value.
             If this metric is not used, its value should be set to
             -1."))
+
 (defoid |ipForwardMetric4| (|ipForwardEntry| 14)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -849,6 +921,7 @@
             protocol specified in the route's ipForwardProto value.
             If this metric is not used, its value should be set to
             -1."))
+
 (defoid |ipForwardMetric5| (|ipForwardEntry| 15)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -860,14 +933,18 @@
             protocol specified in the route's ipForwardProto value.
             If this metric is not used, its value should be set to
             -1."))
+
 (defoid |ipForwardOldCompliance| (|ipForwardCompliances| 2)
   (:type 'module-compliance)
   (:status '|obsolete|)
   (:description
    "The compliance statement for SNMP entities that
             implement the ipForward MIB."))
+
 (defoid |ipForwardMultiPathGroup| (|ipForwardGroups| 2)
   (:type 'object-group)
   (:status '|obsolete|)
   (:description "IP Multipath Route Table."))
+
 (eval-when (:load-toplevel :execute) (setf *current-module* nil))
+

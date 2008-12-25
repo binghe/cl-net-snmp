@@ -3,10 +3,8 @@
 
 (IN-PACKAGE :ASN.1)
 (EVAL-WHEN (:LOAD-TOPLEVEL :EXECUTE)
-  (MAPCAR #'(LAMBDA (ASN.1::X)
-              (SETF (GETHASH (CAR ASN.1::X)
-                             ASN.1::*MIB-MODULE-DEPENDENCY*)
-                    (CDR ASN.1::X)))
+  (MAPCAR #'(LAMBDA (X)
+              (SETF (GETHASH (CAR X) *MIB-MODULE-DEPENDENCY*) (CDR X)))
           '((LISP-CL-HTTP-MIB |SNMPv2-SMI| LISP-MIB)
             (LISP-SCL-MIB |SNMPv2-SMI| LISP-MIB)
             (LISP-CLOZURE-MIB |SNMPv2-SMI| LISP-MIB)

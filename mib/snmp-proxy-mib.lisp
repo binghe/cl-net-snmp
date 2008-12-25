@@ -2,9 +2,11 @@
 ;;;; Auto-generated from MIB:NET-SNMP;SNMP-PROXY-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'snmp-proxy-mib *mib-modules*)
   (setf *current-module* 'snmp-proxy-mib))
+
 (defpackage :asn.1/snmp-proxy-mib
   (:nicknames :snmp-proxy-mib)
   (:use :common-lisp :asn.1)
@@ -15,7 +17,9 @@
                 |SnmpAdminString|)
   (:import-from :asn.1/snmp-target-mib |SnmpTagValue|)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group))
+
 (in-package :snmp-proxy-mib)
+
 (defoid |snmpProxyMIB| (|snmpModules| 14)
   (:type 'module-identity)
   (:description
@@ -27,9 +31,12 @@
          version of this MIB module is part of RFC 3413;
          see the RFC itself for full legal notices.
         "))
+
 (defoid |snmpProxyObjects| (|snmpProxyMIB| 1) (:type 'object-identity))
+
 (defoid |snmpProxyConformance| (|snmpProxyMIB| 3)
   (:type 'object-identity))
+
 (defoid |snmpProxyTable| (|snmpProxyObjects| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -38,6 +45,7 @@
   (:description
    "The table of translation parameters used by proxy forwarder
          applications for forwarding SNMP messages."))
+
 (defoid |snmpProxyEntry| (|snmpProxyTable| 1)
   (:type 'object-type)
   (:syntax '|SnmpProxyEntry|)
@@ -49,7 +57,9 @@
 
          Entries in the snmpProxyTable are created and deleted
          using the snmpProxyRowStatus object."))
+
 (deftype |SnmpProxyEntry| () 't)
+
 (defoid |snmpProxyName| (|snmpProxyEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -58,6 +68,7 @@
   (:description
    "The locally arbitrary, but unique identifier associated
          with this snmpProxyEntry."))
+
 (defoid |snmpProxyType| (|snmpProxyEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -66,6 +77,7 @@
   (:description
    "The type of message that may be forwarded using
          the translation parameters defined by this entry."))
+
 (defoid |snmpProxyContextEngineID| (|snmpProxyEntry| 3)
   (:type 'object-type)
   (:syntax '|SnmpEngineID|)
@@ -75,6 +87,7 @@
    "The contextEngineID contained in messages that
          may be forwarded using the translation parameters
          defined by this entry."))
+
 (defoid |snmpProxyContextName| (|snmpProxyEntry| 4)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
@@ -88,6 +101,7 @@
          This object is optional, and if not supported, the
          contextName contained in a message is ignored when
          selecting an entry in the snmpProxyTable."))
+
 (defoid |snmpProxyTargetParamsIn| (|snmpProxyEntry| 5)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
@@ -97,6 +111,7 @@
    "This object selects an entry in the snmpTargetParamsTable.
          The selected entry is used to determine which row of the
          snmpProxyTable to use for forwarding received messages."))
+
 (defoid |snmpProxySingleTargetOut| (|snmpProxyEntry| 6)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
@@ -112,6 +127,7 @@
          This object is only used when selection of a single
          target is required (i.e. when forwarding an incoming
          read or write request)."))
+
 (defoid |snmpProxyMultipleTargetOut| (|snmpProxyEntry| 7)
   (:type 'object-type)
   (:syntax '|SnmpTagValue|)
@@ -124,6 +140,7 @@
          This object is only used when selection of multiple
          targets is required (i.e. when forwarding an incoming
          notification)."))
+
 (defoid |snmpProxyStorageType| (|snmpProxyEntry| 8)
   (:type 'object-type)
   (:syntax '|StorageType|)
@@ -133,6 +150,7 @@
    "The storage type of this conceptual row.
          Conceptual rows having the value 'permanent' need not
          allow write-access to any columnar objects in the row."))
+
 (defoid |snmpProxyRowStatus| (|snmpProxyEntry| 9)
   (:type 'object-type)
   (:syntax '|RowStatus|)
@@ -154,16 +172,20 @@
              - snmpProxyTargetParamsIn
              - snmpProxySingleTargetOut
              - snmpProxyMultipleTargetOut"))
+
 (defoid |snmpProxyCompliances| (|snmpProxyConformance| 1)
   (:type 'object-identity))
+
 (defoid |snmpProxyGroups| (|snmpProxyConformance| 2)
   (:type 'object-identity))
+
 (defoid |snmpProxyCompliance| (|snmpProxyCompliances| 1)
   (:type 'module-compliance)
   (:status '|current|)
   (:description
    "The compliance statement for SNMP entities which include
          a proxy forwarding application."))
+
 (defoid |snmpProxyGroup| (|snmpProxyGroups| 3)
   (:type 'object-group)
   (:status '|current|)
@@ -171,4 +193,6 @@
    "A collection of objects providing remote configuration of
          management target translation parameters for use by
          proxy forwarder applications."))
+
 (eval-when (:load-toplevel :execute) (setf *current-module* nil))
+

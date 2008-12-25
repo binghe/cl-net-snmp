@@ -2,9 +2,11 @@
 ;;;; Auto-generated from MIB:NET-SNMP;NET-SNMP-VACM-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'net-snmp-vacm-mib *mib-modules*)
   (setf *current-module* 'net-snmp-vacm-mib))
+
 (defpackage :asn.1/net-snmp-vacm-mib
   (:nicknames :net-snmp-vacm-mib)
   (:use :common-lisp :asn.1)
@@ -17,24 +19,30 @@
   (:import-from :|ASN.1/SNMPv2-CONF| object-group notification-group)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention |DisplayString|
                 |RowStatus| |StorageType|))
+
 (in-package :net-snmp-vacm-mib)
+
 (defoid |netSnmpVacmMIB| (|netSnmpObjects| 9)
   (:type 'module-identity)
   (:description
    "Defines Net-SNMP extensions to the standard VACM view table."))
+
 (defoid |nsVacmAccessTable| (|netSnmpVacmMIB| 1)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "Net-SNMP extensions to vacmAccessTable."))
+
 (defoid |nsVacmAccessEntry| (|nsVacmAccessTable| 1)
   (:type 'object-type)
   (:syntax '|NsVacmAccessEntry|)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "Net-SNMP extensions to vacmAccessTable."))
+
 (deftype |NsVacmAccessEntry| () 't)
+
 (defoid |nsVacmAuthType| (|nsVacmAccessEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -44,6 +52,7 @@
    "The type of processing that the specified view
                  should be applied to.   See 'snmpd.conf(5)' and
                  'snmptrapd.conf(5)' for details."))
+
 (defoid |nsVacmContextMatch| (|nsVacmAccessEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -63,6 +72,7 @@
                  all nsVacmAccessEntries corresponding to a single
                  row of the vacmAccessTable.
                 "))
+
 (defoid |nsVacmViewName| (|nsVacmAccessEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -74,6 +84,7 @@
 
                  The interpretation of this value is the same as for
                  the standard VACM ViewName objects."))
+
 (defoid |nsVacmStorageType| (|nsVacmAccessEntry| 4)
   (:type 'object-type)
   (:syntax '|StorageType|)
@@ -89,6 +100,7 @@
                  all nsVacmAccessEntries corresponding to a single
                  row of the vacmAccessTable.
                 "))
+
 (defoid |nsVacmStatus| (|nsVacmAccessEntry| 5)
   (:type 'object-type)
   (:syntax '|RowStatus|)
@@ -108,4 +120,6 @@
                  all nsVacmAccessEntries corresponding to a single
                  row of the vacmAccessTable.
                 "))
+
 (eval-when (:load-toplevel :execute) (setf *current-module* nil))
+

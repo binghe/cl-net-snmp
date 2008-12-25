@@ -2,9 +2,11 @@
 ;;;; Auto-generated from MIB:NET-SNMP;DISMAN-EXPRESSION-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'disman-expression-mib *mib-modules*)
   (setf *current-module* 'disman-expression-mib))
+
 (defpackage :asn.1/disman-expression-mib
   (:nicknames :disman-expression-mib)
   (:use :common-lisp :asn.1)
@@ -17,20 +19,27 @@
   (:import-from :|ASN.1/SNMPv2-MIB| |sysUpTime|)
   (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group))
+
 (in-package :disman-expression-mib)
+
 (defoid |dismanExpressionMIB| (|mib-2| 90)
   (:type 'module-identity)
   (:description
    "The MIB module for defining expressions of MIB objects for
      management purposes."))
+
 (defoid |dismanExpressionMIBObjects| (|dismanExpressionMIB| 1)
   (:type 'object-identity))
+
 (defoid |expResource| (|dismanExpressionMIBObjects| 1)
   (:type 'object-identity))
+
 (defoid |expDefine| (|dismanExpressionMIBObjects| 2)
   (:type 'object-identity))
+
 (defoid |expValue| (|dismanExpressionMIBObjects| 3)
   (:type 'object-identity))
+
 (defoid |expResourceDeltaMinimum| (|expResource| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -55,6 +64,7 @@
 
      Changing this value will not invalidate an existing setting
      of expObjectSampleType."))
+
 (defoid |expResourceDeltaWildcardInstanceMaximum| (|expResource| 2)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -84,6 +94,7 @@
 
      An attempt to allocate beyond the limit results in expErrorCode
      being tooManyWildcardValues for that evaluation attempt."))
+
 (defoid |expResourceDeltaWildcardInstances| (|expResource| 3)
   (:type 'object-type)
   (:syntax '|Gauge32|)
@@ -92,6 +103,7 @@
   (:description
    "The number of currently active instance entries as
      defined for expResourceDeltaWildcardInstanceMaximum."))
+
 (defoid |expResourceDeltaWildcardInstancesHigh| (|expResource| 4)
   (:type 'object-type)
   (:syntax '|Gauge32|)
@@ -101,6 +113,7 @@
    "The highest value of expResourceDeltaWildcardInstances
      that has occurred since initialization of the managed
      system."))
+
 (defoid |expResourceDeltaWildcardInstanceResourceLacks|
         (|expResource| 5)
   (:type 'object-type)
@@ -111,12 +124,14 @@
    "The number of times this system could not evaluate an
      expression because that would have created a value instance in
      excess of expResourceDeltaWildcardInstanceMaximum."))
+
 (defoid |expExpressionTable| (|expDefine| 1)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A table of expression definitions."))
+
 (defoid |expExpressionEntry| (|expExpressionTable| 1)
   (:type 'object-type)
   (:syntax '|ExpExpressionEntry|)
@@ -161,7 +176,9 @@
      Values of read-write objects in this table may be changed
 
      at any time."))
+
 (deftype |ExpExpressionEntry| () 't)
+
 (defoid |expExpressionOwner| (|expExpressionEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -171,6 +188,7 @@
    "The owner of this entry. The exact semantics of this
      string are subject to the security policy defined by the
      security administrator."))
+
 (defoid |expExpressionName| (|expExpressionEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -179,6 +197,7 @@
   (:description
    "The name of the expression.  This is locally unique, within
      the scope of an expExpressionOwner."))
+
 (defoid |expExpression| (|expExpressionEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -389,6 +408,7 @@
      exists(anyTypeObject) - verifies the object instance exists. A
      return value of 0 indicates NoSuchInstance (i.e. boolean
      false)."))
+
 (defoid |expExpressionValueType| (|expExpressionEntry| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -401,6 +421,7 @@
 
      If the result of the expression can not be made into this type,
      an invalidOperandType error will occur."))
+
 (defoid |expExpressionComment| (|expExpressionEntry| 5)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
@@ -408,6 +429,7 @@
   (:status '|current|)
   (:description
    "A comment to explain the use or meaning of the expression."))
+
 (defoid |expExpressionDeltaInterval| (|expExpressionEntry| 6)
   (:type 'object-type)
   (:syntax 't)
@@ -450,6 +472,7 @@
      to avoid the higher level getting the same sample twice, the
      lower level should sample at least twice as fast as the higher
      level does."))
+
 (defoid |expExpressionPrefix| (|expExpressionEntry| 7)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -473,6 +496,7 @@
      This is sufficient, as the remainder, that is, the instance
      fragment relevant to instancing the values, must be the same for
      all wildcarded objects in the expression."))
+
 (defoid |expExpressionErrors| (|expExpressionEntry| 8)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -489,6 +513,7 @@
      evaluation. In such cases, it is a legitimate condition
      that causes the corresponding expression value not to be
      instantiated."))
+
 (defoid |expExpressionEntryStatus| (|expExpressionEntry| 9)
   (:type 'object-type)
   (:syntax '|RowStatus|)
@@ -496,12 +521,14 @@
   (:status '|current|)
   (:description
    "The control that allows creation and deletion of entries."))
+
 (defoid |expErrorTable| (|expDefine| 2)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A table of expression errors."))
+
 (defoid |expErrorEntry| (|expErrorTable| 1)
   (:type 'object-type)
   (:syntax '|ExpErrorEntry|)
@@ -514,7 +541,9 @@
      expExpressionEntry and then only when there has been an
      error for that expression as reflected by the error codes
      defined for expErrorCode."))
+
 (deftype |ExpErrorEntry| () 't)
+
 (defoid |expErrorTime| (|expErrorEntry| 1)
   (:type 'object-type)
   (:syntax '|TimeStamp|)
@@ -523,6 +552,7 @@
   (:description
    "The value of sysUpTime the last time an error caused a
      failure to evaluate this expression."))
+
 (defoid |expErrorIndex| (|expErrorEntry| 2)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -532,6 +562,7 @@
    "The one-dimensioned character array index into
      expExpression for where the error occurred.  The value
      zero indicates irrelevance."))
+
 (defoid |expErrorCode| (|expErrorEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -585,6 +616,7 @@
      the SNMP error code 'genErr' except for 'tooManyWildcardValues'
      and 'resourceUnavailable' which return the SNMP error code
      'resourceUnavailable'."))
+
 (defoid |expErrorInstance| (|expErrorEntry| 4)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -593,6 +625,7 @@
   (:description
    "The expValueInstance being evaluated when the error
      occurred.  A zero-length indicates irrelevance."))
+
 (defoid |expObjectTable| (|expDefine| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -612,6 +645,7 @@
      in the same SEQUENCE or in different SEQUENCEs but with the
      same semantic index value (e.g., a value of ifIndex)
      for the wildcarded portion."))
+
 (defoid |expObjectEntry| (|expObjectTable| 1)
   (:type 'object-type)
   (:syntax '|ExpObjectEntry|)
@@ -624,7 +658,9 @@
 
      Values of read-create objects in this table may be
      changed at any time."))
+
 (deftype |ExpObjectEntry| () 't)
+
 (defoid |expObjectIndex| (|expObjectEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -634,6 +670,7 @@
    "Within an expression, a unique, numeric identification for an
      object.  Prefixed with a dollar sign ('$') this is used to
      reference the object in the corresponding expExpression."))
+
 (defoid |expObjectID| (|expObjectEntry| 2)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -654,6 +691,7 @@
 
      NOTE:  The simplest implementations of this MIB may not allow
      wildcards."))
+
 (defoid |expObjectIDWildcard| (|expObjectEntry| 3)
   (:type 'object-type)
   (:syntax '|TruthValue|)
@@ -669,6 +707,7 @@
 
         NOTE:  The simplest implementations of this MIB may not allow
         wildcards."))
+
 (defoid |expObjectSampleType| (|expObjectEntry| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -695,7 +734,9 @@
      When an expression contains both delta and absolute values
      the absolute values are obtained at the end of the delta
      period."))
+
 (defoid |sysUpTimeInstance| (|sysUpTime| 0) (:type 'object-identity))
+
 (defoid |expObjectDeltaDiscontinuityID| (|expObjectEntry| 5)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -720,6 +761,7 @@
 
      If the object identified is not accessible no discontinuity
      check will be made."))
+
 (defoid |expObjectDiscontinuityIDWildcard| (|expObjectEntry| 6)
   (:type 'object-type)
   (:syntax '|TruthValue|)
@@ -735,6 +777,7 @@
 
      NOTE:  The simplest implementations of this MIB may not allow
      wildcards."))
+
 (defoid |expObjectDiscontinuityIDType| (|expObjectEntry| 7)
   (:type 'object-type)
   (:syntax 't)
@@ -748,6 +791,7 @@
 
      This object is instantiated only if expObjectSampleType is
      'deltaValue' or 'changedValue'."))
+
 (defoid |expObjectConditional| (|expObjectEntry| 8)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -776,6 +820,7 @@
 
      Note that expObjectConditional can not trivially use an object
      of syntax TruthValue, since the underlying value is not 0 or 1."))
+
 (defoid |expObjectConditionalWildcard| (|expObjectEntry| 9)
   (:type 'object-type)
   (:syntax '|TruthValue|)
@@ -788,6 +833,7 @@
 
      NOTE: The simplest implementations of this MIB may not allow
      wildcards."))
+
 (defoid |expObjectEntryStatus| (|expObjectEntry| 10)
   (:type 'object-type)
   (:syntax '|RowStatus|)
@@ -798,12 +844,14 @@
 
      Objects in this table may be changed while
      expObjectEntryStatus is in any state."))
+
 (defoid |expValueTable| (|expValue| 1)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A table of values from evaluated expressions."))
+
 (defoid |expValueEntry| (|expValueTable| 1)
   (:type 'object-type)
   (:syntax '|ExpValueEntry|)
@@ -842,7 +890,9 @@
      isAccessAllowed from the Architecture for Describing SNMP
      Management Frameworks.  These are the security credentials of the
      creator of the corresponding expExpressionEntry."))
+
 (deftype |ExpValueEntry| () 't)
+
 (defoid |expValueInstance| (|expValueEntry| 1)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -863,6 +913,7 @@
      instance for each real, possible value of the wildcard.
      So, for example, if the wildcard worked out to be an ifIndex,
      there is an expValueInstance for each applicable ifIndex."))
+
 (defoid |expValueCounter32Val| (|expValueEntry| 2)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -870,6 +921,7 @@
   (:status '|current|)
   (:description
    "The value when expExpressionValueType is 'counter32'."))
+
 (defoid |expValueUnsigned32Val| (|expValueEntry| 3)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -877,6 +929,7 @@
   (:status '|current|)
   (:description
    "The value when expExpressionValueType is 'unsigned32'."))
+
 (defoid |expValueTimeTicksVal| (|expValueEntry| 4)
   (:type 'object-type)
   (:syntax '|TimeTicks|)
@@ -884,6 +937,7 @@
   (:status '|current|)
   (:description
    "The value when expExpressionValueType is 'timeTicks'."))
+
 (defoid |expValueInteger32Val| (|expValueEntry| 5)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -891,6 +945,7 @@
   (:status '|current|)
   (:description
    "The value when expExpressionValueType is 'integer32'."))
+
 (defoid |expValueIpAddressVal| (|expValueEntry| 6)
   (:type 'object-type)
   (:syntax '|IpAddress|)
@@ -898,6 +953,7 @@
   (:status '|current|)
   (:description
    "The value when expExpressionValueType is 'ipAddress'."))
+
 (defoid |expValueOctetStringVal| (|expValueEntry| 7)
   (:type 'object-type)
   (:syntax 't)
@@ -905,12 +961,14 @@
   (:status '|current|)
   (:description
    "The value when expExpressionValueType is 'octetString'."))
+
 (defoid |expValueOidVal| (|expValueEntry| 8)
   (:type 'object-type)
   (:syntax 'object-id)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The value when expExpressionValueType is 'objectId'."))
+
 (defoid |expValueCounter64Val| (|expValueEntry| 9)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -918,14 +976,18 @@
   (:status '|current|)
   (:description
    "The value when expExpressionValueType is 'counter64'."))
+
 (defoid |dismanExpressionMIBConformance| (|dismanExpressionMIB| 3)
   (:type 'object-identity))
+
 (defoid |dismanExpressionMIBCompliances|
         (|dismanExpressionMIBConformance| 1)
   (:type 'object-identity))
+
 (defoid |dismanExpressionMIBGroups|
         (|dismanExpressionMIBConformance| 2)
   (:type 'object-identity))
+
 (defoid |dismanExpressionMIBCompliance|
         (|dismanExpressionMIBCompliances| 1)
   (:type 'module-compliance)
@@ -933,17 +995,22 @@
   (:description
    "The compliance statement for entities which implement
           the Expression MIB."))
+
 (defoid |dismanExpressionResourceGroup| (|dismanExpressionMIBGroups| 1)
   (:type 'object-group)
   (:status '|current|)
   (:description "Expression definition resource management."))
+
 (defoid |dismanExpressionDefinitionGroup|
         (|dismanExpressionMIBGroups| 2)
   (:type 'object-group)
   (:status '|current|)
   (:description "Expression definition."))
+
 (defoid |dismanExpressionValueGroup| (|dismanExpressionMIBGroups| 3)
   (:type 'object-group)
   (:status '|current|)
   (:description "Expression value."))
+
 (eval-when (:load-toplevel :execute) (setf *current-module* nil))
+
