@@ -2,9 +2,11 @@
 ;;;; Auto-generated from MIB:NET-SNMP;NETWORK-SERVICES-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'network-services-mib *mib-modules*)
   (setf *current-module* 'network-services-mib))
+
 (defpackage :asn.1/network-services-mib
   (:nicknames :network-services-mib)
   (:use :common-lisp :asn.1)
@@ -13,13 +15,18 @@
   (:import-from :|ASN.1/SNMPv2-TC| |TimeStamp| textual-convention)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
   (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|))
+
 (in-package :network-services-mib)
+
 (defoid |application| (|mib-2| 27)
   (:type 'module-identity)
   (:description
    "The MIB module describing network service applications"))
+
 (deftype |DistinguishedName| () 't)
+
 (deftype |URLString| () 't)
+
 (defoid |applTable| (|application| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -30,6 +37,7 @@
          kinds of applications providing network services.
          Each network service application capable of being
          monitored should have a single entry in this table."))
+
 (defoid |applEntry| (|applTable| 1)
   (:type 'object-type)
   (:syntax '|ApplEntry|)
@@ -38,7 +46,9 @@
   (:description
    "An entry associated with a single network service
        application."))
+
 (deftype |ApplEntry| () 't)
+
 (defoid |applIndex| (|applEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -48,6 +58,7 @@
    "An index to uniquely identify the network service
        application. This attribute is the index used for
        lexicographic ordering of the table."))
+
 (defoid |applName| (|applEntry| 2)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
@@ -56,6 +67,7 @@
   (:description
    "The name the network service application chooses to be
        known by."))
+
 (defoid |applDirectoryName| (|applEntry| 3)
   (:type 'object-type)
   (:syntax '|DistinguishedName|)
@@ -66,6 +78,7 @@
        static information about this application is stored.
        An empty string indicates that no information about
        the application is available in the directory."))
+
 (defoid |applVersion| (|applEntry| 4)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
@@ -75,6 +88,7 @@
    "The version of network service application software.
        This field is usually defined by the vendor of the
        network service application software."))
+
 (defoid |applUptime| (|applEntry| 5)
   (:type 'object-type)
   (:syntax '|TimeStamp|)
@@ -86,6 +100,7 @@
        last initialized prior to the last initialization of the
        network management subsystem, then this object contains
        a zero value."))
+
 (defoid |applOperStatus| (|applEntry| 6)
   (:type 'object-type)
   (:syntax 't)
@@ -106,6 +121,7 @@
        but is in the process of shutting down. Additional inbound
        associations may be rejected by applications in the
        'quiescing' state."))
+
 (defoid |applLastChange| (|applEntry| 7)
   (:type 'object-type)
   (:syntax '|TimeStamp|)
@@ -117,6 +133,7 @@
        the current state was entered prior to the last
        initialization of the local network management subsystem,
        then this object contains a zero value."))
+
 (defoid |applInboundAssociations| (|applEntry| 8)
   (:type 'object-type)
   (:syntax '|Gauge32|)
@@ -127,6 +144,7 @@
        application, where it is the responder.  An inbound
        association occurs when another application successfully
        connects to this one."))
+
 (defoid |applOutboundAssociations| (|applEntry| 9)
   (:type 'object-type)
   (:syntax '|Gauge32|)
@@ -137,6 +155,7 @@
        application, where it is the initiator.  An outbound
        association occurs when this application successfully
        connects to another one."))
+
 (defoid |applAccumulatedInboundAssociations| (|applEntry| 10)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -145,6 +164,7 @@
   (:description
    "The total number of associations to the application entity
        since application initialization, where it was the responder."))
+
 (defoid |applAccumulatedOutboundAssociations| (|applEntry| 11)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -153,6 +173,7 @@
   (:description
    "The total number of associations to the application entity
        since application initialization, where it was the initiator."))
+
 (defoid |applLastInboundActivity| (|applEntry| 12)
   (:type 'object-type)
   (:syntax '|TimeStamp|)
@@ -163,6 +184,7 @@
        had an inbound association.  If the last association
        occurred prior to the last initialization of the network
        subsystem, then this object contains a zero value."))
+
 (defoid |applLastOutboundActivity| (|applEntry| 13)
   (:type 'object-type)
   (:syntax '|TimeStamp|)
@@ -173,6 +195,7 @@
        had an outbound association.  If the last association
        occurred prior to the last initialization of the network
        subsystem, then this object contains a zero value."))
+
 (defoid |applRejectedInboundAssociations| (|applEntry| 14)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -188,6 +211,7 @@
        it does not count rejections that occur at lower layers
        of the network.  Thus, this counter may not reflect the
        true number of failed inbound associations."))
+
 (defoid |applFailedOutboundAssociations| (|applEntry| 15)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -198,6 +222,7 @@
        is initiator and association establishment has failed,
        since application initialization.  Failed associations are
        not counted in the accumulated association totals."))
+
 (defoid |applDescription| (|applEntry| 16)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
@@ -207,6 +232,7 @@
    "A text description of the application.  This information
        is intended to identify and briefly describe the
        application in a status display."))
+
 (defoid |applURL| (|applEntry| 17)
   (:type 'object-type)
   (:syntax '|URLString|)
@@ -216,6 +242,7 @@
    "A URL pointing to a description of the application.
        This information is intended to identify and describe
        the application in a status display."))
+
 (defoid |assocTable| (|application| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -225,6 +252,7 @@
    "The table holding a set of all active application
 
          associations."))
+
 (defoid |assocEntry| (|assocTable| 1)
   (:type 'object-type)
   (:syntax '|AssocEntry|)
@@ -233,7 +261,9 @@
   (:description
    "An entry associated with an association for a network
        service application."))
+
 (deftype |AssocEntry| () 't)
+
 (defoid |assocIndex| (|assocEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -244,6 +274,7 @@
        service application.  This attribute is the index that is
        used for lexicographic ordering of the table.  Note that the
        table is also indexed by the applIndex."))
+
 (defoid |assocRemoteApplication| (|assocEntry| 2)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
@@ -260,6 +291,7 @@
        globalid' used in X400-Received: fields can be used. Note,
        however, that not all connections an MTA makes are
        necessarily to another MTA."))
+
 (defoid |assocApplicationProtocol| (|assocEntry| 3)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -275,6 +307,7 @@
        primary port number being used by the protocol. The
        usual IANA procedures may be used to register ports for
        new protocols."))
+
 (defoid |assocApplicationType| (|assocEntry| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -288,6 +321,7 @@
        service or responded to an outgoing connection made by the
        local application.  MTAs and messaging gateways are
        considered to be peers for the purposes of this variable."))
+
 (defoid |assocDuration| (|assocEntry| 5)
   (:type 'object-type)
   (:syntax '|TimeStamp|)
@@ -298,10 +332,14 @@
        started.  If this association started prior to the last
        initialization of the network subsystem, then this
        object contains a zero value."))
+
 (defoid |applConformance| (|application| 3) (:type 'object-identity))
+
 (defoid |applGroups| (|applConformance| 1) (:type 'object-identity))
+
 (defoid |applCompliances| (|applConformance| 2)
   (:type 'object-identity))
+
 (defoid |applCompliance| (|applCompliances| 1)
   (:type 'module-compliance)
   (:status '|obsolete|)
@@ -310,6 +348,7 @@
        which support the Network Services Monitoring MIB
        for basic monitoring of network service applications.
        This is the basic compliance statement for RFC 1565."))
+
 (defoid |assocCompliance| (|applCompliances| 2)
   (:type 'module-compliance)
   (:status '|obsolete|)
@@ -318,6 +357,7 @@
        which support the Network Services Monitoring MIB
        for basic monitoring of network service applications
        and their associations."))
+
 (defoid |applRFC2248Compliance| (|applCompliances| 3)
   (:type 'module-compliance)
   (:status '|deprecated|)
@@ -325,6 +365,7 @@
    "The compliance statement for RFC 2248 implementations
        which support the Network Services Monitoring MIB
        for basic monitoring of network service applications."))
+
 (defoid |assocRFC2248Compliance| (|applCompliances| 4)
   (:type 'module-compliance)
   (:status '|deprecated|)
@@ -334,6 +375,7 @@
        which support the Network Services Monitoring MIB for
        basic monitoring of network service applications and
        their associations."))
+
 (defoid |applRFC2788Compliance| (|applCompliances| 5)
   (:type 'module-compliance)
   (:status '|current|)
@@ -341,6 +383,7 @@
    "The compliance statement for RFC 2788 implementations
        which support the Network Services Monitoring MIB
        for basic monitoring of network service applications."))
+
 (defoid |assocRFC2788Compliance| (|applCompliances| 6)
   (:type 'module-compliance)
   (:status '|current|)
@@ -349,6 +392,7 @@
        which support the Network Services Monitoring MIB for
        basic monitoring of network service applications and
        their associations."))
+
 (defoid |applRFC1565Group| (|applGroups| 7)
   (:type 'object-group)
   (:status '|obsolete|)
@@ -356,6 +400,7 @@
    "A collection of objects providing basic monitoring of
        network service applications.  This is the original set
        of such objects defined in RFC 1565."))
+
 (defoid |assocRFC1565Group| (|applGroups| 2)
   (:type 'object-group)
   (:status '|obsolete|)
@@ -363,6 +408,7 @@
    "A collection of objects providing basic monitoring of
        network service applications' associations.  This is the
        original set of such objects defined in RFC 1565."))
+
 (defoid |applRFC2248Group| (|applGroups| 3)
   (:type 'object-group)
   (:status '|deprecated|)
@@ -371,6 +417,7 @@
        network service applications.  This group was originally
        defined in RFC 2248; note that applDirectoryName is
        missing."))
+
 (defoid |assocRFC2248Group| (|applGroups| 4)
   (:type 'object-group)
   (:status '|deprecated|)
@@ -378,6 +425,7 @@
    "A collection of objects providing basic monitoring of
        network service applications' associations.  This group
        was originally defined by RFC 2248."))
+
 (defoid |applRFC2788Group| (|applGroups| 5)
   (:type 'object-group)
   (:status '|current|)
@@ -387,6 +435,7 @@
 
        group for RFC 2788 -- it adds the applDirectoryName object
        missing in RFC 2248."))
+
 (defoid |assocRFC2788Group| (|applGroups| 6)
   (:type 'object-group)
   (:status '|current|)
@@ -394,6 +443,10 @@
    "A collection of objects providing basic monitoring of
        network service applications' associations.  This is
        the appropriate group for RFC 2788."))
+
 (defoid |applTCPProtoID| (|application| 4) (:type 'object-identity))
+
 (defoid |applUDPProtoID| (|application| 5) (:type 'object-identity))
+
 (eval-when (:load-toplevel :execute) (setf *current-module* nil))
+

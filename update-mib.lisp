@@ -113,7 +113,8 @@
 
 (defun update-mib (&optional (mib-list *mib-list*))
   (let ((mib.lisp-expr '())
-        (mib-depend.lisp '()))
+        (mib-depend.lisp '())
+        (*package* (find-package :asn.1)))
     (dolist (i mib-list)
       (format t "; Compiling ~A~%" i)
       (compile-asn.1 i :to (lisp-file i))

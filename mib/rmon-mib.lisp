@@ -2,9 +2,11 @@
 ;;;; Auto-generated from MIB:NET-SNMP;RMON-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'rmon-mib *mib-modules*)
   (setf *current-module* 'rmon-mib))
+
 (defpackage :asn.1/rmon-mib
   (:nicknames :rmon-mib)
   (:use :common-lisp :asn.1)
@@ -14,20 +16,35 @@
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention |DisplayString|)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group
                 notification-group))
+
 (in-package :rmon-mib)
+
 (defoid |rmon| (|mib-2| 16) (:type 'object-identity))
+
 (deftype |OwnerString| () 't)
+
 (deftype |EntryStatus| () 't)
+
 (defoid |statistics| (|rmon| 1) (:type 'object-identity))
+
 (defoid |history| (|rmon| 2) (:type 'object-identity))
+
 (defoid |alarm| (|rmon| 3) (:type 'object-identity))
+
 (defoid |hosts| (|rmon| 4) (:type 'object-identity))
+
 (defoid |hostTopN| (|rmon| 5) (:type 'object-identity))
+
 (defoid |matrix| (|rmon| 6) (:type 'object-identity))
+
 (defoid |filter| (|rmon| 7) (:type 'object-identity))
+
 (defoid |capture| (|rmon| 8) (:type 'object-identity))
+
 (defoid |event| (|rmon| 9) (:type 'object-identity))
+
 (defoid |rmonConformance| (|rmon| 20) (:type 'object-identity))
+
 (defoid |rmonMibModule| (|rmonConformance| 8)
   (:type 'module-identity)
   (:description
@@ -35,12 +52,14 @@
         monitors or probes, are instruments that exist for
         the purpose of managing a network. This MIB defines
         objects for managing remote network monitoring devices."))
+
 (defoid |etherStatsTable| (|statistics| 1)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A list of Ethernet statistics entries."))
+
 (defoid |etherStatsEntry| (|etherStatsTable| 1)
   (:type 'object-type)
   (:syntax '|EtherStatsEntry|)
@@ -50,7 +69,9 @@
    "A collection of statistics kept for a particular
         Ethernet interface.  As an example, an instance of the
         etherStatsPkts object might be named etherStatsPkts.1"))
+
 (deftype |EtherStatsEntry| () 't)
+
 (defoid |etherStatsIndex| (|etherStatsEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -59,6 +80,7 @@
   (:description
    "The value of this object uniquely identifies this
         etherStats entry."))
+
 (defoid |etherStatsDataSource| (|etherStatsEntry| 2)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -88,6 +110,7 @@
 
         This object may not be modified if the associated
         etherStatsStatus object is equal to valid(1)."))
+
 (defoid |etherStatsDropEvents| (|etherStatsEntry| 3)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -99,6 +122,7 @@
         Note that this number is not necessarily the number of
         packets dropped; it is just the number of times this
         condition has been detected."))
+
 (defoid |etherStatsOctets| (|etherStatsEntry| 4)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -126,6 +150,7 @@
         The result of this equation is the value Utilization which
         is the percent utilization of the ethernet segment on a
         scale of 0 to 100 percent."))
+
 (defoid |etherStatsPkts| (|etherStatsEntry| 5)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -134,6 +159,7 @@
   (:description
    "The total number of packets (including bad packets,
         broadcast packets, and multicast packets) received."))
+
 (defoid |etherStatsBroadcastPkts| (|etherStatsEntry| 6)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -143,6 +169,7 @@
    "The total number of good packets received that were
         directed to the broadcast address.  Note that this
         does not include multicast packets."))
+
 (defoid |etherStatsMulticastPkts| (|etherStatsEntry| 7)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -154,6 +181,7 @@
         does not include packets directed to the broadcast
 
         address."))
+
 (defoid |etherStatsCRCAlignErrors| (|etherStatsEntry| 8)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -167,6 +195,7 @@
         Frame Check Sequence (FCS) with an integral
         number of octets (FCS Error) or a bad FCS with
         a non-integral number of octets (Alignment Error)."))
+
 (defoid |etherStatsUndersizePkts| (|etherStatsEntry| 9)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -177,6 +206,7 @@
         less than 64 octets long (excluding framing bits,
         but including FCS octets) and were otherwise well
         formed."))
+
 (defoid |etherStatsOversizePkts| (|etherStatsEntry| 10)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -187,6 +217,7 @@
         longer than 1518 octets (excluding framing bits,
         but including FCS octets) and were otherwise
         well formed."))
+
 (defoid |etherStatsFragments| (|etherStatsEntry| 11)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -203,6 +234,7 @@
         Note that it is entirely normal for etherStatsFragments to
         increment.  This is because it counts both runts (which are
         normal occurrences due to collisions) and noise hits."))
+
 (defoid |etherStatsJabbers| (|etherStatsEntry| 12)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -222,6 +254,7 @@
         documents define jabber as the condition where any
         packet exceeds 20 ms.  The allowed range to detect
         jabber is between 20 ms and 150 ms."))
+
 (defoid |etherStatsCollisions| (|etherStatsEntry| 13)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -257,6 +290,7 @@
         more other hosts (transmit collisions as defined by IEEE
         802.3k) plus receiver collisions observed on any coax
         segments to which the repeater is connected."))
+
 (defoid |etherStatsPkts64Octets| (|etherStatsEntry| 14)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -266,6 +300,7 @@
    "The total number of packets (including bad
         packets) received that were 64 octets in length
         (excluding framing bits but including FCS octets)."))
+
 (defoid |etherStatsPkts65to127Octets| (|etherStatsEntry| 15)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -276,6 +311,7 @@
         packets) received that were between
         65 and 127 octets in length inclusive
         (excluding framing bits but including FCS octets)."))
+
 (defoid |etherStatsPkts128to255Octets| (|etherStatsEntry| 16)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -286,6 +322,7 @@
         packets) received that were between
         128 and 255 octets in length inclusive
         (excluding framing bits but including FCS octets)."))
+
 (defoid |etherStatsPkts256to511Octets| (|etherStatsEntry| 17)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -296,6 +333,7 @@
         packets) received that were between
         256 and 511 octets in length inclusive
         (excluding framing bits but including FCS octets)."))
+
 (defoid |etherStatsPkts512to1023Octets| (|etherStatsEntry| 18)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -306,6 +344,7 @@
         packets) received that were between
         512 and 1023 octets in length inclusive
         (excluding framing bits but including FCS octets)."))
+
 (defoid |etherStatsPkts1024to1518Octets| (|etherStatsEntry| 19)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -316,6 +355,7 @@
         packets) received that were between
         1024 and 1518 octets in length inclusive
         (excluding framing bits but including FCS octets)."))
+
 (defoid |etherStatsOwner| (|etherStatsEntry| 20)
   (:type 'object-type)
   (:syntax '|OwnerString|)
@@ -324,18 +364,21 @@
   (:description
    "The entity that configured this entry and is therefore
         using the resources assigned to it."))
+
 (defoid |etherStatsStatus| (|etherStatsEntry| 21)
   (:type 'object-type)
   (:syntax '|EntryStatus|)
   (:max-access '|read-create|)
   (:status '|current|)
   (:description "The status of this etherStats entry."))
+
 (defoid |historyControlTable| (|history| 1)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A list of history control entries."))
+
 (defoid |historyControlEntry| (|historyControlTable| 1)
   (:type 'object-type)
   (:syntax '|HistoryControlEntry|)
@@ -346,7 +389,9 @@
         statistics.  As an example, an instance of the
         historyControlInterval object might be named
         historyControlInterval.2"))
+
 (deftype |HistoryControlEntry| () 't)
+
 (defoid |historyControlIndex| (|historyControlEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -357,6 +402,7 @@
         historyControl table.  Each such entry defines a
         set of samples at a particular interval for an
         interface on the device."))
+
 (defoid |historyControlDataSource| (|historyControlEntry| 2)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -389,6 +435,7 @@
 
         This object may not be modified if the associated
         historyControlStatus object is equal to valid(1)."))
+
 (defoid |historyControlBucketsRequested| (|historyControlEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -404,6 +451,7 @@
         should set historyControlBucketsGranted as closely to
         this object as is possible for the particular probe
         implementation and available resources."))
+
 (defoid |historyControlBucketsGranted| (|historyControlEntry| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -447,6 +495,7 @@
         When the value of this object changes to a value greater
         than the current value, the number of associated media-
         specific entries may be allowed to grow."))
+
 (defoid |historyControlInterval| (|historyControlEntry| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -476,6 +525,7 @@
 
         This object may not be modified if the associated
         historyControlStatus object is equal to valid(1)."))
+
 (defoid |historyControlOwner| (|historyControlEntry| 6)
   (:type 'object-type)
   (:syntax '|OwnerString|)
@@ -484,6 +534,7 @@
   (:description
    "The entity that configured this entry and is therefore
         using the resources assigned to it."))
+
 (defoid |historyControlStatus| (|historyControlEntry| 7)
   (:type 'object-type)
   (:syntax '|EntryStatus|)
@@ -495,12 +546,14 @@
         Each instance of the media-specific table associated
         with this historyControlEntry will be deleted by the agent
         if this historyControlEntry is not equal to valid(1)."))
+
 (defoid |etherHistoryTable| (|history| 2)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A list of Ethernet history entries."))
+
 (defoid |etherHistoryEntry| (|etherHistoryTable| 1)
   (:type 'object-type)
   (:syntax '|EtherHistoryEntry|)
@@ -513,7 +566,9 @@
         a regular collection of these samples.  As an example, an
         instance of the etherHistoryPkts object might be named
         etherHistoryPkts.2.89"))
+
 (deftype |EtherHistoryEntry| () 't)
+
 (defoid |etherHistoryIndex| (|etherHistoryEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -524,6 +579,7 @@
         history identified by a particular value of this
         index is the same history as identified
         by the same value of historyControlIndex."))
+
 (defoid |etherHistorySampleIndex| (|etherHistoryEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -535,6 +591,7 @@
         associated with the same historyControlEntry.
         This index starts at 1 and increases by one
         as each new sample is taken."))
+
 (defoid |etherHistoryIntervalStart| (|etherHistoryEntry| 3)
   (:type 'object-type)
   (:syntax '|TimeTicks|)
@@ -552,6 +609,7 @@
         of the same interval.  Also note that the sample which
         is currently being collected is not accessible in this
         table until the end of its interval."))
+
 (defoid |etherHistoryDropEvents| (|etherHistoryEntry| 4)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -565,6 +623,7 @@
         is just the number of times this condition has been
 
         detected."))
+
 (defoid |etherHistoryOctets| (|etherHistoryEntry| 5)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -575,6 +634,7 @@
         those in bad packets) received on the
         network (excluding framing bits but including
         FCS octets)."))
+
 (defoid |etherHistoryPkts| (|etherHistoryEntry| 6)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -583,6 +643,7 @@
   (:description
    "The number of packets (including bad packets)
         received during this sampling interval."))
+
 (defoid |etherHistoryBroadcastPkts| (|etherHistoryEntry| 7)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -592,6 +653,7 @@
    "The number of good packets received during this
         sampling interval that were directed to the
         broadcast address."))
+
 (defoid |etherHistoryMulticastPkts| (|etherHistoryEntry| 8)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -602,6 +664,7 @@
         sampling interval that were directed to a
         multicast address.  Note that this number does not
         include packets addressed to the broadcast address."))
+
 (defoid |etherHistoryCRCAlignErrors| (|etherHistoryEntry| 9)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -615,6 +678,7 @@
         Check Sequence (FCS) with an integral number of octets
         (FCS Error) or a bad FCS with a non-integral number
         of octets (Alignment Error)."))
+
 (defoid |etherHistoryUndersizePkts| (|etherHistoryEntry| 10)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -625,6 +689,7 @@
         sampling interval that were less than 64 octets
         long (excluding framing bits but including FCS
         octets) and were otherwise well formed."))
+
 (defoid |etherHistoryOversizePkts| (|etherHistoryEntry| 11)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -635,6 +700,7 @@
         sampling interval that were longer than 1518
         octets (excluding framing bits but including
         FCS octets) but were otherwise well formed."))
+
 (defoid |etherHistoryFragments| (|etherHistoryEntry| 12)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -653,6 +719,7 @@
         Note that it is entirely normal for etherHistoryFragments to
         increment.  This is because it counts both runts (which are
         normal occurrences due to collisions) and noise hits."))
+
 (defoid |etherHistoryJabbers| (|etherHistoryEntry| 13)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -673,6 +740,7 @@
         documents define jabber as the condition where any
         packet exceeds 20 ms.  The allowed range to detect
         jabber is between 20 ms and 150 ms."))
+
 (defoid |etherHistoryCollisions| (|etherHistoryEntry| 14)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -709,6 +777,7 @@
         more other hosts (transmit collisions as defined by IEEE
         802.3k) plus receiver collisions observed on any coax
         segments to which the repeater is connected."))
+
 (defoid |etherHistoryUtilization| (|etherHistoryEntry| 15)
   (:type 'object-type)
   (:syntax 't)
@@ -718,12 +787,14 @@
    "The best estimate of the mean physical layer
         network utilization on this interface during this
         sampling interval, in hundredths of a percent."))
+
 (defoid |alarmTable| (|alarm| 1)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A list of alarm entries."))
+
 (defoid |alarmEntry| (|alarmTable| 1)
   (:type 'object-type)
   (:syntax '|AlarmEntry|)
@@ -733,7 +804,9 @@
    "A list of parameters that set up a periodic checking
         for alarm conditions.  For example, an instance of the
         alarmValue object might be named alarmValue.8"))
+
 (deftype |AlarmEntry| () 't)
+
 (defoid |alarmIndex| (|alarmEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -744,6 +817,7 @@
         alarm table.  Each such entry defines a
         diagnostic sample at a particular interval
         for an object on the device."))
+
 (defoid |alarmInterval| (|alarmEntry| 2)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -761,6 +835,7 @@
 
         This object may not be modified if the associated
         alarmStatus object is equal to valid(1)."))
+
 (defoid |alarmVariable| (|alarmEntry| 3)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -793,6 +868,7 @@
 
         This object may not be modified if the associated
         alarmStatus object is equal to valid(1)."))
+
 (defoid |alarmSampleType| (|alarmEntry| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -812,6 +888,7 @@
 
         This object may not be modified if the associated
         alarmStatus object is equal to valid(1)."))
+
 (defoid |alarmValue| (|alarmEntry| 5)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -831,6 +908,7 @@
         The value during the current sampling period is not
         made available until the period is completed and will
         remain available until the next period completes."))
+
 (defoid |alarmStartupAlarm| (|alarmEntry| 6)
   (:type 'object-type)
   (:syntax 't)
@@ -850,6 +928,7 @@
 
         This object may not be modified if the associated
         alarmStatus object is equal to valid(1)."))
+
 (defoid |alarmRisingThreshold| (|alarmEntry| 7)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -874,6 +953,7 @@
 
         This object may not be modified if the associated
         alarmStatus object is equal to valid(1)."))
+
 (defoid |alarmFallingThreshold| (|alarmEntry| 8)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -897,6 +977,7 @@
 
         This object may not be modified if the associated
         alarmStatus object is equal to valid(1)."))
+
 (defoid |alarmRisingEventIndex| (|alarmEntry| 9)
   (:type 'object-type)
   (:syntax 't)
@@ -916,6 +997,7 @@
         This object may not be modified if the associated
 
         alarmStatus object is equal to valid(1)."))
+
 (defoid |alarmFallingEventIndex| (|alarmEntry| 10)
   (:type 'object-type)
   (:syntax 't)
@@ -934,6 +1016,7 @@
 
         This object may not be modified if the associated
         alarmStatus object is equal to valid(1)."))
+
 (defoid |alarmOwner| (|alarmEntry| 11)
   (:type 'object-type)
   (:syntax '|OwnerString|)
@@ -942,18 +1025,21 @@
   (:description
    "The entity that configured this entry and is therefore
         using the resources assigned to it."))
+
 (defoid |alarmStatus| (|alarmEntry| 12)
   (:type 'object-type)
   (:syntax '|EntryStatus|)
   (:max-access '|read-create|)
   (:status '|current|)
   (:description "The status of this alarm entry."))
+
 (defoid |hostControlTable| (|hosts| 1)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A list of host table control entries."))
+
 (defoid |hostControlEntry| (|hostControlTable| 1)
   (:type 'object-type)
   (:syntax '|HostControlEntry|)
@@ -965,7 +1051,9 @@
         about these hosts.  For example, an instance of the
         hostControlTableSize object might be named
         hostControlTableSize.1"))
+
 (deftype |HostControlEntry| () 't)
+
 (defoid |hostControlIndex| (|hostControlEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -978,6 +1066,7 @@
         a function that discovers hosts on a particular interface
         and places statistics about them in the hostTable and
         the hostTimeTable on behalf of this hostControlEntry."))
+
 (defoid |hostControlDataSource| (|hostControlEntry| 2)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -1007,6 +1096,7 @@
 
         This object may not be modified if the associated
         hostControlStatus object is equal to valid(1)."))
+
 (defoid |hostControlTableSize| (|hostControlEntry| 3)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -1015,6 +1105,7 @@
   (:description
    "The number of hostEntries in the hostTable and the
         hostTimeTable associated with this hostControlEntry."))
+
 (defoid |hostControlLastDeleteTime| (|hostControlEntry| 4)
   (:type 'object-type)
   (:syntax '|TimeTicks|)
@@ -1025,6 +1116,7 @@
         was deleted from the portion of the hostTable
         associated with this hostControlEntry.  If no
         deletions have occurred, this value shall be zero."))
+
 (defoid |hostControlOwner| (|hostControlEntry| 5)
   (:type 'object-type)
   (:syntax '|OwnerString|)
@@ -1033,6 +1125,7 @@
   (:description
    "The entity that configured this entry and is therefore
         using the resources assigned to it."))
+
 (defoid |hostControlStatus| (|hostControlEntry| 6)
   (:type 'object-type)
   (:syntax '|EntryStatus|)
@@ -1044,12 +1137,14 @@
         If this object is not equal to valid(1), all associated
         entries in the hostTable, hostTimeTable, and the
         hostTopNTable shall be deleted by the agent."))
+
 (defoid |hostTable| (|hosts| 2)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A list of host entries."))
+
 (defoid |hostEntry| (|hostTable| 1)
   (:type 'object-type)
   (:syntax '|HostEntry|)
@@ -1060,13 +1155,16 @@
         been discovered on an interface of this device.  For example,
         an instance of the hostOutBroadcastPkts object might be
         named hostOutBroadcastPkts.1.6.8.0.32.27.3.176"))
+
 (deftype |HostEntry| () 't)
+
 (defoid |hostAddress| (|hostEntry| 1)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The physical address of this host."))
+
 (defoid |hostCreationOrder| (|hostEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -1093,6 +1191,7 @@
         the circumstances where a previous association
         between a value of hostCreationOrder
         and a hostEntry may no longer hold."))
+
 (defoid |hostIndex| (|hostEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -1104,6 +1203,7 @@
         identified by a particular value of this
         index is associated with the hostControlEntry
         as identified by the same value of hostControlIndex."))
+
 (defoid |hostInPkts| (|hostEntry| 4)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1112,6 +1212,7 @@
   (:description
    "The number of good packets transmitted to this
         address since it was added to the hostTable."))
+
 (defoid |hostOutPkts| (|hostEntry| 5)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1120,6 +1221,7 @@
   (:description
    "The number of packets, including bad packets, transmitted
         by this address since it was added to the hostTable."))
+
 (defoid |hostInOctets| (|hostEntry| 6)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1130,6 +1232,7 @@
         it was added to the hostTable (excluding framing
         bits but including FCS octets), except for those
         octets in bad packets."))
+
 (defoid |hostOutOctets| (|hostEntry| 7)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1140,6 +1243,7 @@
         it was added to the hostTable (excluding framing
         bits but including FCS octets), including those
         octets in bad packets."))
+
 (defoid |hostOutErrors| (|hostEntry| 8)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1148,6 +1252,7 @@
   (:description
    "The number of bad packets transmitted by this address
         since this host was added to the hostTable."))
+
 (defoid |hostOutBroadcastPkts| (|hostEntry| 9)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1157,6 +1262,7 @@
    "The number of good packets transmitted by this
         address that were directed to the broadcast address
         since this host was added to the hostTable."))
+
 (defoid |hostOutMulticastPkts| (|hostEntry| 10)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1168,12 +1274,14 @@
         since this host was added to the hostTable.
         Note that this number does not include packets
         directed to the broadcast address."))
+
 (defoid |hostTimeTable| (|hosts| 3)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A list of time-ordered host table entries."))
+
 (defoid |hostTimeEntry| (|hostTimeTable| 1)
   (:type 'object-type)
   (:syntax '|HostTimeEntry|)
@@ -1186,13 +1294,16 @@
         time of this object.  For example, an instance of the
         hostTimeOutBroadcastPkts object might be named
         hostTimeOutBroadcastPkts.1.687"))
+
 (deftype |HostTimeEntry| () 't)
+
 (defoid |hostTimeAddress| (|hostTimeEntry| 1)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The physical address of this host."))
+
 (defoid |hostTimeCreationOrder| (|hostTimeEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -1224,6 +1335,7 @@
         may have missed entries, and where a previous
         association between a value of hostTimeCreationOrder
         and a hostTimeEntry may no longer hold."))
+
 (defoid |hostTimeIndex| (|hostTimeEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -1235,6 +1347,7 @@
         identified by a particular value of this
         index is associated with the hostControlEntry
         as identified by the same value of hostControlIndex."))
+
 (defoid |hostTimeInPkts| (|hostTimeEntry| 4)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1243,6 +1356,7 @@
   (:description
    "The number of good packets transmitted to this
         address since it was added to the hostTimeTable."))
+
 (defoid |hostTimeOutPkts| (|hostTimeEntry| 5)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1251,6 +1365,7 @@
   (:description
    "The number of packets, including bad packets, transmitted
         by this address since it was added to the hostTimeTable."))
+
 (defoid |hostTimeInOctets| (|hostTimeEntry| 6)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1261,6 +1376,7 @@
         it was added to the hostTimeTable (excluding framing
         bits but including FCS octets), except for those
         octets in bad packets."))
+
 (defoid |hostTimeOutOctets| (|hostTimeEntry| 7)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1271,6 +1387,7 @@
         it was added to the hostTimeTable (excluding framing
         bits but including FCS octets), including those
         octets in bad packets."))
+
 (defoid |hostTimeOutErrors| (|hostTimeEntry| 8)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1279,6 +1396,7 @@
   (:description
    "The number of bad packets transmitted by this address
         since this host was added to the hostTimeTable."))
+
 (defoid |hostTimeOutBroadcastPkts| (|hostTimeEntry| 9)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1289,6 +1407,7 @@
         address that were directed to the broadcast address
 
         since this host was added to the hostTimeTable."))
+
 (defoid |hostTimeOutMulticastPkts| (|hostTimeEntry| 10)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1300,12 +1419,14 @@
         since this host was added to the hostTimeTable.
         Note that this number does not include packets directed
         to the broadcast address."))
+
 (defoid |hostTopNControlTable| (|hostTopN| 1)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A list of top N host control entries."))
+
 (defoid |hostTopNControlEntry| (|hostTopNControlTable| 1)
   (:type 'object-type)
   (:syntax '|HostTopNControlEntry|)
@@ -1316,7 +1437,9 @@
         of the top N hosts according to several metrics.  For
         example, an instance of the hostTopNDuration object might
         be named hostTopNDuration.3"))
+
 (deftype |HostTopNControlEntry| () 't)
+
 (defoid |hostTopNControlIndex| (|hostTopNControlEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -1327,6 +1450,7 @@
         in the hostTopNControl table.  Each such
         entry defines one top N report prepared for
         one interface."))
+
 (defoid |hostTopNHostIndex| (|hostTopNControlEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -1341,6 +1465,7 @@
 
         This object may not be modified if the associated
         hostTopNStatus object is equal to valid(1)."))
+
 (defoid |hostTopNRateBase| (|hostTopNControlEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -1352,6 +1477,7 @@
 
         This object may not be modified if the associated
         hostTopNStatus object is equal to valid(1)."))
+
 (defoid |hostTopNTimeRemaining| (|hostTopNControlEntry| 4)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -1375,6 +1501,7 @@
         accessible in the hostTopNTable.  Thus, the hostTopN
         table needs to be created only at the end of the collection
         interval."))
+
 (defoid |hostTopNDuration| (|hostTopNControlEntry| 5)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -1394,6 +1521,7 @@
 
         This value shall be zero if no reports have been
         requested for this hostTopNControlEntry."))
+
 (defoid |hostTopNRequestedSize| (|hostTopNControlEntry| 6)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -1407,6 +1535,7 @@
         should set hostTopNGrantedSize as closely to this
         object as is possible for the particular probe
         implementation and available resources."))
+
 (defoid |hostTopNGrantedSize| (|hostTopNControlEntry| 7)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -1428,6 +1557,7 @@
         placed in this table in decreasing order of this rate
         until there is no more room or until there are no more
         hosts."))
+
 (defoid |hostTopNStartTime| (|hostTopNControlEntry| 8)
   (:type 'object-type)
   (:syntax '|TimeTicks|)
@@ -1438,6 +1568,7 @@
         last started.  In other words, this is the time that
         the associated hostTopNTimeRemaining object was
         modified to start the requested report."))
+
 (defoid |hostTopNOwner| (|hostTopNControlEntry| 9)
   (:type 'object-type)
   (:syntax '|OwnerString|)
@@ -1446,6 +1577,7 @@
   (:description
    "The entity that configured this entry and is therefore
         using the resources assigned to it."))
+
 (defoid |hostTopNStatus| (|hostTopNControlEntry| 10)
   (:type 'object-type)
   (:syntax '|EntryStatus|)
@@ -1456,12 +1588,14 @@
 
         If this object is not equal to valid(1), all associated
         hostTopNEntries shall be deleted by the agent."))
+
 (defoid |hostTopNTable| (|hostTopN| 2)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A list of top N host entries."))
+
 (defoid |hostTopNEntry| (|hostTopNTable| 1)
   (:type 'object-type)
   (:syntax '|HostTopNEntry|)
@@ -1471,7 +1605,9 @@
    "A set of statistics for a host that is part of a top N
         report.  For example, an instance of the hostTopNRate
         object might be named hostTopNRate.3.10"))
+
 (deftype |HostTopNEntry| () 't)
+
 (defoid |hostTopNReport| (|hostTopNEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -1483,6 +1619,7 @@
         identified by a particular value of this
         object is part of the same report as identified
         by the same value of the hostTopNControlIndex object."))
+
 (defoid |hostTopNIndex| (|hostTopNEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -1497,12 +1634,14 @@
         decreasing values of hostTopNRate until index N
         is assigned to the entry with the lowest value of
         hostTopNRate or there are no more hostTopNEntries."))
+
 (defoid |hostTopNAddress| (|hostTopNEntry| 3)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The physical address of this host."))
+
 (defoid |hostTopNRate| (|hostTopNEntry| 4)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -1513,6 +1652,7 @@
         during this sampling interval.  The selected
         variable is this host's instance of the object
         selected by hostTopNRateBase."))
+
 (defoid |matrixControlTable| (|matrix| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -1521,6 +1661,7 @@
   (:description
    "A list of information entries for the
         traffic matrix on each interface."))
+
 (defoid |matrixControlEntry| (|matrixControlTable| 1)
   (:type 'object-type)
   (:syntax '|MatrixControlEntry|)
@@ -1532,7 +1673,9 @@
         interface.  For example, an instance of the
         matrixControlLastDeleteTime object might be named
         matrixControlLastDeleteTime.1"))
+
 (deftype |MatrixControlEntry| () 't)
+
 (defoid |matrixControlIndex| (|matrixControlEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -1545,6 +1688,7 @@
         interface and places statistics about them in the
         matrixSDTable and the matrixDSTable on behalf of this
         matrixControlEntry."))
+
 (defoid |matrixControlDataSource| (|matrixControlEntry| 2)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -1575,6 +1719,7 @@
 
         This object may not be modified if the associated
         matrixControlStatus object is equal to valid(1)."))
+
 (defoid |matrixControlTableSize| (|matrixControlEntry| 3)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -1585,6 +1730,7 @@
         for this interface.  This must also be the value of
         the number of entries in the matrixDSTable for this
         interface."))
+
 (defoid |matrixControlLastDeleteTime| (|matrixControlEntry| 4)
   (:type 'object-type)
   (:syntax '|TimeTicks|)
@@ -1596,6 +1742,7 @@
         or matrixDSTable associated with this matrixControlEntry.
         If no deletions have occurred, this value shall be
         zero."))
+
 (defoid |matrixControlOwner| (|matrixControlEntry| 5)
   (:type 'object-type)
   (:syntax '|OwnerString|)
@@ -1604,6 +1751,7 @@
   (:description
    "The entity that configured this entry and is therefore
         using the resources assigned to it."))
+
 (defoid |matrixControlStatus| (|matrixControlEntry| 6)
   (:type 'object-type)
   (:syntax '|EntryStatus|)
@@ -1615,6 +1763,7 @@
         If this object is not equal to valid(1), all associated
         entries in the matrixSDTable and the matrixDSTable
         shall be deleted by the agent."))
+
 (defoid |matrixSDTable| (|matrix| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -1623,6 +1772,7 @@
   (:description
    "A list of traffic matrix entries indexed by
         source and destination MAC address."))
+
 (defoid |matrixSDEntry| (|matrixSDTable| 1)
   (:type 'object-type)
   (:syntax '|MatrixSDEntry|)
@@ -1633,19 +1783,23 @@
         two addresses on a particular interface.  For example,
         an instance of the matrixSDPkts object might be named
         matrixSDPkts.1.6.8.0.32.27.3.176.6.8.0.32.10.8.113"))
+
 (deftype |MatrixSDEntry| () 't)
+
 (defoid |matrixSDSourceAddress| (|matrixSDEntry| 1)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The source physical address."))
+
 (defoid |matrixSDDestAddress| (|matrixSDEntry| 2)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The destination physical address."))
+
 (defoid |matrixSDIndex| (|matrixSDEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -1657,6 +1811,7 @@
         identified by a particular value of this index
         is associated with the same matrixControlEntry
         as identified by the same value of matrixControlIndex."))
+
 (defoid |matrixSDPkts| (|matrixSDEntry| 4)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1666,6 +1821,7 @@
    "The number of packets transmitted from the source
         address to the destination address (this number includes
         bad packets)."))
+
 (defoid |matrixSDOctets| (|matrixSDEntry| 5)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1676,6 +1832,7 @@
         including FCS octets) contained in all packets
         transmitted from the source address to the
         destination address."))
+
 (defoid |matrixSDErrors| (|matrixSDEntry| 6)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1684,6 +1841,7 @@
   (:description
    "The number of bad packets transmitted from
         the source address to the destination address."))
+
 (defoid |matrixDSTable| (|matrix| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -1692,6 +1850,7 @@
   (:description
    "A list of traffic matrix entries indexed by
         destination and source MAC address."))
+
 (defoid |matrixDSEntry| (|matrixDSTable| 1)
   (:type 'object-type)
   (:syntax '|MatrixDSEntry|)
@@ -1702,19 +1861,23 @@
         two addresses on a particular interface.  For example,
         an instance of the matrixSDPkts object might be named
         matrixSDPkts.1.6.8.0.32.10.8.113.6.8.0.32.27.3.176"))
+
 (deftype |MatrixDSEntry| () 't)
+
 (defoid |matrixDSSourceAddress| (|matrixDSEntry| 1)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The source physical address."))
+
 (defoid |matrixDSDestAddress| (|matrixDSEntry| 2)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The destination physical address."))
+
 (defoid |matrixDSIndex| (|matrixDSEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -1726,6 +1889,7 @@
         identified by a particular value of this index
         is associated with the same matrixControlEntry
         as identified by the same value of matrixControlIndex."))
+
 (defoid |matrixDSPkts| (|matrixDSEntry| 4)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1735,6 +1899,7 @@
    "The number of packets transmitted from the source
         address to the destination address (this number includes
         bad packets)."))
+
 (defoid |matrixDSOctets| (|matrixDSEntry| 5)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1745,6 +1910,7 @@
         but including FCS octets) contained in all packets
         transmitted from the source address to the
         destination address."))
+
 (defoid |matrixDSErrors| (|matrixDSEntry| 6)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1753,12 +1919,14 @@
   (:description
    "The number of bad packets transmitted from
         the source address to the destination address."))
+
 (defoid |filterTable| (|filter| 1)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A list of packet filter entries."))
+
 (defoid |filterEntry| (|filterTable| 1)
   (:type 'object-type)
   (:syntax '|FilterEntry|)
@@ -1768,7 +1936,9 @@
    "A set of parameters for a packet filter applied on a
         particular interface.  As an example, an instance of the
         filterPktData object might be named filterPktData.12"))
+
 (deftype |FilterEntry| () 't)
+
 (defoid |filterIndex| (|filterEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -1779,6 +1949,7 @@
         in the filter table.  Each such entry defines
         one filter that is to be applied to every packet
         received on an interface."))
+
 (defoid |filterChannelIndex| (|filterEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -1789,6 +1960,7 @@
         is a part.  The filters identified by a particular value
         of this object are associated with the same channel as
         identified by the same value of the channelIndex object."))
+
 (defoid |filterPktDataOffset| (|filterEntry| 3)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -1804,6 +1976,7 @@
 
         This object may not be modified if the associated
         filterStatus object is equal to valid(1)."))
+
 (defoid |filterPktData| (|filterEntry| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -1840,6 +2013,7 @@
 
         This object may not be modified if the associated
         filterStatus object is equal to valid(1)."))
+
 (defoid |filterPktDataMask| (|filterEntry| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -1860,6 +2034,7 @@
 
         This object may not be modified if the associated
         filterStatus object is equal to valid(1)."))
+
 (defoid |filterPktDataNotMask| (|filterEntry| 6)
   (:type 'object-type)
   (:syntax 't)
@@ -1883,6 +2058,7 @@
 
         This object may not be modified if the associated
         filterStatus object is equal to valid(1)."))
+
 (defoid |filterPktStatus| (|filterEntry| 7)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -1940,6 +2116,7 @@
 
         This object may not be modified if the associated
         filterStatus object is equal to valid(1)."))
+
 (defoid |filterPktStatusMask| (|filterEntry| 8)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -1959,6 +2136,7 @@
 
         This object may not be modified if the associated
         filterStatus object is equal to valid(1)."))
+
 (defoid |filterPktStatusNotMask| (|filterEntry| 9)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -1983,6 +2161,7 @@
 
         This object may not be modified if the associated
         filterStatus object is equal to valid(1)."))
+
 (defoid |filterOwner| (|filterEntry| 10)
   (:type 'object-type)
   (:syntax '|OwnerString|)
@@ -1991,18 +2170,21 @@
   (:description
    "The entity that configured this entry and is therefore
         using the resources assigned to it."))
+
 (defoid |filterStatus| (|filterEntry| 11)
   (:type 'object-type)
   (:syntax '|EntryStatus|)
   (:max-access '|read-create|)
   (:status '|current|)
   (:description "The status of this filter entry."))
+
 (defoid |channelTable| (|filter| 2)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A list of packet channel entries."))
+
 (defoid |channelEntry| (|channelTable| 1)
   (:type 'object-type)
   (:syntax '|ChannelEntry|)
@@ -2012,7 +2194,9 @@
    "A set of parameters for a packet channel applied on a
         particular interface.  As an example, an instance of the
         channelMatches object might be named channelMatches.3"))
+
 (deftype |ChannelEntry| () 't)
+
 (defoid |channelIndex| (|channelEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -2028,6 +2212,7 @@
         filterChannelIndex object to make sure that there are no
         pre-existing filters that would be inadvertently be linked
         to the channel."))
+
 (defoid |channelIfIndex| (|channelEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -2055,6 +2240,7 @@
 
         This object may not be modified if the associated
         channelStatus object is equal to valid(1)."))
+
 (defoid |channelAcceptType| (|channelEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -2077,6 +2263,7 @@
 
         This object may not be modified if the associated
         channelStatus object is equal to valid(1)."))
+
 (defoid |channelDataControl| (|channelEntry| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -2087,6 +2274,7 @@
         If this object is on(1), data, status and events flow
         through this channel.  If this object is off(2), data,
         status and events will not flow through this channel."))
+
 (defoid |channelTurnOnEventIndex| (|channelEntry| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -2106,6 +2294,7 @@
 
         This object may not be modified if the associated
         channelStatus object is equal to valid(1)."))
+
 (defoid |channelTurnOffEventIndex| (|channelEntry| 6)
   (:type 'object-type)
   (:syntax 't)
@@ -2125,6 +2314,7 @@
 
         This object may not be modified if the associated
         channelStatus object is equal to valid(1)."))
+
 (defoid |channelEventIndex| (|channelEntry| 7)
   (:type 'object-type)
   (:syntax 't)
@@ -2144,6 +2334,7 @@
 
         This object may not be modified if the associated
         channelStatus object is equal to valid(1)."))
+
 (defoid |channelEventStatus| (|channelEntry| 8)
   (:type 'object-type)
   (:syntax 't)
@@ -2170,6 +2361,7 @@
         eventAlwaysReady(3).  Disabling the flow control
         is discouraged as it can result in high network
         traffic or other performance problems."))
+
 (defoid |channelMatches| (|channelEntry| 9)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -2179,12 +2371,14 @@
    "The number of times this channel has matched a packet.
         Note that this object is updated even when
         channelDataControl is set to off."))
+
 (defoid |channelDescription| (|channelEntry| 10)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|read-create|)
   (:status '|current|)
   (:description "A comment describing this channel."))
+
 (defoid |channelOwner| (|channelEntry| 11)
   (:type 'object-type)
   (:syntax '|OwnerString|)
@@ -2193,18 +2387,21 @@
   (:description
    "The entity that configured this entry and is therefore
         using the resources assigned to it."))
+
 (defoid |channelStatus| (|channelEntry| 12)
   (:type 'object-type)
   (:syntax '|EntryStatus|)
   (:max-access '|read-create|)
   (:status '|current|)
   (:description "The status of this channel entry."))
+
 (defoid |bufferControlTable| (|capture| 1)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A list of buffers control entries."))
+
 (defoid |bufferControlEntry| (|bufferControlTable| 1)
   (:type 'object-type)
   (:syntax '|BufferControlEntry|)
@@ -2215,7 +2412,9 @@
         of packets that have matched filters.  As an example, an
         instance of the bufferControlCaptureSliceSize object might
         be named bufferControlCaptureSliceSize.3"))
+
 (deftype |BufferControlEntry| () 't)
+
 (defoid |bufferControlIndex| (|bufferControlEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -2227,6 +2426,7 @@
         index shall never be zero.  Each such
         entry defines one set of packets that is
         captured and controlled by one or more filters."))
+
 (defoid |bufferControlChannelIndex| (|bufferControlEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -2241,6 +2441,7 @@
 
         This object may not be modified if the associated
         bufferControlStatus object is equal to valid(1)."))
+
 (defoid |bufferControlFullStatus| (|bufferControlEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -2267,6 +2468,7 @@
         particular, the wrap-mode action of deleting old
         packets to make room for newly arrived packets
         must not affect the value of this object."))
+
 (defoid |bufferControlFullAction| (|bufferControlEntry| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -2279,6 +2481,7 @@
         fills the buffer, the bufferControlFullStatus will
         be set to full(2) and this buffer will stop capturing
         packets."))
+
 (defoid |bufferControlCaptureSliceSize| (|bufferControlEntry| 5)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -2296,6 +2499,7 @@
 
         This object may not be modified if the associated
         bufferControlStatus object is equal to valid(1)."))
+
 (defoid |bufferControlDownloadSliceSize| (|bufferControlEntry| 6)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -2319,6 +2523,7 @@
         required to accept messages whose length exceeds 484
         octets, although they are encouraged to support larger
         datagrams whenever feasible."))
+
 (defoid |bufferControlDownloadOffset| (|bufferControlEntry| 7)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -2333,6 +2538,7 @@
         100, then the captureBufferPacket object that
         contains the packet will contain bytes starting
         100 octets into the packet."))
+
 (defoid |bufferControlMaxOctetsRequested| (|bufferControlEntry| 8)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -2351,6 +2557,7 @@
         implementation and available resources.  However, if
         the object has the special value of -1, the probe
         must set bufferControlMaxOctetsGranted to -1."))
+
 (defoid |bufferControlMaxOctetsGranted| (|bufferControlEntry| 9)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -2398,6 +2605,7 @@
         When the value of this object changes to a value greater
         than the current value, the number of associated
         captureBufferEntries may be allowed to grow."))
+
 (defoid |bufferControlCapturedPackets| (|bufferControlEntry| 10)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -2405,6 +2613,7 @@
   (:status '|current|)
   (:description
    "The number of packets currently in this captureBuffer."))
+
 (defoid |bufferControlTurnOnTime| (|bufferControlEntry| 11)
   (:type 'object-type)
   (:syntax '|TimeTicks|)
@@ -2413,6 +2622,7 @@
   (:description
    "The value of sysUpTime when this capture buffer was
         first turned on."))
+
 (defoid |bufferControlOwner| (|bufferControlEntry| 12)
   (:type 'object-type)
   (:syntax '|OwnerString|)
@@ -2421,18 +2631,21 @@
   (:description
    "The entity that configured this entry and is therefore
         using the resources assigned to it."))
+
 (defoid |bufferControlStatus| (|bufferControlEntry| 13)
   (:type 'object-type)
   (:syntax '|EntryStatus|)
   (:max-access '|read-create|)
   (:status '|current|)
   (:description "The status of this buffer Control Entry."))
+
 (defoid |captureBufferTable| (|capture| 2)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A list of packets captured off of a channel."))
+
 (defoid |captureBufferEntry| (|captureBufferTable| 1)
   (:type 'object-type)
   (:syntax '|CaptureBufferEntry|)
@@ -2442,7 +2655,9 @@
    "A packet captured off of an attached network.  As an
         example, an instance of the captureBufferPacketData
         object might be named captureBufferPacketData.3.1783"))
+
 (deftype |CaptureBufferEntry| () 't)
+
 (defoid |captureBufferControlIndex| (|captureBufferEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -2451,6 +2666,7 @@
   (:description
    "The index of the bufferControlEntry with which
         this packet is associated."))
+
 (defoid |captureBufferIndex| (|captureBufferEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -2466,6 +2682,7 @@
         Should this value reach 2147483647, the next packet
         added with the same captureBufferControlIndex shall
         cause this value to wrap around to 1."))
+
 (defoid |captureBufferPacketID| (|captureBufferEntry| 3)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -2481,6 +2698,7 @@
         object has a maximum positive value of 2^31 - 1,
         any captureBufferPacketID object shall have the
         value of the associated packet's packetID mod 2^31."))
+
 (defoid |captureBufferPacketData| (|captureBufferEntry| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -2497,6 +2715,7 @@
         bufferControlCaptureSliceSize minus the offset, and the
         associated bufferControlDownloadSliceSize.  If this minimum
         is less than zero, this object shall have a length of zero."))
+
 (defoid |captureBufferPacketLength| (|captureBufferEntry| 5)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -2505,6 +2724,7 @@
   (:description
    "The actual length (off the wire) of the packet stored
         in this entry, including FCS octets."))
+
 (defoid |captureBufferPacketTime| (|captureBufferEntry| 6)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -2514,6 +2734,7 @@
    "The number of milliseconds that had passed since
         this capture buffer was first turned on when this
         packet was captured."))
+
 (defoid |captureBufferPacketStatus| (|captureBufferEntry| 7)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -2548,12 +2769,14 @@
 
         As this MIB is expanded to new media types, this object
         will have other media-specific errors defined."))
+
 (defoid |eventTable| (|event| 1)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A list of events to be generated."))
+
 (defoid |eventEntry| (|eventTable| 1)
   (:type 'object-type)
   (:syntax '|EventEntry|)
@@ -2564,7 +2787,9 @@
         when certain conditions are met.  As an example, an instance
         of the eventLastTimeSent object might be named
         eventLastTimeSent.6"))
+
 (deftype |EventEntry| () 't)
+
 (defoid |eventIndex| (|eventEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -2575,12 +2800,14 @@
         event table.  Each such entry defines one event that
         is to be generated when the appropriate conditions
         occur."))
+
 (defoid |eventDescription| (|eventEntry| 2)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|read-create|)
   (:status '|current|)
   (:description "A comment describing this event entry."))
+
 (defoid |eventType| (|eventEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -2592,6 +2819,7 @@
         made in the log table for each event.  In the case of
         snmp-trap, an SNMP trap is sent to one or more
         management stations."))
+
 (defoid |eventCommunity| (|eventEntry| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -2600,6 +2828,7 @@
   (:description
    "If an SNMP trap is to be sent, it will be sent to
         the SNMP community specified by this octet string."))
+
 (defoid |eventLastTimeSent| (|eventEntry| 5)
   (:type 'object-type)
   (:syntax '|TimeTicks|)
@@ -2610,6 +2839,7 @@
         entry last generated an event.  If this entry has
         not generated any events, this value will be
         zero."))
+
 (defoid |eventOwner| (|eventEntry| 6)
   (:type 'object-type)
   (:syntax '|OwnerString|)
@@ -2624,6 +2854,7 @@
         management stations should retrieve those log entries,
         as they may have significance to all management stations
         connected to this device"))
+
 (defoid |eventStatus| (|eventEntry| 7)
   (:type 'object-type)
   (:syntax '|EntryStatus|)
@@ -2634,12 +2865,14 @@
 
         If this object is not equal to valid(1), all associated
         log entries shall be deleted by the agent."))
+
 (defoid |logTable| (|event| 2)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A list of events that have been logged."))
+
 (defoid |logEntry| (|logTable| 1)
   (:type 'object-type)
   (:syntax '|LogEntry|)
@@ -2649,7 +2882,9 @@
    "A set of data describing an event that has been
         logged.  For example, an instance of the logDescription
         object might be named logDescription.6.47"))
+
 (deftype |LogEntry| () 't)
+
 (defoid |logEventIndex| (|logEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -2661,6 +2896,7 @@
         value of this index is associated with the same
         eventEntry as identified by the same value
         of eventIndex."))
+
 (defoid |logIndex| (|logEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -2678,6 +2914,7 @@
         instances of logEntry as required because of
         lack of memory.  It is an implementation-specific
         matter as to when this deletion may occur."))
+
 (defoid |logTime| (|logEntry| 3)
   (:type 'object-type)
   (:syntax '|TimeTicks|)
@@ -2685,6 +2922,7 @@
   (:status '|current|)
   (:description
    "The value of sysUpTime when this log entry was created."))
+
 (defoid |logDescription| (|logEntry| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -2693,10 +2931,12 @@
   (:description
    "An implementation dependent description of the
         event that activated this log entry."))
+
 (defoid |rmonEventsV2| (|rmon| 0)
   (:type 'object-identity)
   (:status '|current|)
   (:description "Definition point for RMON notifications."))
+
 (defoid |risingAlarm| (|rmonEventsV2| 1)
   (:type 'notification-type)
   (:status '|current|)
@@ -2705,6 +2945,7 @@
         entry crosses its rising threshold and generates
         an event that is configured for sending SNMP
         traps."))
+
 (defoid |fallingAlarm| (|rmonEventsV2| 2)
   (:type 'notification-type)
   (:status '|current|)
@@ -2713,9 +2954,12 @@
         entry crosses its falling threshold and generates
         an event that is configured for sending SNMP
         traps."))
+
 (defoid |rmonCompliances| (|rmonConformance| 9)
   (:type 'object-identity))
+
 (defoid |rmonGroups| (|rmonConformance| 10) (:type 'object-identity))
+
 (defoid |rmonCompliance| (|rmonCompliances| 1)
   (:type 'module-compliance)
   (:status '|current|)
@@ -2725,48 +2969,61 @@
         conform to the RMON MIB. Implementations of this MIB
         must also implement the system group of MIB-II [16] and the
         IF-MIB [17]."))
+
 (defoid |rmonEtherStatsGroup| (|rmonGroups| 1)
   (:type 'object-group)
   (:status '|current|)
   (:description "The RMON Ethernet Statistics Group."))
+
 (defoid |rmonHistoryControlGroup| (|rmonGroups| 2)
   (:type 'object-group)
   (:status '|current|)
   (:description "The RMON History Control Group."))
+
 (defoid |rmonEthernetHistoryGroup| (|rmonGroups| 3)
   (:type 'object-group)
   (:status '|current|)
   (:description "The RMON Ethernet History Group."))
+
 (defoid |rmonAlarmGroup| (|rmonGroups| 4)
   (:type 'object-group)
   (:status '|current|)
   (:description "The RMON Alarm Group."))
+
 (defoid |rmonHostGroup| (|rmonGroups| 5)
   (:type 'object-group)
   (:status '|current|)
   (:description "The RMON Host Group."))
+
 (defoid |rmonHostTopNGroup| (|rmonGroups| 6)
   (:type 'object-group)
   (:status '|current|)
   (:description "The RMON Host Top 'N' Group."))
+
 (defoid |rmonMatrixGroup| (|rmonGroups| 7)
   (:type 'object-group)
   (:status '|current|)
   (:description "The RMON Matrix Group."))
+
 (defoid |rmonFilterGroup| (|rmonGroups| 8)
   (:type 'object-group)
   (:status '|current|)
   (:description "The RMON Filter Group."))
+
 (defoid |rmonPacketCaptureGroup| (|rmonGroups| 9)
   (:type 'object-group)
   (:status '|current|)
   (:description "The RMON Packet Capture Group."))
+
 (defoid |rmonEventGroup| (|rmonGroups| 10)
   (:type 'object-group)
   (:status '|current|)
   (:description "The RMON Event Group."))
+
 (defoid |rmonNotificationGroup| (|rmonGroups| 11)
   (:type 'notification-group)
   (:status '|current|)
   (:description "The RMON Notification Group."))
+
 (eval-when (:load-toplevel :execute) (setf *current-module* nil))
+

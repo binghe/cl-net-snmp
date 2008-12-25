@@ -2,9 +2,11 @@
 ;;;; Auto-generated from MIB:NET-SNMP;MTA-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'mta-mib *mib-modules*)
   (setf *current-module* 'mta-mib))
+
 (defpackage :asn.1/mta-mib
   (:nicknames :mta-mib)
   (:use :common-lisp :asn.1)
@@ -14,24 +16,30 @@
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
   (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|)
   (:import-from :asn.1/network-services-mib |applIndex| |URLString|))
+
 (in-package :mta-mib)
+
 (defoid |mta| (|mib-2| 28)
   (:type 'module-identity)
   (:description
    "The MIB module describing Message Transfer Agents (MTAs)"))
+
 (defoid |mtaTable| (|mta| 1)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The table holding information specific to an MTA."))
+
 (defoid |mtaEntry| (|mtaTable| 1)
   (:type 'object-type)
   (:syntax '|MtaEntry|)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The entry associated with each MTA."))
+
 (deftype |MtaEntry| () 't)
+
 (defoid |mtaReceivedMessages| (|mtaEntry| 1)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -42,6 +50,7 @@
       This includes messages transmitted to this MTA from other
       MTAs as well as messages that have been submitted to the
       MTA directly by end-users or applications."))
+
 (defoid |mtaStoredMessages| (|mtaEntry| 2)
   (:type 'object-type)
   (:syntax '|Gauge32|)
@@ -52,6 +61,7 @@
       This includes messages that are awaiting transmission to
       some other MTA or are waiting for delivery to an end-user
       or application."))
+
 (defoid |mtaTransmittedMessages| (|mtaEntry| 3)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -62,6 +72,7 @@
       This includes messages that were transmitted to some other
       MTA or are waiting for delivery to an end-user or
       application."))
+
 (defoid |mtaReceivedVolume| (|mtaEntry| 4)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -78,6 +89,7 @@
       to this MTA from other MTAs as well as messages that have
       been submitted to the MTA directly by end-users or
       applications."))
+
 (defoid |mtaStoredVolume| (|mtaEntry| 5)
   (:type 'object-type)
   (:syntax '|Gauge32|)
@@ -93,6 +105,7 @@
       kilo-octets of P2 data.  This includes messages that are
       awaiting transmission to some other MTA or are waiting
       for delivery to an end-user or application."))
+
 (defoid |mtaTransmittedVolume| (|mtaEntry| 6)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -108,6 +121,7 @@
       kilo-octets of P2 data.  This includes messages that were
       transmitted to some other MTA or are waiting for delivery
       to an end-user or application."))
+
 (defoid |mtaReceivedRecipients| (|mtaEntry| 7)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -123,6 +137,7 @@
       transmitted to this MTA from other MTAs as well as
       messages that have been submitted to the MTA directly
       by end-users or applications."))
+
 (defoid |mtaStoredRecipients| (|mtaEntry| 8)
   (:type 'object-type)
   (:syntax '|Gauge32|)
@@ -136,6 +151,7 @@
       counted.  This includes messages that are awaiting
       transmission to some other MTA or are waiting for
       delivery to an end-user or application."))
+
 (defoid |mtaTransmittedRecipients| (|mtaEntry| 9)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -149,6 +165,7 @@
       should not be counted.  This includes messages that were
       transmitted to some other MTA or are waiting for
       delivery to an end-user or application."))
+
 (defoid |mtaSuccessfulConvertedMessages| (|mtaEntry| 10)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -158,6 +175,7 @@
    "The number of messages that have been successfully
       converted from one form to another since MTA
       initialization."))
+
 (defoid |mtaFailedConvertedMessages| (|mtaEntry| 11)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -167,6 +185,7 @@
    "The number of messages for which an unsuccessful
       attempt was made to convert them from one form to
       another since MTA initialization."))
+
 (defoid |mtaLoopsDetected| (|mtaEntry| 12)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -190,6 +209,7 @@
       to the postmaster, messages that the MTA knows will loop
       won't be accepted, etc.) vary widely from one MTA to the
       next and cannot be inferred from this variable."))
+
 (defoid |mtaGroupTable| (|mta| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -197,19 +217,23 @@
   (:status '|current|)
   (:description
    "The table holding information specific to each MTA group."))
+
 (defoid |mtaGroupEntry| (|mtaGroupTable| 1)
   (:type 'object-type)
   (:syntax '|MtaGroupEntry|)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The entry associated with each MTA group."))
+
 (deftype |MtaGroupEntry| () 't)
+
 (defoid |mtaGroupIndex| (|mtaGroupEntry| 1)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The index associated with a group for a given MTA."))
+
 (defoid |mtaGroupReceivedMessages| (|mtaGroupEntry| 2)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -218,6 +242,7 @@
   (:description
    "The number of messages received to this group since
       group creation."))
+
 (defoid |mtaGroupRejectedMessages| (|mtaGroupEntry| 3)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -226,6 +251,7 @@
   (:description
    "The number of messages rejected by this group since
       group creation."))
+
 (defoid |mtaGroupStoredMessages| (|mtaGroupEntry| 4)
   (:type 'object-type)
   (:syntax '|Gauge32|)
@@ -234,6 +260,7 @@
   (:description
    "The total number of messages currently stored in this
       group's queue."))
+
 (defoid |mtaGroupTransmittedMessages| (|mtaGroupEntry| 5)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -242,6 +269,7 @@
   (:description
    "The number of messages transmitted by this group since
       group creation."))
+
 (defoid |mtaGroupReceivedVolume| (|mtaGroupEntry| 6)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -255,6 +283,7 @@
       SMTP-based MTA should use the number of kilo-octets in the
       message header and body, while an X.400-based MTA should use
       the number of kilo-octets of P2 data."))
+
 (defoid |mtaGroupStoredVolume| (|mtaGroupEntry| 7)
   (:type 'object-type)
   (:syntax '|Gauge32|)
@@ -268,6 +297,7 @@
       MTA should use the number of kilo-octets in the message
       header and body, while an X.400-based MTA would use the
       number of kilo-octets of P2 data."))
+
 (defoid |mtaGroupTransmittedVolume| (|mtaGroupEntry| 8)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -281,6 +311,7 @@
       SMTP-based MTA should use the number of kilo-octets in the
       message header and body, while an X.400-based MTA should use
       the number of kilo-octets of P2 data."))
+
 (defoid |mtaGroupReceivedRecipients| (|mtaGroupEntry| 9)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -291,6 +322,7 @@
       received to this group since group creation.
       Recipients this MTA has no responsibility for should not
       be counted."))
+
 (defoid |mtaGroupStoredRecipients| (|mtaGroupEntry| 10)
   (:type 'object-type)
   (:syntax '|Gauge32|)
@@ -300,6 +332,7 @@
    "The total number of recipients specified in all messages
       currently stored in this group's queue.  Recipients this
       MTA has no responsibility for should not be counted."))
+
 (defoid |mtaGroupTransmittedRecipients| (|mtaGroupEntry| 11)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -310,6 +343,7 @@
       transmitted by this group since group creation.
       Recipients this MTA had no responsibility for should not
       be counted."))
+
 (defoid |mtaGroupOldestMessageStored| (|mtaGroupEntry| 12)
   (:type 'object-type)
   (:syntax '|TimeInterval|)
@@ -319,6 +353,7 @@
    "Time since the oldest message in this group's queue was
 
       placed in the queue."))
+
 (defoid |mtaGroupInboundAssociations| (|mtaGroupEntry| 13)
   (:type 'object-type)
   (:syntax '|Gauge32|)
@@ -327,6 +362,7 @@
   (:description
    "The number of current associations to the group, where the
       group is the responder."))
+
 (defoid |mtaGroupOutboundAssociations| (|mtaGroupEntry| 14)
   (:type 'object-type)
   (:syntax '|Gauge32|)
@@ -335,6 +371,7 @@
   (:description
    "The number of current associations to the group, where the
      group is the initiator."))
+
 (defoid |mtaGroupAccumulatedInboundAssociations| (|mtaGroupEntry| 15)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -343,6 +380,7 @@
   (:description
    "The total number of associations to the group since
      group creation, where the MTA was the responder."))
+
 (defoid |mtaGroupAccumulatedOutboundAssociations| (|mtaGroupEntry| 16)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -351,6 +389,7 @@
   (:description
    "The total number of associations from the group since
       group creation, where the MTA was the initiator."))
+
 (defoid |mtaGroupLastInboundActivity| (|mtaGroupEntry| 17)
   (:type 'object-type)
   (:syntax '|TimeInterval|)
@@ -359,6 +398,7 @@
   (:description
    "Time since the last time that this group had an active
      inbound association for purposes of message reception."))
+
 (defoid |mtaGroupLastOutboundActivity| (|mtaGroupEntry| 18)
   (:type 'object-type)
   (:syntax '|TimeInterval|)
@@ -368,6 +408,7 @@
    "Time since the last time that this group had a
       successful outbound association for purposes of
       message delivery."))
+
 (defoid |mtaGroupLastOutboundAssociationAttempt| (|mtaGroupEntry| 34)
   (:type 'object-type)
   (:syntax '|TimeInterval|)
@@ -377,6 +418,7 @@
    "Time since the last time that this group attempted
       to make an outbound association for purposes of
       message delivery."))
+
 (defoid |mtaGroupRejectedInboundAssociations| (|mtaGroupEntry| 19)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -386,6 +428,7 @@
    "The total number of inbound associations the group has
      rejected, since group creation.  Rejected associations
      are not counted in the accumulated association totals."))
+
 (defoid |mtaGroupFailedOutboundAssociations| (|mtaGroupEntry| 20)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -396,6 +439,7 @@
      initiator and association establishment has failed,
      since group creation.  Failed associations are
      not counted in the accumulated association totals."))
+
 (defoid |mtaGroupInboundRejectionReason| (|mtaGroupEntry| 21)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
@@ -407,6 +451,7 @@
 
      has been made since the MTA was initialized the value
      should be 'never'."))
+
 (defoid |mtaGroupOutboundConnectFailureReason| (|mtaGroupEntry| 22)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
@@ -417,6 +462,7 @@
      this group initiated. If no association attempt has been
      made since the MTA was initialized the value should be
      'never'."))
+
 (defoid |mtaGroupScheduledRetry| (|mtaGroupEntry| 23)
   (:type 'object-type)
   (:syntax '|TimeInterval|)
@@ -425,6 +471,7 @@
   (:description
    "The amount of time until this group is next scheduled to
       attempt to make an association."))
+
 (defoid |mtaGroupMailProtocol| (|mtaGroupEntry| 24)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -441,6 +488,7 @@
       usual IANA procedures may be used to register ports for
       new protocols. applTCPProtoID and applUDPProtoID are
       defined in the NETWORK-SERVICES-MIB, RFC 2788."))
+
 (defoid |mtaGroupName| (|mtaGroupEntry| 25)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
@@ -457,6 +505,7 @@
       have a Distinguished Name, the RFC 2156 syntax
       'mta in globalid' used in X400-Received: fields can be
       used."))
+
 (defoid |mtaGroupSuccessfulConvertedMessages| (|mtaGroupEntry| 26)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -466,6 +515,7 @@
    "The number of messages that have been successfully
       converted from one form to another in this group
       since group creation."))
+
 (defoid |mtaGroupFailedConvertedMessages| (|mtaGroupEntry| 27)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -475,6 +525,7 @@
    "The number of messages for which an unsuccessful
       attempt was made to convert them from one form to
       another in this group since group creation."))
+
 (defoid |mtaGroupDescription| (|mtaGroupEntry| 28)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
@@ -483,6 +534,7 @@
   (:description
    "A description of the group's purpose.  This information is
       intended to identify the group in a status display."))
+
 (defoid |mtaGroupURL| (|mtaGroupEntry| 29)
   (:type 'object-type)
   (:syntax '|URLString|)
@@ -492,12 +544,14 @@
    "A URL pointing to a description of the group.  This
       information is intended to identify and briefly describe
       the group in a status display."))
+
 (defoid |mtaGroupCreationTime| (|mtaGroupEntry| 30)
   (:type 'object-type)
   (:syntax '|TimeInterval|)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "Time since this group was first created."))
+
 (defoid |mtaGroupHierarchy| (|mtaGroupEntry| 31)
   (:type 'object-type)
   (:syntax 't)
@@ -514,6 +568,7 @@
       zero value means that this MIB implementation doesn't
       implement hierarchy indicators and thus the overall
       group hierarchy cannot be determined."))
+
 (defoid |mtaGroupOldestMessageId| (|mtaGroupEntry| 32)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
@@ -525,6 +580,7 @@
       RFC 822 msg-id; X.400 may convert X.400 message
       identifiers to this form by following the rules laid
       out in RFC2156."))
+
 (defoid |mtaGroupLoopsDetected| (|mtaGroupEntry| 33)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -549,6 +605,7 @@
       to the postmaster, messages that the MTA knows will loop
       won't be accepted, etc.) vary widely from one MTA to the
       next and cannot be inferred from this variable."))
+
 (defoid |mtaGroupAssociationTable| (|mta| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -557,6 +614,7 @@
   (:description
    "The table holding information regarding the associations
       for each MTA group."))
+
 (defoid |mtaGroupAssociationEntry| (|mtaGroupAssociationTable| 1)
   (:type 'object-type)
   (:syntax '|MtaGroupAssociationEntry|)
@@ -565,7 +623,9 @@
   (:description
    "The entry holding information regarding the associations
       for each MTA group."))
+
 (deftype |MtaGroupAssociationEntry| () 't)
+
 (defoid |mtaGroupAssociationIndex| (|mtaGroupAssociationEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -574,6 +634,7 @@
   (:description
    "Reference into association table to allow correlation of
       this group's active associations with the association table."))
+
 (defoid |mtaGroupErrorTable| (|mta| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -582,6 +643,7 @@
   (:description
    "The table holding information regarding accumulated errors
       for each MTA group."))
+
 (defoid |mtaGroupErrorEntry| (|mtaGroupErrorTable| 1)
   (:type 'object-type)
   (:syntax '|MtaGroupErrorEntry|)
@@ -590,7 +652,9 @@
   (:description
    "The entry holding information regarding accumulated
       errors for each MTA group."))
+
 (deftype |MtaGroupErrorEntry| () 't)
+
 (defoid |mtaGroupInboundErrorCount| (|mtaGroupErrorEntry| 1)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -605,6 +669,7 @@
       server to the remote client; in the case of X.400
       these will typically be errors encountered while
       processing an incoming message."))
+
 (defoid |mtaGroupInternalErrorCount| (|mtaGroupErrorEntry| 2)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -614,6 +679,7 @@
    "Count of the number of errors of a given type that have
       been accumulated in association with a particular group
       during internal MTA processing."))
+
 (defoid |mtaGroupOutboundErrorCount| (|mtaGroupErrorEntry| 3)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -628,6 +694,7 @@
       remote SMTP server. In the case of X.400 these will
       typically be errors encountered while constructing
       or attempting to deliver an outgoing message."))
+
 (defoid |mtaStatusCode| (|mtaGroupErrorEntry| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -649,9 +716,13 @@
 
       capable of describing most error conditions a mail system
       encounters in a generic yet detailed way."))
+
 (defoid |mtaConformance| (|mta| 4) (:type 'object-identity))
+
 (defoid |mtaGroups| (|mtaConformance| 1) (:type 'object-identity))
+
 (defoid |mtaCompliances| (|mtaConformance| 2) (:type 'object-identity))
+
 (defoid |mtaCompliance| (|mtaCompliances| 1)
   (:type 'module-compliance)
   (:status '|current|)
@@ -659,6 +730,7 @@
    "The compliance statement for RFC 1566 implementations
       which support the Mail Monitoring MIB for basic
       monitoring of MTAs."))
+
 (defoid |mtaAssocCompliance| (|mtaCompliances| 2)
   (:type 'module-compliance)
   (:status '|current|)
@@ -666,6 +738,7 @@
    "The compliance statement for RFC 1566 implementations
       which support the Mail Monitoring MIB for monitoring
       of MTAs and their associations."))
+
 (defoid |mtaRFC2249Compliance| (|mtaCompliances| 5)
   (:type 'module-compliance)
   (:status '|current|)
@@ -673,6 +746,7 @@
    "The compliance statement for RFC 2249 implementations
       which support the Mail Monitoring MIB for basic
       monitoring of MTAs."))
+
 (defoid |mtaRFC2249AssocCompliance| (|mtaCompliances| 6)
   (:type 'module-compliance)
   (:status '|current|)
@@ -681,6 +755,7 @@
 
       which support the Mail Monitoring MIB for monitoring of
       MTAs and their associations."))
+
 (defoid |mtaRFC2249ErrorCompliance| (|mtaCompliances| 7)
   (:type 'module-compliance)
   (:status '|current|)
@@ -688,6 +763,7 @@
    "The compliance statement for RFC 2249 implementations
       which support the Mail Monitoring MIB for monitoring of
       MTAs and detailed errors."))
+
 (defoid |mtaRFC2249FullCompliance| (|mtaCompliances| 8)
   (:type 'module-compliance)
   (:status '|current|)
@@ -695,6 +771,7 @@
    "The compliance statement for RFC 2249 implementations
       which support the full Mail Monitoring MIB for
       monitoring of MTAs, associations, and detailed errors."))
+
 (defoid |mtaRFC2789Compliance| (|mtaCompliances| 9)
   (:type 'module-compliance)
   (:status '|current|)
@@ -702,6 +779,7 @@
    "The compliance statement for RFC 2789 implementations
       which support the Mail Monitoring MIB for basic
       monitoring of MTAs."))
+
 (defoid |mtaRFC2789AssocCompliance| (|mtaCompliances| 10)
   (:type 'module-compliance)
   (:status '|current|)
@@ -709,6 +787,7 @@
    "The compliance statement for RFC 2789 implementations
       which support the Mail Monitoring MIB for monitoring of
       MTAs and their associations."))
+
 (defoid |mtaRFC2789ErrorCompliance| (|mtaCompliances| 11)
   (:type 'module-compliance)
   (:status '|current|)
@@ -716,6 +795,7 @@
    "The compliance statement for RFC 2789 implementations
       which support the Mail Monitoring MIB for monitoring of
       MTAs and detailed errors."))
+
 (defoid |mtaRFC2789FullCompliance| (|mtaCompliances| 12)
   (:type 'module-compliance)
   (:status '|current|)
@@ -723,6 +803,7 @@
    "The compliance statement for RFC 2789 implementations
       which support the full Mail Monitoring MIB for
       monitoring of MTAs, associations, and detailed errors."))
+
 (defoid |mtaRFC1566Group| (|mtaGroups| 10)
   (:type 'object-group)
   (:status '|current|)
@@ -730,6 +811,7 @@
    "A collection of objects providing basic monitoring of MTAs.
       This is the original set of such objects defined in RFC
       1566."))
+
 (defoid |mtaRFC1566AssocGroup| (|mtaGroups| 11)
   (:type 'object-group)
   (:status '|current|)
@@ -737,12 +819,14 @@
    "A collection of objects providing monitoring of MTA
       associations.  This is the original set of such objects
       defined in RFC 1566."))
+
 (defoid |mtaRFC2249Group| (|mtaGroups| 4)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "A collection of objects providing basic monitoring of MTAs.
       This group was originally defined in RFC 2249."))
+
 (defoid |mtaRFC2249AssocGroup| (|mtaGroups| 5)
   (:type 'object-group)
   (:status '|current|)
@@ -750,6 +834,7 @@
    "A collection of objects providing monitoring of MTA
       associations.  This group was originally defined in RFC
       2249."))
+
 (defoid |mtaRFC2249ErrorGroup| (|mtaGroups| 6)
   (:type 'object-group)
   (:status '|current|)
@@ -757,6 +842,7 @@
    "A collection of objects providing monitoring of
       detailed MTA errors.  This group was originally defined
       in RFC 2249."))
+
 (defoid |mtaRFC2789Group| (|mtaGroups| 7)
   (:type 'object-group)
   (:status '|current|)
@@ -764,6 +850,7 @@
    "A collection of objects providing basic monitoring of MTAs.
 
       This is the appropriate group for RFC 2789."))
+
 (defoid |mtaRFC2789AssocGroup| (|mtaGroups| 8)
   (:type 'object-group)
   (:status '|current|)
@@ -771,6 +858,7 @@
    "A collection of objects providing monitoring of MTA
       associations.  This is the appropriate group for RFC
       2789 association monitoring."))
+
 (defoid |mtaRFC2789ErrorGroup| (|mtaGroups| 9)
   (:type 'object-group)
   (:status '|current|)
@@ -778,4 +866,6 @@
    "A collection of objects providing monitoring of
       detailed MTA errors.  This is the appropriate group
       for RFC 2789 error monitoring."))
+
 (eval-when (:load-toplevel :execute) (setf *current-module* nil))
+

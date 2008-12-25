@@ -2,9 +2,11 @@
 ;;;; Auto-generated from MIB:NET-SNMP;IF-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'if-mib *mib-modules*)
   (setf *current-module* 'if-mib))
+
 (defpackage :asn.1/if-mib
   (:nicknames :if-mib)
   (:use :common-lisp :asn.1)
@@ -18,7 +20,9 @@
                 notification-group)
   (:import-from :|ASN.1/SNMPv2-MIB| |snmpTraps|)
   (:import-from :|ASN.1/IANAifType-MIB| |IANAifType|))
+
 (in-package :if-mib)
+
 (defoid |ifMIB| (|mib-2| 31)
   (:type 'module-identity)
   (:description
@@ -26,11 +30,17 @@
             interface sub-layers.  This MIB is an updated version of
             MIB-II's ifTable, and incorporates the extensions defined in
             RFC 1229."))
+
 (defoid |ifMIBObjects| (|ifMIB| 1) (:type 'object-identity))
+
 (defoid |interfaces| (|mib-2| 2) (:type 'object-identity))
+
 (deftype |OwnerString| () 't)
+
 (deftype |InterfaceIndex| () 't)
+
 (deftype |InterfaceIndexOrZero| () 't)
+
 (defoid |ifNumber| (|interfaces| 1)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -39,6 +49,7 @@
   (:description
    "The number of network interfaces (regardless of their
             current state) present on this system."))
+
 (defoid |ifTableLastChange| (|ifMIBObjects| 5)
   (:type 'object-type)
   (:syntax '|TimeTicks|)
@@ -50,6 +61,7 @@
             entries has been unchanged since the last re-initialization
             of the local network management subsystem, then this object
             contains a zero value."))
+
 (defoid |ifTable| (|interfaces| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -58,6 +70,7 @@
   (:description
    "A list of interface entries.  The number of entries is
             given by the value of ifNumber."))
+
 (defoid |ifEntry| (|ifTable| 1)
   (:type 'object-type)
   (:syntax '|IfEntry|)
@@ -66,7 +79,9 @@
   (:description
    "An entry containing management information applicable to a
             particular interface."))
+
 (deftype |IfEntry| () 't)
+
 (defoid |ifIndex| (|ifEntry| 1)
   (:type 'object-type)
   (:syntax '|InterfaceIndex|)
@@ -79,6 +94,7 @@
             must remain constant at least from one re-initialization of
             the entity's network management system to the next re-
             initialization."))
+
 (defoid |ifDescr| (|ifEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -89,6 +105,7 @@
             interface.  This string should include the name of the
             manufacturer, the product name and the version of the
             interface hardware/software."))
+
 (defoid |ifType| (|ifEntry| 3)
   (:type 'object-type)
   (:syntax '|IANAifType|)
@@ -99,6 +116,7 @@
             assigned by the Internet Assigned Numbers Authority (IANA),
             through updating the syntax of the IANAifType textual
             convention."))
+
 (defoid |ifMtu| (|ifEntry| 4)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -110,6 +128,7 @@
             are used for transmitting network datagrams, this is the
             size of the largest network datagram that can be sent on the
             interface."))
+
 (defoid |ifSpeed| (|ifEntry| 5)
   (:type 'object-type)
   (:syntax '|Gauge32|)
@@ -125,6 +144,7 @@
             maximum value (4,294,967,295) and ifHighSpeed must be used
             to report the interace's speed.  For a sub-layer which has
             no concept of bandwidth, this object should be zero."))
+
 (defoid |ifPhysAddress| (|ifEntry| 6)
   (:type 'object-type)
   (:syntax '|PhysAddress|)
@@ -138,6 +158,7 @@
             value of this object.  For interfaces which do not have such
             an address (e.g., a serial line), this object should contain
             an octet string of zero length."))
+
 (defoid |ifAdminStatus| (|ifEntry| 7)
   (:type 'object-type)
   (:syntax 't)
@@ -152,6 +173,7 @@
             retained by the managed system, ifAdminStatus is then
             changed to either the up(1) or testing(3) states (or remains
             in the down(2) state)."))
+
 (defoid |ifOperStatus| (|ifEntry| 8)
   (:type 'object-type)
   (:syntax 't)
@@ -171,6 +193,7 @@
             to the up(1) state; it should remain in the notPresent(6)
             state if the interface has missing (typically, hardware)
             components."))
+
 (defoid |ifLastChange| (|ifEntry| 9)
   (:type 'object-type)
   (:syntax '|TimeTicks|)
@@ -182,6 +205,7 @@
             entered prior to the last re-initialization of the local
             network management subsystem, then this object contains a
             zero value."))
+
 (defoid |ifInOctets| (|ifEntry| 10)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -195,6 +219,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ifCounterDiscontinuityTime."))
+
 (defoid |ifInUcastPkts| (|ifEntry| 11)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -209,6 +234,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ifCounterDiscontinuityTime."))
+
 (defoid |ifInNUcastPkts| (|ifEntry| 12)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -226,6 +252,7 @@
 
             This object is deprecated in favour of ifInMulticastPkts and
             ifInBroadcastPkts."))
+
 (defoid |ifInDiscards| (|ifEntry| 13)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -243,6 +270,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ifCounterDiscontinuityTime."))
+
 (defoid |ifInErrors| (|ifEntry| 14)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -260,6 +288,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ifCounterDiscontinuityTime."))
+
 (defoid |ifInUnknownProtos| (|ifEntry| 15)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -280,6 +309,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ifCounterDiscontinuityTime."))
+
 (defoid |ifOutOctets| (|ifEntry| 16)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -293,6 +323,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ifCounterDiscontinuityTime."))
+
 (defoid |ifOutUcastPkts| (|ifEntry| 17)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -308,6 +339,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ifCounterDiscontinuityTime."))
+
 (defoid |ifOutNUcastPkts| (|ifEntry| 18)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -326,6 +358,7 @@
 
             This object is deprecated in favour of ifOutMulticastPkts
             and ifOutBroadcastPkts."))
+
 (defoid |ifOutDiscards| (|ifEntry| 19)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -341,6 +374,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ifCounterDiscontinuityTime."))
+
 (defoid |ifOutErrors| (|ifEntry| 20)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -357,12 +391,14 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ifCounterDiscontinuityTime."))
+
 (defoid |ifOutQLen| (|ifEntry| 21)
   (:type 'object-type)
   (:syntax '|Gauge32|)
   (:max-access '|read-only|)
   (:status '|deprecated|)
   (:description "The length of the output packet queue (in packets)."))
+
 (defoid |ifSpecific| (|ifEntry| 22)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -380,6 +416,7 @@
             ifSpecific should/can take for values of ifType.  If no MIB
             definitions specific to the particular media are available,
             the value should be set to the OBJECT IDENTIFIER { 0 0 }."))
+
 (defoid |ifXTable| (|ifMIBObjects| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -389,6 +426,7 @@
    "A list of interface entries.  The number of entries is
             given by the value of ifNumber.  This table contains
             additional objects for the interface table."))
+
 (defoid |ifXEntry| (|ifXTable| 1)
   (:type 'object-type)
   (:syntax '|IfXEntry|)
@@ -397,7 +435,9 @@
   (:description
    "An entry containing additional management information
             applicable to a particular interface."))
+
 (deftype |IfXEntry| () 't)
+
 (defoid |ifName| (|ifXEntry| 1)
   (:type 'object-type)
   (:syntax '|DisplayString|)
@@ -419,6 +459,7 @@
 
             If there is no local name, or this object is otherwise not
             applicable, then this object contains a zero-length string."))
+
 (defoid |ifInMulticastPkts| (|ifXEntry| 2)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -435,6 +476,7 @@
 
             times as indicated by the value of
             ifCounterDiscontinuityTime."))
+
 (defoid |ifInBroadcastPkts| (|ifXEntry| 3)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -449,6 +491,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ifCounterDiscontinuityTime."))
+
 (defoid |ifOutMulticastPkts| (|ifXEntry| 4)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -465,6 +508,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ifCounterDiscontinuityTime."))
+
 (defoid |ifOutBroadcastPkts| (|ifXEntry| 5)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -481,6 +525,7 @@
 
             times as indicated by the value of
             ifCounterDiscontinuityTime."))
+
 (defoid |ifHCInOctets| (|ifXEntry| 6)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -495,6 +540,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ifCounterDiscontinuityTime."))
+
 (defoid |ifHCInUcastPkts| (|ifXEntry| 7)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -510,6 +556,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ifCounterDiscontinuityTime."))
+
 (defoid |ifHCInMulticastPkts| (|ifXEntry| 8)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -526,6 +573,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ifCounterDiscontinuityTime."))
+
 (defoid |ifHCInBroadcastPkts| (|ifXEntry| 9)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -541,6 +589,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ifCounterDiscontinuityTime."))
+
 (defoid |ifHCOutOctets| (|ifXEntry| 10)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -555,6 +604,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ifCounterDiscontinuityTime."))
+
 (defoid |ifHCOutUcastPkts| (|ifXEntry| 11)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -571,6 +621,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ifCounterDiscontinuityTime."))
+
 (defoid |ifHCOutMulticastPkts| (|ifXEntry| 12)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -588,6 +639,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ifCounterDiscontinuityTime."))
+
 (defoid |ifHCOutBroadcastPkts| (|ifXEntry| 13)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -604,6 +656,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ifCounterDiscontinuityTime."))
+
 (defoid |ifLinkUpDownTrapEnable| (|ifXEntry| 14)
   (:type 'object-type)
   (:syntax 't)
@@ -617,6 +670,7 @@
             interfaces which do not operate on 'top' of any other
             interface (as defined in the ifStackTable), and disabled(2)
             otherwise."))
+
 (defoid |ifHighSpeed| (|ifXEntry| 15)
   (:type 'object-type)
   (:syntax '|Gauge32|)
@@ -631,6 +685,7 @@
             accurate estimation can be made, this object should contain
             the nominal bandwidth.  For a sub-layer which has no concept
             of bandwidth, this object should be zero."))
+
 (defoid |ifPromiscuousMode| (|ifXEntry| 16)
   (:type 'object-type)
   (:syntax '|TruthValue|)
@@ -647,6 +702,7 @@
 
             The value of ifPromiscuousMode does not affect the reception
             of broadcast and multicast packets/frames by the interface."))
+
 (defoid |ifConnectorPresent| (|ifXEntry| 17)
   (:type 'object-type)
   (:syntax '|TruthValue|)
@@ -656,6 +712,7 @@
    "This object has the value 'true(1)' if the interface
             sublayer has a physical connector and the value 'false(2)'
             otherwise."))
+
 (defoid |ifAlias| (|ifXEntry| 18)
   (:type 'object-type)
   (:syntax 't)
@@ -687,6 +744,7 @@
             non-volatile storage, but it may limit the length of new
             values depending on how much storage is already occupied by
             the current values for other interfaces."))
+
 (defoid |ifCounterDiscontinuityTime| (|ifXEntry| 19)
   (:type 'object-type)
   (:syntax '|TimeStamp|)
@@ -702,6 +760,7 @@
             no such discontinuities have occurred since the last re-
             initialization of the local management subsystem, then this
             object contains a zero value."))
+
 (defoid |ifStackTable| (|ifMIBObjects| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -732,6 +791,7 @@
 
               ifStackStatus.0.x=active
               ifStackStatus.x.0=active "))
+
 (defoid |ifStackEntry| (|ifStackTable| 1)
   (:type 'object-type)
   (:syntax '|IfStackEntry|)
@@ -742,7 +802,9 @@
             layers, specifying that one sub-layer runs on 'top' of the
             other sub-layer.  Each sub-layer corresponds to a conceptual
             row in the ifTable."))
+
 (deftype |IfStackEntry| () 't)
+
 (defoid |ifStackHigherLayer| (|ifStackEntry| 1)
   (:type 'object-type)
   (:syntax '|InterfaceIndexOrZero|)
@@ -754,6 +816,7 @@
             of the sub-layer identified by the corresponding instance of
             ifStackLowerLayer.  If there is no higher sub-layer (below
             the internetwork layer), then this object has the value 0."))
+
 (defoid |ifStackLowerLayer| (|ifStackEntry| 2)
   (:type 'object-type)
   (:syntax '|InterfaceIndexOrZero|)
@@ -765,6 +828,7 @@
             the sub-layer identified by the corresponding instance of
             ifStackHigherLayer.  If there is no lower sub-layer, then
             this object has the value 0."))
+
 (defoid |ifStackStatus| (|ifStackEntry| 3)
   (:type 'object-type)
   (:syntax '|RowStatus|)
@@ -779,6 +843,7 @@
             object is likely to be inappropriate for some types of
             interfaces, and many implementations will choose not to
             support write-access for any type of interface."))
+
 (defoid |ifStackLastChange| (|ifMIBObjects| 6)
   (:type 'object-type)
   (:syntax '|TimeTicks|)
@@ -792,6 +857,7 @@
             stack has been unchanged since the last re-initialization of
             the local network management subsystem, then this object
             contains a zero value."))
+
 (defoid |ifRcvAddressTable| (|ifMIBObjects| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -814,6 +880,7 @@
 
             A system is normally able to use any unicast address which
             corresponds to an entry in this table as a source address."))
+
 (defoid |ifRcvAddressEntry| (|ifRcvAddressTable| 1)
   (:type 'object-type)
   (:syntax '|IfRcvAddressEntry|)
@@ -823,7 +890,9 @@
    "A list of objects identifying an address for which the
             system will accept packets/frames on the particular
             interface identified by the index value ifIndex."))
+
 (deftype |IfRcvAddressEntry| () 't)
+
 (defoid |ifRcvAddressAddress| (|ifRcvAddressEntry| 1)
   (:type 'object-type)
   (:syntax '|PhysAddress|)
@@ -832,6 +901,7 @@
   (:description
    "An address for which the system will accept packets/frames
             on this entry's interface."))
+
 (defoid |ifRcvAddressStatus| (|ifRcvAddressEntry| 2)
   (:type 'object-type)
   (:syntax '|RowStatus|)
@@ -840,6 +910,7 @@
   (:description
    "This object is used to create and delete rows in the
             ifRcvAddressTable."))
+
 (defoid |ifRcvAddressType| (|ifRcvAddressEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -854,6 +925,7 @@
             managed system.  Entries having the value other(1) are valid
             and exist but are not classified as to whether they will
             continue to exist after the next restart."))
+
 (defoid |linkDown| (|snmpTraps| 3)
   (:type 'notification-type)
   (:status '|current|)
@@ -864,6 +936,7 @@
             state from some other state (but not from the notPresent
             state).  This other state is indicated by the included value
             of ifOperStatus."))
+
 (defoid |linkUp| (|snmpTraps| 4)
   (:type 'notification-type)
   (:status '|current|)
@@ -874,21 +947,27 @@
             transitioned into some other state (but not into the
             notPresent state).  This other state is indicated by the
             included value of ifOperStatus."))
+
 (defoid |ifConformance| (|ifMIB| 2) (:type 'object-identity))
+
 (defoid |ifGroups| (|ifConformance| 1) (:type 'object-identity))
+
 (defoid |ifCompliances| (|ifConformance| 2) (:type 'object-identity))
+
 (defoid |ifCompliance3| (|ifCompliances| 3)
   (:type 'module-compliance)
   (:status '|current|)
   (:description
    "The compliance statement for SNMP entities which have
             network interfaces."))
+
 (defoid |ifGeneralInformationGroup| (|ifGroups| 10)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "A collection of objects providing information applicable to
             all network interfaces."))
+
 (defoid |ifFixedLengthGroup| (|ifGroups| 2)
   (:type 'object-group)
   (:status '|current|)
@@ -898,6 +977,7 @@
             receive at speeds less than or equal to 20,000,000
             bits/second) character-oriented or fixed-length-transmission
             network interfaces."))
+
 (defoid |ifHCFixedLengthGroup| (|ifGroups| 3)
   (:type 'object-group)
   (:status '|current|)
@@ -905,6 +985,7 @@
    "A collection of objects providing information specific to
             high speed (greater than 20,000,000 bits/second) character-
             oriented or fixed-length-transmission network interfaces."))
+
 (defoid |ifPacketGroup| (|ifGroups| 4)
   (:type 'object-group)
   (:status '|current|)
@@ -913,6 +994,7 @@
             non-high speed (non-high speed interfaces transmit and
             receive at speeds less than or equal to 20,000,000
             bits/second) packet-oriented network interfaces."))
+
 (defoid |ifHCPacketGroup| (|ifGroups| 5)
   (:type 'object-group)
   (:status '|current|)
@@ -921,6 +1003,7 @@
             high speed (greater than 20,000,000 bits/second but less
             than or equal to 650,000,000 bits/second) packet-oriented
             network interfaces."))
+
 (defoid |ifVHCPacketGroup| (|ifGroups| 6)
   (:type 'object-group)
   (:status '|current|)
@@ -928,30 +1011,35 @@
    "A collection of objects providing information specific to
             higher speed (greater than 650,000,000 bits/second) packet-
             oriented network interfaces."))
+
 (defoid |ifRcvAddressGroup| (|ifGroups| 7)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "A collection of objects providing information on the
             multiple addresses which an interface receives."))
+
 (defoid |ifStackGroup2| (|ifGroups| 11)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "A collection of objects providing information on the
             layering of MIB-II interfaces."))
+
 (defoid |ifCounterDiscontinuityGroup| (|ifGroups| 13)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "A collection of objects providing information specific to
             interface counter discontinuities."))
+
 (defoid |linkUpDownNotificationsGroup| (|ifGroups| 14)
   (:type 'notification-group)
   (:status '|current|)
   (:description
    "The notifications which indicate specific changes in the
             value of ifOperStatus."))
+
 (defoid |ifTestTable| (|ifMIBObjects| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -1080,6 +1168,7 @@
             perhaps due to resource constraints, make available at least
             the minimum amount of information after that test
             completes."))
+
 (defoid |ifTestEntry| (|ifTestTable| 1)
   (:type 'object-type)
   (:syntax '|IfTestEntry|)
@@ -1088,7 +1177,9 @@
   (:description
    "An entry containing objects for invoking tests on an
             interface."))
+
 (deftype |IfTestEntry| () 't)
+
 (defoid |ifTestId| (|ifTestEntry| 1)
   (:type 'object-type)
   (:syntax '|TestAndIncr|)
@@ -1097,6 +1188,7 @@
   (:description
    "This object identifies the current invocation of the
             interface's test."))
+
 (defoid |ifTestStatus| (|ifTestEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -1109,6 +1201,7 @@
             when it changes its value from 'notInUse(1)' to 'inUse(2)'.
             After completion of a test, the agent resets the value back
             to 'notInUse(1)'."))
+
 (defoid |ifTestType| (|ifTestEntry| 3)
   (:type 'object-type)
   (:syntax '|AutonomousType|)
@@ -1135,6 +1228,7 @@
             that ifTestType was set to.  If it has not been set since
             the last initialization of the network management subsystem
             on the agent, a value of noTest is returned."))
+
 (defoid |ifTestResult| (|ifTestEntry| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -1147,6 +1241,7 @@
             provides no provision for saving the results of one test
             when starting another, as could be required if used by
             multiple managers concurrently."))
+
 (defoid |ifTestCode| (|ifTestEntry| 5)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -1165,6 +1260,7 @@
 
             is defined for use if no additional result code is
             available."))
+
 (defoid |ifTestOwner| (|ifTestEntry| 6)
   (:type 'object-type)
   (:syntax '|OwnerString|)
@@ -1173,30 +1269,35 @@
   (:description
    "The entity which currently has the 'ownership' required to
             invoke a test on this interface."))
+
 (defoid |ifGeneralGroup| (|ifGroups| 1)
   (:type 'object-group)
   (:status '|deprecated|)
   (:description
    "A collection of objects deprecated in favour of
             ifGeneralInformationGroup."))
+
 (defoid |ifTestGroup| (|ifGroups| 8)
   (:type 'object-group)
   (:status '|deprecated|)
   (:description
    "A collection of objects providing the ability to invoke
             tests on an interface."))
+
 (defoid |ifStackGroup| (|ifGroups| 9)
   (:type 'object-group)
   (:status '|deprecated|)
   (:description
    "The previous collection of objects providing information on
             the layering of MIB-II interfaces."))
+
 (defoid |ifOldObjectsGroup| (|ifGroups| 12)
   (:type 'object-group)
   (:status '|deprecated|)
   (:description
    "The collection of objects deprecated from the original MIB-
             II interfaces group."))
+
 (defoid |ifCompliance| (|ifCompliances| 1)
   (:type 'module-compliance)
   (:status '|deprecated|)
@@ -1204,6 +1305,7 @@
    "A compliance statement defined in a previous version of
             this MIB module, for SNMP entities which have network
             interfaces."))
+
 (defoid |ifCompliance2| (|ifCompliances| 2)
   (:type 'module-compliance)
   (:status '|deprecated|)
@@ -1211,4 +1313,6 @@
    "A compliance statement defined in a previous version of
             this MIB module, for SNMP entities which have network
             interfaces."))
+
 (eval-when (:load-toplevel :execute) (setf *current-module* nil))
+

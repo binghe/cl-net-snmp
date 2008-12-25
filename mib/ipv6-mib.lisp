@@ -2,9 +2,11 @@
 ;;;; Auto-generated from MIB:NET-SNMP;IPV6-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'ipv6-mib *mib-modules*)
   (setf *current-module* 'ipv6-mib))
+
 (defpackage :asn.1/ipv6-mib
   (:nicknames :ipv6-mib)
   (:use :common-lisp :asn.1)
@@ -19,13 +21,17 @@
   (:import-from :asn.1/ipv6-tc |Ipv6IfIndex| |Ipv6Address|
                 |Ipv6AddressPrefix| |Ipv6AddressIfIdentifier|
                 |Ipv6IfIndexOrZero|))
+
 (in-package :ipv6-mib)
+
 (defoid |ipv6MIB| (|mib-2| 55)
   (:type 'module-identity)
   (:description
    "The MIB module for entities implementing the IPv6
         protocol."))
+
 (defoid |ipv6MIBObjects| (|ipv6MIB| 1) (:type 'object-identity))
+
 (defoid |ipv6Forwarding| (|ipv6MIBObjects| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -45,6 +51,7 @@
         return a `wrongValue' response if a management
         station attempts to change this object to an
         inappropriate value."))
+
 (defoid |ipv6DefaultHopLimit| (|ipv6MIBObjects| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -55,6 +62,7 @@
         field of the IPv6 header of datagrams originated
         at this entity, whenever a Hop Limit value is not
         supplied by the transport layer protocol."))
+
 (defoid |ipv6Interfaces| (|ipv6MIBObjects| 3)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -63,6 +71,7 @@
   (:description
    "The number of IPv6 interfaces (regardless of
         their current state) present on this system."))
+
 (defoid |ipv6IfTableLastChange| (|ipv6MIBObjects| 4)
   (:type 'object-type)
   (:syntax '|TimeStamp|)
@@ -75,6 +84,7 @@
        unchanged since the last re-initialization of
        the local network management subsystem, then this
        object contains a zero value."))
+
 (defoid |ipv6IfTable| (|ipv6MIBObjects| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -88,6 +98,7 @@
 
        IPv6 including internet layer 'tunnels', such as
        tunnels over IPv4 or IPv6 itself."))
+
 (defoid |ipv6IfEntry| (|ipv6IfTable| 1)
   (:type 'object-type)
   (:syntax '|Ipv6IfEntry|)
@@ -96,7 +107,9 @@
   (:description
    "An interface entry containing objects
         about a particular IPv6 interface."))
+
 (deftype |Ipv6IfEntry| () 't)
+
 (defoid |ipv6IfIndex| (|ipv6IfEntry| 1)
   (:type 'object-type)
   (:syntax '|Ipv6IfIndex|)
@@ -105,6 +118,7 @@
   (:description
    "A unique non-zero value identifying
         the particular IPv6 interface."))
+
 (defoid |ipv6IfDescr| (|ipv6IfEntry| 2)
   (:type 'object-type)
   (:syntax '|DisplayString|)
@@ -114,6 +128,7 @@
    "A textual string containing information about the
        interface.  This string may be set by the network
        management system."))
+
 (defoid |ipv6IfLowerLayer| (|ipv6IfEntry| 3)
   (:type 'object-type)
   (:syntax '|VariablePointer|)
@@ -134,6 +149,7 @@
        interface is not currently operating over an active
        protocol layer, then the value of this object
        should be set to the OBJECT ID { 0 0 }."))
+
 (defoid |ipv6IfEffectiveMtu| (|ipv6IfEntry| 4)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -143,6 +159,7 @@
    "The size of the largest IPv6 packet which can be
       sent/received on the interface, specified in
       octets."))
+
 (defoid |ipv6IfReasmMaxSize| (|ipv6IfEntry| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -152,6 +169,7 @@
    "The size of the largest IPv6 datagram which this
       entity can re-assemble from incoming IPv6 fragmented
       datagrams received on this interface."))
+
 (defoid |ipv6IfIdentifier| (|ipv6IfEntry| 6)
   (:type 'object-type)
   (:syntax '|Ipv6AddressIfIdentifier|)
@@ -167,12 +185,14 @@
         By default, the Interface Identifier is autoconfigured
         according to the rules of the link type this
         interface is attached to."))
+
 (defoid |ipv6IfIdentifierLength| (|ipv6IfEntry| 7)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|read-write|)
   (:status '|current|)
   (:description "The length of the Interface Identifier in bits."))
+
 (defoid |ipv6IfPhysicalAddress| (|ipv6IfEntry| 8)
   (:type 'object-type)
   (:syntax '|PhysAddress|)
@@ -189,6 +209,7 @@
        this object. For interfaces which do not have such
        an address (e.g., a serial line), this object should
        contain an octet string of zero length."))
+
 (defoid |ipv6IfAdminStatus| (|ipv6IfEntry| 9)
   (:type 'object-type)
   (:syntax 't)
@@ -203,6 +224,7 @@
 
       system,  ipv6IfAdminStatus is then changed to
       the up(1) state (or remains in the down(2) state)."))
+
 (defoid |ipv6IfOperStatus| (|ipv6IfEntry| 10)
   (:type 'object-type)
   (:syntax 't)
@@ -224,6 +246,7 @@
       it should remain in the notPresent(5) state if
       the interface has missing (typically, lower layer)
       components."))
+
 (defoid |ipv6IfLastChange| (|ipv6IfEntry| 11)
   (:type 'object-type)
   (:syntax '|TimeStamp|)
@@ -237,12 +260,14 @@
 
         subsystem, then this object contains a zero
         value."))
+
 (defoid |ipv6IfStatsTable| (|ipv6MIBObjects| 6)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "IPv6 interface traffic statistics."))
+
 (defoid |ipv6IfStatsEntry| (|ipv6IfStatsTable| 1)
   (:type 'object-type)
   (:syntax '|Ipv6IfStatsEntry|)
@@ -251,7 +276,9 @@
   (:description
    "An interface statistics entry containing objects
          at a particular IPv6 interface."))
+
 (deftype |Ipv6IfStatsEntry| () 't)
+
 (defoid |ipv6IfStatsInReceives| (|ipv6IfStatsEntry| 1)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -260,6 +287,7 @@
   (:description
    "The total number of input datagrams received by
         the interface, including those received in error."))
+
 (defoid |ipv6IfStatsInHdrErrors| (|ipv6IfStatsEntry| 2)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -271,6 +299,7 @@
         number mismatch, other format errors, hop count
         exceeded, errors discovered in processing their
         IPv6 options, etc."))
+
 (defoid |ipv6IfStatsInTooBigErrors| (|ipv6IfStatsEntry| 3)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -280,6 +309,7 @@
    "The number of input datagrams that could not be
        forwarded because their size exceeded the link MTU
        of outgoing interface."))
+
 (defoid |ipv6IfStatsInNoRoutes| (|ipv6IfStatsEntry| 4)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -289,6 +319,7 @@
    "The number of input datagrams discarded because no
          route could be found to transmit them to their
          destination."))
+
 (defoid |ipv6IfStatsInAddrErrors| (|ipv6IfStatsEntry| 5)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -305,6 +336,7 @@
         do not forward datagrams, this counter includes
         datagrams discarded because the destination address
         was not a local address."))
+
 (defoid |ipv6IfStatsInUnknownProtos| (|ipv6IfStatsEntry| 6)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -318,6 +350,7 @@
         datagrams were addressed which might not be
         necessarily the input interface for some of
         the datagrams."))
+
 (defoid |ipv6IfStatsInTruncatedPkts| (|ipv6IfStatsEntry| 7)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -326,6 +359,7 @@
   (:description
    "The number of input datagrams discarded because
          datagram frame didn't carry enough data."))
+
 (defoid |ipv6IfStatsInDiscards| (|ipv6IfStatsEntry| 8)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -338,6 +372,7 @@
         (e.g., for lack of buffer space).  Note that this
         counter does not include any datagrams discarded
         while awaiting re-assembly."))
+
 (defoid |ipv6IfStatsInDelivers| (|ipv6IfStatsEntry| 9)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -350,6 +385,7 @@
       which these datagrams were addressed which might
       not be necessarily the input interface for some of
       the datagrams."))
+
 (defoid |ipv6IfStatsOutForwDatagrams| (|ipv6IfStatsEntry| 10)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -365,6 +401,7 @@
         processing was successful.  Note that for
         a successfully forwarded datagram the counter
         of the outgoing interface is incremented."))
+
 (defoid |ipv6IfStatsOutRequests| (|ipv6IfStatsEntry| 11)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -376,6 +413,7 @@
       requests for transmission.  Note that this counter
       does not include any datagrams counted in
       ipv6IfStatsOutForwDatagrams."))
+
 (defoid |ipv6IfStatsOutDiscards| (|ipv6IfStatsEntry| 12)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -389,6 +427,7 @@
          that this counter would include datagrams counted
          in ipv6IfStatsOutForwDatagrams if any such packets
          met this (discretionary) discard criterion."))
+
 (defoid |ipv6IfStatsOutFragOKs| (|ipv6IfStatsEntry| 13)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -397,6 +436,7 @@
   (:description
    "The number of IPv6 datagrams that have been
          successfully fragmented at this output interface."))
+
 (defoid |ipv6IfStatsOutFragFails| (|ipv6IfStatsEntry| 14)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -406,6 +446,7 @@
    "The number of IPv6 datagrams that have been
          discarded because they needed to be fragmented
          at this output interface but could not be."))
+
 (defoid |ipv6IfStatsOutFragCreates| (|ipv6IfStatsEntry| 15)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -415,6 +456,7 @@
    "The number of output datagram fragments that have
          been generated as a result of fragmentation at
          this output interface."))
+
 (defoid |ipv6IfStatsReasmReqds| (|ipv6IfStatsEntry| 16)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -427,6 +469,7 @@
          these fragments were addressed which might not
          be necessarily the input interface for some of
          the fragments."))
+
 (defoid |ipv6IfStatsReasmOKs| (|ipv6IfStatsEntry| 17)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -438,6 +481,7 @@
        at the interface to which these datagrams were
        addressed which might not be necessarily the input
        interface for some of the fragments."))
+
 (defoid |ipv6IfStatsReasmFails| (|ipv6IfStatsEntry| 18)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -455,6 +499,7 @@
         these fragments were addressed which might not be
         necessarily the input interface for some of the
         fragments."))
+
 (defoid |ipv6IfStatsInMcastPkts| (|ipv6IfStatsEntry| 19)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -463,6 +508,7 @@
   (:description
    "The number of multicast packets received
          by the interface"))
+
 (defoid |ipv6IfStatsOutMcastPkts| (|ipv6IfStatsEntry| 20)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -471,6 +517,7 @@
   (:description
    "The number of multicast packets transmitted
          by the interface"))
+
 (defoid |ipv6AddrPrefixTable| (|ipv6MIBObjects| 7)
   (:type 'object-type)
   (:syntax 't)
@@ -479,6 +526,7 @@
   (:description
    "The list of IPv6 address prefixes of
          IPv6 interfaces."))
+
 (defoid |ipv6AddrPrefixEntry| (|ipv6AddrPrefixTable| 1)
   (:type 'object-type)
   (:syntax '|Ipv6AddrPrefixEntry|)
@@ -487,19 +535,23 @@
   (:description
    "An interface entry containing objects of
          a particular IPv6 address prefix."))
+
 (deftype |Ipv6AddrPrefixEntry| () 't)
+
 (defoid |ipv6AddrPrefix| (|ipv6AddrPrefixEntry| 1)
   (:type 'object-type)
   (:syntax '|Ipv6AddressPrefix|)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The prefix associated with the this interface."))
+
 (defoid |ipv6AddrPrefixLength| (|ipv6AddrPrefixEntry| 2)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The length of the prefix (in bits)."))
+
 (defoid |ipv6AddrPrefixOnLinkFlag| (|ipv6AddrPrefixEntry| 3)
   (:type 'object-type)
   (:syntax '|TruthValue|)
@@ -509,6 +561,7 @@
    "This object has the value 'true(1)', if this
        prefix can be used  for on-link determination
        and the value 'false(2)' otherwise."))
+
 (defoid |ipv6AddrPrefixAutonomousFlag| (|ipv6AddrPrefixEntry| 4)
   (:type 'object-type)
   (:syntax '|TruthValue|)
@@ -521,6 +574,7 @@
        be used to form a local interface address).
        If false(2), it is not used to autoconfigure
        a local interface address."))
+
 (defoid |ipv6AddrPrefixAdvPreferredLifetime| (|ipv6AddrPrefixEntry| 5)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -536,6 +590,7 @@
         should no longer be used as a source address in
         new communications, but packets received on such
         an interface are processed as expected."))
+
 (defoid |ipv6AddrPrefixAdvValidLifetime| (|ipv6AddrPrefixEntry| 6)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -550,6 +605,7 @@
        The address generated from an invalidated prefix
        should not appear as the destination or source
        address of a packet."))
+
 (defoid |ipv6AddrTable| (|ipv6MIBObjects| 8)
   (:type 'object-type)
   (:syntax 't)
@@ -558,6 +614,7 @@
   (:description
    "The table of addressing information relevant to
       this node's interface addresses."))
+
 (defoid |ipv6AddrEntry| (|ipv6AddrTable| 1)
   (:type 'object-type)
   (:syntax '|Ipv6AddrEntry|)
@@ -566,7 +623,9 @@
   (:description
    "The addressing information for one of this
         node's interface addresses."))
+
 (deftype |Ipv6AddrEntry| () 't)
+
 (defoid |ipv6AddrAddress| (|ipv6AddrEntry| 1)
   (:type 'object-type)
   (:syntax '|Ipv6Address|)
@@ -575,6 +634,7 @@
   (:description
    "The IPv6 address to which this entry's addressing
       information pertains."))
+
 (defoid |ipv6AddrPfxLength| (|ipv6AddrEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -583,6 +643,7 @@
   (:description
    "The length of the prefix (in bits) associated with
       the IPv6 address of this entry."))
+
 (defoid |ipv6AddrType| (|ipv6AddrEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -594,6 +655,7 @@
        autoconfigured; 'stateful(2)' refers to a address
        which was acquired by via a stateful protocol
        (e.g. DHCPv6, manual configuration)."))
+
 (defoid |ipv6AddrAnycastFlag| (|ipv6AddrEntry| 4)
   (:type 'object-type)
   (:syntax '|TruthValue|)
@@ -603,6 +665,7 @@
    "This object has the value 'true(1)', if this
        address is an anycast address and the value
        'false(2)' otherwise."))
+
 (defoid |ipv6AddrStatus| (|ipv6AddrEntry| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -623,6 +686,7 @@
       a packet. The inaccessible(4) state indicates that
       the address is not accessible because the interface
       to which this address is assigned is not operational."))
+
 (defoid |ipv6RouteNumber| (|ipv6MIBObjects| 9)
   (:type 'object-type)
   (:syntax '|Gauge32|)
@@ -632,6 +696,7 @@
    "The number of current ipv6RouteTable entries.
        This is primarily to avoid having to read
        the table in order to determine this number."))
+
 (defoid |ipv6DiscardedRoutes| (|ipv6MIBObjects| 10)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -643,6 +708,7 @@
         possible reason for discarding such an entry could
         be to free-up buffer space for other routing
         entries."))
+
 (defoid |ipv6RouteTable| (|ipv6MIBObjects| 11)
   (:type 'object-type)
   (:syntax 't)
@@ -653,13 +719,16 @@
        an entry for each valid IPv6 unicast route
        that can be used for packet forwarding
        determination."))
+
 (defoid |ipv6RouteEntry| (|ipv6RouteTable| 1)
   (:type 'object-type)
   (:syntax '|Ipv6RouteEntry|)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A routing entry."))
+
 (deftype |Ipv6RouteEntry| () 't)
+
 (defoid |ipv6RouteDest| (|ipv6RouteEntry| 1)
   (:type 'object-type)
   (:syntax '|Ipv6Address|)
@@ -669,6 +738,7 @@
    "The destination IPv6 address of this route.
        This object may not take a Multicast address
        value."))
+
 (defoid |ipv6RoutePfxLength| (|ipv6RouteEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -677,6 +747,7 @@
   (:description
    "Indicates the prefix length of the destination
        address."))
+
 (defoid |ipv6RouteIndex| (|ipv6RouteEntry| 3)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -689,6 +760,7 @@
        implementation specific but it must be unique for
        ipv6RouteDest/ipv6RoutePfxLength pair and remain
        constant for the life of the route."))
+
 (defoid |ipv6RouteIfIndex| (|ipv6RouteEntry| 4)
   (:type 'object-type)
   (:syntax '|Ipv6IfIndexOrZero|)
@@ -702,6 +774,7 @@
        interface as identified by the same value of
        ipv6IfIndex.  For routes of the discard type this
        value can be zero."))
+
 (defoid |ipv6RouteNextHop| (|ipv6RouteEntry| 5)
   (:type 'object-type)
   (:syntax '|Ipv6Address|)
@@ -712,6 +785,7 @@
        system en route;  otherwise, ::0
        ('00000000000000000000000000000000'H in ASN.1
        string representation)."))
+
 (defoid |ipv6RouteType| (|ipv6RouteEntry| 6)
   (:type 'object-type)
   (:syntax 't)
@@ -726,6 +800,7 @@
         indicating that packets to destinations matching
         this route are to be discarded (sometimes called
         black-hole route)."))
+
 (defoid |ipv6RouteProtocol| (|ipv6RouteEntry| 7)
   (:type 'object-type)
   (:syntax 't)
@@ -734,6 +809,7 @@
   (:description
    "The routing mechanism via which this route was
        learned."))
+
 (defoid |ipv6RoutePolicy| (|ipv6RouteEntry| 8)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -753,6 +829,7 @@
       this object or must implement an integer-
       instanced  policy table for which this object's
       value acts as an index."))
+
 (defoid |ipv6RouteAge| (|ipv6RouteEntry| 9)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -764,6 +841,7 @@
         Note that no semantics of `too old' can be implied
         except through knowledge of the routing protocol
         by which the route was learned."))
+
 (defoid |ipv6RouteNextHopRDI| (|ipv6RouteEntry| 10)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -776,6 +854,7 @@
         ipv6RouteProtocol value.   When  this object is
         unknown or not relevant its value should be set
         to zero."))
+
 (defoid |ipv6RouteMetric| (|ipv6RouteEntry| 11)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -789,6 +868,7 @@
         or not relevant to the protocol indicated by
         ipv6RouteProtocol, the object value should be
         set to its maximum value (4,294,967,295)."))
+
 (defoid |ipv6RouteWeight| (|ipv6RouteEntry| 12)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -801,6 +881,7 @@
         within routes with the same ipv6RoutePolicy value,
         the lower the weight value the more preferred is
         the route."))
+
 (defoid |ipv6RouteInfo| (|ipv6RouteEntry| 13)
   (:type 'object-type)
   (:syntax '|RowPointer|)
@@ -817,6 +898,7 @@
         and any implementation conforming to ASN.1
         and the Basic Encoding Rules must  be  able  to
         generate and recognize this value."))
+
 (defoid |ipv6RouteValid| (|ipv6RouteEntry| 14)
   (:type 'object-type)
   (:syntax '|TruthValue|)
@@ -838,6 +920,7 @@
         Proper interpretation of such entries requires
         examination of the relevant ipv6RouteValid
         object."))
+
 (defoid |ipv6NetToMediaTable| (|ipv6MIBObjects| 12)
   (:type 'object-type)
   (:syntax 't)
@@ -854,6 +937,7 @@
        interfaces are of this type, then the Address
        Translation table is empty, i.e., has zero
        entries."))
+
 (defoid |ipv6NetToMediaEntry| (|ipv6NetToMediaTable| 1)
   (:type 'object-type)
   (:syntax '|Ipv6NetToMediaEntry|)
@@ -862,7 +946,9 @@
   (:description
    "Each entry contains one IPv6 address to `physical'
        address equivalence."))
+
 (deftype |Ipv6NetToMediaEntry| () 't)
+
 (defoid |ipv6NetToMediaNetAddress| (|ipv6NetToMediaEntry| 1)
   (:type 'object-type)
   (:syntax '|Ipv6Address|)
@@ -871,12 +957,14 @@
   (:description
    "The IPv6 Address corresponding to
         the media-dependent `physical' address."))
+
 (defoid |ipv6NetToMediaPhysAddress| (|ipv6NetToMediaEntry| 2)
   (:type 'object-type)
   (:syntax '|PhysAddress|)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The media-dependent `physical' address."))
+
 (defoid |ipv6NetToMediaType| (|ipv6NetToMediaEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -891,6 +979,7 @@
              the mapping has been statically configured.
              The local(4) indicates that the mapping is
              provided for an entity's own interface address."))
+
 (defoid |ipv6IfNetToMediaState| (|ipv6NetToMediaEntry| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -900,6 +989,7 @@
    "The Neighbor Unreachability Detection [8] state
         for the interface when the address mapping in
         this entry is used."))
+
 (defoid |ipv6IfNetToMediaLastUpdated| (|ipv6NetToMediaEntry| 5)
   (:type 'object-type)
   (:syntax '|TimeStamp|)
@@ -911,6 +1001,7 @@
         to the last re-initialization of the local network
         management subsystem, then this object contains
         a zero value."))
+
 (defoid |ipv6NetToMediaValid| (|ipv6NetToMediaEntry| 6)
   (:type 'object-type)
   (:syntax '|TruthValue|)
@@ -931,9 +1022,12 @@
       currently in use.  Proper interpretation of such
       entries requires examination of the relevant
       ipv6NetToMediaValid object."))
+
 (defoid |ipv6Notifications| (|ipv6MIB| 2) (:type 'object-identity))
+
 (defoid |ipv6NotificationPrefix| (|ipv6Notifications| 0)
   (:type 'object-identity))
+
 (defoid |ipv6IfStateChange| (|ipv6NotificationPrefix| 1)
   (:type 'notification-type)
   (:status '|current|)
@@ -943,26 +1037,34 @@
         an ipv6 interface.  This notification should
         be generated when the interface's operational
         status transitions to or from the up(1) state."))
+
 (defoid |ipv6Conformance| (|ipv6MIB| 3) (:type 'object-identity))
+
 (defoid |ipv6Compliances| (|ipv6Conformance| 1)
   (:type 'object-identity))
+
 (defoid |ipv6Groups| (|ipv6Conformance| 2) (:type 'object-identity))
+
 (defoid |ipv6Compliance| (|ipv6Compliances| 1)
   (:type 'module-compliance)
   (:status '|current|)
   (:description
    "The compliance statement for SNMPv2 entities which
       implement ipv6 MIB."))
+
 (defoid |ipv6GeneralGroup| (|ipv6Groups| 1)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "The IPv6 group of objects providing for basic
           management of IPv6 entities."))
+
 (defoid |ipv6NotificationGroup| (|ipv6Groups| 2)
   (:type 'notification-group)
   (:status '|current|)
   (:description
    "The notification that an IPv6 entity is required
           to implement."))
+
 (eval-when (:load-toplevel :execute) (setf *current-module* nil))
+

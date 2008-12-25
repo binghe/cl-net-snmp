@@ -2,9 +2,11 @@
 ;;;; Auto-generated from MIB:NET-SNMP;ETHERLIKE-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew '|EtherLike-MIB| *mib-modules*)
   (setf *current-module* '|EtherLike-MIB|))
+
 (defpackage :|ASN.1/EtherLike-MIB|
   (:nicknames :|EtherLike-MIB|)
   (:use :common-lisp :asn.1)
@@ -14,7 +16,9 @@
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
   (:import-from :|ASN.1/SNMPv2-TC| |TruthValue|)
   (:import-from :asn.1/if-mib |ifIndex| |InterfaceIndex|))
+
 (in-package :|EtherLike-MIB|)
+
 (defoid |etherMIB| (|mib-2| 35)
   (:type 'module-identity)
   (:description
@@ -46,8 +50,11 @@
                     Copyright (C) The Internet Society (2003).  This
                     version of this MIB module is part of RFC 3635;
                     see the RFC itself for full legal notices."))
+
 (defoid |etherMIBObjects| (|etherMIB| 1) (:type 'object-identity))
+
 (defoid |dot3| (|transmission| 7) (:type 'object-identity))
+
 (defoid |dot3StatsTable| (|dot3| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -58,6 +65,7 @@
                     interfaces attached to a particular system.
                     There will be one row in this table for each
                     ethernet-like interface in the system."))
+
 (defoid |dot3StatsEntry| (|dot3StatsTable| 1)
   (:type 'object-type)
   (:syntax '|Dot3StatsEntry|)
@@ -66,7 +74,9 @@
   (:description
    "Statistics for a particular interface to an
                     ethernet-like medium."))
+
 (deftype |Dot3StatsEntry| () 't)
+
 (defoid |dot3StatsIndex| (|dot3StatsEntry| 1)
   (:type 'object-type)
   (:syntax '|InterfaceIndex|)
@@ -78,6 +88,7 @@
                     interface identified by a particular value of
                     this index is the same interface as identified
                     by the same value of ifIndex."))
+
 (defoid |dot3StatsAlignmentErrors| (|dot3StatsEntry| 2)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -115,6 +126,7 @@
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
                     value of ifCounterDiscontinuityTime."))
+
 (defoid |dot3StatsFCSErrors| (|dot3StatsEntry| 3)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -155,6 +167,7 @@
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
                     value of ifCounterDiscontinuityTime."))
+
 (defoid |dot3StatsSingleCollisionFrames| (|dot3StatsEntry| 4)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -180,6 +193,7 @@
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
                     value of ifCounterDiscontinuityTime."))
+
 (defoid |dot3StatsMultipleCollisionFrames| (|dot3StatsEntry| 5)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -206,6 +220,7 @@
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
                     value of ifCounterDiscontinuityTime."))
+
 (defoid |dot3StatsSQETestErrors| (|dot3StatsEntry| 6)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -228,6 +243,7 @@
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
                     value of ifCounterDiscontinuityTime."))
+
 (defoid |dot3StatsDeferredTransmissions| (|dot3StatsEntry| 7)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -249,6 +265,7 @@
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
                     value of ifCounterDiscontinuityTime."))
+
 (defoid |dot3StatsLateCollisions| (|dot3StatsEntry| 8)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -272,6 +289,7 @@
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
                     value of ifCounterDiscontinuityTime."))
+
 (defoid |dot3StatsExcessiveCollisions| (|dot3StatsEntry| 9)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -289,6 +307,7 @@
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
                     value of ifCounterDiscontinuityTime."))
+
 (defoid |dot3StatsInternalMacTransmitErrors| (|dot3StatsEntry| 10)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -326,6 +345,7 @@
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
                     value of ifCounterDiscontinuityTime."))
+
 (defoid |dot3StatsCarrierSenseErrors| (|dot3StatsEntry| 11)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -350,6 +370,7 @@
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
                     value of ifCounterDiscontinuityTime."))
+
 (defoid |dot3StatsFrameTooLongs| (|dot3StatsEntry| 13)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -383,6 +404,7 @@
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
                     value of ifCounterDiscontinuityTime."))
+
 (defoid |dot3StatsInternalMacReceiveErrors| (|dot3StatsEntry| 16)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -420,6 +442,7 @@
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
                     value of ifCounterDiscontinuityTime."))
+
 (defoid |dot3StatsEtherChipSet| (|dot3StatsEntry| 17)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -454,6 +477,7 @@
                     the administrative overhead involved in
                     maintaining a registry of chipset OIDs is not
                     justified."))
+
 (defoid |dot3StatsSymbolErrors| (|dot3StatsEntry| 18)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -513,6 +537,7 @@
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
                     value of ifCounterDiscontinuityTime."))
+
 (defoid |dot3StatsDuplexStatus| (|dot3StatsEntry| 19)
   (:type 'object-type)
   (:syntax 't)
@@ -542,6 +567,7 @@
                     without having to know every possible value of
                     ifMauType.  This was felt to be sufficiently
                     valuable to justify the redundancy."))
+
 (defoid |dot3StatsRateControlAbility| (|dot3StatsEntry| 20)
   (:type 'object-type)
   (:syntax '|TruthValue|)
@@ -553,6 +579,7 @@
                     lowering the average data rate of the MAC
                     sublayer, with frame granularity, and 'false'
                     otherwise."))
+
 (defoid |dot3StatsRateControlStatus| (|dot3StatsEntry| 21)
   (:type 'object-type)
   (:syntax 't)
@@ -561,6 +588,7 @@
   (:description
    "The current Rate Control mode of operation of
                     the MAC sublayer of this interface."))
+
 (defoid |dot3CollTable| (|dot3| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -569,6 +597,7 @@
   (:description
    "A collection of collision histograms for a
                     particular set of interfaces."))
+
 (defoid |dot3CollEntry| (|dot3CollTable| 1)
   (:type 'object-type)
   (:syntax '|Dot3CollEntry|)
@@ -583,7 +612,9 @@
                     the transmission (successful or otherwise) on a
                     particular interface is accompanied by a
                     particular number of media collisions."))
+
 (deftype |Dot3CollEntry| () 't)
+
 (defoid |dot3CollCount| (|dot3CollEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -594,6 +625,7 @@
                     which a particular collision histogram cell
                     represents the frequency on a particular
                     interface."))
+
 (defoid |dot3CollFrequencies| (|dot3CollEntry| 3)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -622,6 +654,7 @@
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
                     value of ifCounterDiscontinuityTime."))
+
 (defoid |dot3ControlTable| (|dot3| 9)
   (:type 'object-type)
   (:syntax 't)
@@ -638,6 +671,7 @@
                     ethernet-like interfaces in the system implement
                     the MAC Control sublayer, there will be fewer
                     rows in this table than in the dot3StatsTable."))
+
 (defoid |dot3ControlEntry| (|dot3ControlTable| 1)
   (:type 'object-type)
   (:syntax '|Dot3ControlEntry|)
@@ -647,7 +681,9 @@
    "An entry in the table, containing information
                     about the MAC Control sublayer on a single
                     ethernet-like interface."))
+
 (deftype |Dot3ControlEntry| () 't)
+
 (defoid |dot3ControlFunctionsSupported| (|dot3ControlEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -656,6 +692,7 @@
   (:description
    "A list of the possible MAC Control functions
                     implemented for this interface."))
+
 (defoid |dot3ControlInUnknownOpcodes| (|dot3ControlEntry| 2)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -680,6 +717,7 @@
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
                     value of ifCounterDiscontinuityTime."))
+
 (defoid |dot3HCControlInUnknownOpcodes| (|dot3ControlEntry| 3)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -698,6 +736,7 @@
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
                     value of ifCounterDiscontinuityTime."))
+
 (defoid |dot3PauseTable| (|dot3| 10)
   (:type 'object-type)
   (:syntax 't)
@@ -718,6 +757,7 @@
                     function (for example, if some interfaces only
                     support half-duplex), there will be fewer rows
                     in this table than in the dot3StatsTable."))
+
 (defoid |dot3PauseEntry| (|dot3PauseTable| 1)
   (:type 'object-type)
   (:syntax '|Dot3PauseEntry|)
@@ -727,7 +767,9 @@
    "An entry in the table, containing information
                     about the MAC Control PAUSE function on a single
                     ethernet-like interface."))
+
 (deftype |Dot3PauseEntry| () 't)
+
 (defoid |dot3PauseAdminMode| (|dot3PauseEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -768,6 +810,7 @@
                     'enabledXmit(2)' or 'enabledRcv(3)' will fail
                     on interfaces that do not support operation
                     at greater than 100 Mb/s."))
+
 (defoid |dot3PauseOperMode| (|dot3PauseEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -789,6 +832,7 @@
                     auto-negotiation is enabled but not yet
                     completed should return the value
                     'disabled(1)'."))
+
 (defoid |dot3InPauseFrames| (|dot3PauseEntry| 3)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -816,6 +860,7 @@
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
                     value of ifCounterDiscontinuityTime."))
+
 (defoid |dot3OutPauseFrames| (|dot3PauseEntry| 4)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -843,6 +888,7 @@
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
                     value of ifCounterDiscontinuityTime."))
+
 (defoid |dot3HCInPauseFrames| (|dot3PauseEntry| 5)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -864,6 +910,7 @@
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
                     value of ifCounterDiscontinuityTime."))
+
 (defoid |dot3HCOutPauseFrames| (|dot3PauseEntry| 6)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -885,6 +932,7 @@
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
                     value of ifCounterDiscontinuityTime."))
+
 (defoid |dot3HCStatsTable| (|dot3| 11)
   (:type 'object-type)
   (:syntax 't)
@@ -914,6 +962,7 @@
                     choose to implement entries in this table for
 
                     all ethernet-like interfaces."))
+
 (defoid |dot3HCStatsEntry| (|dot3HCStatsTable| 1)
   (:type 'object-type)
   (:syntax '|Dot3HCStatsEntry|)
@@ -922,7 +971,9 @@
   (:description
    "An entry containing 64-bit statistics for a
                     single ethernet-like interface."))
+
 (deftype |Dot3HCStatsEntry| () 't)
+
 (defoid |dot3HCStatsAlignmentErrors| (|dot3HCStatsEntry| 1)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -954,6 +1005,7 @@
 
                     system, and at other times as indicated by the
                     value of ifCounterDiscontinuityTime."))
+
 (defoid |dot3HCStatsFCSErrors| (|dot3HCStatsEntry| 2)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -987,6 +1039,7 @@
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
                     value of ifCounterDiscontinuityTime."))
+
 (defoid |dot3HCStatsInternalMacTransmitErrors| (|dot3HCStatsEntry| 3)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -1019,6 +1072,7 @@
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
                     value of ifCounterDiscontinuityTime."))
+
 (defoid |dot3HCStatsFrameTooLongs| (|dot3HCStatsEntry| 4)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -1047,6 +1101,7 @@
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
                     value of ifCounterDiscontinuityTime."))
+
 (defoid |dot3HCStatsInternalMacReceiveErrors| (|dot3HCStatsEntry| 5)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -1078,6 +1133,7 @@
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
                     value of ifCounterDiscontinuityTime."))
+
 (defoid |dot3HCStatsSymbolErrors| (|dot3HCStatsEntry| 6)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -1127,8 +1183,11 @@
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
                     value of ifCounterDiscontinuityTime."))
+
 (defoid |dot3Tests| (|dot3| 6) (:type 'object-identity))
+
 (defoid |dot3Errors| (|dot3| 7) (:type 'object-identity))
+
 (defoid |dot3TestTdr| (|dot3Tests| 1)
   (:type 'object-identity)
   (:status '|deprecated|)
@@ -1162,6 +1221,7 @@
                     and there is no longer a standard mechanism for
                     initiating an interface test.  This left no
                     standard way of using this object identity."))
+
 (defoid |dot3TestLoopBack| (|dot3Tests| 2)
   (:type 'object-identity)
   (:status '|deprecated|)
@@ -1190,6 +1250,7 @@
                     and there is no longer a standard mechanism for
                     initiating an interface test.  This left no
                     standard way of using this object identity."))
+
 (defoid |dot3ErrorInitError| (|dot3Errors| 1)
   (:type 'object-identity)
   (:status '|deprecated|)
@@ -1203,6 +1264,7 @@
                     and there is no longer a standard mechanism for
                     initiating an interface test.  This left no
                     standard way of using this object identity."))
+
 (defoid |dot3ErrorLoopbackError| (|dot3Errors| 2)
   (:type 'object-identity)
   (:status '|deprecated|)
@@ -1217,10 +1279,14 @@
                     and there is no longer a standard mechanism for
                     initiating an interface test.  This left no
                     standard way of using this object identity."))
+
 (defoid |etherConformance| (|etherMIB| 2) (:type 'object-identity))
+
 (defoid |etherGroups| (|etherConformance| 1) (:type 'object-identity))
+
 (defoid |etherCompliances| (|etherConformance| 2)
   (:type 'object-identity))
+
 (defoid |etherCompliance| (|etherCompliances| 1)
   (:type 'module-compliance)
   (:status '|deprecated|)
@@ -1233,6 +1299,7 @@
 
                     This compliance is deprecated and replaced by
                     dot3Compliance."))
+
 (defoid |ether100MbsCompliance| (|etherCompliances| 2)
   (:type 'module-compliance)
   (:status '|deprecated|)
@@ -1245,6 +1312,7 @@
 
                     This compliance is deprecated and replaced by
                     dot3Compliance."))
+
 (defoid |dot3Compliance| (|etherCompliances| 3)
   (:type 'module-compliance)
   (:status '|deprecated|)
@@ -1257,6 +1325,7 @@
 
                     This compliance is deprecated and replaced by
                     dot3Compliance2."))
+
 (defoid |dot3Compliance2| (|etherCompliances| 4)
   (:type 'module-compliance)
   (:status '|current|)
@@ -1272,6 +1341,7 @@
                         MIB module requires compliance  with the
                         mauModIfCompl3 MODULE-COMPLIANCE statement of
                         the MAU-MIB (RFC3636)."))
+
 (defoid |etherStatsGroup| (|etherGroups| 1)
   (:type 'object-group)
   (:status '|deprecated|)
@@ -1285,6 +1355,7 @@
                     This object group has been deprecated and
                     replaced by etherStatsBaseGroup and
                     etherStatsLowSpeedGroup."))
+
 (defoid |etherCollisionTableGroup| (|etherGroups| 2)
   (:type 'object-group)
   (:status '|current|)
@@ -1292,6 +1363,7 @@
    "A collection of objects providing a histogram
                     of packets successfully transmitted after
                     experiencing exactly N collisions."))
+
 (defoid |etherStats100MbsGroup| (|etherGroups| 3)
   (:type 'object-group)
   (:status '|deprecated|)
@@ -1305,6 +1377,7 @@
                     This object group has been deprecated and
                     replaced by etherStatsBaseGroup and
                     etherStatsHighSpeedGroup."))
+
 (defoid |etherStatsBaseGroup| (|etherGroups| 4)
   (:type 'object-group)
   (:status '|deprecated|)
@@ -1323,6 +1396,7 @@
                     objects that need only be implemented on
                     ethernet-like network interfaces that are
                     capable of half-duplex operation."))
+
 (defoid |etherStatsLowSpeedGroup| (|etherGroups| 5)
   (:type 'object-group)
   (:status '|current|)
@@ -1332,6 +1406,7 @@
                     applicable to ethernet-like network interfaces
                     capable of operating at 10 Mb/s or slower in
                     half-duplex mode."))
+
 (defoid |etherStatsHighSpeedGroup| (|etherGroups| 6)
   (:type 'object-group)
   (:status '|current|)
@@ -1339,6 +1414,7 @@
    "A collection of objects providing information
                     applicable to ethernet-like network interfaces
                     capable of operating at 100 Mb/s or faster."))
+
 (defoid |etherDuplexGroup| (|etherGroups| 7)
   (:type 'object-group)
   (:status '|current|)
@@ -1346,6 +1422,7 @@
    "A collection of objects providing information
                     about the duplex mode of an ethernet-like
                     network interface."))
+
 (defoid |etherControlGroup| (|etherGroups| 8)
   (:type 'object-group)
   (:status '|current|)
@@ -1353,6 +1430,7 @@
    "A collection of objects providing information
                     about the MAC Control sublayer on ethernet-like
                     network interfaces."))
+
 (defoid |etherControlPauseGroup| (|etherGroups| 9)
   (:type 'object-group)
   (:status '|current|)
@@ -1360,6 +1438,7 @@
    "A collection of objects providing information
                     about and control of the MAC Control PAUSE
                     function on ethernet-like network interfaces."))
+
 (defoid |etherStatsBaseGroup2| (|etherGroups| 10)
   (:type 'object-group)
   (:status '|current|)
@@ -1367,6 +1446,7 @@
    "A collection of objects providing information
                     applicable to all ethernet-like network
                     interfaces."))
+
 (defoid |etherStatsHalfDuplexGroup| (|etherGroups| 11)
   (:type 'object-group)
   (:status '|current|)
@@ -1374,6 +1454,7 @@
    "A collection of objects providing information
                     applicable only to half-duplex ethernet-like
                     network interfaces."))
+
 (defoid |etherHCStatsGroup| (|etherGroups| 12)
   (:type 'object-group)
   (:status '|current|)
@@ -1381,6 +1462,7 @@
    "A collection of objects providing high-capacity
                     statistics applicable to higher-speed
                     ethernet-like network interfaces."))
+
 (defoid |etherHCControlGroup| (|etherGroups| 13)
   (:type 'object-group)
   (:status '|current|)
@@ -1388,6 +1470,7 @@
    "A collection of objects providing high-capacity
                     statistics for the MAC Control sublayer on
                     higher-speed ethernet-like network interfaces."))
+
 (defoid |etherHCControlPauseGroup| (|etherGroups| 14)
   (:type 'object-group)
   (:status '|current|)
@@ -1395,6 +1478,7 @@
    "A collection of objects providing high-capacity
                     statistics for the MAC Control PAUSE function on
                     higher-speed ethernet-like network interfaces."))
+
 (defoid |etherRateControlGroup| (|etherGroups| 15)
   (:type 'object-group)
   (:status '|current|)
@@ -1402,4 +1486,6 @@
    "A collection of objects providing information
                     about the Rate Control function on ethernet-like
                     interfaces."))
+
 (eval-when (:load-toplevel :execute) (setf *current-module* nil))
+

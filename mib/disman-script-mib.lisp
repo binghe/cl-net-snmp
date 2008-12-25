@@ -2,9 +2,11 @@
 ;;;; Auto-generated from MIB:NET-SNMP;DISMAN-SCRIPT-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'disman-script-mib *mib-modules*)
   (setf *current-module* 'disman-script-mib))
+
 (defpackage :asn.1/disman-script-mib
   (:nicknames :disman-script-mib)
   (:use :common-lisp :asn.1)
@@ -15,28 +17,37 @@
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group
                 notification-group)
   (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|))
+
 (in-package :disman-script-mib)
+
 (defoid |scriptMIB| (|mib-2| 64)
   (:type 'module-identity)
   (:description
    "This MIB module defines a set of objects that allow to
          delegate management scripts to distributed managers."))
+
 (defoid |smObjects| (|scriptMIB| 1) (:type 'object-identity))
+
 (defoid |smNotifications| (|scriptMIB| 2) (:type 'object-identity))
+
 (defoid |smConformance| (|scriptMIB| 3) (:type 'object-identity))
+
 (defoid |smLangTable| (|smObjects| 1)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "This table lists supported script languages."))
+
 (defoid |smLangEntry| (|smLangTable| 1)
   (:type 'object-type)
   (:syntax '|SmLangEntry|)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "An entry describing a particular language."))
+
 (deftype |SmLangEntry| () 't)
+
 (defoid |smLangIndex| (|smLangEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -52,12 +63,14 @@
 
          Note that the data type and the range of this object must
          be consistent with the definition of smScriptLanguage."))
+
 (defoid |smLangLanguage| (|smLangEntry| 2)
   (:type 'object-type)
   (:syntax 'object-id)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The globally unique identification of the language."))
+
 (defoid |smLangVersion| (|smLangEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -71,6 +84,7 @@
          It is suggested that the version number consist of one or
          more decimal numbers separated by dots, where the first
          number is called the major version number."))
+
 (defoid |smLangVendor| (|smLangEntry| 4)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -83,6 +97,7 @@
          below the enterprise object identifier {1 3 6 1 4 1}
          allocated for the vendor. The value must be the object
          identifier {0 0} if the vendor is not known."))
+
 (defoid |smLangRevision| (|smLangEntry| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -96,25 +111,30 @@
          It is suggested that the value consist of one or more
          decimal numbers separated by dots, where the first
          number is called the major version number."))
+
 (defoid |smLangDescr| (|smLangEntry| 6)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "A textual description of the language."))
+
 (defoid |smExtsnTable| (|smObjects| 2)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "This table lists supported language extensions."))
+
 (defoid |smExtsnEntry| (|smExtsnTable| 1)
   (:type 'object-type)
   (:syntax '|SmExtsnEntry|)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "An entry describing a particular language extension."))
+
 (deftype |SmExtsnEntry| () 't)
+
 (defoid |smExtsnIndex| (|smExtsnEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -127,6 +147,7 @@
          The value is expected to remain constant at least from one
          re-initialization of the entity's network management system
          to the next re-initialization."))
+
 (defoid |smExtsnExtension| (|smExtsnEntry| 2)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -135,6 +156,7 @@
   (:description
    "The globally unique identification of the language
          extension."))
+
 (defoid |smExtsnVersion| (|smExtsnEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -145,6 +167,7 @@
          It is suggested that the version number consist of one or
          more decimal numbers separated by dots, where the first
          number is called the major version number."))
+
 (defoid |smExtsnVendor| (|smExtsnEntry| 4)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -157,6 +180,7 @@
          directly below the enterprise OID {1 3 6 1 4 1}
          allocated for the vendor. The value must by the object
          identifier {0 0} if the vendor is not known."))
+
 (defoid |smExtsnRevision| (|smExtsnEntry| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -170,13 +194,16 @@
          It is suggested that the value consist of one or more
          decimal numbers separated by dots, where the first
          number is called the major version number."))
+
 (defoid |smExtsnDescr| (|smExtsnEntry| 6)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "A textual description of the language extension."))
+
 (defoid |smScriptObjects| (|smObjects| 3) (:type 'object-identity))
+
 (defoid |smScriptTable| (|smScriptObjects| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -184,6 +211,7 @@
   (:status '|current|)
   (:description
    "This table lists and describes locally known scripts."))
+
 (defoid |smScriptEntry| (|smScriptTable| 1)
   (:type 'object-type)
   (:syntax '|SmScriptEntry|)
@@ -193,13 +221,16 @@
    "An entry describing a particular script. Every script that
          is stored in non-volatile memory is required to appear in
          this script table."))
+
 (deftype |SmScriptEntry| () 't)
+
 (defoid |smScriptOwner| (|smScriptEntry| 1)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The manager who owns this row in the smScriptTable."))
+
 (defoid |smScriptName| (|smScriptEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -217,12 +248,14 @@
          specific. However, the mapping needs to ensure that scripts
          created by different owners with the same script name do not
          map to the same name in non-volatile storage."))
+
 (defoid |smScriptDescr| (|smScriptEntry| 3)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
   (:max-access '|read-create|)
   (:status '|current|)
   (:description "A description of the purpose of the script."))
+
 (defoid |smScriptLanguage| (|smScriptEntry| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -241,6 +274,7 @@
 
          Note that the data type and the range of this object must
          be consistent with the definition of smLangIndex."))
+
 (defoid |smScriptSource| (|smScriptEntry| 5)
   (:type 'object-type)
   (:syntax '|DisplayString|)
@@ -272,6 +306,7 @@
          value of smScriptOperStatus is `enabled', `editing',
          `retrieving' or `compiling' and will result in an
          inconsistentValue error."))
+
 (defoid |smScriptAdminStatus| (|smScriptEntry| 6)
   (:type 'object-type)
   (:syntax 't)
@@ -287,6 +322,7 @@
          states, the Script MIB implementation will `pull' the script
          source from the URL contained in the smScriptSource object
          if the URL is not empty."))
+
 (defoid |smScriptOperStatus| (|smScriptEntry| 7)
   (:type 'object-type)
   (:syntax 't)
@@ -353,6 +389,7 @@
          All launch table entries that refer to this script table
          entry shall have an smLaunchOperStatus value of `disabled'
          when the value of this object is not `enabled'."))
+
 (defoid |smScriptStorageType| (|smScriptEntry| 8)
   (:type 'object-type)
   (:syntax '|StorageType|)
@@ -393,6 +430,7 @@
          objects whose MAX-ACCESS value is read-create must be
          writable, with the exception of the smScriptStorageType and
          smScriptRowStatus objects, which shall be read-only."))
+
 (defoid |smScriptRowStatus| (|smScriptEntry| 9)
   (:type 'object-type)
   (:syntax '|RowStatus|)
@@ -427,6 +465,7 @@
 
          The value of this object has no effect on whether other
          objects in this conceptual row can be modified."))
+
 (defoid |smScriptError| (|smScriptEntry| 10)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
@@ -439,6 +478,7 @@
          Implementations must reset the error message to a
          zero-length string when a new attempt to change the
          script status to `enabled' is started."))
+
 (defoid |smScriptLastChange| (|smScriptEntry| 11)
   (:type 'object-type)
   (:syntax '|DateAndTime|)
@@ -451,6 +491,7 @@
 
          Note that the resetting of smScriptError is not considered
          a change of the script table entry."))
+
 (defoid |smCodeTable| (|smScriptObjects| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -459,6 +500,7 @@
   (:description
    "This table contains the script code for scripts that are
          written via SNMP write operations."))
+
 (defoid |smCodeEntry| (|smCodeTable| 1)
   (:type 'object-type)
   (:syntax '|SmCodeEntry|)
@@ -466,13 +508,16 @@
   (:status '|current|)
   (:description
    "An entry describing a particular fragment of a script."))
+
 (deftype |SmCodeEntry| () 't)
+
 (defoid |smCodeIndex| (|smCodeEntry| 1)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The index value identifying this code fragment."))
+
 (defoid |smCodeText| (|smCodeEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -482,6 +527,7 @@
    "The code that makes up a fragment of a script. The format
          of this code fragment depends on the script language which
          is identified by the associated smScriptLanguage object."))
+
 (defoid |smCodeRowStatus| (|smCodeEntry| 3)
   (:type 'object-type)
   (:syntax '|RowStatus|)
@@ -493,7 +539,9 @@
 
          The value of this object has no effect on whether other
          objects in this conceptual row can be modified."))
+
 (defoid |smRunObjects| (|smObjects| 4) (:type 'object-identity))
+
 (defoid |smLaunchTable| (|smRunObjects| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -502,13 +550,16 @@
   (:description
    "This table lists and describes scripts that are ready
          to be executed together with their parameters."))
+
 (defoid |smLaunchEntry| (|smLaunchTable| 1)
   (:type 'object-type)
   (:syntax '|SmLaunchEntry|)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "An entry describing a particular executable script."))
+
 (deftype |SmLaunchEntry| () 't)
+
 (defoid |smLaunchOwner| (|smLaunchEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -521,6 +572,7 @@
          be owned by the same smLaunchOwner used to index the entry
          in the smLaunchTable. This owner is not necessarily the same
          as the owner of the script itself (smLaunchScriptOwner)."))
+
 (defoid |smLaunchName| (|smLaunchEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -536,6 +588,7 @@
          different smLaunchOwner values. Note that the value of
          smLaunchName is not related in any way to the name of the
          script being launched."))
+
 (defoid |smLaunchScriptOwner| (|smLaunchEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -547,6 +600,7 @@
          launched from this smLaunchTable entry. Attempts to write
          this object will fail with an inconsistentValue error if
          the value of smLaunchOperStatus is `enabled'."))
+
 (defoid |smLaunchScriptName| (|smLaunchEntry| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -561,6 +615,7 @@
          Attempts to write this object will fail with an
          inconsistentValue error if the value of smLaunchOperStatus
          is `enabled'."))
+
 (defoid |smLaunchArgument| (|smLaunchEntry| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -570,6 +625,7 @@
    "The argument supplied to the script. When a script is
          invoked, the value of this object is used to initialize
          the smRunArgument object."))
+
 (defoid |smLaunchMaxRunning| (|smLaunchEntry| 6)
   (:type 'object-type)
   (:syntax 't)
@@ -580,6 +636,7 @@
          be invoked from this entry in the smLaunchTable. Lowering
          the current value of this object does not affect any scripts
          that are already executing."))
+
 (defoid |smLaunchMaxCompleted| (|smLaunchEntry| 7)
   (:type 'object-type)
   (:syntax 't)
@@ -594,6 +651,7 @@
          scripts is smaller than the value of this object. Scripts
          whose smRunEndTime value indicates the oldest completion
          time are deleted first."))
+
 (defoid |smLaunchLifeTime| (|smLaunchEntry| 8)
   (:type 'object-type)
   (:syntax '|TimeInterval|)
@@ -607,6 +665,7 @@
          instance does not affect scripts previously launched from
 
          this entry."))
+
 (defoid |smLaunchExpireTime| (|smLaunchEntry| 9)
   (:type 'object-type)
   (:syntax '|TimeInterval|)
@@ -620,6 +679,7 @@
          object when a script is launched. Changing the value of an
          smLaunchExpireTime instance does not affect scripts
          previously launched from this entry."))
+
 (defoid |smLaunchStart| (|smLaunchEntry| 10)
   (:type 'object-type)
   (:syntax 't)
@@ -700,6 +760,7 @@
          object might be written from the scheduling MIB, the
 
          data type Integer32 rather than Unsigned32 is used."))
+
 (defoid |smLaunchControl| (|smLaunchEntry| 11)
   (:type 'object-type)
   (:syntax 't)
@@ -725,6 +786,7 @@
          rows lead to inconsistentValue errors. It is not allowed
          to return an inconsistentValue error if at least one state
          change on one of the applicable rows was successful."))
+
 (defoid |smLaunchAdminStatus| (|smLaunchEntry| 12)
   (:type 'object-type)
   (:syntax 't)
@@ -744,6 +806,7 @@
          the transition from the `disabled' into the `enabled'
          operational state. This is useful for scripts that are
          to be launched on system start-up."))
+
 (defoid |smLaunchOperStatus| (|smLaunchEntry| 13)
   (:type 'object-type)
   (:syntax 't)
@@ -769,6 +832,7 @@
          object is active. The value `disabled' requires that there
          are no entries in the smRunTable associated with this
          smLaunchTable entry."))
+
 (defoid |smLaunchRunIndexNext| (|smLaunchEntry| 14)
   (:type 'object-type)
   (:syntax 't)
@@ -790,6 +854,7 @@
 
          Note that the data type and the range of this object must be
          consistent with the definition of smRunIndex."))
+
 (defoid |smLaunchStorageType| (|smLaunchEntry| 15)
   (:type 'object-type)
   (:syntax '|StorageType|)
@@ -807,6 +872,7 @@
          objects whose MAX-ACCESS value is read-create must be
          writable, with the exception of the smLaunchStorageType and
          smLaunchRowStatus objects, which shall be read-only."))
+
 (defoid |smLaunchRowStatus| (|smLaunchEntry| 16)
   (:type 'object-type)
   (:syntax '|RowStatus|)
@@ -827,6 +893,7 @@
 
          The value of this object has no effect on whether other
          objects in this conceptual row can be modified."))
+
 (defoid |smLaunchError| (|smLaunchEntry| 17)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
@@ -837,6 +904,7 @@
          attempt to launch a script fails. Implementations must reset
          the error message to a zero-length string when a new attempt
          to launch a script is started."))
+
 (defoid |smLaunchLastChange| (|smLaunchEntry| 18)
   (:type 'object-type)
   (:syntax '|DateAndTime|)
@@ -851,6 +919,7 @@
          smLaunchRunIndexNext, smLaunchRowExpireTime, or the
          resetting of smLaunchError is not considered a change
          of this launch table entry."))
+
 (defoid |smLaunchRowExpireTime| (|smLaunchEntry| 19)
   (:type 'object-type)
   (:syntax '|TimeInterval|)
@@ -886,6 +955,7 @@
 
          Note that the timer ticks backwards independent of the
          operational state of the launch table entry."))
+
 (defoid |smRunTable| (|smRunObjects| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -894,6 +964,7 @@
   (:description
    "This table lists and describes scripts that are currently
          running or have been running in the past."))
+
 (defoid |smRunEntry| (|smRunTable| 1)
   (:type 'object-type)
   (:syntax '|SmRunEntry|)
@@ -902,7 +973,9 @@
   (:description
    "An entry describing a particular running or finished
          script."))
+
 (deftype |SmRunEntry| () 't)
+
 (defoid |smRunIndex| (|smRunEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -917,12 +990,14 @@
          Note that the data type and the range of this object must
          be consistent with the definition of smLaunchRunIndexNext
          and smLaunchStart."))
+
 (defoid |smRunArgument| (|smRunEntry| 2)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The argument supplied to the script when it started."))
+
 (defoid |smRunStartTime| (|smRunEntry| 3)
   (:type 'object-type)
   (:syntax '|DateAndTime|)
@@ -932,6 +1007,7 @@
    "The date and time when the execution started. The value
          '0000000000000000'H is returned if the script has not
          started yet."))
+
 (defoid |smRunEndTime| (|smRunEntry| 4)
   (:type 'object-type)
   (:syntax '|DateAndTime|)
@@ -941,6 +1017,7 @@
    "The date and time when the execution terminated. The value
          '0000000000000000'H is returned if the script has not
          terminated yet."))
+
 (defoid |smRunLifeTime| (|smRunEntry| 5)
   (:type 'object-type)
   (:syntax '|TimeInterval|)
@@ -976,6 +1053,7 @@
          Note that this does not affect set operations. It is legal
          to modify smRunLifeTime via set operations while a script
          is suspended."))
+
 (defoid |smRunExpireTime| (|smRunEntry| 6)
   (:type 'object-type)
   (:syntax '|TimeInterval|)
@@ -995,6 +1073,7 @@
          reduce the remaining time that the row may exist.  Setting
          the value to 0 will destroy this entry as soon as the
          smRunState has the value `terminated'."))
+
 (defoid |smRunExitCode| (|smRunEntry| 7)
   (:type 'object-type)
   (:syntax 't)
@@ -1035,6 +1114,7 @@
 
          If the script has not yet begun running, or is currently
          running, the value will be `noError'."))
+
 (defoid |smRunResult| (|smRunEntry| 8)
   (:type 'object-type)
   (:syntax 't)
@@ -1043,6 +1123,7 @@
   (:description
    "The result value produced by the running script. Note that
          the result may change while the script is executing."))
+
 (defoid |smRunControl| (|smRunEntry| 9)
   (:type 'object-type)
   (:syntax 't)
@@ -1076,6 +1157,7 @@
          that the attempt to resume the execution would fail.
 
          Setting this object to nop(4) has no effect."))
+
 (defoid |smRunState| (|smRunEntry| 10)
   (:type 'object-type)
   (:syntax 't)
@@ -1107,6 +1189,7 @@
          `aborting' state.
 
          A script which has finished its execution is `terminated'."))
+
 (defoid |smRunError| (|smRunEntry| 11)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
@@ -1118,6 +1201,7 @@
          An implementation must store a descriptive error message
          in this object if the script exits with the smRunExitCode
          `genericError'."))
+
 (defoid |smRunResultTime| (|smRunEntry| 12)
   (:type 'object-type)
   (:syntax '|DateAndTime|)
@@ -1128,6 +1212,7 @@
          The value '0000000000000000'H is returned if smRunResult
          has not yet been updated after the creation of this
          smRunTable entry."))
+
 (defoid |smRunErrorTime| (|smRunEntry| 13)
   (:type 'object-type)
   (:syntax '|DateAndTime|)
@@ -1139,13 +1224,16 @@
 
          has not yet been updated after the creation of this
          smRunTable entry."))
+
 (defoid |smTraps| (|smNotifications| 0) (:type 'object-identity))
+
 (defoid |smScriptAbort| (|smTraps| 1)
   (:type 'notification-type)
   (:status '|current|)
   (:description
    "This notification is generated whenever a running script
          terminates with an smRunExitCode unequal to `noError'."))
+
 (defoid |smScriptResult| (|smTraps| 2)
   (:type 'notification-type)
   (:status '|current|)
@@ -1158,6 +1246,7 @@
          Script MIB implementation. It is the responsibility of
          the executing script to emit this notification where it
          is appropriate to do so."))
+
 (defoid |smScriptException| (|smTraps| 3)
   (:type 'notification-type)
   (:status '|current|)
@@ -1169,74 +1258,90 @@
          Script MIB implementation. It is the responsibility of
          the executing script or the runtime system to emit this
          notification where it is appropriate to do so."))
+
 (defoid |smCompliances| (|smConformance| 1) (:type 'object-identity))
+
 (defoid |smGroups| (|smConformance| 2) (:type 'object-identity))
+
 (defoid |smCompliance2| (|smCompliances| 2)
   (:type 'module-compliance)
   (:status '|current|)
   (:description
    "The compliance statement for SNMP entities which implement
          the Script MIB."))
+
 (defoid |smLanguageGroup| (|smGroups| 1)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "A collection of objects providing information about the
          capabilities of the scripting engine."))
+
 (defoid |smScriptGroup2| (|smGroups| 7)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "A collection of objects providing information about
          installed scripts."))
+
 (defoid |smCodeGroup| (|smGroups| 3)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "A collection of objects used to download or modify scripts
          by using SNMP set requests."))
+
 (defoid |smLaunchGroup2| (|smGroups| 8)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "A collection of objects providing information about scripts
          that can be launched."))
+
 (defoid |smRunGroup2| (|smGroups| 9)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "A collection of objects providing information about running
          scripts."))
+
 (defoid |smNotificationsGroup2| (|smGroups| 10)
   (:type 'notification-group)
   (:status '|current|)
   (:description "The notifications emitted by the Script MIB."))
+
 (defoid |smCompliance| (|smCompliances| 1)
   (:type 'module-compliance)
   (:status '|deprecated|)
   (:description
    "The compliance statement for SNMP entities which implement
          the Script MIB."))
+
 (defoid |smScriptGroup| (|smGroups| 2)
   (:type 'object-group)
   (:status '|deprecated|)
   (:description
    "A collection of objects providing information about
          installed scripts."))
+
 (defoid |smLaunchGroup| (|smGroups| 4)
   (:type 'object-group)
   (:status '|deprecated|)
   (:description
    "A collection of objects providing information about scripts
          that can be launched."))
+
 (defoid |smRunGroup| (|smGroups| 5)
   (:type 'object-group)
   (:status '|deprecated|)
   (:description
    "A collection of objects providing information about running
          scripts."))
+
 (defoid |smNotificationsGroup| (|smGroups| 6)
   (:type 'notification-group)
   (:status '|deprecated|)
   (:description "The notifications emitted by the Script MIB."))
+
 (eval-when (:load-toplevel :execute) (setf *current-module* nil))
+

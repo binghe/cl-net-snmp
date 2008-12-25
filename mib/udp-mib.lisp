@@ -2,9 +2,11 @@
 ;;;; Auto-generated from MIB:NET-SNMP;UDP-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'udp-mib *mib-modules*)
   (setf *current-module* 'udp-mib))
+
 (defpackage :asn.1/udp-mib
   (:nicknames :udp-mib)
   (:use :common-lisp :asn.1)
@@ -14,7 +16,9 @@
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
   (:import-from :asn.1/inet-address-mib |InetAddress| |InetAddressType|
                 |InetPortNumber|))
+
 (in-package :udp-mib)
+
 (defoid |udpMIB| (|mib-2| 50)
   (:type 'module-identity)
   (:description
@@ -22,7 +26,9 @@
             Copyright (C) The Internet Society (2005).  This
             version of this MIB module is part of RFC 4113;
             see the RFC itself for full legal notices."))
+
 (defoid |udp| (|mib-2| 7) (:type 'object-identity))
+
 (defoid |udpInDatagrams| (|udp| 1)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -36,6 +42,7 @@
             at re-initialization of the management system, and at
             other times as indicated by discontinuities in the
             value of sysUpTime."))
+
 (defoid |udpNoPorts| (|udp| 2)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -49,6 +56,7 @@
             at re-initialization of the management system, and at
             other times as indicated by discontinuities in the
             value of sysUpTime."))
+
 (defoid |udpInErrors| (|udp| 3)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -63,6 +71,7 @@
             at re-initialization of the management system, and at
             other times as indicated by discontinuities in the
             value of sysUpTime."))
+
 (defoid |udpOutDatagrams| (|udp| 4)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -76,6 +85,7 @@
             at re-initialization of the management system, and at
             other times as indicated by discontinuities in the
             value of sysUpTime."))
+
 (defoid |udpHCInDatagrams| (|udp| 8)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -90,6 +100,7 @@
             at re-initialization of the management system, and at
             other times as indicated by discontinuities in the
             value of sysUpTime."))
+
 (defoid |udpHCOutDatagrams| (|udp| 9)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -104,6 +115,7 @@
             at re-initialization of the management system, and at
             other times as indicated by discontinuities in the
             value of sysUpTime."))
+
 (defoid |udpEndpointTable| (|udp| 7)
   (:type 'object-type)
   (:syntax 't)
@@ -156,6 +168,7 @@
             'connected' the socket specifying a default remote
             address and port, the udpEndpointRemote* values should
             be used to reflect this."))
+
 (defoid |udpEndpointEntry| (|udpEndpointTable| 1)
   (:type 'object-type)
   (:syntax '|UdpEndpointEntry|)
@@ -170,7 +183,9 @@
             exceeds 111, then OIDs of column instances in this table
             will have more than 128 sub-identifiers and cannot be
             accessed using SNMPv1, SNMPv2c, or SNMPv3."))
+
 (deftype |UdpEndpointEntry| () 't)
+
 (defoid |udpEndpointLocalAddressType| (|udpEndpointEntry| 1)
   (:type 'object-type)
   (:syntax '|InetAddressType|)
@@ -181,6 +196,7 @@
             IPv4, IPv4z, IPv6, and IPv6z addresses are expected, or
             unknown(0) if datagrams for all local IP addresses are
             accepted."))
+
 (defoid |udpEndpointLocalAddress| (|udpEndpointEntry| 2)
   (:type 'object-type)
   (:syntax '|InetAddress|)
@@ -220,12 +236,14 @@
             careful not to create entries that would result in OIDs
             with more than 128 subidentifiers; else the information
             cannot be accessed using SNMPv1, SNMPv2c, or SNMPv3."))
+
 (defoid |udpEndpointLocalPort| (|udpEndpointEntry| 3)
   (:type 'object-type)
   (:syntax '|InetPortNumber|)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The local port number for this UDP endpoint."))
+
 (defoid |udpEndpointRemoteAddressType| (|udpEndpointEntry| 4)
   (:type 'object-type)
   (:syntax '|InetAddressType|)
@@ -242,6 +260,7 @@
             particular, if the value of this object is not
             unknown(0), it is expected to always refer to the
             same IP version as udpEndpointLocalAddressType."))
+
 (defoid |udpEndpointRemoteAddress| (|udpEndpointEntry| 5)
   (:type 'object-type)
   (:syntax '|InetAddress|)
@@ -261,6 +280,7 @@
             careful not to create entries that would result in OIDs
             with more than 128 subidentifiers; else the information
             cannot be accessed using SNMPv1, SNMPv2c, or SNMPv3."))
+
 (defoid |udpEndpointRemotePort| (|udpEndpointEntry| 6)
   (:type 'object-type)
   (:syntax '|InetPortNumber|)
@@ -270,6 +290,7 @@
    "The remote port number for this UDP endpoint.  If
             datagrams from any remote system are to be accepted,
             this value is zero."))
+
 (defoid |udpEndpointInstance| (|udpEndpointEntry| 7)
   (:type 'object-type)
   (:syntax 't)
@@ -282,6 +303,7 @@
             implementing the BSD sockets interface, this would be
             used to support the SO_REUSEADDR and SO_REUSEPORT
             socket options."))
+
 (defoid |udpEndpointProcess| (|udpEndpointEntry| 8)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -294,6 +316,7 @@
             HOST-RESOURCES-MIB::hrSWRunIndex or SYSAPPL-MIB::
             sysApplElmtRunIndex for some row in the appropriate
             tables."))
+
 (defoid |udpTable| (|udp| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -306,13 +329,16 @@
             currently accepting datagrams.  This table has been
             deprecated in favor of the version neutral
             udpEndpointTable."))
+
 (defoid |udpEntry| (|udpTable| 1)
   (:type 'object-type)
   (:syntax '|UdpEntry|)
   (:max-access '|not-accessible|)
   (:status '|deprecated|)
   (:description "Information about a particular current UDP listener."))
+
 (deftype |UdpEntry| () 't)
+
 (defoid |udpLocalAddress| (|udpEntry| 1)
   (:type 'object-type)
   (:syntax '|IpAddress|)
@@ -323,16 +349,21 @@
             case of a UDP listener that is willing to accept
             datagrams for any IP interface associated with the
             node, the value 0.0.0.0 is used."))
+
 (defoid |udpLocalPort| (|udpEntry| 2)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|read-only|)
   (:status '|deprecated|)
   (:description "The local port number for this UDP listener."))
+
 (defoid |udpMIBConformance| (|udpMIB| 2) (:type 'object-identity))
+
 (defoid |udpMIBCompliances| (|udpMIBConformance| 1)
   (:type 'object-identity))
+
 (defoid |udpMIBGroups| (|udpMIBConformance| 2) (:type 'object-identity))
+
 (defoid |udpMIBCompliance2| (|udpMIBCompliances| 2)
   (:type 'module-compliance)
   (:status '|current|)
@@ -372,6 +403,7 @@
             --     octet-strings, and for scoped and unscoped
             --     IPv4 and IPv6 addresses.
            "))
+
 (defoid |udpMIBCompliance| (|udpMIBCompliances| 1)
   (:type 'module-compliance)
   (:status '|deprecated|)
@@ -382,28 +414,34 @@
             udpMIBCompliance2.  However, agents are still
             encouraged to implement these objects in order to
             interoperate with the deployed base of managers."))
+
 (defoid |udpGroup| (|udpMIBGroups| 1)
   (:type 'object-group)
   (:status '|deprecated|)
   (:description
    "The deprecated group of objects providing for
             management of UDP over IPv4."))
+
 (defoid |udpBaseGroup| (|udpMIBGroups| 2)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "The group of objects providing for counters of UDP
             statistics."))
+
 (defoid |udpHCGroup| (|udpMIBGroups| 3)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "The group of objects providing for counters of high
             speed UDP implementations."))
+
 (defoid |udpEndpointGroup| (|udpMIBGroups| 4)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "The group of objects providing for the IP version
             independent management of UDP 'endpoints'."))
+
 (eval-when (:load-toplevel :execute) (setf *current-module* nil))
+

@@ -2,9 +2,11 @@
 ;;;; Auto-generated from MIB:NET-SNMP;IP-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'ip-mib *mib-modules*)
   (setf *current-module* 'ip-mib))
+
 (defpackage :asn.1/ip-mib
   (:nicknames :ip-mib)
   (:use :common-lisp :asn.1)
@@ -19,7 +21,9 @@
                 |InetAddressPrefixLength| |InetVersion|
                 |InetZoneIndex|)
   (:import-from :asn.1/if-mib |InterfaceIndex|))
+
 (in-package :ip-mib)
+
 (defoid |ipMIB| (|mib-2| 48)
   (:type 'module-identity)
   (:description
@@ -29,11 +33,17 @@
             Copyright (C) The Internet Society (2006).  This version of
             this MIB module is part of RFC 4293; see the RFC itself for
             full legal notices."))
+
 (deftype |IpAddressOriginTC| () 't)
+
 (deftype |IpAddressStatusTC| () 't)
+
 (deftype |IpAddressPrefixOriginTC| () 't)
+
 (deftype |Ipv6AddressIfIdentifierTC| () 't)
+
 (defoid |ip| (|mib-2| 4) (:type 'object-identity))
+
 (defoid |ipForwarding| (|ip| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -51,6 +61,7 @@
             non-volatile storage upon re-initialization of the system.
             Note: a stronger requirement is not used because this object
             was previously defined."))
+
 (defoid |ipDefaultTTL| (|ip| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -70,6 +81,7 @@
             non-volatile storage upon re-initialization of the system.
             Note: a stronger requirement is not used because this object
             was previously defined."))
+
 (defoid |ipReasmTimeout| (|ip| 13)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -78,6 +90,7 @@
   (:description
    "The maximum number of seconds that received fragments are
             held while they are awaiting reassembly at this entity."))
+
 (defoid |ipv6IpForwarding| (|ip| 25)
   (:type 'object-type)
   (:syntax 't)
@@ -93,6 +106,7 @@
             When this object is written, the entity SHOULD save the
             change to non-volatile storage and restore the object from
             non-volatile storage upon re-initialization of the system."))
+
 (defoid |ipv6IpDefaultHopLimit| (|ip| 26)
   (:type 'object-type)
   (:syntax 't)
@@ -107,6 +121,7 @@
             When this object is written, the entity SHOULD save the
             change to non-volatile storage and restore the object from
             non-volatile storage upon re-initialization of the system."))
+
 (defoid |ipv4InterfaceTableLastChange| (|ip| 27)
   (:type 'object-type)
   (:syntax '|TimeStamp|)
@@ -122,6 +137,7 @@
             require the ipv4InterfaceTableLastChange to be updated when
             they are modified, they must specify that requirement in
             their description clause."))
+
 (defoid |ipv4InterfaceTable| (|ip| 28)
   (:type 'object-type)
   (:syntax 't)
@@ -130,6 +146,7 @@
   (:description
    "The table containing per-interface IPv4-specific
             information."))
+
 (defoid |ipv4InterfaceEntry| (|ipv4InterfaceTable| 1)
   (:type 'object-type)
   (:syntax '|Ipv4InterfaceEntry|)
@@ -138,7 +155,9 @@
   (:description
    "An entry containing IPv4-specific information for a specific
             interface."))
+
 (deftype |Ipv4InterfaceEntry| () 't)
+
 (defoid |ipv4InterfaceIfIndex| (|ipv4InterfaceEntry| 1)
   (:type 'object-type)
   (:syntax '|InterfaceIndex|)
@@ -149,6 +168,7 @@
             which this entry is applicable.  The interface identified by
             a particular value of this index is the same interface as
             identified by the same value of the IF-MIB's ifIndex."))
+
 (defoid |ipv4InterfaceReasmMaxSize| (|ipv4InterfaceEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -158,6 +178,7 @@
    "The size of the largest IPv4 datagram that this entity can
             re-assemble from incoming IPv4 fragmented datagrams received
             on this interface."))
+
 (defoid |ipv4InterfaceEnableStatus| (|ipv4InterfaceEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -169,6 +190,7 @@
             state of the interface itself, only its connection to an
             IPv4 stack.  The IF-MIB should be used to control the state
             of the interface."))
+
 (defoid |ipv4InterfaceRetransmitTime| (|ipv4InterfaceEntry| 4)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -178,6 +200,7 @@
    "The time between retransmissions of ARP requests to a
             neighbor when resolving the address or when probing the
             reachability of a neighbor."))
+
 (defoid |ipv6InterfaceTableLastChange| (|ip| 29)
   (:type 'object-type)
   (:syntax '|TimeStamp|)
@@ -195,6 +218,7 @@
             require the ipv6InterfaceTableLastChange to be updated when
             they are modified, they must specify that requirement in
             their description clause."))
+
 (defoid |ipv6InterfaceTable| (|ip| 30)
   (:type 'object-type)
   (:syntax 't)
@@ -203,6 +227,7 @@
   (:description
    "The table containing per-interface IPv6-specific
             information."))
+
 (defoid |ipv6InterfaceEntry| (|ipv6InterfaceTable| 1)
   (:type 'object-type)
   (:syntax '|Ipv6InterfaceEntry|)
@@ -211,7 +236,9 @@
   (:description
    "An entry containing IPv6-specific information for a given
             interface."))
+
 (deftype |Ipv6InterfaceEntry| () 't)
+
 (defoid |ipv6InterfaceIfIndex| (|ipv6InterfaceEntry| 1)
   (:type 'object-type)
   (:syntax '|InterfaceIndex|)
@@ -222,6 +249,7 @@
             which this entry is applicable.  The interface identified by
             a particular value of this index is the same interface as
             identified by the same value of the IF-MIB's ifIndex."))
+
 (defoid |ipv6InterfaceReasmMaxSize| (|ipv6InterfaceEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -231,6 +259,7 @@
    "The size of the largest IPv6 datagram that this entity can
             re-assemble from incoming IPv6 fragmented datagrams received
             on this interface."))
+
 (defoid |ipv6InterfaceIdentifier| (|ipv6InterfaceEntry| 3)
   (:type 'object-type)
   (:syntax '|Ipv6AddressIfIdentifierTC|)
@@ -250,6 +279,7 @@
 
             A zero length identifier may be used where appropriate.  One
             possible example is a loopback interface."))
+
 (defoid |ipv6InterfaceEnableStatus| (|ipv6InterfaceEntry| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -265,6 +295,7 @@
             When this object is written, the entity SHOULD save the
             change to non-volatile storage and restore the object from
             non-volatile storage upon re-initialization of the system."))
+
 (defoid |ipv6InterfaceReachableTime| (|ipv6InterfaceEntry| 6)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -273,6 +304,7 @@
   (:description
    "The time a neighbor is considered reachable after receiving
             a reachability confirmation."))
+
 (defoid |ipv6InterfaceRetransmitTime| (|ipv6InterfaceEntry| 7)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -282,6 +314,7 @@
    "The time between retransmissions of Neighbor Solicitation
             messages to a neighbor when resolving the address or when
             probing the reachability of a neighbor."))
+
 (defoid |ipv6InterfaceForwarding| (|ipv6InterfaceEntry| 8)
   (:type 'object-type)
   (:syntax 't)
@@ -304,7 +337,9 @@
             When this object is written, the entity SHOULD save the
             change to non-volatile storage and restore the object from
             non-volatile storage upon re-initialization of the system."))
+
 (defoid |ipTrafficStats| (|ip| 31) (:type 'object-identity))
+
 (defoid |ipSystemStatsTable| (|ipTrafficStats| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -317,6 +352,7 @@
             granularity.  Where this table contains system wide traffic
             statistics, the ipIfStatsTable contains the same statistics
             but counted on a per-interface basis."))
+
 (defoid |ipSystemStatsEntry| (|ipSystemStatsTable| 1)
   (:type 'object-type)
   (:syntax '|IpSystemStatsEntry|)
@@ -325,13 +361,16 @@
   (:description
    "A statistics entry containing system-wide objects for a
             particular IP version."))
+
 (deftype |IpSystemStatsEntry| () 't)
+
 (defoid |ipSystemStatsIPVersion| (|ipSystemStatsEntry| 1)
   (:type 'object-type)
   (:syntax '|InetVersion|)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The IP version of this row."))
+
 (defoid |ipSystemStatsInReceives| (|ipSystemStatsEntry| 3)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -345,6 +384,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsHCInReceives| (|ipSystemStatsEntry| 4)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -360,6 +400,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsInOctets| (|ipSystemStatsEntry| 5)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -374,6 +415,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsHCInOctets| (|ipSystemStatsEntry| 6)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -392,6 +434,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsInHdrErrors| (|ipSystemStatsEntry| 7)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -407,6 +450,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsInNoRoutes| (|ipSystemStatsEntry| 8)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -420,6 +464,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsInAddrErrors| (|ipSystemStatsEntry| 9)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -441,6 +486,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsInUnknownProtos| (|ipSystemStatsEntry| 10)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -460,6 +506,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsInTruncatedPkts| (|ipSystemStatsEntry| 11)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -473,6 +520,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsInForwDatagrams| (|ipSystemStatsEntry| 12)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -494,6 +542,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsHCInForwDatagrams| (|ipSystemStatsEntry| 13)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -510,6 +559,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsReasmReqds| (|ipSystemStatsEntry| 14)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -531,6 +581,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsReasmOKs| (|ipSystemStatsEntry| 15)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -548,6 +599,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsReasmFails| (|ipSystemStatsEntry| 16)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -570,6 +622,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsInDiscards| (|ipSystemStatsEntry| 17)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -586,6 +639,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsInDelivers| (|ipSystemStatsEntry| 18)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -604,6 +658,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsHCInDelivers| (|ipSystemStatsEntry| 19)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -619,6 +674,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsOutRequests| (|ipSystemStatsEntry| 20)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -634,6 +690,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsHCOutRequests| (|ipSystemStatsEntry| 21)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -649,6 +706,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsOutNoRoutes| (|ipSystemStatsEntry| 22)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -663,6 +721,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsOutForwDatagrams| (|ipSystemStatsEntry| 23)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -684,6 +743,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsHCOutForwDatagrams| (|ipSystemStatsEntry| 24)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -700,6 +760,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsOutDiscards| (|ipSystemStatsEntry| 25)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -720,6 +781,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsOutFragReqds| (|ipSystemStatsEntry| 26)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -737,6 +799,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsOutFragOKs| (|ipSystemStatsEntry| 27)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -754,6 +817,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsOutFragFails| (|ipSystemStatsEntry| 28)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -774,6 +838,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsOutFragCreates| (|ipSystemStatsEntry| 29)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -791,6 +856,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsOutTransmits| (|ipSystemStatsEntry| 30)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -809,6 +875,7 @@
 
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsHCOutTransmits| (|ipSystemStatsEntry| 31)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -824,6 +891,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsOutOctets| (|ipSystemStatsEntry| 32)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -838,6 +906,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsHCOutOctets| (|ipSystemStatsEntry| 33)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -856,6 +925,7 @@
 
 
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsInMcastPkts| (|ipSystemStatsEntry| 34)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -868,6 +938,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsHCInMcastPkts| (|ipSystemStatsEntry| 35)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -882,6 +953,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsInMcastOctets| (|ipSystemStatsEntry| 36)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -896,6 +968,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsHCInMcastOctets| (|ipSystemStatsEntry| 37)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -910,6 +983,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsOutMcastPkts| (|ipSystemStatsEntry| 38)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -922,6 +996,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsHCOutMcastPkts| (|ipSystemStatsEntry| 39)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -936,6 +1011,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsOutMcastOctets| (|ipSystemStatsEntry| 40)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -953,6 +1029,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsHCOutMcastOctets| (|ipSystemStatsEntry| 41)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -967,6 +1044,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsInBcastPkts| (|ipSystemStatsEntry| 42)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -979,6 +1057,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsHCInBcastPkts| (|ipSystemStatsEntry| 43)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -996,6 +1075,7 @@
 
 
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsOutBcastPkts| (|ipSystemStatsEntry| 44)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1008,6 +1088,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsHCOutBcastPkts| (|ipSystemStatsEntry| 45)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -1022,6 +1103,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipSystemStatsDiscontinuityTime."))
+
 (defoid |ipSystemStatsDiscontinuityTime| (|ipSystemStatsEntry| 46)
   (:type 'object-type)
   (:syntax '|TimeStamp|)
@@ -1035,6 +1117,7 @@
             If no such discontinuities have occurred since the last re-
             initialization of the local management subsystem, then this
             object contains a zero value."))
+
 (defoid |ipSystemStatsRefreshRate| (|ipSystemStatsEntry| 47)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -1044,6 +1127,7 @@
    "The minimum reasonable polling interval for this entry.
             This object provides an indication of the minimum amount of
             time required to update the counters in this entry."))
+
 (defoid |ipIfStatsTableLastChange| (|ipTrafficStats| 2)
   (:type 'object-type)
   (:syntax '|TimeStamp|)
@@ -1057,6 +1141,7 @@
             the ipIfStatsTableLastChange to be updated when they are
             modified, they must specify that requirement in their
             description clause."))
+
 (defoid |ipIfStatsTable| (|ipTrafficStats| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -1069,6 +1154,7 @@
             contains per-interface statistics, the ipSystemStatsTable
             contains the same statistics, but counted on a system wide
             basis."))
+
 (defoid |ipIfStatsEntry| (|ipIfStatsTable| 1)
   (:type 'object-type)
   (:syntax '|IpIfStatsEntry|)
@@ -1077,13 +1163,16 @@
   (:description
    "An interface statistics entry containing objects for a
             particular interface and version of IP."))
+
 (deftype |IpIfStatsEntry| () 't)
+
 (defoid |ipIfStatsIPVersion| (|ipIfStatsEntry| 1)
   (:type 'object-type)
   (:syntax '|InetVersion|)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The IP version of this row."))
+
 (defoid |ipIfStatsIfIndex| (|ipIfStatsEntry| 2)
   (:type 'object-type)
   (:syntax '|InterfaceIndex|)
@@ -1094,6 +1183,7 @@
             which this entry is applicable.  The interface identified by
             a particular value of this index is the same interface as
             identified by the same value of the IF-MIB's ifIndex."))
+
 (defoid |ipIfStatsInReceives| (|ipIfStatsEntry| 3)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1107,6 +1197,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsHCInReceives| (|ipIfStatsEntry| 4)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -1122,6 +1213,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsInOctets| (|ipIfStatsEntry| 5)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1136,6 +1228,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsHCInOctets| (|ipIfStatsEntry| 6)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -1151,6 +1244,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsInHdrErrors| (|ipIfStatsEntry| 7)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1166,6 +1260,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsInNoRoutes| (|ipIfStatsEntry| 8)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1179,6 +1274,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsInAddrErrors| (|ipIfStatsEntry| 9)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1197,6 +1293,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsInUnknownProtos| (|ipIfStatsEntry| 10)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1219,6 +1316,7 @@
 
 
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsInTruncatedPkts| (|ipIfStatsEntry| 11)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1232,6 +1330,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsInForwDatagrams| (|ipIfStatsEntry| 12)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1253,6 +1352,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsHCInForwDatagrams| (|ipIfStatsEntry| 13)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -1272,6 +1372,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsReasmReqds| (|ipIfStatsEntry| 14)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1290,6 +1391,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsReasmOKs| (|ipIfStatsEntry| 15)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1307,6 +1409,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsReasmFails| (|ipIfStatsEntry| 16)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1329,6 +1432,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsInDiscards| (|ipIfStatsEntry| 17)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1345,6 +1449,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsInDelivers| (|ipIfStatsEntry| 18)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1366,6 +1471,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsHCInDelivers| (|ipIfStatsEntry| 19)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -1381,6 +1487,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsOutRequests| (|ipIfStatsEntry| 20)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1396,6 +1503,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsHCOutRequests| (|ipIfStatsEntry| 21)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -1414,6 +1522,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsOutForwDatagrams| (|ipIfStatsEntry| 23)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1435,6 +1544,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsHCOutForwDatagrams| (|ipIfStatsEntry| 24)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -1454,6 +1564,7 @@
 
 
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsOutDiscards| (|ipIfStatsEntry| 25)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1471,6 +1582,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsOutFragReqds| (|ipIfStatsEntry| 26)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1488,6 +1600,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsOutFragOKs| (|ipIfStatsEntry| 27)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1508,6 +1621,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsOutFragFails| (|ipIfStatsEntry| 28)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1528,6 +1642,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsOutFragCreates| (|ipIfStatsEntry| 29)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1545,6 +1660,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsOutTransmits| (|ipIfStatsEntry| 30)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1560,6 +1676,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsHCOutTransmits| (|ipIfStatsEntry| 31)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -1575,6 +1692,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsOutOctets| (|ipIfStatsEntry| 32)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1589,6 +1707,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsHCOutOctets| (|ipIfStatsEntry| 33)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -1603,6 +1722,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsInMcastPkts| (|ipIfStatsEntry| 34)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1615,6 +1735,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsHCInMcastPkts| (|ipIfStatsEntry| 35)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -1629,6 +1750,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsInMcastOctets| (|ipIfStatsEntry| 36)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1646,6 +1768,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsHCInMcastOctets| (|ipIfStatsEntry| 37)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -1660,6 +1783,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsOutMcastPkts| (|ipIfStatsEntry| 38)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1672,6 +1796,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsHCOutMcastPkts| (|ipIfStatsEntry| 39)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -1689,6 +1814,7 @@
 
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsOutMcastOctets| (|ipIfStatsEntry| 40)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1703,6 +1829,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsHCOutMcastOctets| (|ipIfStatsEntry| 41)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -1717,6 +1844,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsInBcastPkts| (|ipIfStatsEntry| 42)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1729,6 +1857,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsHCInBcastPkts| (|ipIfStatsEntry| 43)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -1743,6 +1872,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsOutBcastPkts| (|ipIfStatsEntry| 44)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -1755,6 +1885,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsHCOutBcastPkts| (|ipIfStatsEntry| 45)
   (:type 'object-type)
   (:syntax '|Counter64|)
@@ -1769,6 +1900,7 @@
             re-initialization of the management system, and at other
             times as indicated by the value of
             ipIfStatsDiscontinuityTime."))
+
 (defoid |ipIfStatsDiscontinuityTime| (|ipIfStatsEntry| 46)
   (:type 'object-type)
   (:syntax '|TimeStamp|)
@@ -1785,6 +1917,7 @@
             If no such discontinuities have occurred since the last re-
             initialization of the local management subsystem, then this
             object contains a zero value."))
+
 (defoid |ipIfStatsRefreshRate| (|ipIfStatsEntry| 47)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -1794,6 +1927,7 @@
    "The minimum reasonable polling interval for this entry.
             This object provides an indication of the minimum amount of
             time required to update the counters in this entry."))
+
 (defoid |ipAddressPrefixTable| (|ip| 32)
   (:type 'object-type)
   (:syntax 't)
@@ -1824,13 +1958,16 @@
 
 
             advertisements.)"))
+
 (defoid |ipAddressPrefixEntry| (|ipAddressPrefixTable| 1)
   (:type 'object-type)
   (:syntax '|IpAddressPrefixEntry|)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "An entry in the ipAddressPrefixTable."))
+
 (deftype |IpAddressPrefixEntry| () 't)
+
 (defoid |ipAddressPrefixIfIndex| (|ipAddressPrefixEntry| 1)
   (:type 'object-type)
   (:syntax '|InterfaceIndex|)
@@ -1841,12 +1978,14 @@
             which this prefix is configured.  The interface identified
             by a particular value of this index is the same interface as
             identified by the same value of the IF-MIB's ifIndex."))
+
 (defoid |ipAddressPrefixType| (|ipAddressPrefixEntry| 2)
   (:type 'object-type)
   (:syntax '|InetAddressType|)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The address type of ipAddressPrefix."))
+
 (defoid |ipAddressPrefixPrefix| (|ipAddressPrefixEntry| 3)
   (:type 'object-type)
   (:syntax '|InetAddress|)
@@ -1863,6 +2002,7 @@
             instances of columns in this row will have more than 128
             sub-identifiers and cannot be accessed using SNMPv1,
             SNMPv2c, or SNMPv3."))
+
 (defoid |ipAddressPrefixLength| (|ipAddressPrefixEntry| 4)
   (:type 'object-type)
   (:syntax '|InetAddressPrefixLength|)
@@ -1873,12 +2013,14 @@
 
             The value 0 has no special meaning for this object.  It
             simply refers to address '::/0'."))
+
 (defoid |ipAddressPrefixOrigin| (|ipAddressPrefixEntry| 5)
   (:type 'object-type)
   (:syntax '|IpAddressPrefixOriginTC|)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The origin of this prefix."))
+
 (defoid |ipAddressPrefixOnLinkFlag| (|ipAddressPrefixEntry| 6)
   (:type 'object-type)
   (:syntax '|TruthValue|)
@@ -1890,6 +2032,7 @@
             'false(2)'.
 
             The default for IPv4 prefixes is 'true(1)'."))
+
 (defoid |ipAddressPrefixAutonomousFlag| (|ipAddressPrefixEntry| 7)
   (:type 'object-type)
   (:syntax '|TruthValue|)
@@ -1903,6 +2046,7 @@
             configure a local interface address.
 
             The default for IPv4 prefixes is 'false(2)'."))
+
 (defoid |ipAddressPrefixAdvPreferredLifetime|
         (|ipAddressPrefixEntry| 8)
   (:type 'object-type)
@@ -1921,6 +2065,7 @@
             expected.
 
             The default for IPv4 prefixes is 4,294,967,295 (infinity)."))
+
 (defoid |ipAddressPrefixAdvValidLifetime| (|ipAddressPrefixEntry| 9)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -1938,6 +2083,7 @@
 
 
             The default for IPv4 prefixes is 4,294,967,295 (infinity)."))
+
 (defoid |ipAddressSpinLock| (|ip| 33)
   (:type 'object-type)
   (:syntax '|TestAndIncr|)
@@ -1960,6 +2106,7 @@
             ipAddressSpinLock.  It is suggested, but not required, that
             the ipAddressSpinLock be the first var bind for each set of
             objects representing a 'row' in a PDU."))
+
 (defoid |ipAddressTable| (|ip| 34)
   (:type 'object-type)
   (:syntax 't)
@@ -1989,19 +2136,23 @@
             Note well: When including IPv6 link-local addresses in this
             table, the entry must use an InetAddressType of 'ipv6z' in
             order to differentiate between the possible interfaces."))
+
 (defoid |ipAddressEntry| (|ipAddressTable| 1)
   (:type 'object-type)
   (:syntax '|IpAddressEntry|)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "An address mapping for a particular interface."))
+
 (deftype |IpAddressEntry| () 't)
+
 (defoid |ipAddressAddrType| (|ipAddressEntry| 1)
   (:type 'object-type)
   (:syntax '|InetAddressType|)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The address type of ipAddressAddr."))
+
 (defoid |ipAddressAddr| (|ipAddressEntry| 2)
   (:type 'object-type)
   (:syntax '|InetAddress|)
@@ -2019,6 +2170,7 @@
             ipAddressAddr exceeds 116 octets, then OIDS of instances of
             columns in this row will have more than 128 sub-identifiers
             and cannot be accessed using SNMPv1, SNMPv2c, or SNMPv3."))
+
 (defoid |ipAddressIfIndex| (|ipAddressEntry| 3)
   (:type 'object-type)
   (:syntax '|InterfaceIndex|)
@@ -2029,6 +2181,7 @@
             which this entry is applicable.  The interface identified by
             a particular value of this index is the same interface as
             identified by the same value of the IF-MIB's ifIndex."))
+
 (defoid |ipAddressType| (|ipAddressEntry| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -2037,6 +2190,7 @@
   (:description
    "The type of address.  broadcast(3) is not a valid value for
             IPv6 addresses (RFC 3513)."))
+
 (defoid |ipAddressPrefix| (|ipAddressEntry| 5)
   (:type 'object-type)
   (:syntax '|RowPointer|)
@@ -2045,12 +2199,14 @@
   (:description
    "A pointer to the row in the prefix table to which this
             address belongs.  May be { 0 0 } if there is no such row."))
+
 (defoid |ipAddressOrigin| (|ipAddressEntry| 6)
   (:type 'object-type)
   (:syntax '|IpAddressOriginTC|)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The origin of the address."))
+
 (defoid |ipAddressStatus| (|ipAddressEntry| 7)
   (:type 'object-type)
   (:syntax '|IpAddressStatusTC|)
@@ -2062,6 +2218,7 @@
 
             In the absence of other information, an IPv4 address is
             always preferred(1)."))
+
 (defoid |ipAddressCreated| (|ipAddressEntry| 8)
   (:type 'object-type)
   (:syntax '|TimeStamp|)
@@ -2072,6 +2229,7 @@
             If this entry was created prior to the last re-
             initialization of the local network management subsystem,
             then this object contains a zero value."))
+
 (defoid |ipAddressLastChanged| (|ipAddressEntry| 9)
   (:type 'object-type)
   (:syntax '|TimeStamp|)
@@ -2082,6 +2240,7 @@
             updated.  If this entry was updated prior to the last re-
             initialization of the local network management subsystem,
             then this object contains a zero value."))
+
 (defoid |ipAddressRowStatus| (|ipAddressEntry| 10)
   (:type 'object-type)
   (:syntax '|RowStatus|)
@@ -2101,6 +2260,7 @@
 
             A conceptual row can not be made active until the
             ipAddressIfIndex has been set to a valid index."))
+
 (defoid |ipAddressStorageType| (|ipAddressEntry| 11)
   (:type 'object-type)
   (:syntax '|StorageType|)
@@ -2110,6 +2270,7 @@
    "The storage type for this conceptual row.  If this object
             has a value of 'permanent', then no other objects are
             required to be able to be modified."))
+
 (defoid |ipNetToPhysicalTable| (|ip| 35)
   (:type 'object-type)
   (:syntax 't)
@@ -2129,6 +2290,7 @@
             While many protocols may be used to populate this table, ARP
             and Neighbor Discovery are the most likely
             options."))
+
 (defoid |ipNetToPhysicalEntry| (|ipNetToPhysicalTable| 1)
   (:type 'object-type)
   (:syntax '|IpNetToPhysicalEntry|)
@@ -2137,7 +2299,9 @@
   (:description
    "Each entry contains one IP address to `physical' address
             equivalence."))
+
 (deftype |IpNetToPhysicalEntry| () 't)
+
 (defoid |ipNetToPhysicalIfIndex| (|ipNetToPhysicalEntry| 1)
   (:type 'object-type)
   (:syntax '|InterfaceIndex|)
@@ -2148,12 +2312,14 @@
             which this entry is applicable.  The interface identified by
             a particular value of this index is the same interface as
             identified by the same value of the IF-MIB's ifIndex."))
+
 (defoid |ipNetToPhysicalNetAddressType| (|ipNetToPhysicalEntry| 2)
   (:type 'object-type)
   (:syntax '|InetAddressType|)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The type of ipNetToPhysicalNetAddress."))
+
 (defoid |ipNetToPhysicalNetAddress| (|ipNetToPhysicalEntry| 3)
   (:type 'object-type)
   (:syntax '|InetAddress|)
@@ -2172,6 +2338,7 @@
             instances of columns in this row will have more than 128
             sub-identifiers and cannot be accessed using SNMPv1,
             SNMPv2c, or SNMPv3."))
+
 (defoid |ipNetToPhysicalPhysAddress| (|ipNetToPhysicalEntry| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -2183,6 +2350,7 @@
             As the entries in this table are typically not persistent
             when this object is written the entity SHOULD NOT save the
             change to non-volatile storage."))
+
 (defoid |ipNetToPhysicalLastUpdated| (|ipNetToPhysicalEntry| 5)
   (:type 'object-type)
   (:syntax '|TimeStamp|)
@@ -2193,6 +2361,7 @@
             updated.  If this entry was updated prior to the last re-
             initialization of the local network management subsystem,
             then this object contains a zero value."))
+
 (defoid |ipNetToPhysicalType| (|ipNetToPhysicalEntry| 6)
   (:type 'object-type)
   (:syntax 't)
@@ -2232,6 +2401,7 @@
             As the entries in this table are typically not persistent
             when this object is written the entity SHOULD NOT save the
             change to non-volatile storage."))
+
 (defoid |ipNetToPhysicalState| (|ipNetToPhysicalEntry| 7)
   (:type 'object-type)
   (:syntax 't)
@@ -2242,6 +2412,7 @@
             interface when the address mapping in this entry is used.
             If Neighbor Unreachability Detection is not in use (e.g. for
             IPv4), this object is always unknown(6)."))
+
 (defoid |ipNetToPhysicalRowStatus| (|ipNetToPhysicalEntry| 8)
   (:type 'object-type)
   (:syntax '|RowStatus|)
@@ -2262,6 +2433,7 @@
             Note that if the ipNetToPhysicalType is set to 'invalid',
             the managed node may delete the entry independent of the
             state of this object."))
+
 (defoid |ipv6ScopeZoneIndexTable| (|ip| 36)
   (:type 'object-type)
   (:syntax 't)
@@ -2274,6 +2446,7 @@
             For those objects that have names rather than numbers, the
             names were chosen to coincide with the names used in the
             IPv6 address architecture document. "))
+
 (defoid |ipv6ScopeZoneIndexEntry| (|ipv6ScopeZoneIndexTable| 1)
   (:type 'object-type)
   (:syntax '|Ipv6ScopeZoneIndexEntry|)
@@ -2282,7 +2455,9 @@
   (:description
    "Each entry contains the list of scope identifiers on a given
             interface."))
+
 (deftype |Ipv6ScopeZoneIndexEntry| () 't)
+
 (defoid |ipv6ScopeZoneIndexIfIndex| (|ipv6ScopeZoneIndexEntry| 1)
   (:type 'object-type)
   (:syntax '|InterfaceIndex|)
@@ -2293,6 +2468,7 @@
             which these scopes belong.  The interface identified by a
             particular value of this index is the same interface as
             identified by the same value of the IF-MIB's ifIndex."))
+
 (defoid |ipv6ScopeZoneIndexLinkLocal| (|ipv6ScopeZoneIndexEntry| 2)
   (:type 'object-type)
   (:syntax '|InetZoneIndex|)
@@ -2300,12 +2476,14 @@
   (:status '|current|)
   (:description
    "The zone index for the link-local scope on this interface."))
+
 (defoid |ipv6ScopeZoneIndex3| (|ipv6ScopeZoneIndexEntry| 3)
   (:type 'object-type)
   (:syntax '|InetZoneIndex|)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The zone index for scope 3 on this interface."))
+
 (defoid |ipv6ScopeZoneIndexAdminLocal| (|ipv6ScopeZoneIndexEntry| 4)
   (:type 'object-type)
   (:syntax '|InetZoneIndex|)
@@ -2313,6 +2491,7 @@
   (:status '|current|)
   (:description
    "The zone index for the admin-local scope on this interface."))
+
 (defoid |ipv6ScopeZoneIndexSiteLocal| (|ipv6ScopeZoneIndexEntry| 5)
   (:type 'object-type)
   (:syntax '|InetZoneIndex|)
@@ -2320,18 +2499,21 @@
   (:status '|current|)
   (:description
    "The zone index for the site-local scope on this interface."))
+
 (defoid |ipv6ScopeZoneIndex6| (|ipv6ScopeZoneIndexEntry| 6)
   (:type 'object-type)
   (:syntax '|InetZoneIndex|)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The zone index for scope 6 on this interface."))
+
 (defoid |ipv6ScopeZoneIndex7| (|ipv6ScopeZoneIndexEntry| 7)
   (:type 'object-type)
   (:syntax '|InetZoneIndex|)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The zone index for scope 7 on this interface."))
+
 (defoid |ipv6ScopeZoneIndexOrganizationLocal|
         (|ipv6ScopeZoneIndexEntry| 8)
   (:type 'object-type)
@@ -2341,36 +2523,42 @@
   (:description
    "The zone index for the organization-local scope on this
             interface."))
+
 (defoid |ipv6ScopeZoneIndex9| (|ipv6ScopeZoneIndexEntry| 9)
   (:type 'object-type)
   (:syntax '|InetZoneIndex|)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The zone index for scope 9 on this interface."))
+
 (defoid |ipv6ScopeZoneIndexA| (|ipv6ScopeZoneIndexEntry| 10)
   (:type 'object-type)
   (:syntax '|InetZoneIndex|)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The zone index for scope A on this interface."))
+
 (defoid |ipv6ScopeZoneIndexB| (|ipv6ScopeZoneIndexEntry| 11)
   (:type 'object-type)
   (:syntax '|InetZoneIndex|)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The zone index for scope B on this interface."))
+
 (defoid |ipv6ScopeZoneIndexC| (|ipv6ScopeZoneIndexEntry| 12)
   (:type 'object-type)
   (:syntax '|InetZoneIndex|)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The zone index for scope C on this interface."))
+
 (defoid |ipv6ScopeZoneIndexD| (|ipv6ScopeZoneIndexEntry| 13)
   (:type 'object-type)
   (:syntax '|InetZoneIndex|)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The zone index for scope D on this interface."))
+
 (defoid |ipDefaultRouterTable| (|ip| 37)
   (:type 'object-type)
   (:syntax 't)
@@ -2382,6 +2570,7 @@
 
 
             entity."))
+
 (defoid |ipDefaultRouterEntry| (|ipDefaultRouterTable| 1)
   (:type 'object-type)
   (:syntax '|IpDefaultRouterEntry|)
@@ -2390,13 +2579,16 @@
   (:description
    "Each entry contains information about a default router known
             to this entity."))
+
 (deftype |IpDefaultRouterEntry| () 't)
+
 (defoid |ipDefaultRouterAddressType| (|ipDefaultRouterEntry| 1)
   (:type 'object-type)
   (:syntax '|InetAddressType|)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The address type for this row."))
+
 (defoid |ipDefaultRouterAddress| (|ipDefaultRouterEntry| 2)
   (:type 'object-type)
   (:syntax '|InetAddress|)
@@ -2412,6 +2604,7 @@
             instances of columns in this row will have more than 128
             sub-identifiers and cannot be accessed using SNMPv1,
             SNMPv2c, or SNMPv3."))
+
 (defoid |ipDefaultRouterIfIndex| (|ipDefaultRouterEntry| 3)
   (:type 'object-type)
   (:syntax '|InterfaceIndex|)
@@ -2422,6 +2615,7 @@
             which the router can be reached.  The interface identified
             by a particular value of this index is the same interface as
             identified by the same value of the IF-MIB's ifIndex."))
+
 (defoid |ipDefaultRouterLifetime| (|ipDefaultRouterEntry| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -2437,6 +2631,7 @@
 
             For IPv6, this value should be extracted from the router
             advertisement messages."))
+
 (defoid |ipDefaultRouterPreference| (|ipDefaultRouterEntry| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -2452,6 +2647,7 @@
             For IPv4 routers or IPv6 routers that are not using the
             updated router advertisement format, this object is set to
             medium (0)."))
+
 (defoid |ipv6RouterAdvertSpinLock| (|ip| 38)
   (:type 'object-type)
   (:syntax '|TestAndIncr|)
@@ -2474,6 +2670,7 @@
             ipv6RouterAdvertSpinLock.  It is suggested, but not
             required, that the ipv6RouterAdvertSpinLock be the first var
             bind for each set of objects representing a 'row' in a PDU."))
+
 (defoid |ipv6RouterAdvertTable| (|ip| 39)
   (:type 'object-type)
   (:syntax 't)
@@ -2482,6 +2679,7 @@
   (:description
    "The table containing information used to construct router
             advertisements."))
+
 (defoid |ipv6RouterAdvertEntry| (|ipv6RouterAdvertTable| 1)
   (:type 'object-type)
   (:syntax '|Ipv6RouterAdvertEntry|)
@@ -2494,7 +2692,9 @@
             Information in this table is persistent, and when this
             object is written, the entity SHOULD save the change to
             non-volatile storage."))
+
 (deftype |Ipv6RouterAdvertEntry| () 't)
+
 (defoid |ipv6RouterAdvertIfIndex| (|ipv6RouterAdvertEntry| 1)
   (:type 'object-type)
   (:syntax '|InterfaceIndex|)
@@ -2506,6 +2706,7 @@
             information will be transmitted.  The interface identified
             by a particular value of this index is the same interface as
             identified by the same value of the IF-MIB's ifIndex."))
+
 (defoid |ipv6RouterAdvertSendAdverts| (|ipv6RouterAdvertEntry| 2)
   (:type 'object-type)
   (:syntax '|TruthValue|)
@@ -2515,6 +2716,7 @@
    "A flag indicating whether the router sends periodic
             router advertisements and responds to router solicitations
             on this interface."))
+
 (defoid |ipv6RouterAdvertMaxInterval| (|ipv6RouterAdvertEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -2526,6 +2728,7 @@
 
 
             advertisements from this interface."))
+
 (defoid |ipv6RouterAdvertMinInterval| (|ipv6RouterAdvertEntry| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -2538,6 +2741,7 @@
             The default is 0.33 * ipv6RouterAdvertMaxInterval, however,
             in the case of a low value for ipv6RouterAdvertMaxInterval,
             the minimum value for this object is restricted to 3."))
+
 (defoid |ipv6RouterAdvertManagedFlag| (|ipv6RouterAdvertEntry| 5)
   (:type 'object-type)
   (:syntax '|TruthValue|)
@@ -2547,6 +2751,7 @@
    "The true/false value to be placed into the 'managed address
             configuration' flag field in router advertisements sent from
             this interface."))
+
 (defoid |ipv6RouterAdvertOtherConfigFlag| (|ipv6RouterAdvertEntry| 6)
   (:type 'object-type)
   (:syntax '|TruthValue|)
@@ -2556,6 +2761,7 @@
    "The true/false value to be placed into the 'other stateful
             configuration' flag field in router advertisements sent from
             this interface."))
+
 (defoid |ipv6RouterAdvertLinkMTU| (|ipv6RouterAdvertEntry| 7)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -2566,6 +2772,7 @@
             this interface.
 
             A value of zero indicates that no MTU options are sent."))
+
 (defoid |ipv6RouterAdvertReachableTime| (|ipv6RouterAdvertEntry| 8)
   (:type 'object-type)
   (:syntax 't)
@@ -2578,6 +2785,7 @@
             A value of zero in the router advertisement indicates that
             the advertisement isn't specifying a value for reachable
             time."))
+
 (defoid |ipv6RouterAdvertRetransmitTime| (|ipv6RouterAdvertEntry| 9)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -2590,6 +2798,7 @@
             A value of zero in the router advertisement indicates that
             the advertisement isn't specifying a value for retrans
             time."))
+
 (defoid |ipv6RouterAdvertCurHopLimit| (|ipv6RouterAdvertEntry| 10)
   (:type 'object-type)
   (:syntax 't)
@@ -2609,6 +2818,7 @@
 
             The default should be set to the value specified in the IANA
             web pages (www.iana.org) at the time of implementation."))
+
 (defoid |ipv6RouterAdvertDefaultLifetime| (|ipv6RouterAdvertEntry| 11)
   (:type 'object-type)
   (:syntax 't)
@@ -2624,6 +2834,7 @@
             as a default router.
 
             The default is 3 * ipv6RouterAdvertMaxInterval."))
+
 (defoid |ipv6RouterAdvertRowStatus| (|ipv6RouterAdvertEntry| 12)
   (:type 'object-type)
   (:syntax '|RowStatus|)
@@ -2641,26 +2852,32 @@
             can be modified.  The value of this object has no effect on
             whether other objects in this conceptual row can be
             modified."))
+
 (defoid |icmp| (|mib-2| 5) (:type 'object-identity))
+
 (defoid |icmpStatsTable| (|icmp| 29)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The table of generic system-wide ICMP counters."))
+
 (defoid |icmpStatsEntry| (|icmpStatsTable| 1)
   (:type 'object-type)
   (:syntax '|IcmpStatsEntry|)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A conceptual row in the icmpStatsTable."))
+
 (deftype |IcmpStatsEntry| () 't)
+
 (defoid |icmpStatsIPVersion| (|icmpStatsEntry| 1)
   (:type 'object-type)
   (:syntax '|InetVersion|)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The IP version of the statistics."))
+
 (defoid |icmpStatsInMsgs| (|icmpStatsEntry| 2)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -2670,6 +2887,7 @@
    "The total number of ICMP messages that the entity received.
             Note that this counter includes all those counted by
             icmpStatsInErrors."))
+
 (defoid |icmpStatsInErrors| (|icmpStatsEntry| 3)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -2679,6 +2897,7 @@
    "The number of ICMP messages that the entity received but
             determined as having ICMP-specific errors (bad ICMP
             checksums, bad length, etc.)."))
+
 (defoid |icmpStatsOutMsgs| (|icmpStatsEntry| 4)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -2688,6 +2907,7 @@
    "The total number of ICMP messages that the entity attempted
             to send.  Note that this counter includes all those counted
             by icmpStatsOutErrors."))
+
 (defoid |icmpStatsOutErrors| (|icmpStatsEntry| 5)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -2701,6 +2921,7 @@
             the resultant datagram.  In some implementations, there may
             be no types of error that contribute to this counter's
             value."))
+
 (defoid |icmpMsgStatsTable| (|icmp| 30)
   (:type 'object-type)
   (:syntax 't)
@@ -2709,6 +2930,7 @@
   (:description
    "The table of system-wide per-version, per-message type ICMP
             counters."))
+
 (defoid |icmpMsgStatsEntry| (|icmpMsgStatsTable| 1)
   (:type 'object-type)
   (:syntax '|IcmpMsgStatsEntry|)
@@ -2726,13 +2948,16 @@
             received or transmitted.  After receiving or transmitting
             any succeeding messages with Type=X, the relevant counter
             must be incremented."))
+
 (deftype |IcmpMsgStatsEntry| () 't)
+
 (defoid |icmpMsgStatsIPVersion| (|icmpMsgStatsEntry| 1)
   (:type 'object-type)
   (:syntax '|InetVersion|)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The IP version of the statistics."))
+
 (defoid |icmpMsgStatsType| (|icmpMsgStatsEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -2744,22 +2969,28 @@
 
             Note that ICMP message types are scoped by the address type
             in use."))
+
 (defoid |icmpMsgStatsInPkts| (|icmpMsgStatsEntry| 3)
   (:type 'object-type)
   (:syntax '|Counter32|)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The number of input packets for this AF and type."))
+
 (defoid |icmpMsgStatsOutPkts| (|icmpMsgStatsEntry| 4)
   (:type 'object-type)
   (:syntax '|Counter32|)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The number of output packets for this AF and type."))
+
 (defoid |ipMIBConformance| (|ipMIB| 2) (:type 'object-identity))
+
 (defoid |ipMIBCompliances| (|ipMIBConformance| 1)
   (:type 'object-identity))
+
 (defoid |ipMIBGroups| (|ipMIBConformance| 2) (:type 'object-identity))
+
 (defoid |ipMIBCompliance2| (|ipMIBCompliances| 2)
   (:type 'module-compliance)
   (:status '|current|)
@@ -2857,30 +3088,35 @@
             --     This MIB requires support for only global and
             --     non-global IPv4 and IPv6 addresses and so the size
             --     can be 4, 8, 16, or 20 bytes."))
+
 (defoid |ipv4GeneralGroup| (|ipMIBGroups| 3)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "The group of IPv4-specific objects for basic management of
             IPv4 entities."))
+
 (defoid |ipv4IfGroup| (|ipMIBGroups| 4)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "The group of IPv4-specific objects for basic management of
             IPv4 interfaces."))
+
 (defoid |ipv6GeneralGroup2| (|ipMIBGroups| 5)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "The IPv6 group of objects providing for basic management of
             IPv6 entities."))
+
 (defoid |ipv6IfGroup| (|ipMIBGroups| 6)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "The group of IPv6-specific objects for basic management of
             IPv6 interfaces."))
+
 (defoid |ipLastChangeGroup| (|ipMIBGroups| 7)
   (:type 'object-group)
   (:status '|current|)
@@ -2893,40 +3129,48 @@
             several sub-agents using AgentX, the agent MUST NOT
             implement these objects to return an incorrect or static
             value."))
+
 (defoid |ipSystemStatsGroup| (|ipMIBGroups| 8)
   (:type 'object-group)
   (:status '|current|)
   (:description "IP system wide statistics."))
+
 (defoid |ipv4SystemStatsGroup| (|ipMIBGroups| 9)
   (:type 'object-group)
   (:status '|current|)
   (:description "IPv4 only system wide statistics."))
+
 (defoid |ipSystemStatsHCOctetGroup| (|ipMIBGroups| 10)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "IP system wide statistics for systems that may overflow the
             standard octet counters within 1 hour."))
+
 (defoid |ipSystemStatsHCPacketGroup| (|ipMIBGroups| 11)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "IP system wide statistics for systems that may overflow the
             standard packet counters within 1 hour."))
+
 (defoid |ipv4SystemStatsHCPacketGroup| (|ipMIBGroups| 12)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "IPv4 only system wide statistics for systems that may
             overflow the standard packet counters within 1 hour."))
+
 (defoid |ipIfStatsGroup| (|ipMIBGroups| 13)
   (:type 'object-group)
   (:status '|current|)
   (:description "IP per-interface statistics."))
+
 (defoid |ipv4IfStatsGroup| (|ipMIBGroups| 14)
   (:type 'object-group)
   (:status '|current|)
   (:description "IPv4 only per-interface statistics."))
+
 (defoid |ipIfStatsHCOctetGroup| (|ipMIBGroups| 15)
   (:type 'object-group)
   (:status '|current|)
@@ -2934,6 +3178,7 @@
    "IP per-interfaces statistics for systems that include
             interfaces that may overflow the standard octet
             counters within 1 hour."))
+
 (defoid |ipIfStatsHCPacketGroup| (|ipMIBGroups| 16)
   (:type 'object-group)
   (:status '|current|)
@@ -2941,6 +3186,7 @@
    "IP per-interfaces statistics for systems that include
             interfaces that may overflow the standard packet counters
             within 1 hour."))
+
 (defoid |ipv4IfStatsHCPacketGroup| (|ipMIBGroups| 17)
   (:type 'object-group)
   (:status '|current|)
@@ -2948,18 +3194,21 @@
    "IPv4 only per-interface statistics for systems that include
             interfaces that may overflow the standard packet counters
             within 1 hour."))
+
 (defoid |ipAddressPrefixGroup| (|ipMIBGroups| 18)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "The group of objects for providing information about address
             prefixes used by this node."))
+
 (defoid |ipAddressGroup| (|ipMIBGroups| 19)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "The group of objects for providing information about the
             addresses relevant to this entity's interfaces."))
+
 (defoid |ipNetToPhysicalGroup| (|ipMIBGroups| 20)
   (:type 'object-group)
   (:status '|current|)
@@ -2967,26 +3216,31 @@
    "The group of objects for providing information about the
             mappings of network address to physical address known to
             this node."))
+
 (defoid |ipv6ScopeGroup| (|ipMIBGroups| 21)
   (:type 'object-group)
   (:status '|current|)
   (:description "The group of objects for managing IPv6 scope zones."))
+
 (defoid |ipDefaultRouterGroup| (|ipMIBGroups| 22)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "The group of objects for providing information about default
             routers known to this node."))
+
 (defoid |ipv6RouterAdvertGroup| (|ipMIBGroups| 23)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "The group of objects for controlling information advertised
             by IPv6 routers."))
+
 (defoid |icmpStatsGroup| (|ipMIBGroups| 24)
   (:type 'object-group)
   (:status '|current|)
   (:description "The group of objects providing ICMP statistics."))
+
 (defoid |ipInReceives| (|ip| 3)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3002,6 +3256,7 @@
 
             table has been added.  It is loosely replaced by
             ipSystemStatsInRecieves."))
+
 (defoid |ipInHdrErrors| (|ip| 4)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3016,6 +3271,7 @@
             This object has been deprecated as a new IP version-neutral
             table has been added.  It is loosely replaced by
             ipSystemStatsInHdrErrors."))
+
 (defoid |ipInAddrErrors| (|ip| 5)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3034,6 +3290,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by
             ipSystemStatsInAddrErrors."))
+
 (defoid |ipForwDatagrams| (|ip| 6)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3054,6 +3311,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by
             ipSystemStatsInForwDatagrams."))
+
 (defoid |ipInUnknownProtos| (|ip| 7)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3067,6 +3325,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by
             ipSystemStatsInUnknownProtos."))
+
 (defoid |ipInDiscards| (|ip| 8)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3082,6 +3341,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by
             ipSystemStatsInDiscards."))
+
 (defoid |ipInDelivers| (|ip| 9)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3097,6 +3357,7 @@
 
 
             ipSystemStatsIndelivers."))
+
 (defoid |ipOutRequests| (|ip| 10)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3111,6 +3372,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by
             ipSystemStatsOutRequests."))
+
 (defoid |ipOutDiscards| (|ip| 11)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3127,6 +3389,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by
             ipSystemStatsOutDiscards."))
+
 (defoid |ipOutNoRoutes| (|ip| 12)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3146,6 +3409,7 @@
 
             table has been added.  It is loosely replaced by
             ipSystemStatsOutNoRoutes."))
+
 (defoid |ipReasmReqds| (|ip| 14)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3158,6 +3422,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by
             ipSystemStatsReasmReqds."))
+
 (defoid |ipReasmOKs| (|ip| 15)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3169,6 +3434,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by
             ipSystemStatsReasmOKs."))
+
 (defoid |ipReasmFails| (|ip| 16)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3185,6 +3451,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by
             ipSystemStatsReasmFails."))
+
 (defoid |ipFragOKs| (|ip| 17)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3197,6 +3464,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by
             ipSystemStatsOutFragOKs."))
+
 (defoid |ipFragFails| (|ip| 18)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3211,6 +3479,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by
             ipSystemStatsOutFragFails."))
+
 (defoid |ipFragCreates| (|ip| 19)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3223,6 +3492,7 @@
             This object has been deprecated as a new IP version neutral
             table has been added.  It is loosely replaced by
             ipSystemStatsOutFragCreates."))
+
 (defoid |ipRoutingDiscards| (|ip| 23)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3242,6 +3512,7 @@
             clarify the specifications, this object has been deprecated
             and a similar, but more thoroughly clarified, object has
             been added to the IP-FORWARD-MIB."))
+
 (defoid |ipAddrTable| (|ip| 20)
   (:type 'object-type)
   (:syntax 't)
@@ -3256,6 +3527,7 @@
             ipAddressTable although several objects that weren't deemed
             useful weren't carried forward while another
             (ipAdEntReasmMaxSize) was moved to the ipv4InterfaceTable."))
+
 (defoid |ipAddrEntry| (|ipAddrTable| 1)
   (:type 'object-type)
   (:syntax '|IpAddrEntry|)
@@ -3264,7 +3536,9 @@
   (:description
    "The addressing information for one of this entity's IPv4
             addresses."))
+
 (deftype |IpAddrEntry| () 't)
+
 (defoid |ipAdEntAddr| (|ipAddrEntry| 1)
   (:type 'object-type)
   (:syntax '|IpAddress|)
@@ -3273,6 +3547,7 @@
   (:description
    "The IPv4 address to which this entry's addressing
             information pertains."))
+
 (defoid |ipAdEntIfIndex| (|ipAddrEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -3283,6 +3558,7 @@
             which this entry is applicable.  The interface identified by
             a particular value of this index is the same interface as
             identified by the same value of the IF-MIB's ifIndex."))
+
 (defoid |ipAdEntNetMask| (|ipAddrEntry| 3)
   (:type 'object-type)
   (:syntax '|IpAddress|)
@@ -3292,6 +3568,7 @@
    "The subnet mask associated with the IPv4 address of this
             entry.  The value of the mask is an IPv4 address with all
             the network bits set to 1 and all the hosts bits set to 0."))
+
 (defoid |ipAdEntBcastAddr| (|ipAddrEntry| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -3305,6 +3582,7 @@
             address is used, the value will be 1.  This value applies to
             both the subnet and network broadcast addresses used by the
             entity on this (logical) interface."))
+
 (defoid |ipAdEntReasmMaxSize| (|ipAddrEntry| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -3314,6 +3592,7 @@
    "The size of the largest IPv4 datagram which this entity can
             re-assemble from incoming IPv4 fragmented datagrams received
             on this interface."))
+
 (defoid |ipNetToMediaTable| (|ip| 22)
   (:type 'object-type)
   (:syntax 't)
@@ -3326,6 +3605,7 @@
             This table has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by the
             ipNetToPhysicalTable."))
+
 (defoid |ipNetToMediaEntry| (|ipNetToMediaTable| 1)
   (:type 'object-type)
   (:syntax '|IpNetToMediaEntry|)
@@ -3334,7 +3614,9 @@
   (:description
    "Each entry contains one IpAddress to `physical' address
             equivalence."))
+
 (deftype |IpNetToMediaEntry| () 't)
+
 (defoid |ipNetToMediaIfIndex| (|ipNetToMediaEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -3352,6 +3634,7 @@
             This object predates the rule limiting index objects to a
             max access value of 'not-accessible' and so continues to use
             a value of 'read-create'."))
+
 (defoid |ipNetToMediaPhysAddress| (|ipNetToMediaEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -3366,6 +3649,7 @@
             change to non-volatile storage.  Note: a stronger
             requirement is not used because this object was previously
             defined."))
+
 (defoid |ipNetToMediaNetAddress| (|ipNetToMediaEntry| 3)
   (:type 'object-type)
   (:syntax '|IpAddress|)
@@ -3378,6 +3662,7 @@
             This object predates the rule limiting index objects to a
             max access value of 'not-accessible' and so continues to use
             a value of 'read-create'."))
+
 (defoid |ipNetToMediaType| (|ipNetToMediaEntry| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -3406,6 +3691,7 @@
             change to non-volatile storage.  Note: a stronger
             requirement is not used because this object was previously
             defined."))
+
 (defoid |icmpInMsgs| (|icmp| 1)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3419,6 +3705,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by
             icmpStatsInMsgs."))
+
 (defoid |icmpInErrors| (|icmp| 2)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3432,6 +3719,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by
             icmpStatsInErrors."))
+
 (defoid |icmpInDestUnreachs| (|icmp| 3)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3444,6 +3732,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by a column in
             the icmpMsgStatsTable."))
+
 (defoid |icmpInTimeExcds| (|icmp| 4)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3455,6 +3744,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by a column in
             the icmpMsgStatsTable."))
+
 (defoid |icmpInParmProbs| (|icmp| 5)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3466,6 +3756,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by a column in
             the icmpMsgStatsTable."))
+
 (defoid |icmpInSrcQuenchs| (|icmp| 6)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3477,6 +3768,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by a column in
             the icmpMsgStatsTable."))
+
 (defoid |icmpInRedirects| (|icmp| 7)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3488,6 +3780,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by a column in
             the icmpMsgStatsTable."))
+
 (defoid |icmpInEchos| (|icmp| 8)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3499,6 +3792,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by a column in
             the icmpMsgStatsTable."))
+
 (defoid |icmpInEchoReps| (|icmp| 9)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3510,6 +3804,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by a column in
             the icmpMsgStatsTable."))
+
 (defoid |icmpInTimestamps| (|icmp| 10)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3521,6 +3816,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by a column in
             the icmpMsgStatsTable."))
+
 (defoid |icmpInTimestampReps| (|icmp| 11)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3532,6 +3828,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by a column in
             the icmpMsgStatsTable."))
+
 (defoid |icmpInAddrMasks| (|icmp| 12)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3543,6 +3840,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by a column in
             the icmpMsgStatsTable."))
+
 (defoid |icmpInAddrMaskReps| (|icmp| 13)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3554,6 +3852,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by a column in
             the icmpMsgStatsTable."))
+
 (defoid |icmpOutMsgs| (|icmp| 14)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3567,6 +3866,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by
             icmpStatsOutMsgs."))
+
 (defoid |icmpOutErrors| (|icmp| 15)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3584,6 +3884,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by
             icmpStatsOutErrors."))
+
 (defoid |icmpOutDestUnreachs| (|icmp| 16)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3595,6 +3896,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by a column in
             the icmpMsgStatsTable."))
+
 (defoid |icmpOutTimeExcds| (|icmp| 17)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3606,6 +3908,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by a column in
             the icmpMsgStatsTable."))
+
 (defoid |icmpOutParmProbs| (|icmp| 18)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3617,6 +3920,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by a column in
             the icmpMsgStatsTable."))
+
 (defoid |icmpOutSrcQuenchs| (|icmp| 19)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3628,6 +3932,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by a column in
             the icmpMsgStatsTable."))
+
 (defoid |icmpOutRedirects| (|icmp| 20)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3641,6 +3946,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by a column in
             the icmpMsgStatsTable."))
+
 (defoid |icmpOutEchos| (|icmp| 21)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3652,6 +3958,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by a column in
             the icmpMsgStatsTable."))
+
 (defoid |icmpOutEchoReps| (|icmp| 22)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3663,6 +3970,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by a column in
             the icmpMsgStatsTable."))
+
 (defoid |icmpOutTimestamps| (|icmp| 23)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3674,6 +3982,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by a column in
             the icmpMsgStatsTable."))
+
 (defoid |icmpOutTimestampReps| (|icmp| 24)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3685,6 +3994,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by a column in
             the icmpMsgStatsTable."))
+
 (defoid |icmpOutAddrMasks| (|icmp| 25)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3696,6 +4006,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by a column in
             the icmpMsgStatsTable."))
+
 (defoid |icmpOutAddrMaskReps| (|icmp| 26)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -3707,6 +4018,7 @@
             This object has been deprecated, as a new IP version-neutral
             table has been added.  It is loosely replaced by a column in
             the icmpMsgStatsTable."))
+
 (defoid |ipMIBCompliance| (|ipMIBCompliances| 1)
   (:type 'module-compliance)
   (:status '|deprecated|)
@@ -3714,6 +4026,7 @@
    "The compliance statement for systems that implement only
             IPv4.  For version-independence, this compliance statement
             is deprecated in favor of ipMIBCompliance2."))
+
 (defoid |ipGroup| (|ipMIBGroups| 1)
   (:type 'object-group)
   (:status '|deprecated|)
@@ -3726,6 +4039,7 @@
 
             As part of the version independence, this group has been
             deprecated.  "))
+
 (defoid |icmpGroup| (|ipMIBGroups| 2)
   (:type 'object-group)
   (:status '|deprecated|)
@@ -3734,4 +4048,6 @@
 
             As part of the version independence, this group has been
             deprecated.  "))
+
 (eval-when (:load-toplevel :execute) (setf *current-module* nil))
+

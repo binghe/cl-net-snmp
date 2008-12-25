@@ -2,9 +2,11 @@
 ;;;; Auto-generated from MIB:NET-SNMP;SNMP-FRAMEWORK-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'snmp-framework-mib *mib-modules*)
   (setf *current-module* 'snmp-framework-mib))
+
 (defpackage :asn.1/snmp-framework-mib
   (:nicknames :snmp-framework-mib)
   (:use :common-lisp :asn.1)
@@ -12,7 +14,9 @@
                 object-identity |snmpModules|)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group))
+
 (in-package :snmp-framework-mib)
+
 (defoid |snmpFrameworkMIB| (|snmpModules| 10)
   (:type 'module-identity)
   (:description
@@ -22,19 +26,29 @@
                      version of this MIB module is part of RFC 3411;
                      see the RFC itself for full legal notices.
                     "))
+
 (deftype |SnmpEngineID| () 't)
+
 (deftype |SnmpSecurityModel| () 't)
+
 (deftype |SnmpMessageProcessingModel| () 't)
+
 (deftype |SnmpSecurityLevel| () 't)
+
 (deftype |SnmpAdminString| () 't)
+
 (defoid |snmpFrameworkAdmin| (|snmpFrameworkMIB| 1)
   (:type 'object-identity))
+
 (defoid |snmpFrameworkMIBObjects| (|snmpFrameworkMIB| 2)
   (:type 'object-identity))
+
 (defoid |snmpFrameworkMIBConformance| (|snmpFrameworkMIB| 3)
   (:type 'object-identity))
+
 (defoid |snmpEngine| (|snmpFrameworkMIBObjects| 1)
   (:type 'object-identity))
+
 (defoid |snmpEngineID| (|snmpEngine| 1)
   (:type 'object-type)
   (:syntax '|SnmpEngineID|)
@@ -47,6 +61,7 @@
                  storage so that it remains constant across
                  re-initializations of the SNMP engine.
                 "))
+
 (defoid |snmpEngineBoots| (|snmpEngine| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -57,6 +72,7 @@
                  (re-)initialized itself since snmpEngineID
                  was last configured.
                 "))
+
 (defoid |snmpEngineTime| (|snmpEngine| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -71,6 +87,7 @@
                  re-initialization had occurred, and this
                  object's value consequently reverts to zero.
                 "))
+
 (defoid |snmpEngineMaxMessageSize| (|snmpEngine| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -83,6 +100,7 @@
                  message size values supported among all of the
                  transports available to and supported by the engine.
                 "))
+
 (defoid |snmpAuthProtocols| (|snmpFrameworkAdmin| 1)
   (:type 'object-identity)
   (:status '|current|)
@@ -91,6 +109,7 @@
                   authentication protocols used in SNMP Management
                   Frameworks.
                  "))
+
 (defoid |snmpPrivProtocols| (|snmpFrameworkAdmin| 2)
   (:type 'object-identity)
   (:status '|current|)
@@ -98,10 +117,13 @@
    "Registration point for standards-track privacy
                   protocols used in SNMP Management Frameworks.
                  "))
+
 (defoid |snmpFrameworkMIBCompliances| (|snmpFrameworkMIBConformance| 1)
   (:type 'object-identity))
+
 (defoid |snmpFrameworkMIBGroups| (|snmpFrameworkMIBConformance| 2)
   (:type 'object-identity))
+
 (defoid |snmpFrameworkMIBCompliance| (|snmpFrameworkMIBCompliances| 1)
   (:type 'module-compliance)
   (:status '|current|)
@@ -109,6 +131,7 @@
    "The compliance statement for SNMP engines which
                  implement the SNMP Management Framework MIB.
                 "))
+
 (defoid |snmpEngineGroup| (|snmpFrameworkMIBGroups| 1)
   (:type 'object-group)
   (:status '|current|)
@@ -118,4 +141,6 @@
 
                  values of an SNMP engine.
                 "))
+
 (eval-when (:load-toplevel :execute) (setf *current-module* nil))
+

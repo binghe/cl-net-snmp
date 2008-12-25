@@ -2,9 +2,11 @@
 ;;;; Auto-generated from MIB:NET-SNMP;SNMPV2-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew '|SNMPv2-MIB| *mib-modules*)
   (setf *current-module* '|SNMPv2-MIB|))
+
 (defpackage :|ASN.1/SNMPv2-MIB|
   (:nicknames :|SNMPv2-MIB|)
   (:use :common-lisp :asn.1)
@@ -15,7 +17,9 @@
                 |TimeStamp|)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group
                 notification-group))
+
 (in-package :|SNMPv2-MIB|)
+
 (defoid |snmpMIB| (|snmpModules| 1)
   (:type 'module-identity)
   (:description
@@ -25,8 +29,11 @@
              version of this MIB module is part of RFC 3418;
              see the RFC itself for full legal notices.
             "))
+
 (defoid |snmpMIBObjects| (|snmpMIB| 1) (:type 'object-identity))
+
 (defoid |system| (|mib-2| 1) (:type 'object-identity))
+
 (defoid |sysDescr| (|system| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -37,6 +44,7 @@
             include the full name and version identification of
             the system's hardware type, software operating-system,
             and networking software."))
+
 (defoid |sysObjectID| (|system| 2)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -52,6 +60,7 @@
             Inc.' was assigned the subtree 1.3.6.1.4.1.424242,
             it could assign the identifier 1.3.6.1.4.1.424242.1.1
             to its `Fred Router'."))
+
 (defoid |sysUpTime| (|system| 3)
   (:type 'object-type)
   (:syntax '|TimeTicks|)
@@ -61,6 +70,7 @@
    "The time (in hundredths of a second) since the
             network management portion of the system was last
             re-initialized."))
+
 (defoid |sysContact| (|system| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -71,6 +81,7 @@
             this managed node, together with information on how
             to contact this person.  If no contact information is
             known, the value is the zero-length string."))
+
 (defoid |sysName| (|system| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -81,6 +92,7 @@
             node.  By convention, this is the node's fully-qualified
             domain name.  If the name is unknown, the value is
             the zero-length string."))
+
 (defoid |sysLocation| (|system| 6)
   (:type 'object-type)
   (:syntax 't)
@@ -90,6 +102,7 @@
    "The physical location of this node (e.g., 'telephone
             closet, 3rd floor').  If the location is unknown, the
             value is the zero-length string."))
+
 (defoid |sysServices| (|system| 7)
   (:type 'object-type)
   (:syntax 't)
@@ -118,6 +131,7 @@
 
             For systems including OSI protocols, layers 5 and 6
             may also be counted."))
+
 (defoid |sysORLastChange| (|system| 8)
   (:type 'object-type)
   (:syntax '|TimeStamp|)
@@ -126,6 +140,7 @@
   (:description
    "The value of sysUpTime at the time of the most recent
             change in state or value of any instance of sysORID."))
+
 (defoid |sysORTable| (|system| 9)
   (:type 'object-type)
   (:syntax 't)
@@ -138,13 +153,16 @@
             SNMP entities having dynamically-configurable support
             of MIB modules will have a dynamically-varying number
             of conceptual rows."))
+
 (defoid |sysOREntry| (|sysORTable| 1)
   (:type 'object-type)
   (:syntax '|SysOREntry|)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "An entry (conceptual row) in the sysORTable."))
+
 (deftype |SysOREntry| () 't)
+
 (defoid |sysORIndex| (|sysOREntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -153,6 +171,7 @@
   (:description
    "The auxiliary variable used for identifying instances
             of the columnar objects in the sysORTable."))
+
 (defoid |sysORID| (|sysOREntry| 2)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -163,6 +182,7 @@
             statement with respect to various MIB modules supported
             by the local SNMP application acting as a command
             responder."))
+
 (defoid |sysORDescr| (|sysOREntry| 3)
   (:type 'object-type)
   (:syntax '|DisplayString|)
@@ -171,6 +191,7 @@
   (:description
    "A textual description of the capabilities identified
             by the corresponding instance of sysORID."))
+
 (defoid |sysORUpTime| (|sysOREntry| 4)
   (:type 'object-type)
   (:syntax '|TimeStamp|)
@@ -179,7 +200,9 @@
   (:description
    "The value of sysUpTime at the time this conceptual
             row was last instantiated."))
+
 (defoid |snmp| (|mib-2| 11) (:type 'object-identity))
+
 (defoid |snmpInPkts| (|snmp| 1)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -188,6 +211,7 @@
   (:description
    "The total number of messages delivered to the SNMP
             entity from the transport service."))
+
 (defoid |snmpInBadVersions| (|snmp| 3)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -197,6 +221,7 @@
    "The total number of SNMP messages which were delivered
             to the SNMP entity and were for an unsupported SNMP
             version."))
+
 (defoid |snmpInBadCommunityNames| (|snmp| 4)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -217,6 +242,7 @@
            the documentation for any security model which is used
            to authenticate community-based SNMP messages specify
            the precise conditions that contribute to this value."))
+
 (defoid |snmpInBadCommunityUses| (|snmp| 5)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -235,6 +261,7 @@
            access control mechanism which is used to control access
            to and visibility of MIB instrumentation specify the
            precise conditions that contribute to this value."))
+
 (defoid |snmpInASNParseErrs| (|snmp| 6)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -243,6 +270,7 @@
   (:description
    "The total number of ASN.1 or BER errors encountered by
             the SNMP entity when decoding received SNMP messages."))
+
 (defoid |snmpEnableAuthenTraps| (|snmp| 30)
   (:type 'object-type)
   (:syntax 't)
@@ -259,6 +287,7 @@
             be stored in non-volatile memory so that it remains
             constant across re-initializations of the network
             management system."))
+
 (defoid |snmpSilentDrops| (|snmp| 31)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -275,6 +304,7 @@
            was greater than either a local constraint or the
            maximum message size associated with the originator of
            the request."))
+
 (defoid |snmpProxyDrops| (|snmp| 32)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -290,7 +320,9 @@
             failed in a manner (other than a time-out) such that
             no Response Class PDU (such as a Response-PDU) could
             be returned."))
+
 (defoid |snmpTrap| (|snmpMIBObjects| 4) (:type 'object-identity))
+
 (defoid |snmpTrapOID| (|snmpTrap| 1)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -301,6 +333,7 @@
             currently being sent.  This variable occurs as
             the second varbind in every SNMPv2-Trap-PDU and
             InformRequest-PDU."))
+
 (defoid |snmpTrapEnterprise| (|snmpTrap| 3)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -312,7 +345,9 @@
             SNMP proxy agent is mapping an RFC1157 Trap-PDU
             into a SNMPv2-Trap-PDU, this variable occurs as the
             last varbind."))
+
 (defoid |snmpTraps| (|snmpMIBObjects| 5) (:type 'object-identity))
+
 (defoid |coldStart| (|snmpTraps| 1)
   (:type 'notification-type)
   (:status '|current|)
@@ -321,6 +356,7 @@
             supporting a notification originator application, is
             reinitializing itself and that its configuration may
             have been altered."))
+
 (defoid |warmStart| (|snmpTraps| 2)
   (:type 'notification-type)
   (:status '|current|)
@@ -329,6 +365,7 @@
             supporting a notification originator application,
             is reinitializing itself such that its configuration
             is unaltered."))
+
 (defoid |authenticationFailure| (|snmpTraps| 5)
   (:type 'notification-type)
   (:status '|current|)
@@ -339,7 +376,9 @@
              of SNMP entities MAY be capable of generating this
              trap, the snmpEnableAuthenTraps object indicates
              whether this trap will be generated."))
+
 (defoid |snmpSet| (|snmpMIBObjects| 6) (:type 'object-identity))
+
 (defoid |snmpSetSerialNo| (|snmpSet| 1)
   (:type 'object-type)
   (:syntax '|TestAndIncr|)
@@ -354,11 +393,15 @@
             To achieve fine-grain coordination, one or more similar
             objects might be defined within each MIB group, as
             appropriate."))
+
 (defoid |snmpMIBConformance| (|snmpMIB| 2) (:type 'object-identity))
+
 (defoid |snmpMIBCompliances| (|snmpMIBConformance| 1)
   (:type 'object-identity))
+
 (defoid |snmpMIBGroups| (|snmpMIBConformance| 2)
   (:type 'object-identity))
+
 (defoid |snmpBasicCompliance| (|snmpMIBCompliances| 2)
   (:type 'module-compliance)
   (:status '|deprecated|)
@@ -368,18 +411,21 @@
 
             This compliance statement is replaced by
             snmpBasicComplianceRev2."))
+
 (defoid |snmpBasicComplianceRev2| (|snmpMIBCompliances| 3)
   (:type 'module-compliance)
   (:status '|current|)
   (:description
    "The compliance statement for SNMP entities which
             implement this MIB module."))
+
 (defoid |snmpGroup| (|snmpMIBGroups| 8)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "A collection of objects providing basic instrumentation
             and control of an SNMP entity."))
+
 (defoid |snmpCommunityGroup| (|snmpMIBGroups| 9)
   (:type 'object-group)
   (:status '|current|)
@@ -387,6 +433,7 @@
    "A collection of objects providing basic instrumentation
             of a SNMP entity which supports community-based
             authentication."))
+
 (defoid |snmpSetGroup| (|snmpMIBGroups| 5)
   (:type 'object-group)
   (:status '|current|)
@@ -394,18 +441,21 @@
    "A collection of objects which allow several cooperating
             command generator applications to coordinate their
             use of the set operation."))
+
 (defoid |systemGroup| (|snmpMIBGroups| 6)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "The system group defines objects which are common to all
             managed systems."))
+
 (defoid |snmpBasicNotificationsGroup| (|snmpMIBGroups| 7)
   (:type 'notification-group)
   (:status '|current|)
   (:description
    "The basic notifications implemented by an SNMP entity
         supporting command responder applications."))
+
 (defoid |snmpWarmStartNotificationGroup| (|snmpMIBGroups| 11)
   (:type 'notification-group)
   (:status '|current|)
@@ -413,12 +463,14 @@
    "An additional notification for an SNMP entity supporting
      command responder applications, if it is able to reinitialize
      itself such that its configuration is unaltered."))
+
 (defoid |snmpNotificationGroup| (|snmpMIBGroups| 12)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "These objects are required for entities
             which support notification originator applications."))
+
 (defoid |snmpOutPkts| (|snmp| 2)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -428,6 +480,7 @@
    "The total number of SNMP Messages which were
             passed from the SNMP protocol entity to the
             transport service."))
+
 (defoid |snmpInTooBigs| (|snmp| 8)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -438,6 +491,7 @@
             delivered to the SNMP protocol entity and for
             which the value of the error-status field was
             `tooBig'."))
+
 (defoid |snmpInNoSuchNames| (|snmp| 9)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -448,6 +502,7 @@
             delivered to the SNMP protocol entity and for
             which the value of the error-status field was
             `noSuchName'."))
+
 (defoid |snmpInBadValues| (|snmp| 10)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -458,6 +513,7 @@
             delivered to the SNMP protocol entity and for
             which the value of the error-status field was
             `badValue'."))
+
 (defoid |snmpInReadOnlys| (|snmp| 11)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -472,6 +528,7 @@
             error-status field, as such this object is provided
             as a means of detecting incorrect implementations of
             the SNMP."))
+
 (defoid |snmpInGenErrs| (|snmp| 12)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -481,6 +538,7 @@
    "The total number of SNMP PDUs which were delivered
             to the SNMP protocol entity and for which the value
             of the error-status field was `genErr'."))
+
 (defoid |snmpInTotalReqVars| (|snmp| 13)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -491,6 +549,7 @@
             retrieved successfully by the SNMP protocol entity
             as the result of receiving valid SNMP Get-Request
             and Get-Next PDUs."))
+
 (defoid |snmpInTotalSetVars| (|snmp| 14)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -500,6 +559,7 @@
    "The total number of MIB objects which have been
             altered successfully by the SNMP protocol entity as
             the result of receiving valid SNMP Set-Request PDUs."))
+
 (defoid |snmpInGetRequests| (|snmp| 15)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -509,6 +569,7 @@
    "The total number of SNMP Get-Request PDUs which
             have been accepted and processed by the SNMP
             protocol entity."))
+
 (defoid |snmpInGetNexts| (|snmp| 16)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -517,6 +578,7 @@
   (:description
    "The total number of SNMP Get-Next PDUs which have been
             accepted and processed by the SNMP protocol entity."))
+
 (defoid |snmpInSetRequests| (|snmp| 17)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -526,6 +588,7 @@
    "The total number of SNMP Set-Request PDUs which
             have been accepted and processed by the SNMP protocol
             entity."))
+
 (defoid |snmpInGetResponses| (|snmp| 18)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -535,6 +598,7 @@
    "The total number of SNMP Get-Response PDUs which
             have been accepted and processed by the SNMP protocol
             entity."))
+
 (defoid |snmpInTraps| (|snmp| 19)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -543,6 +607,7 @@
   (:description
    "The total number of SNMP Trap PDUs which have been
             accepted and processed by the SNMP protocol entity."))
+
 (defoid |snmpOutTooBigs| (|snmp| 20)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -552,6 +617,7 @@
    "The total number of SNMP PDUs which were generated
             by the SNMP protocol entity and for which the value
             of the error-status field was `tooBig.'"))
+
 (defoid |snmpOutNoSuchNames| (|snmp| 21)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -561,6 +627,7 @@
    "The total number of SNMP PDUs which were generated
             by the SNMP protocol entity and for which the value
             of the error-status was `noSuchName'."))
+
 (defoid |snmpOutBadValues| (|snmp| 22)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -570,6 +637,7 @@
    "The total number of SNMP PDUs which were generated
             by the SNMP protocol entity and for which the value
             of the error-status field was `badValue'."))
+
 (defoid |snmpOutGenErrs| (|snmp| 24)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -579,6 +647,7 @@
    "The total number of SNMP PDUs which were generated
             by the SNMP protocol entity and for which the value
             of the error-status field was `genErr'."))
+
 (defoid |snmpOutGetRequests| (|snmp| 25)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -587,6 +656,7 @@
   (:description
    "The total number of SNMP Get-Request PDUs which
             have been generated by the SNMP protocol entity."))
+
 (defoid |snmpOutGetNexts| (|snmp| 26)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -595,6 +665,7 @@
   (:description
    "The total number of SNMP Get-Next PDUs which have
             been generated by the SNMP protocol entity."))
+
 (defoid |snmpOutSetRequests| (|snmp| 27)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -603,6 +674,7 @@
   (:description
    "The total number of SNMP Set-Request PDUs which
             have been generated by the SNMP protocol entity."))
+
 (defoid |snmpOutGetResponses| (|snmp| 28)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -611,6 +683,7 @@
   (:description
    "The total number of SNMP Get-Response PDUs which
             have been generated by the SNMP protocol entity."))
+
 (defoid |snmpOutTraps| (|snmp| 29)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -619,10 +692,13 @@
   (:description
    "The total number of SNMP Trap PDUs which have
             been generated by the SNMP protocol entity."))
+
 (defoid |snmpObsoleteGroup| (|snmpMIBGroups| 10)
   (:type 'object-group)
   (:status '|obsolete|)
   (:description
    "A collection of objects from RFC 1213 made obsolete
             by this MIB module."))
+
 (eval-when (:load-toplevel :execute) (setf *current-module* nil))
+

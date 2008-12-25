@@ -2,15 +2,19 @@
 ;;;; Auto-generated from MIB:NET-SNMP;IANA-RTPROTO-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'iana-rtproto-mib *mib-modules*)
   (setf *current-module* 'iana-rtproto-mib))
+
 (defpackage :asn.1/iana-rtproto-mib
   (:nicknames :iana-rtproto-mib)
   (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity |mib-2|)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention))
+
 (in-package :iana-rtproto-mib)
+
 (defoid |ianaRtProtoMIB| (|mib-2| 84)
   (:type 'module-identity)
   (:description
@@ -25,6 +29,10 @@
             IANA Considerations Section in RFCs.  The Designated Expert 
             will be selected by the IESG Area Director(s) of the Routing
             Area."))
+
 (deftype |IANAipRouteProtocol| () 't)
+
 (deftype |IANAipMRouteProtocol| () 't)
+
 (eval-when (:load-toplevel :execute) (setf *current-module* nil))
+

@@ -2,9 +2,11 @@
 ;;;; Auto-generated from MIB:NET-SNMP;IF-INVERTED-STACK-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'if-inverted-stack-mib *mib-modules*)
   (setf *current-module* 'if-inverted-stack-mib))
+
 (defpackage :asn.1/if-inverted-stack-mib
   (:nicknames :if-inverted-stack-mib)
   (:use :common-lisp :asn.1)
@@ -14,14 +16,18 @@
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
   (:import-from :asn.1/if-mib |ifStackGroup2| |ifStackHigherLayer|
                 |ifStackLowerLayer|))
+
 (in-package :if-inverted-stack-mib)
+
 (defoid |ifInvertedStackMIB| (|mib-2| 77)
   (:type 'module-identity)
   (:description
    "The MIB module which provides the Inverted Stack Table for
           interface sub-layers."))
+
 (defoid |ifInvMIBObjects| (|ifInvertedStackMIB| 1)
   (:type 'object-identity))
+
 (defoid |ifInvStackTable| (|ifInvMIBObjects| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -56,6 +62,7 @@
 
           This table contains exactly the same number of rows as the
           ifStackTable, but the rows appear in a different order."))
+
 (defoid |ifInvStackEntry| (|ifInvStackTable| 1)
   (:type 'object-type)
   (:syntax '|IfInvStackEntry|)
@@ -66,7 +73,9 @@
           layers, specifying that one sub-layer runs underneath the
           other sub-layer.  Each sub-layer corresponds to a conceptual
           row in the ifTable."))
+
 (deftype |IfInvStackEntry| () 't)
+
 (defoid |ifInvStackStatus| (|ifInvStackEntry| 1)
   (:type 'object-type)
   (:syntax '|RowStatus|)
@@ -88,21 +97,28 @@
           must instead modify the value of ifStackStatus.H.L.  After
           the ifStackTable is modified, the change will be reflected
           in this table."))
+
 (defoid |ifInvConformance| (|ifInvMIBObjects| 2)
   (:type 'object-identity))
+
 (defoid |ifInvGroups| (|ifInvConformance| 1) (:type 'object-identity))
+
 (defoid |ifInvCompliances| (|ifInvConformance| 2)
   (:type 'object-identity))
+
 (defoid |ifInvCompliance| (|ifInvCompliances| 1)
   (:type 'module-compliance)
   (:status '|current|)
   (:description
    "The compliance statement for SNMP entities which provide
           inverted information on the layering of network interfaces."))
+
 (defoid |ifInvStackGroup| (|ifInvGroups| 1)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "A collection of objects providing inverted information on
           the layering of MIB-II interfaces."))
+
 (eval-when (:load-toplevel :execute) (setf *current-module* nil))
+

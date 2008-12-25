@@ -2,9 +2,11 @@
 ;;;; Auto-generated from MIB:NET-SNMP;SNMP-COMMUNITY-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'snmp-community-mib *mib-modules*)
   (setf *current-module* 'snmp-community-mib))
+
 (defpackage :asn.1/snmp-community-mib
   (:nicknames :snmp-community-mib)
   (:use :common-lisp :asn.1)
@@ -16,16 +18,21 @@
   (:import-from :asn.1/snmp-target-mib |SnmpTagValue|
                 |snmpTargetAddrEntry|)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group))
+
 (in-package :snmp-community-mib)
+
 (defoid |snmpCommunityMIB| (|snmpModules| 18)
   (:type 'module-identity)
   (:description
    "This MIB module defines objects to help support coexistence
              between SNMPv1, SNMPv2c, and SNMPv3."))
+
 (defoid |snmpCommunityMIBObjects| (|snmpCommunityMIB| 1)
   (:type 'object-identity))
+
 (defoid |snmpCommunityMIBConformance| (|snmpCommunityMIB| 2)
   (:type 'object-identity))
+
 (defoid |snmpCommunityTable| (|snmpCommunityMIBObjects| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -34,19 +41,23 @@
   (:description
    "The table of community strings configured in the SNMP
          engine's Local Configuration Datastore (LCD)."))
+
 (defoid |snmpCommunityEntry| (|snmpCommunityTable| 1)
   (:type 'object-type)
   (:syntax '|SnmpCommunityEntry|)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "Information about a particular community string."))
+
 (deftype |SnmpCommunityEntry| () 't)
+
 (defoid |snmpCommunityIndex| (|snmpCommunityEntry| 1)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The unique index value of a row in this table."))
+
 (defoid |snmpCommunityName| (|snmpCommunityEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -55,6 +66,7 @@
   (:description
    "The community string for which a row in this table
          represents a configuration."))
+
 (defoid |snmpCommunitySecurityName| (|snmpCommunityEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -64,6 +76,7 @@
    "A human readable string representing the corresponding
          value of snmpCommunityName in a Security Model
          independent format."))
+
 (defoid |snmpCommunityContextEngineID| (|snmpCommunityEntry| 4)
   (:type 'object-type)
   (:syntax '|SnmpEngineID|)
@@ -77,6 +90,7 @@
 
          The default value is the snmpEngineID of the entity in
          which this object is instantiated."))
+
 (defoid |snmpCommunityContextName| (|snmpCommunityEntry| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -86,6 +100,7 @@
    "The context in which management information is accessed
          when using the community string specified by the corresponding
          instance of snmpCommunityName."))
+
 (defoid |snmpCommunityTransportTag| (|snmpCommunityEntry| 6)
   (:type 'object-type)
   (:syntax '|SnmpTagValue|)
@@ -108,6 +123,7 @@
          If the value of this object has zero-length, transport
          endpoints are not checked when authenticating messages
          containing this community string."))
+
 (defoid |snmpCommunityStorageType| (|snmpCommunityEntry| 7)
   (:type 'object-type)
   (:syntax '|StorageType|)
@@ -118,6 +134,7 @@
          snmpCommunityTable.  Conceptual rows having the value
          'permanent' need not allow write-access to any
          columnar object in the row."))
+
 (defoid |snmpCommunityStatus| (|snmpCommunityEntry| 8)
   (:type 'object-type)
   (:syntax '|RowStatus|)
@@ -134,6 +151,7 @@
 
          There is no restriction on setting columns in this table
          when the value of snmpCommunityStatus is active(1)."))
+
 (defoid |snmpTargetAddrExtTable| (|snmpCommunityMIBObjects| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -153,13 +171,16 @@
          message size of another SNMP entity to be configured for
          use in SNMPv1 (and SNMPv2c) transactions, where the
          message format does not specify a maximum message size."))
+
 (defoid |snmpTargetAddrExtEntry| (|snmpTargetAddrExtTable| 1)
   (:type 'object-type)
   (:syntax '|SnmpTargetAddrExtEntry|)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "Information about a particular mask and mms value."))
+
 (deftype |SnmpTargetAddrExtEntry| () 't)
+
 (defoid |snmpTargetAddrTMask| (|snmpTargetAddrExtEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -194,6 +215,7 @@
          corresponding instance of snmpTargetAddrRowStatus is
          active(1).  An attempt to set this object in this case
          will result in an inconsistentValue error."))
+
 (defoid |snmpTargetAddrMMS| (|snmpTargetAddrExtEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -202,6 +224,7 @@
   (:description
    "The maximum message size value associated with an entry
          in the snmpTargetAddrTable."))
+
 (defoid |snmpTrapAddress| (|snmpCommunityMIBObjects| 3)
   (:type 'object-type)
   (:syntax '|IpAddress|)
@@ -214,6 +237,7 @@
          object SHOULD contain the value of the agent-addr field
          from the original Trap PDU as generated by an SNMPv1
          agent."))
+
 (defoid |snmpTrapCommunity| (|snmpCommunityMIBObjects| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -227,16 +251,20 @@
          contain the value of the community string field from
          the original SNMPv1 message containing a Trap PDU as
          generated by an SNMPv1 agent."))
+
 (defoid |snmpCommunityMIBCompliances| (|snmpCommunityMIBConformance| 1)
   (:type 'object-identity))
+
 (defoid |snmpCommunityMIBGroups| (|snmpCommunityMIBConformance| 2)
   (:type 'object-identity))
+
 (defoid |snmpCommunityMIBCompliance| (|snmpCommunityMIBCompliances| 1)
   (:type 'module-compliance)
   (:status '|current|)
   (:description
    "The compliance statement for SNMP engines which
          implement the SNMP-COMMUNITY-MIB."))
+
 (defoid |snmpProxyTrapForwardCompliance|
         (|snmpCommunityMIBCompliances| 2)
   (:type 'module-compliance)
@@ -246,12 +274,14 @@
          contain a proxy forwarding application which is
          capable of forwarding SNMPv1 traps using SNMPv2c
          or SNMPv3."))
+
 (defoid |snmpCommunityGroup| (|snmpCommunityMIBGroups| 1)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "A collection of objects providing for configuration
          of community strings for SNMPv1 (and SNMPv2c) usage."))
+
 (defoid |snmpProxyTrapForwardGroup| (|snmpCommunityMIBGroups| 3)
   (:type 'object-group)
   (:status '|current|)
@@ -261,4 +291,6 @@
          used to preserve SNMPv1-specific information when
 
          translating to SNMPv2c or SNMPv3."))
+
 (eval-when (:load-toplevel :execute) (setf *current-module* nil))
+
