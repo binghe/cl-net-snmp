@@ -2,9 +2,11 @@
 ;;;; Auto-generated from MIB:NET-SNMP;HOST-RESOURCES-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'host-resources-mib *mib-modules*)
   (setf *current-module* 'host-resources-mib))
+
 (defpackage :asn.1/host-resources-mib
   (:nicknames :host-resources-mib)
   (:use :common-lisp :asn.1)
@@ -14,15 +16,25 @@
                 |TruthValue| |DateAndTime| |AutonomousType|)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
   (:import-from :asn.1/if-mib |InterfaceIndexOrZero|))
+
 (in-package :host-resources-mib)
+
 (defoid |host| (|mib-2| 25) (:type 'object-identity))
+
 (defoid |hrSystem| (|host| 1) (:type 'object-identity))
+
 (defoid |hrStorage| (|host| 2) (:type 'object-identity))
+
 (defoid |hrDevice| (|host| 3) (:type 'object-identity))
+
 (defoid |hrSWRun| (|host| 4) (:type 'object-identity))
+
 (defoid |hrSWRunPerf| (|host| 5) (:type 'object-identity))
+
 (defoid |hrSWInstalled| (|host| 6) (:type 'object-identity))
+
 (defoid |hrMIBAdminInfo| (|host| 7) (:type 'object-identity))
+
 (defoid |hostResourcesMibModule| (|hrMIBAdminInfo| 1)
   (:type 'module-identity)
   (:description
@@ -36,9 +48,13 @@
        not explicitly precluded.  This MIB instruments attributes
        common to all internet hosts including, for example, both
        personal computers and systems that run variants of Unix."))
+
 (deftype |KBytes| () 't)
+
 (deftype |ProductID| () 't)
+
 (deftype |InternationalDisplayString| () 't)
+
 (defoid |hrSystemUptime| (|hrSystem| 1)
   (:type 'object-type)
   (:syntax '|TimeTicks|)
@@ -50,12 +66,14 @@
         sysUpTime in the SNMPv2-MIB [RFC1907] because
         sysUpTime is the uptime of the network management
         portion of the system."))
+
 (defoid |hrSystemDate| (|hrSystem| 2)
   (:type 'object-type)
   (:syntax '|DateAndTime|)
   (:max-access '|read-write|)
   (:status '|current|)
   (:description "The host's notion of the local date and time of day."))
+
 (defoid |hrSystemInitialLoadDevice| (|hrSystem| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -71,6 +89,7 @@
         configuration that will be used the next time the
         operating system is loaded and does not actually cause
         the reload to occur."))
+
 (defoid |hrSystemInitialLoadParameters| (|hrSystem| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -86,6 +105,7 @@
      configuration that will be used the next time the
      operating system is loaded and does not actually cause
      the reload to occur."))
+
 (defoid |hrSystemNumUsers| (|hrSystem| 5)
   (:type 'object-type)
   (:syntax '|Gauge32|)
@@ -97,6 +117,7 @@
         of processes requiring a single act of user
         authentication and possibly subject to collective job
         control."))
+
 (defoid |hrSystemProcesses| (|hrSystem| 6)
   (:type 'object-type)
   (:syntax '|Gauge32|)
@@ -105,6 +126,7 @@
   (:description
    "The number of process contexts currently loaded or
         running on this system."))
+
 (defoid |hrSystemMaxProcesses| (|hrSystem| 7)
   (:type 'object-type)
   (:syntax 't)
@@ -116,7 +138,9 @@
         should be zero.  On systems that have a fixed maximum,
         this object can help diagnose failures that occur when
         this maximum is reached."))
+
 (defoid |hrStorageTypes| (|hrStorage| 1) (:type 'object-identity))
+
 (defoid |hrMemorySize| (|hrStorage| 2)
   (:type 'object-type)
   (:syntax '|KBytes|)
@@ -125,6 +149,7 @@
   (:description
    "The amount of physical read-write main memory,
         typically RAM, contained by the host."))
+
 (defoid |hrStorageTable| (|hrStorage| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -159,6 +184,7 @@
         failures.  In addition, it can be a useful performance
         monitoring tool for tracking memory, disk, or buffer
         usage."))
+
 (defoid |hrStorageEntry| (|hrStorageTable| 1)
   (:type 'object-type)
   (:syntax '|HrStorageEntry|)
@@ -168,7 +194,9 @@
    "A (conceptual) entry for one logical storage area on
         the host.  As an example, an instance of the
         hrStorageType object might be named hrStorageType.3"))
+
 (deftype |HrStorageEntry| () 't)
+
 (defoid |hrStorageIndex| (|hrStorageEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -177,12 +205,14 @@
   (:description
    "A unique value for each logical storage area
         contained by the host."))
+
 (defoid |hrStorageType| (|hrStorageEntry| 2)
   (:type 'object-type)
   (:syntax '|AutonomousType|)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The type of storage represented by this entry."))
+
 (defoid |hrStorageDescr| (|hrStorageEntry| 3)
   (:type 'object-type)
   (:syntax '|DisplayString|)
@@ -191,6 +221,7 @@
   (:description
    "A description of the type and instance of the storage
         described by this entry."))
+
 (defoid |hrStorageAllocationUnits| (|hrStorageEntry| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -202,6 +233,7 @@
         blocks, buffers, or packets, for example, this number
         will commonly be greater than one.  Otherwise this
         number will typically be one."))
+
 (defoid |hrStorageSize| (|hrStorageEntry| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -217,6 +249,7 @@
         memory allocated to a buffer pool might be modified or
         the amount of disk space allocated to virtual memory
         might be modified."))
+
 (defoid |hrStorageUsed| (|hrStorageEntry| 6)
   (:type 'object-type)
   (:syntax 't)
@@ -226,6 +259,7 @@
    "The amount of the storage represented by this entry
         that is allocated, in units of
         hrStorageAllocationUnits."))
+
 (defoid |hrStorageAllocationFailures| (|hrStorageEntry| 7)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -239,7 +273,9 @@
         initial value.  However, it is recommended that this
         object be initialized to zero, even though management
         stations must not depend on such an initialization."))
+
 (defoid |hrDeviceTypes| (|hrDevice| 1) (:type 'object-identity))
+
 (defoid |hrDeviceTable| (|hrDevice| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -248,6 +284,7 @@
   (:description
    "The (conceptual) table of devices contained by the
         host."))
+
 (defoid |hrDeviceEntry| (|hrDeviceTable| 1)
   (:type 'object-type)
   (:syntax '|HrDeviceEntry|)
@@ -257,7 +294,9 @@
    "A (conceptual) entry for one device contained by the
         host.  As an example, an instance of the hrDeviceType
         object might be named hrDeviceType.3"))
+
 (deftype |HrDeviceEntry| () 't)
+
 (defoid |hrDeviceIndex| (|hrDeviceEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -268,6 +307,7 @@
         The value for each device must remain constant at
         least from one re-initialization of the agent to the
         next re-initialization."))
+
 (defoid |hrDeviceType| (|hrDeviceEntry| 2)
   (:type 'object-type)
   (:syntax '|AutonomousType|)
@@ -295,6 +335,7 @@
         `hrDeviceDiskStorage { hrDeviceTypes 6 }', then an
         entry exists in the hrDiskStorageTable which
         corresponds to this device."))
+
 (defoid |hrDeviceDescr| (|hrDeviceEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -304,12 +345,14 @@
    "A textual description of this device, including the
         device's manufacturer and revision, and optionally,
         its serial number."))
+
 (defoid |hrDeviceID| (|hrDeviceEntry| 4)
   (:type 'object-type)
   (:syntax '|ProductID|)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The product ID for this device."))
+
 (defoid |hrDeviceStatus| (|hrDeviceEntry| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -331,6 +374,7 @@
         The state of down(5) is used only when the agent has
         been informed that the device is not available for any
         use."))
+
 (defoid |hrDeviceErrors| (|hrDeviceEntry| 6)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -343,6 +387,7 @@
         value.  However, it is recommended that this object be
         initialized to zero, even though management stations
         must not depend on such an initialization."))
+
 (defoid |hrProcessorTable| (|hrDevice| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -356,6 +401,7 @@
         (conceptual) entry exists only if the correspondent
         value of the hrDeviceType object is
         `hrDeviceProcessor'."))
+
 (defoid |hrProcessorEntry| (|hrProcessorTable| 1)
   (:type 'object-type)
   (:syntax '|HrProcessorEntry|)
@@ -370,7 +416,9 @@
         As an example of how objects in this table are named,
         an instance of the hrProcessorFrwID object might be
         named hrProcessorFrwID.3"))
+
 (deftype |HrProcessorEntry| () 't)
+
 (defoid |hrProcessorFrwID| (|hrProcessorEntry| 1)
   (:type 'object-type)
   (:syntax '|ProductID|)
@@ -379,6 +427,7 @@
   (:description
    "The product ID of the firmware associated with the
         processor."))
+
 (defoid |hrProcessorLoad| (|hrProcessorEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -389,6 +438,7 @@
         of time that this processor was not idle.
         Implementations may approximate this one minute
         smoothing period if necessary."))
+
 (defoid |hrNetworkTable| (|hrDevice| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -402,6 +452,7 @@
         (conceptual) entry exists only if the correspondent
         value of the hrDeviceType object is
         `hrDeviceNetwork'."))
+
 (defoid |hrNetworkEntry| (|hrNetworkTable| 1)
   (:type 'object-type)
   (:syntax '|HrNetworkEntry|)
@@ -416,7 +467,9 @@
         As an example of how objects in this table are named,
         an instance of the hrNetworkIfIndex object might be
         named hrNetworkIfIndex.3"))
+
 (deftype |HrNetworkEntry| () 't)
+
 (defoid |hrNetworkIfIndex| (|hrNetworkEntry| 1)
   (:type 'object-type)
   (:syntax '|InterfaceIndexOrZero|)
@@ -426,6 +479,7 @@
    "The value of ifIndex which corresponds to this
         network device. If this device is not represented in
         the ifTable, then this value shall be zero."))
+
 (defoid |hrPrinterTable| (|hrDevice| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -438,6 +492,7 @@
         (conceptual) entry exists only if the correspondent
         value of the hrDeviceType object is
         `hrDevicePrinter'."))
+
 (defoid |hrPrinterEntry| (|hrPrinterTable| 1)
   (:type 'object-type)
   (:syntax '|HrPrinterEntry|)
@@ -452,13 +507,16 @@
         As an example of how objects in this table are named,
         an instance of the hrPrinterStatus object might be
         named hrPrinterStatus.3"))
+
 (deftype |HrPrinterEntry| () 't)
+
 (defoid |hrPrinterStatus| (|hrPrinterEntry| 1)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The current status of this printer device."))
+
 (defoid |hrPrinterDetectedErrorState| (|hrPrinterEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -500,6 +558,7 @@
         This object is useful for alerting an operator to
         specific warning or error conditions that may occur,
         especially those requiring human intervention."))
+
 (defoid |hrDiskStorageTable| (|hrDevice| 6)
   (:type 'object-type)
   (:syntax 't)
@@ -515,6 +574,7 @@
         (conceptual) entry exists only if the correspondent
         value of the hrDeviceType object is
         `hrDeviceDiskStorage'."))
+
 (defoid |hrDiskStorageEntry| (|hrDiskStorageTable| 1)
   (:type 'object-type)
   (:syntax '|HrDiskStorageEntry|)
@@ -527,7 +587,9 @@
         corresponds to the hrDiskStorageEntry. As an example,
         an instance of the hrDiskStorageCapacity object might
         be named hrDiskStorageCapacity.3"))
+
 (deftype |HrDiskStorageEntry| () 't)
+
 (defoid |hrDiskStorageAccess| (|hrDiskStorageEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -539,6 +601,7 @@
         reflect the media type, any write-protect mechanism,
         and any device configuration that affects the entire
         device."))
+
 (defoid |hrDiskStorageMedia| (|hrDiskStorageEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -547,6 +610,7 @@
   (:description
    "An indication of the type of media used in this long-
         term storage device."))
+
 (defoid |hrDiskStorageRemoveble| (|hrDiskStorageEntry| 3)
   (:type 'object-type)
   (:syntax '|TruthValue|)
@@ -555,6 +619,7 @@
   (:description
    "Denotes whether or not the disk media may be removed
         from the drive."))
+
 (defoid |hrDiskStorageCapacity| (|hrDiskStorageEntry| 4)
   (:type 'object-type)
   (:syntax '|KBytes|)
@@ -564,6 +629,7 @@
    "The total size for this long-term storage device. If
         the media is removable and is currently removed, this
         value should be zero."))
+
 (defoid |hrPartitionTable| (|hrDevice| 7)
   (:type 'object-type)
   (:syntax 't)
@@ -574,6 +640,7 @@
         storage devices contained by the host.  In particular,
         partitions accessed remotely over a network are not
         included here."))
+
 (defoid |hrPartitionEntry| (|hrPartitionTable| 1)
   (:type 'object-type)
   (:syntax '|HrPartitionEntry|)
@@ -588,7 +655,9 @@
         As an example of how objects in this table are named,
         an instance of the hrPartitionSize object might be
         named hrPartitionSize.3.1"))
+
 (deftype |HrPartitionEntry| () 't)
+
 (defoid |hrPartitionIndex| (|hrPartitionEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -600,12 +669,14 @@
         device must remain constant at least from one re-
         initialization of the agent to the next re-
         initialization."))
+
 (defoid |hrPartitionLabel| (|hrPartitionEntry| 2)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "A textual description of this partition."))
+
 (defoid |hrPartitionID| (|hrPartitionEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -615,12 +686,14 @@
    "A descriptor which uniquely represents this partition
         to the responsible operating system.  On some systems,
         this might take on a binary representation."))
+
 (defoid |hrPartitionSize| (|hrPartitionEntry| 4)
   (:type 'object-type)
   (:syntax '|KBytes|)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The size of this partition."))
+
 (defoid |hrPartitionFSIndex| (|hrPartitionEntry| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -634,7 +707,9 @@
         denoting that that file system resides on those
         partitions.  Multiple file systems may not reside on
         one partition."))
+
 (defoid |hrFSTypes| (|hrDevice| 9) (:type 'object-identity))
+
 (defoid |hrFSTable| (|hrDevice| 8)
   (:type 'object-type)
   (:syntax 't)
@@ -645,6 +720,7 @@
         host or remotely mounted from a file server.  File
         systems that are in only one user's environment on a
         multi-user system will not be included in this table."))
+
 (defoid |hrFSEntry| (|hrFSTable| 1)
   (:type 'object-type)
   (:syntax '|HrFSEntry|)
@@ -660,7 +736,9 @@
         As an example of how objects in this table are named,
         an instance of the hrFSMountPoint object might be
         named hrFSMountPoint.3"))
+
 (deftype |HrFSEntry| () 't)
+
 (defoid |hrFSIndex| (|hrFSEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -671,12 +749,14 @@
         host.  The value for each file system must remain
         constant at least from one re-initialization of the
         agent to the next re-initialization."))
+
 (defoid |hrFSMountPoint| (|hrFSEntry| 2)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The path name of the root of this file system."))
+
 (defoid |hrFSRemoteMountPoint| (|hrFSEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -688,6 +768,7 @@
         may also include parameters such as the mount point on
         the remote file system.  If this is not a remote file
         system, this string should have a length of zero."))
+
 (defoid |hrFSType| (|hrFSEntry| 4)
   (:type 'object-type)
   (:syntax '|AutonomousType|)
@@ -696,6 +777,7 @@
   (:description
    "The value of this object identifies the type of this
         file system."))
+
 (defoid |hrFSAccess| (|hrFSEntry| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -707,6 +789,7 @@
         writable or only readable.  This does not represent
         any local access-control policy, except one that is
         applied to the file system as a whole."))
+
 (defoid |hrFSBootable| (|hrFSEntry| 6)
   (:type 'object-type)
   (:syntax '|TruthValue|)
@@ -715,6 +798,7 @@
   (:description
    "A flag indicating whether this file system is
         bootable."))
+
 (defoid |hrFSStorageIndex| (|hrFSEntry| 7)
   (:type 'object-type)
   (:syntax 't)
@@ -728,6 +812,7 @@
         tracking the percent usage of this file system and
         diagnosing errors that may occur when it runs out of
         space."))
+
 (defoid |hrFSLastFullBackupDate| (|hrFSEntry| 8)
   (:type 'object-type)
   (:syntax '|DateAndTime|)
@@ -744,6 +829,7 @@
         shall have the value corresponding to January 1, year
         0000, 00:00:00.0, which is encoded as
         (hex)'00 00 01 01 00 00 00 00'."))
+
 (defoid |hrFSLastPartialBackupDate| (|hrFSEntry| 9)
   (:type 'object-type)
   (:syntax '|DateAndTime|)
@@ -759,6 +845,7 @@
         shall have the value corresponding to January 1, year
         0000, 00:00:00.0, which is encoded as
         (hex)'00 00 01 01 00 00 00 00'."))
+
 (defoid |hrSWOSIndex| (|hrSWRun| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -769,6 +856,7 @@
         that represents the primary operating system running
         on this host.  This object is useful for quickly and
         uniquely identifying that primary operating system."))
+
 (defoid |hrSWRunTable| (|hrSWRun| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -777,6 +865,7 @@
   (:description
    "The (conceptual) table of software running on the
         host."))
+
 (defoid |hrSWRunEntry| (|hrSWRunTable| 1)
   (:type 'object-type)
   (:syntax '|HrSWRunEntry|)
@@ -795,7 +884,9 @@
         As an example of how objects in this table are named,
         an instance of the hrSWRunName object might be named
         hrSWRunName.1287"))
+
 (deftype |HrSWRunEntry| () 't)
+
 (defoid |hrSWRunIndex| (|hrSWRunEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -805,6 +896,7 @@
    "A unique value for each piece of software running on
         the host.  Wherever possible, this should be the
         system's native, unique identification number."))
+
 (defoid |hrSWRunName| (|hrSWRunEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -817,12 +909,14 @@
         software was installed locally, this should be the
         same string as used in the corresponding
         hrSWInstalledName."))
+
 (defoid |hrSWRunID| (|hrSWRunEntry| 3)
   (:type 'object-type)
   (:syntax '|ProductID|)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The product ID of this running piece of software."))
+
 (defoid |hrSWRunPath| (|hrSWRunEntry| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -832,6 +926,7 @@
    "A description of the location on long-term storage
         (e.g. a disk drive) from which this software was
         loaded."))
+
 (defoid |hrSWRunParameters| (|hrSWRunEntry| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -840,12 +935,14 @@
   (:description
    "A description of the parameters supplied to this
         software when it was initially loaded."))
+
 (defoid |hrSWRunType| (|hrSWRunEntry| 6)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The type of this software."))
+
 (defoid |hrSWRunStatus| (|hrSWRunEntry| 7)
   (:type 'object-type)
   (:syntax 't)
@@ -856,6 +953,7 @@
         Setting this value to invalid(4) shall cause this
         software to stop running and to be unloaded. Sets to
         other values are not valid."))
+
 (defoid |hrSWRunPerfTable| (|hrSWRunPerf| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -864,6 +962,7 @@
   (:description
    "The (conceptual) table of running software
         performance metrics."))
+
 (defoid |hrSWRunPerfEntry| (|hrSWRunPerfTable| 1)
   (:type 'object-type)
   (:syntax '|HrSWRunPerfEntry|)
@@ -874,7 +973,9 @@
         metrics.  As an example, an instance of the
         hrSWRunPerfCPU object might be named
         hrSWRunPerfCPU.1287"))
+
 (deftype |HrSWRunPerfEntry| () 't)
+
 (defoid |hrSWRunPerfCPU| (|hrSWRunPerfEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -886,6 +987,7 @@
         multi-processor system, this value may increment by
         more than one centi-second in one centi-second of real
         (wall clock) time."))
+
 (defoid |hrSWRunPerfMem| (|hrSWRunPerfEntry| 2)
   (:type 'object-type)
   (:syntax '|KBytes|)
@@ -894,6 +996,7 @@
   (:description
    "The total amount of real system memory allocated to
         this process."))
+
 (defoid |hrSWInstalledLastChange| (|hrSWInstalled| 1)
   (:type 'object-type)
   (:syntax '|TimeTicks|)
@@ -906,6 +1009,7 @@
         entries, polling of this object allows a management
         station to determine when re-downloading of the table
         might be useful."))
+
 (defoid |hrSWInstalledLastUpdateTime| (|hrSWInstalled| 2)
   (:type 'object-type)
   (:syntax '|TimeTicks|)
@@ -918,6 +1022,7 @@
         retrieval of this object allows a management station
         to obtain a guarantee that no data in this table is
         older than the indicated time."))
+
 (defoid |hrSWInstalledTable| (|hrSWInstalled| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -926,6 +1031,7 @@
   (:description
    "The (conceptual) table of software installed on this
         host."))
+
 (defoid |hrSWInstalledEntry| (|hrSWInstalledTable| 1)
   (:type 'object-type)
   (:syntax '|HrSWInstalledEntry|)
@@ -938,7 +1044,9 @@
         As an example of how objects in this table are named,
         an instance of the hrSWInstalledName object might be
         named hrSWInstalledName.96"))
+
 (deftype |HrSWInstalledEntry| () 't)
+
 (defoid |hrSWInstalledIndex| (|hrSWInstalledEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -949,6 +1057,7 @@
         on the host.  This value shall be in the range from 1
         to the number of pieces of software installed on the
         host."))
+
 (defoid |hrSWInstalledName| (|hrSWInstalledEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -959,18 +1068,21 @@
         software, including the manufacturer, revision, the
         name by which it is commonly known, and optionally,
         its serial number."))
+
 (defoid |hrSWInstalledID| (|hrSWInstalledEntry| 3)
   (:type 'object-type)
   (:syntax '|ProductID|)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The product ID of this installed piece of software."))
+
 (defoid |hrSWInstalledType| (|hrSWInstalledEntry| 4)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The type of this software."))
+
 (defoid |hrSWInstalledDate| (|hrSWInstalledEntry| 5)
   (:type 'object-type)
   (:syntax '|DateAndTime|)
@@ -984,38 +1096,49 @@
         shall have the value corresponding to January 1, year
         0000, 00:00:00.0, which is encoded as
         (hex)'00 00 01 01 00 00 00 00'."))
+
 (defoid |hrMIBCompliances| (|hrMIBAdminInfo| 2)
   (:type 'object-identity))
+
 (defoid |hrMIBGroups| (|hrMIBAdminInfo| 3) (:type 'object-identity))
+
 (defoid |hrMIBCompliance| (|hrMIBCompliances| 1)
   (:type 'module-compliance)
   (:status '|current|)
   (:description
    "The requirements for conformance to the Host Resources MIB."))
+
 (defoid |hrSystemGroup| (|hrMIBGroups| 1)
   (:type 'object-group)
   (:status '|current|)
   (:description "The Host Resources System Group."))
+
 (defoid |hrStorageGroup| (|hrMIBGroups| 2)
   (:type 'object-group)
   (:status '|current|)
   (:description "The Host Resources Storage Group."))
+
 (defoid |hrDeviceGroup| (|hrMIBGroups| 3)
   (:type 'object-group)
   (:status '|current|)
   (:description "The Host Resources Device Group."))
+
 (defoid |hrSWRunGroup| (|hrMIBGroups| 4)
   (:type 'object-group)
   (:status '|current|)
   (:description "The Host Resources Running Software Group."))
+
 (defoid |hrSWRunPerfGroup| (|hrMIBGroups| 5)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "The Host Resources Running Software
             Performance Group."))
+
 (defoid |hrSWInstalledGroup| (|hrMIBGroups| 6)
   (:type 'object-group)
   (:status '|current|)
   (:description "The Host Resources Installed Software Group."))
+
 (eval-when (:load-toplevel :execute) (setf *current-module* nil))
+

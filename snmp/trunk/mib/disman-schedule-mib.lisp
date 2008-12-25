@@ -2,9 +2,11 @@
 ;;;; Auto-generated from MIB:NET-SNMP;DISMAN-SCHEDULE-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'disman-schedule-mib *mib-modules*)
   (setf *current-module* 'disman-schedule-mib))
+
 (defpackage :asn.1/disman-schedule-mib
   (:nicknames :disman-schedule-mib)
   (:use :common-lisp :asn.1)
@@ -16,17 +18,24 @@
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group
                 notification-group)
   (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|))
+
 (in-package :disman-schedule-mib)
+
 (defoid |schedMIB| (|mib-2| 63)
   (:type 'module-identity)
   (:description
    "This MIB module defines a MIB which provides mechanisms to
          schedule SNMP set operations periodically or at specific
          points in time."))
+
 (defoid |schedObjects| (|schedMIB| 1) (:type 'object-identity))
+
 (defoid |schedNotifications| (|schedMIB| 2) (:type 'object-identity))
+
 (defoid |schedConformance| (|schedMIB| 3) (:type 'object-identity))
+
 (deftype |SnmpPduErrorStatus| () 't)
+
 (defoid |schedLocalTime| (|schedObjects| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -38,6 +47,7 @@
          by this object.  An implementation MUST return all 11 bytes
          of the DateAndTime textual-convention so that a manager
          may retrieve the offset from GMT time."))
+
 (defoid |schedTable| (|schedObjects| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -46,6 +56,7 @@
   (:description
    "This table defines scheduled actions triggered by
          SNMP set operations."))
+
 (defoid |schedEntry| (|schedTable| 1)
   (:type 'object-type)
   (:syntax '|SchedEntry|)
@@ -61,7 +72,9 @@
          and the objects in the schedCalendarGroup when
          schedRowStatus is active and schedAdminStatus and
          schedOperStatus are both enabled."))
+
 (deftype |SchedEntry| () 't)
+
 (defoid |schedOwner| (|schedEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -72,6 +85,7 @@
          this string are subject to the security policy defined by
 
          the security administrator."))
+
 (defoid |schedName| (|schedEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -81,6 +95,7 @@
    "The locally-unique, administratively assigned name for this
          scheduling entry.  This object allows a schedOwner to have
          multiple entries in the schedTable."))
+
 (defoid |schedDescr| (|schedEntry| 3)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
@@ -89,6 +104,7 @@
   (:description
    "The human readable description of the purpose of this
          scheduling entry."))
+
 (defoid |schedInterval| (|schedEntry| 4)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -113,6 +129,7 @@
          Note that implementations which maintain a list of pending
          activations must re-calculate them when this object is
          changed."))
+
 (defoid |schedWeekDay| (|schedEntry| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -128,6 +145,7 @@
          Note that implementations which maintain a list of pending
          activations must re-calculate them when this object is
          changed."))
+
 (defoid |schedMonth| (|schedEntry| 6)
   (:type 'object-type)
   (:syntax 't)
@@ -144,6 +162,7 @@
          Note that implementations which maintain a list of pending
          activations must re-calculate them when this object is
          changed."))
+
 (defoid |schedDay| (|schedEntry| 7)
   (:type 'object-type)
   (:syntax 't)
@@ -177,6 +196,7 @@
          Note that implementations which maintain a list of pending
          activations must re-calculate them when this object is
          changed."))
+
 (defoid |schedHour| (|schedEntry| 8)
   (:type 'object-type)
   (:syntax 't)
@@ -189,6 +209,7 @@
          Note that implementations which maintain a list of pending
          activations must re-calculate them when this object is
          changed."))
+
 (defoid |schedMinute| (|schedEntry| 9)
   (:type 'object-type)
   (:syntax 't)
@@ -201,6 +222,7 @@
          Note that implementations which maintain a list of pending
          activations must re-calculate them when this object is
          changed."))
+
 (defoid |schedContextName| (|schedEntry| 10)
   (:type 'object-type)
   (:syntax 't)
@@ -209,6 +231,7 @@
   (:description
    "The context which contains the local MIB variable pointed
          to by schedVariable."))
+
 (defoid |schedVariable| (|schedEntry| 11)
   (:type 'object-type)
   (:syntax '|VariablePointer|)
@@ -217,6 +240,7 @@
   (:description
    "An object identifier pointing to a local MIB variable
          which resolves to an ASN.1 primitive type of INTEGER."))
+
 (defoid |schedValue| (|schedEntry| 12)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -233,6 +257,7 @@
          Note that an implementation may choose to issue an SNMP Set
          message to the SNMP engine and leave the access control
          decision to the normal message processing procedure."))
+
 (defoid |schedType| (|schedEntry| 13)
   (:type 'object-type)
   (:syntax 't)
@@ -262,12 +287,14 @@
          Note that implementations which maintain a list of pending
          activations must re-calculate them when this object is
          changed."))
+
 (defoid |schedAdminStatus| (|schedEntry| 14)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|read-create|)
   (:status '|current|)
   (:description "The desired state of the schedule."))
+
 (defoid |schedOperStatus| (|schedEntry| 15)
   (:type 'object-type)
   (:syntax 't)
@@ -286,6 +313,7 @@
 
          Note that the operational state must not be enabled(1)
          when the schedRowStatus is not active."))
+
 (defoid |schedFailures| (|schedEntry| 16)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -295,6 +323,7 @@
    "This variable counts the number of failures while invoking
          the scheduled action.  This counter at most increments once
          for a triggered action."))
+
 (defoid |schedLastFailure| (|schedEntry| 17)
   (:type 'object-type)
   (:syntax '|SnmpPduErrorStatus|)
@@ -304,6 +333,7 @@
    "The most recent error that occurred during the invocation of
          a scheduled action.  The value noError(0) is returned
          if no errors have occurred yet."))
+
 (defoid |schedLastFailed| (|schedEntry| 18)
   (:type 'object-type)
   (:syntax '|DateAndTime|)
@@ -314,6 +344,7 @@
 
          The value '0000000000000000'H is returned if no failure
          occurred since the last re-initialization of the scheduler."))
+
 (defoid |schedStorageType| (|schedEntry| 19)
   (:type 'object-type)
   (:syntax '|StorageType|)
@@ -331,6 +362,7 @@
          schedCalendarGroup, write access must be also allowed to
          the columnar objects schedWeekDay, schedMonth, schedDay,
          schedHour, schedMinute."))
+
 (defoid |schedRowStatus| (|schedEntry| 20)
   (:type 'object-type)
   (:syntax '|RowStatus|)
@@ -350,6 +382,7 @@
 
          The value of this object has no effect on whether other
          objects in this conceptual row can be modified."))
+
 (defoid |schedTriggers| (|schedEntry| 21)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -358,45 +391,57 @@
   (:description
    "This variable counts the number of attempts (either
          successful or failed) to invoke the scheduled action."))
+
 (defoid |schedTraps| (|schedNotifications| 0) (:type 'object-identity))
+
 (defoid |schedActionFailure| (|schedTraps| 1)
   (:type 'notification-type)
   (:status '|current|)
   (:description
    "This notification is generated whenever the invocation of a
          scheduled action fails."))
+
 (defoid |schedCompliances| (|schedConformance| 1)
   (:type 'object-identity))
+
 (defoid |schedGroups| (|schedConformance| 2) (:type 'object-identity))
+
 (defoid |schedCompliance2| (|schedCompliances| 2)
   (:type 'module-compliance)
   (:status '|current|)
   (:description
    "The compliance statement for SNMP entities which implement
          the scheduling MIB."))
+
 (defoid |schedGroup2| (|schedGroups| 4)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "A collection of objects providing scheduling capabilities."))
+
 (defoid |schedCalendarGroup| (|schedGroups| 2)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "A collection of objects providing calendar based schedules."))
+
 (defoid |schedNotificationsGroup| (|schedGroups| 3)
   (:type 'notification-group)
   (:status '|current|)
   (:description "The notifications emitted by the scheduler."))
+
 (defoid |schedCompliance| (|schedCompliances| 1)
   (:type 'module-compliance)
   (:status '|deprecated|)
   (:description
    "The compliance statement for SNMP entities which implement
          the scheduling MIB."))
+
 (defoid |schedGroup| (|schedGroups| 1)
   (:type 'object-group)
   (:status '|deprecated|)
   (:description
    "A collection of objects providing scheduling capabilities."))
+
 (eval-when (:load-toplevel :execute) (setf *current-module* nil))
+

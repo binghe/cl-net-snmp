@@ -2,9 +2,11 @@
 ;;;; Auto-generated from MIB:NET-SNMP;SNMP-USER-BASED-SM-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'snmp-user-based-sm-mib *mib-modules*)
   (setf *current-module* 'snmp-user-based-sm-mib))
+
 (defpackage :asn.1/snmp-user-based-sm-mib
   (:nicknames :snmp-user-based-sm-mib)
   (:use :common-lisp :asn.1)
@@ -16,7 +18,9 @@
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
   (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|
                 |SnmpEngineID| |snmpAuthProtocols| |snmpPrivProtocols|))
+
 (in-package :snmp-user-based-sm-mib)
+
 (defoid |snmpUsmMIB| (|snmpModules| 15)
   (:type 'module-identity)
   (:description
@@ -27,30 +31,40 @@
                   version of this MIB module is part of RFC 3414;
                   see the RFC itself for full legal notices.
                  "))
+
 (defoid |usmMIBObjects| (|snmpUsmMIB| 1) (:type 'object-identity))
+
 (defoid |usmMIBConformance| (|snmpUsmMIB| 2) (:type 'object-identity))
+
 (defoid |usmNoAuthProtocol| (|snmpAuthProtocols| 1)
   (:type 'object-identity)
   (:status '|current|)
   (:description "No Authentication Protocol."))
+
 (defoid |usmHMACMD5AuthProtocol| (|snmpAuthProtocols| 2)
   (:type 'object-identity)
   (:status '|current|)
   (:description "The HMAC-MD5-96 Digest Authentication Protocol."))
+
 (defoid |usmHMACSHAAuthProtocol| (|snmpAuthProtocols| 3)
   (:type 'object-identity)
   (:status '|current|)
   (:description "The HMAC-SHA-96 Digest Authentication Protocol."))
+
 (defoid |usmNoPrivProtocol| (|snmpPrivProtocols| 1)
   (:type 'object-identity)
   (:status '|current|)
   (:description "No Privacy Protocol."))
+
 (defoid |usmDESPrivProtocol| (|snmpPrivProtocols| 2)
   (:type 'object-identity)
   (:status '|current|)
   (:description "The CBC-DES Symmetric Encryption Protocol."))
+
 (deftype |KeyChange| () 't)
+
 (defoid |usmStats| (|usmMIBObjects| 1) (:type 'object-identity))
+
 (defoid |usmStatsUnsupportedSecLevels| (|usmStats| 1)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -62,6 +76,7 @@
                  securityLevel that was unknown to the SNMP engine
                  or otherwise unavailable.
                 "))
+
 (defoid |usmStatsNotInTimeWindows| (|usmStats| 2)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -72,6 +87,7 @@
                  engine which were dropped because they appeared
                  outside of the authoritative SNMP engine's window.
                 "))
+
 (defoid |usmStatsUnknownUserNames| (|usmStats| 3)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -82,6 +98,7 @@
                  engine which were dropped because they referenced a
                  user that was not known to the SNMP engine.
                 "))
+
 (defoid |usmStatsUnknownEngineIDs| (|usmStats| 4)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -92,6 +109,7 @@
                  engine which were dropped because they referenced an
                  snmpEngineID that was not known to the SNMP engine.
                 "))
+
 (defoid |usmStatsWrongDigests| (|usmStats| 5)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -102,6 +120,7 @@
                  engine which were dropped because they didn't
                  contain the expected digest value.
                 "))
+
 (defoid |usmStatsDecryptionErrors| (|usmStats| 6)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -112,7 +131,9 @@
                  engine which were dropped because they could not be
                  decrypted.
                 "))
+
 (defoid |usmUser| (|usmMIBObjects| 2) (:type 'object-identity))
+
 (defoid |usmUserSpinLock| (|usmUser| 1)
   (:type 'object-type)
   (:syntax '|TestAndIncr|)
@@ -124,6 +145,7 @@
                  use of facilities to alter secrets in the
                  usmUserTable.
                 "))
+
 (defoid |usmUserTable| (|usmUser| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -192,6 +214,7 @@
                  another SNMP command generator application which may
                  also be acting on the usmUserTable.
                 "))
+
 (defoid |usmUserEntry| (|usmUserTable| 1)
   (:type 'object-type)
   (:syntax '|UsmUserEntry|)
@@ -202,7 +225,9 @@
                  Configuration Datastore (LCD) for the User-based
                  Security Model.
                 "))
+
 (deftype |UsmUserEntry| () 't)
+
 (defoid |usmUserEngineID| (|usmUserEntry| 1)
   (:type 'object-type)
   (:syntax '|SnmpEngineID|)
@@ -218,6 +243,7 @@
                  of a remote SNMP engine with which this user can
                  communicate.
                 "))
+
 (defoid |usmUserName| (|usmUserEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -230,6 +256,7 @@
                  This is the (User-based Security) Model dependent
                  security ID.
                 "))
+
 (defoid |usmUserSecurityName| (|usmUserEntry| 3)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
@@ -244,6 +271,7 @@
                  vice versa is the identity function so that the
                  securityName is the same as the userName.
                 "))
+
 (defoid |usmUserCloneFrom| (|usmUserEntry| 4)
   (:type 'object-type)
   (:syntax '|RowPointer|)
@@ -284,6 +312,7 @@
                  When this object is read, the ZeroDotZero OID
                  is returned.
                 "))
+
 (defoid |usmUserAuthProtocol| (|usmUserEntry| 5)
   (:type 'object-type)
   (:syntax '|AutonomousType|)
@@ -328,6 +357,7 @@
                  to the usmNoPrivProtocol value before it can set
                  the usmUserAuthProtocol value to usmNoAuthProtocol.
                 "))
+
 (defoid |usmUserAuthKeyChange| (|usmUserEntry| 6)
   (:type 'object-type)
   (:syntax '|KeyChange|)
@@ -388,6 +418,7 @@
                  request probably never reached the target and so you
                  can start over with the procedure above.
                 "))
+
 (defoid |usmUserOwnAuthKeyChange| (|usmUserEntry| 7)
   (:type 'object-type)
   (:syntax '|KeyChange|)
@@ -416,6 +447,7 @@
                  When a set is received and the security model in use
                  is not USM, then a 'noAccess' error must be returned.
                 "))
+
 (defoid |usmUserPrivProtocol| (|usmUserEntry| 8)
   (:type 'object-type)
   (:syntax '|AutonomousType|)
@@ -459,6 +491,7 @@
                  usmNoAuthProtocol. If it does, then an
                  'inconsistentValue' error must be returned.
                 "))
+
 (defoid |usmUserPrivKeyChange| (|usmUserEntry| 9)
   (:type 'object-type)
   (:syntax '|KeyChange|)
@@ -492,6 +525,7 @@
                  See the description clause of usmUserAuthKeyChange for
                  a recommended procedure to do a key change.
                 "))
+
 (defoid |usmUserOwnPrivKeyChange| (|usmUserEntry| 10)
   (:type 'object-type)
   (:syntax '|KeyChange|)
@@ -520,6 +554,7 @@
                  When a set is received and the security model in use
                  is not USM, then a 'noAccess' error must be returned.
                 "))
+
 (defoid |usmUserPublic| (|usmUserEntry| 11)
   (:type 'object-type)
   (:syntax 't)
@@ -532,6 +567,7 @@
                  determine whether the change of the secret was
                  effected.
                 "))
+
 (defoid |usmUserStorageType| (|usmUserEntry| 12)
   (:type 'object-type)
   (:syntax '|StorageType|)
@@ -567,6 +603,7 @@
                  a SET for a readOnly or permanent row is not accepted
                  at all, then a 'wrongValue' error must be returned.
                 "))
+
 (defoid |usmUserStatus| (|usmUserEntry| 13)
   (:type 'object-type)
   (:syntax '|RowStatus|)
@@ -600,9 +637,12 @@
 
                  value of usmUserStatus MUST be active.
                 "))
+
 (defoid |usmMIBCompliances| (|usmMIBConformance| 1)
   (:type 'object-identity))
+
 (defoid |usmMIBGroups| (|usmMIBConformance| 2) (:type 'object-identity))
+
 (defoid |usmMIBCompliance| (|usmMIBCompliances| 1)
   (:type 'module-compliance)
   (:status '|current|)
@@ -610,6 +650,7 @@
    "The compliance statement for SNMP engines which
                  implement the SNMP-USER-BASED-SM-MIB.
                 "))
+
 (defoid |usmMIBBasicGroup| (|usmMIBGroups| 1)
   (:type 'object-group)
   (:status '|current|)
@@ -618,4 +659,6 @@
                  of an SNMP engine which implements the SNMP
                  User-based Security Model.
                 "))
+
 (eval-when (:load-toplevel :execute) (setf *current-module* nil))
+

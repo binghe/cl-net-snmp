@@ -2,9 +2,11 @@
 ;;;; Auto-generated from MIB:NET-SNMP;SNMP-TARGET-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'snmp-target-mib *mib-modules*)
   (setf *current-module* 'snmp-target-mib))
+
 (defpackage :asn.1/snmp-target-mib
   (:nicknames :snmp-target-mib)
   (:use :common-lisp :asn.1)
@@ -17,7 +19,9 @@
                 |SnmpMessageProcessingModel| |SnmpSecurityLevel|
                 |SnmpAdminString|)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group))
+
 (in-package :snmp-target-mib)
+
 (defoid |snmpTargetMIB| (|snmpModules| 12)
   (:type 'module-identity)
   (:description
@@ -29,12 +33,17 @@
          version of this MIB module is part of RFC 3413;
          see the RFC itself for full legal notices.
         "))
+
 (defoid |snmpTargetObjects| (|snmpTargetMIB| 1)
   (:type 'object-identity))
+
 (defoid |snmpTargetConformance| (|snmpTargetMIB| 3)
   (:type 'object-identity))
+
 (deftype |SnmpTagValue| () 't)
+
 (deftype |SnmpTagList| () 't)
+
 (defoid |snmpTargetSpinLock| (|snmpTargetObjects| 1)
   (:type 'object-type)
   (:syntax '|TestAndIncr|)
@@ -59,6 +68,7 @@
                  snmpTargetAddrTagList to the new value.  If
                  the set fails for the snmpTargetSpinLock
                  object, go back to step 1."))
+
 (defoid |snmpTargetAddrTable| (|snmpTargetObjects| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -67,6 +77,7 @@
   (:description
    "A table of transport addresses to be used in the generation
          of SNMP messages."))
+
 (defoid |snmpTargetAddrEntry| (|snmpTargetAddrTable| 1)
   (:type 'object-type)
   (:syntax '|SnmpTargetAddrEntry|)
@@ -78,7 +89,9 @@
 
          Entries in the snmpTargetAddrTable are created and
          deleted using the snmpTargetAddrRowStatus object."))
+
 (deftype |SnmpTargetAddrEntry| () 't)
+
 (defoid |snmpTargetAddrName| (|snmpTargetAddrEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -87,6 +100,7 @@
   (:description
    "The locally arbitrary, but unique identifier associated
          with this snmpTargetAddrEntry."))
+
 (defoid |snmpTargetAddrTDomain| (|snmpTargetAddrEntry| 2)
   (:type 'object-type)
   (:syntax '|TDomain|)
@@ -95,6 +109,7 @@
   (:description
    "This object indicates the transport type of the address
          contained in the snmpTargetAddrTAddress object."))
+
 (defoid |snmpTargetAddrTAddress| (|snmpTargetAddrEntry| 3)
   (:type 'object-type)
   (:syntax '|TAddress|)
@@ -104,6 +119,7 @@
    "This object contains a transport address.  The format of
          this address depends on the value of the
          snmpTargetAddrTDomain object."))
+
 (defoid |snmpTargetAddrTimeout| (|snmpTargetAddrEntry| 4)
   (:type 'object-type)
   (:syntax '|TimeInterval|)
@@ -131,6 +147,7 @@
          authentication and privacy, the derived value may be
          increased to compensate for extra processing time spent
          during authentication and encryption processing."))
+
 (defoid |snmpTargetAddrRetryCount| (|snmpTargetAddrEntry| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -141,6 +158,7 @@
          attempted when a response is not received for a generated
          message.  An application may provide its own retry count,
          in which case the value of this object is ignored."))
+
 (defoid |snmpTargetAddrTagList| (|snmpTargetAddrEntry| 6)
   (:type 'object-type)
   (:syntax '|SnmpTagList|)
@@ -150,6 +168,7 @@
    "This object contains a list of tag values which are
          used to select target addresses for a particular
          operation."))
+
 (defoid |snmpTargetAddrParams| (|snmpTargetAddrEntry| 7)
   (:type 'object-type)
   (:syntax 't)
@@ -160,6 +179,7 @@
          snmpTargetParamsTable.  The identified entry
          contains SNMP parameters to be used when generating
          messages to be sent to this transport address."))
+
 (defoid |snmpTargetAddrStorageType| (|snmpTargetAddrEntry| 8)
   (:type 'object-type)
   (:syntax '|StorageType|)
@@ -169,6 +189,7 @@
    "The storage type for this conceptual row.
          Conceptual rows having the value 'permanent' need not
          allow write-access to any columnar objects in the row."))
+
 (defoid |snmpTargetAddrRowStatus| (|snmpTargetAddrEntry| 9)
   (:type 'object-type)
   (:syntax '|RowStatus|)
@@ -198,6 +219,7 @@
          An attempt to set these objects while the value of
          snmpTargetAddrRowStatus is active(1) will result in
          an inconsistentValue error."))
+
 (defoid |snmpTargetParamsTable| (|snmpTargetObjects| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -206,6 +228,7 @@
   (:description
    "A table of SNMP target information to be used
          in the generation of SNMP messages."))
+
 (defoid |snmpTargetParamsEntry| (|snmpTargetParamsTable| 1)
   (:type 'object-type)
   (:syntax '|SnmpTargetParamsEntry|)
@@ -216,7 +239,9 @@
 
          Entries in the snmpTargetParamsTable are created and
          deleted using the snmpTargetParamsRowStatus object."))
+
 (deftype |SnmpTargetParamsEntry| () 't)
+
 (defoid |snmpTargetParamsName| (|snmpTargetParamsEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -225,6 +250,7 @@
   (:description
    "The locally arbitrary, but unique identifier associated
          with this snmpTargetParamsEntry."))
+
 (defoid |snmpTargetParamsMPModel| (|snmpTargetParamsEntry| 2)
   (:type 'object-type)
   (:syntax '|SnmpMessageProcessingModel|)
@@ -233,6 +259,7 @@
   (:description
    "The Message Processing Model to be used when generating
          SNMP messages using this entry."))
+
 (defoid |snmpTargetParamsSecurityModel| (|snmpTargetParamsEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -245,6 +272,7 @@
           attempt is made to set this variable to a value
           for a security model which the implementation does
           not support."))
+
 (defoid |snmpTargetParamsSecurityName| (|snmpTargetParamsEntry| 4)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
@@ -254,6 +282,7 @@
    "The securityName which identifies the Principal on
          whose behalf SNMP messages will be generated using
          this entry."))
+
 (defoid |snmpTargetParamsSecurityLevel| (|snmpTargetParamsEntry| 5)
   (:type 'object-type)
   (:syntax '|SnmpSecurityLevel|)
@@ -262,6 +291,7 @@
   (:description
    "The Level of Security to be used when generating
          SNMP messages using this entry."))
+
 (defoid |snmpTargetParamsStorageType| (|snmpTargetParamsEntry| 6)
   (:type 'object-type)
   (:syntax '|StorageType|)
@@ -271,6 +301,7 @@
    "The storage type for this conceptual row.
          Conceptual rows having the value 'permanent' need not
          allow write-access to any columnar objects in the row."))
+
 (defoid |snmpTargetParamsRowStatus| (|snmpTargetParamsEntry| 7)
   (:type 'object-type)
   (:syntax '|RowStatus|)
@@ -304,6 +335,7 @@
          An attempt to set these objects while the value of
          snmpTargetParamsRowStatus is active(1) will result in
          an inconsistentValue error."))
+
 (defoid |snmpUnavailableContexts| (|snmpTargetObjects| 4)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -313,6 +345,7 @@
    "The total number of packets received by the SNMP
          engine which were dropped because the context
          contained in the message was unavailable."))
+
 (defoid |snmpUnknownContexts| (|snmpTargetObjects| 5)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -322,10 +355,13 @@
    "The total number of packets received by the SNMP
          engine which were dropped because the context
          contained in the message was unknown."))
+
 (defoid |snmpTargetCompliances| (|snmpTargetConformance| 1)
   (:type 'object-identity))
+
 (defoid |snmpTargetGroups| (|snmpTargetConformance| 2)
   (:type 'object-identity))
+
 (defoid |snmpTargetCommandResponderCompliance|
         (|snmpTargetCompliances| 1)
   (:type 'module-compliance)
@@ -333,12 +369,14 @@
   (:description
    "The compliance statement for SNMP entities which include
          a command responder application."))
+
 (defoid |snmpTargetBasicGroup| (|snmpTargetGroups| 1)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "A collection of objects providing basic remote
          configuration of management targets."))
+
 (defoid |snmpTargetResponseGroup| (|snmpTargetGroups| 2)
   (:type 'object-group)
   (:status '|current|)
@@ -347,10 +385,13 @@
          of management targets for applications which generate
          SNMP messages for which a response message would be
          expected."))
+
 (defoid |snmpTargetCommandResponderGroup| (|snmpTargetGroups| 3)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "A collection of objects required for command responder
          applications, used for counting error conditions."))
+
 (eval-when (:load-toplevel :execute) (setf *current-module* nil))
+

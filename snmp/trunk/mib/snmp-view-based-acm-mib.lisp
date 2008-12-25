@@ -2,9 +2,11 @@
 ;;;; Auto-generated from MIB:NET-SNMP;SNMP-VIEW-BASED-ACM-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'snmp-view-based-acm-mib *mib-modules*)
   (setf *current-module* 'snmp-view-based-acm-mib))
+
 (defpackage :asn.1/snmp-view-based-acm-mib
   (:nicknames :snmp-view-based-acm-mib)
   (:use :common-lisp :asn.1)
@@ -15,7 +17,9 @@
                 |StorageType|)
   (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|
                 |SnmpSecurityLevel| |SnmpSecurityModel|))
+
 (in-package :snmp-view-based-acm-mib)
+
 (defoid |snmpVacmMIB| (|snmpModules| 16)
   (:type 'module-identity)
   (:description
@@ -26,8 +30,11 @@
                   version of this MIB module is part of RFC 3415;
                   see the RFC itself for full legal notices.
                  "))
+
 (defoid |vacmMIBObjects| (|snmpVacmMIB| 1) (:type 'object-identity))
+
 (defoid |vacmMIBConformance| (|snmpVacmMIB| 2) (:type 'object-identity))
+
 (defoid |vacmContextTable| (|vacmMIBObjects| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -65,13 +72,16 @@
                  This table is read-only.  It cannot be configured via
                  SNMP.
                 "))
+
 (defoid |vacmContextEntry| (|vacmContextTable| 1)
   (:type 'object-type)
   (:syntax '|VacmContextEntry|)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "Information about a particular context."))
+
 (deftype |VacmContextEntry| () 't)
+
 (defoid |vacmContextName| (|vacmContextEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -84,6 +94,7 @@
                  The empty contextName (zero length) represents the
                  default context.
                 "))
+
 (defoid |vacmSecurityToGroupTable| (|vacmMIBObjects| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -94,6 +105,7 @@
                  securityName into a groupName which is used to define
                  an access control policy for a group of principals.
                 "))
+
 (defoid |vacmSecurityToGroupEntry| (|vacmSecurityToGroupTable| 1)
   (:type 'object-type)
   (:syntax '|VacmSecurityToGroupEntry|)
@@ -103,7 +115,9 @@
    "An entry in this table maps the combination of a
                  securityModel and securityName into a groupName.
                 "))
+
 (deftype |VacmSecurityToGroupEntry| () 't)
+
 (defoid |vacmSecurityModel| (|vacmSecurityToGroupEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -115,6 +129,7 @@
 
                  Note, this object may not take the 'any' (0) value.
                 "))
+
 (defoid |vacmSecurityName| (|vacmSecurityToGroupEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -125,6 +140,7 @@
                  Security Model independent format, which is mapped by
                  this entry to a groupName.
                 "))
+
 (defoid |vacmGroupName| (|vacmSecurityToGroupEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -140,6 +156,7 @@
                  However, a value in this table does not imply that an
                  instance with the value exists in table vacmAccesTable.
                 "))
+
 (defoid |vacmSecurityToGroupStorageType| (|vacmSecurityToGroupEntry| 4)
   (:type 'object-type)
   (:syntax '|StorageType|)
@@ -150,6 +167,7 @@
                  Conceptual rows having the value 'permanent' need not
                  allow write-access to any columnar objects in the row.
                 "))
+
 (defoid |vacmSecurityToGroupStatus| (|vacmSecurityToGroupEntry| 5)
   (:type 'object-type)
   (:syntax '|RowStatus|)
@@ -174,6 +192,7 @@
                  The value of this object has no effect on whether
                  other objects in this conceptual row can be modified.
                 "))
+
 (defoid |vacmAccessTable| (|vacmMIBObjects| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -227,6 +246,7 @@
                  groups are really equivalent since the assumption that
                  the securityName has been authenticated does not hold.
                 "))
+
 (defoid |vacmAccessEntry| (|vacmAccessTable| 1)
   (:type 'object-type)
   (:syntax '|VacmAccessEntry|)
@@ -241,7 +261,9 @@
                  vacmAccessSecurityToGroupTable has a corresponding
                  value for object vacmGroupName.
                 "))
+
 (deftype |VacmAccessEntry| () 't)
+
 (defoid |vacmAccessContextPrefix| (|vacmAccessEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -255,6 +277,7 @@
                  is 'prefix') to the value of the instance of this
                  object.
                 "))
+
 (defoid |vacmAccessSecurityModel| (|vacmAccessEntry| 2)
   (:type 'object-type)
   (:syntax '|SnmpSecurityModel|)
@@ -264,6 +287,7 @@
    "In order to gain the access rights allowed by this
                  conceptual row, this securityModel must be in use.
                 "))
+
 (defoid |vacmAccessSecurityLevel| (|vacmAccessEntry| 3)
   (:type 'object-type)
   (:syntax '|SnmpSecurityLevel|)
@@ -280,6 +304,7 @@
                  which has the highest value for
                  vacmAccessSecurityLevel is selected.
                 "))
+
 (defoid |vacmAccessContextMatch| (|vacmAccessEntry| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -295,6 +320,7 @@
                  exactly match vacmAccessContextPrefix are selected.
                  This allows for a simple form of wildcarding.
                 "))
+
 (defoid |vacmAccessReadViewName| (|vacmAccessEntry| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -312,6 +338,7 @@
                  value of vacmViewTreeFamilyViewName, then no access
                  is granted.
                 "))
+
 (defoid |vacmAccessWriteViewName| (|vacmAccessEntry| 6)
   (:type 'object-type)
   (:syntax 't)
@@ -329,6 +356,7 @@
                  value of vacmViewTreeFamilyViewName, then no access
                  is granted.
                 "))
+
 (defoid |vacmAccessNotifyViewName| (|vacmAccessEntry| 7)
   (:type 'object-type)
   (:syntax 't)
@@ -346,6 +374,7 @@
                  value of vacmViewTreeFamilyViewName, then no access
                  is granted.
                 "))
+
 (defoid |vacmAccessStorageType| (|vacmAccessEntry| 8)
   (:type 'object-type)
   (:syntax '|StorageType|)
@@ -357,6 +386,7 @@
                  Conceptual rows having the value 'permanent' need not
                  allow write-access to any columnar objects in the row.
                 "))
+
 (defoid |vacmAccessStatus| (|vacmAccessEntry| 9)
   (:type 'object-type)
   (:syntax '|RowStatus|)
@@ -372,7 +402,9 @@
                  The value of this object has no effect on whether
                  other objects in this conceptual row can be modified.
                 "))
+
 (defoid |vacmMIBViews| (|vacmMIBObjects| 5) (:type 'object-identity))
+
 (defoid |vacmViewSpinLock| (|vacmMIBViews| 1)
   (:type 'object-type)
   (:syntax '|TestAndIncr|)
@@ -402,6 +434,7 @@
                  Since this is an advisory lock, the use of this lock
                  is not enforced.
                 "))
+
 (defoid |vacmViewTreeFamilyTable| (|vacmMIBViews| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -472,6 +505,7 @@
                  support instance-level granularity, then an
                  inconsistentName error must be returned.
                 "))
+
 (defoid |vacmViewTreeFamilyEntry| (|vacmViewTreeFamilyTable| 1)
   (:type 'object-type)
   (:syntax '|VacmViewTreeFamilyEntry|)
@@ -492,7 +526,9 @@
                  MIB view (viewName), that view may be thought of as
                  consisting of the empty set of view subtrees.
                 "))
+
 (deftype |VacmViewTreeFamilyEntry| () 't)
+
 (defoid |vacmViewTreeFamilyViewName| (|vacmViewTreeFamilyEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -501,6 +537,7 @@
   (:description
    "The human readable name for a family of view subtrees.
                 "))
+
 (defoid |vacmViewTreeFamilySubtree| (|vacmViewTreeFamilyEntry| 2)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -511,6 +548,7 @@
                  corresponding instance of vacmViewTreeFamilyMask
                  defines a family of view subtrees.
                 "))
+
 (defoid |vacmViewTreeFamilyMask| (|vacmViewTreeFamilyEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -566,6 +604,7 @@
                  do not need to be supported.  In this case this
                  object is made read-only.
                 "))
+
 (defoid |vacmViewTreeFamilyType| (|vacmViewTreeFamilyEntry| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -577,6 +616,7 @@
                  define a family of view subtrees which is included in
                  or excluded from the MIB view.
                 "))
+
 (defoid |vacmViewTreeFamilyStorageType| (|vacmViewTreeFamilyEntry| 5)
   (:type 'object-type)
   (:syntax '|StorageType|)
@@ -588,6 +628,7 @@
                  Conceptual rows having the value 'permanent' need not
                  allow write-access to any columnar objects in the row.
                 "))
+
 (defoid |vacmViewTreeFamilyStatus| (|vacmViewTreeFamilyEntry| 6)
   (:type 'object-type)
   (:syntax '|RowStatus|)
@@ -603,10 +644,13 @@
                  The value of this object has no effect on whether
                  other objects in this conceptual row can be modified.
                 "))
+
 (defoid |vacmMIBCompliances| (|vacmMIBConformance| 1)
   (:type 'object-identity))
+
 (defoid |vacmMIBGroups| (|vacmMIBConformance| 2)
   (:type 'object-identity))
+
 (defoid |vacmMIBCompliance| (|vacmMIBCompliances| 1)
   (:type 'module-compliance)
   (:status '|current|)
@@ -615,6 +659,7 @@
                  implement the SNMP View-based Access Control Model
                  configuration MIB.
                 "))
+
 (defoid |vacmBasicGroup| (|vacmMIBGroups| 1)
   (:type 'object-group)
   (:status '|current|)
@@ -624,4 +669,6 @@
 
                  the SNMP View-based Access Control Model.
                 "))
+
 (eval-when (:load-toplevel :execute) (setf *current-module* nil))
+

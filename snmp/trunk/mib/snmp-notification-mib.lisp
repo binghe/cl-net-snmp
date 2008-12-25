@@ -2,9 +2,11 @@
 ;;;; Auto-generated from MIB:NET-SNMP;SNMP-NOTIFICATION-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'snmp-notification-mib *mib-modules*)
   (setf *current-module* 'snmp-notification-mib))
+
 (defpackage :asn.1/snmp-notification-mib
   (:nicknames :snmp-notification-mib)
   (:use :common-lisp :asn.1)
@@ -15,7 +17,9 @@
   (:import-from :asn.1/snmp-target-mib |SnmpTagValue|
                 |snmpTargetParamsName|)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group))
+
 (in-package :snmp-notification-mib)
+
 (defoid |snmpNotificationMIB| (|snmpModules| 13)
   (:type 'module-identity)
   (:description
@@ -28,10 +32,13 @@
          version of this MIB module is part of RFC 3413;
          see the RFC itself for full legal notices.
         "))
+
 (defoid |snmpNotifyObjects| (|snmpNotificationMIB| 1)
   (:type 'object-identity))
+
 (defoid |snmpNotifyConformance| (|snmpNotificationMIB| 3)
   (:type 'object-identity))
+
 (defoid |snmpNotifyTable| (|snmpNotifyObjects| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -41,6 +48,7 @@
    "This table is used to select management targets which should
          receive notifications, as well as the type of notification
          which should be sent to each selected management target."))
+
 (defoid |snmpNotifyEntry| (|snmpNotifyTable| 1)
   (:type 'object-type)
   (:syntax '|SnmpNotifyEntry|)
@@ -55,7 +63,9 @@
 
          Entries in the snmpNotifyTable are created and
          deleted using the snmpNotifyRowStatus object."))
+
 (deftype |SnmpNotifyEntry| () 't)
+
 (defoid |snmpNotifyName| (|snmpNotifyEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -64,6 +74,7 @@
   (:description
    "The locally arbitrary, but unique identifier associated
          with this snmpNotifyEntry."))
+
 (defoid |snmpNotifyTag| (|snmpNotifyEntry| 2)
   (:type 'object-type)
   (:syntax '|SnmpTagValue|)
@@ -76,6 +87,7 @@
          which is equal to the value of an instance of this
          object is selected.  If this object contains a value
          of zero length, no entries are selected."))
+
 (defoid |snmpNotifyType| (|snmpNotifyEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -102,6 +114,7 @@
          generation of Unconfirmed-Class PDUs (and not
          Confirmed-Class PDUs), then this object may be
          read-only."))
+
 (defoid |snmpNotifyStorageType| (|snmpNotifyEntry| 4)
   (:type 'object-type)
   (:syntax '|StorageType|)
@@ -111,6 +124,7 @@
    "The storage type for this conceptual row.
          Conceptual rows having the value 'permanent' need not
          allow write-access to any columnar objects in the row."))
+
 (defoid |snmpNotifyRowStatus| (|snmpNotifyEntry| 5)
   (:type 'object-type)
   (:syntax '|RowStatus|)
@@ -122,6 +136,7 @@
          To create a row in this table, a manager must
          set this object to either createAndGo(4) or
          createAndWait(5)."))
+
 (defoid |snmpNotifyFilterProfileTable| (|snmpNotifyObjects| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -130,6 +145,7 @@
   (:description
    "This table is used to associate a notification filter
          profile with a particular set of target parameters."))
+
 (defoid |snmpNotifyFilterProfileEntry|
         (|snmpNotifyFilterProfileTable| 1)
   (:type 'object-type)
@@ -144,7 +160,9 @@
          Entries in the snmpNotifyFilterProfileTable are created
          and deleted using the snmpNotifyFilterProfileRowStatus
          object."))
+
 (deftype |SnmpNotifyFilterProfileEntry| () 't)
+
 (defoid |snmpNotifyFilterProfileName|
         (|snmpNotifyFilterProfileEntry| 1)
   (:type 'object-type)
@@ -155,6 +173,7 @@
    "The name of the filter profile to be used when generating
          notifications using the corresponding entry in the
          snmpTargetAddrTable."))
+
 (defoid |snmpNotifyFilterProfileStorType|
         (|snmpNotifyFilterProfileEntry| 2)
   (:type 'object-type)
@@ -165,6 +184,7 @@
    "The storage type for this conceptual row.
          Conceptual rows having the value 'permanent' need not
          allow write-access to any columnar objects in the row."))
+
 (defoid |snmpNotifyFilterProfileRowStatus|
         (|snmpNotifyFilterProfileEntry| 3)
   (:type 'object-type)
@@ -186,6 +206,7 @@
          In particular, a newly created row cannot be made
          active until the corresponding instance of
          snmpNotifyFilterProfileName has been set."))
+
 (defoid |snmpNotifyFilterTable| (|snmpNotifyObjects| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -204,6 +225,7 @@
 
          A more complete discussion of notification filtering
          can be found in section 6. of [SNMP-APPL]."))
+
 (defoid |snmpNotifyFilterEntry| (|snmpNotifyFilterTable| 1)
   (:type 'object-type)
   (:syntax '|SnmpNotifyFilterEntry|)
@@ -214,7 +236,9 @@
 
          Entries in the snmpNotifyFilterTable are created and
          deleted using the snmpNotifyFilterRowStatus object."))
+
 (deftype |SnmpNotifyFilterEntry| () 't)
+
 (defoid |snmpNotifyFilterSubtree| (|snmpNotifyFilterEntry| 1)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -225,6 +249,7 @@
          instance of snmpNotifyFilterMask, defines a family of
          subtrees which are included in or excluded from the
          filter profile."))
+
 (defoid |snmpNotifyFilterMask| (|snmpNotifyFilterEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -275,6 +300,7 @@
          and the family of filter subtrees is the one
          subtree uniquely identified by the corresponding
          instance of snmpNotifyFilterSubtree."))
+
 (defoid |snmpNotifyFilterType| (|snmpNotifyFilterEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -285,6 +311,7 @@
          defined by this entry are included in or excluded from a
          filter.  A more detailed discussion of the use of this
          object can be found in section 6. of [SNMP-APPL]."))
+
 (defoid |snmpNotifyFilterStorageType| (|snmpNotifyFilterEntry| 4)
   (:type 'object-type)
   (:syntax '|StorageType|)
@@ -295,6 +322,7 @@
          Conceptual rows having the value 'permanent' need not
 
          allow write-access to any columnar objects in the row."))
+
 (defoid |snmpNotifyFilterRowStatus| (|snmpNotifyFilterEntry| 5)
   (:type 'object-type)
   (:syntax '|RowStatus|)
@@ -306,10 +334,13 @@
          To create a row in this table, a manager must
          set this object to either createAndGo(4) or
          createAndWait(5)."))
+
 (defoid |snmpNotifyCompliances| (|snmpNotifyConformance| 1)
   (:type 'object-identity))
+
 (defoid |snmpNotifyGroups| (|snmpNotifyConformance| 2)
   (:type 'object-identity))
+
 (defoid |snmpNotifyBasicCompliance| (|snmpNotifyCompliances| 1)
   (:type 'module-compliance)
   (:status '|current|)
@@ -317,6 +348,7 @@
    "The compliance statement for minimal SNMP entities which
          implement only SNMP Unconfirmed-Class notifications and
          read-create operations on only the snmpTargetAddrTable."))
+
 (defoid |snmpNotifyBasicFiltersCompliance| (|snmpNotifyCompliances| 2)
   (:type 'module-compliance)
   (:status '|current|)
@@ -324,6 +356,7 @@
    "The compliance statement for SNMP entities which implement
          SNMP Unconfirmed-Class notifications with filtering, and
          read-create operations on all related tables."))
+
 (defoid |snmpNotifyFullCompliance| (|snmpNotifyCompliances| 3)
   (:type 'module-compliance)
   (:status '|current|)
@@ -333,6 +366,7 @@
          SNMP Unconfirmed-Class and Confirmed-Class notifications,
          plus filtering and read-create operations on all related
          tables."))
+
 (defoid |snmpNotifyGroup| (|snmpNotifyGroups| 1)
   (:type 'object-group)
   (:status '|current|)
@@ -341,10 +375,13 @@
          targets are used for generating notifications, and the
          type of notification to be generated for each selected
          management target."))
+
 (defoid |snmpNotifyFilterGroup| (|snmpNotifyGroups| 2)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "A collection of objects providing remote configuration
          of notification filters."))
+
 (eval-when (:load-toplevel :execute) (setf *current-module* nil))
+

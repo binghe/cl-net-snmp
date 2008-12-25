@@ -2,9 +2,11 @@
 ;;;; Auto-generated from MIB:NET-SNMP;DISMAN-EVENT-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'disman-event-mib *mib-modules*)
   (setf *current-module* 'disman-event-mib))
+
 (defpackage :asn.1/disman-event-mib
   (:nicknames :disman-event-mib)
   (:use :common-lisp :asn.1)
@@ -18,22 +20,31 @@
   (:import-from :|ASN.1/SNMPv2-MIB| |sysUpTime|)
   (:import-from :asn.1/snmp-target-mib |SnmpTagValue|)
   (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|))
+
 (in-package :disman-event-mib)
+
 (defoid |dismanEventMIB| (|mib-2| 88)
   (:type 'module-identity)
   (:description
    "The MIB module for defining event triggers and actions
      for network management purposes."))
+
 (defoid |dismanEventMIBObjects| (|dismanEventMIB| 1)
   (:type 'object-identity))
+
 (defoid |mteResource| (|dismanEventMIBObjects| 1)
   (:type 'object-identity))
+
 (defoid |mteTrigger| (|dismanEventMIBObjects| 2)
   (:type 'object-identity))
+
 (defoid |mteObjects| (|dismanEventMIBObjects| 3)
   (:type 'object-identity))
+
 (defoid |mteEvent| (|dismanEventMIBObjects| 4) (:type 'object-identity))
+
 (deftype |FailureReason| () 't)
+
 (defoid |mteResourceSampleMinimum| (|mteResource| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -54,6 +65,7 @@
 
         Changing this value will not invalidate an existing setting
         of mteTriggerFrequency."))
+
 (defoid |mteResourceSampleInstanceMaximum| (|mteResource| 2)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -77,6 +89,7 @@
         Changing this value will not eliminate or inhibit existing
         sample state but could prevent allocation of additional state
         information."))
+
 (defoid |mteResourceSampleInstances| (|mteResource| 3)
   (:type 'object-type)
   (:syntax '|Gauge32|)
@@ -85,6 +98,7 @@
   (:description
    "The number of currently active instance entries as
         defined for mteResourceSampleInstanceMaximum."))
+
 (defoid |mteResourceSampleInstancesHigh| (|mteResource| 4)
   (:type 'object-type)
   (:syntax '|Gauge32|)
@@ -93,6 +107,7 @@
   (:description
    "The highest value of mteResourceSampleInstances that has
         occurred since initialization of the management system."))
+
 (defoid |mteResourceSampleInstanceLacks| (|mteResource| 5)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -102,6 +117,7 @@
    "The number of times this system could not take a new sample
         because that allocation would have exceeded the limit set by
         mteResourceSampleInstanceMaximum."))
+
 (defoid |mteTriggerFailures| (|mteTrigger| 1)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -114,12 +130,14 @@
 
 
         wildcarded object."))
+
 (defoid |mteTriggerTable| (|mteTrigger| 2)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A table of management event trigger information."))
+
 (defoid |mteTriggerEntry| (|mteTriggerTable| 1)
   (:type 'object-type)
   (:syntax '|MteTriggerEntry|)
@@ -128,7 +146,9 @@
   (:description
    "Information about a single trigger.  Applications create and
         delete entries using mteTriggerEntryStatus."))
+
 (deftype |MteTriggerEntry| () 't)
+
 (defoid |mteOwner| (|mteTriggerEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -138,6 +158,7 @@
    "The owner of this entry. The exact semantics of this
         string are subject to the security policy defined by the
         security administrator."))
+
 (defoid |mteTriggerName| (|mteTriggerEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -146,12 +167,14 @@
   (:description
    "A locally-unique, administratively assigned name for the
         trigger within the scope of mteOwner."))
+
 (defoid |mteTriggerComment| (|mteTriggerEntry| 3)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
   (:max-access '|read-create|)
   (:status '|current|)
   (:description "A description of the trigger's function and use."))
+
 (defoid |mteTriggerTest| (|mteTriggerEntry| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -185,6 +208,7 @@
 
         Note that combining 'boolean' and 'threshold' tests on the
         same object may be somewhat redundant."))
+
 (defoid |mteTriggerSampleType| (|mteTriggerEntry| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -212,6 +236,7 @@
 
         If only 'existence' is set in mteTriggerTest this object has
         no meaning."))
+
 (defoid |mteTriggerValueID| (|mteTriggerEntry| 6)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -245,6 +270,7 @@
         as if there were a separate table entry for each instance
         that fills the wildcard without having to actually predict
         all possible instances ahead of time."))
+
 (defoid |mteTriggerValueIDWildcard| (|mteTriggerEntry| 7)
   (:type 'object-type)
   (:syntax '|TruthValue|)
@@ -253,6 +279,7 @@
   (:description
    "Control for whether mteTriggerValueID is to be treated as
         fully-specified or wildcarded, with 'true' indicating wildcard."))
+
 (defoid |mteTriggerTargetTag| (|mteTriggerEntry| 8)
   (:type 'object-type)
   (:syntax '|SnmpTagValue|)
@@ -273,6 +300,7 @@
 
 
         parameters resulting from the tag."))
+
 (defoid |mteTriggerContextName| (|mteTriggerEntry| 9)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
@@ -300,6 +328,7 @@
         For a remote system a local version of such a list is not
         defined by any current standard and may not be available, so
         this function MAY not be supported."))
+
 (defoid |mteTriggerContextNameWildcard| (|mteTriggerEntry| 10)
   (:type 'object-type)
   (:syntax '|TruthValue|)
@@ -308,6 +337,7 @@
   (:description
    "Control for whether mteTriggerContextName is to be treated as
         fully-specified or wildcarded, with 'true' indicating wildcard."))
+
 (defoid |mteTriggerFrequency| (|mteTriggerEntry| 11)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -336,6 +366,7 @@
         Systems that can support this SHOULD document those cases
         where it can be used.  In cases where it can not, setting this
         object to 0 should be disallowed."))
+
 (defoid |mteTriggerObjectsOwner| (|mteTriggerEntry| 12)
   (:type 'object-type)
   (:syntax 't)
@@ -344,6 +375,7 @@
   (:description
    "To go with mteTriggerObjects, the mteOwner of a group of
         objects from mteObjectsTable."))
+
 (defoid |mteTriggerObjects| (|mteTriggerEntry| 13)
   (:type 'object-type)
   (:syntax 't)
@@ -360,6 +392,7 @@
 
 
         A length of 0 indicates no additional objects."))
+
 (defoid |mteTriggerEnabled| (|mteTriggerEntry| 14)
   (:type 'object-type)
   (:syntax '|TruthValue|)
@@ -368,6 +401,7 @@
   (:description
    "A control to allow a trigger to be configured but not used.
         When the value is 'false' the trigger is not sampled."))
+
 (defoid |mteTriggerEntryStatus| (|mteTriggerEntry| 15)
   (:type 'object-type)
   (:syntax '|RowStatus|)
@@ -377,6 +411,7 @@
    "The control that allows creation and deletion of entries.
         Once made active an entry may not be modified except to
         delete it."))
+
 (defoid |mteTriggerDeltaTable| (|mteTrigger| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -385,6 +420,7 @@
   (:description
    "A table of management event trigger information for delta
         sampling."))
+
 (defoid |mteTriggerDeltaEntry| (|mteTriggerDeltaTable| 1)
   (:type 'object-type)
   (:syntax '|MteTriggerDeltaEntry|)
@@ -394,8 +430,11 @@
    "Information about a single trigger's delta sampling.  Entries
         automatically exist in this this table for each mteTriggerEntry
         that has mteTriggerSampleType set to 'deltaValue'."))
+
 (deftype |MteTriggerDeltaEntry| () 't)
+
 (defoid |sysUpTimeInstance| (|sysUpTime| 0) (:type 'object-identity))
+
 (defoid |mteTriggerDeltaDiscontinuityID| (|mteTriggerDeltaEntry| 1)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -424,6 +463,7 @@
         the wrong object.  If the value syntax of those objects is not
         usable, that results in an error that terminates the sample
         with a 'badType' error code."))
+
 (defoid |mteTriggerDeltaDiscontinuityIDWildcard|
         (|mteTriggerDeltaEntry| 2)
   (:type 'object-type)
@@ -439,6 +479,7 @@
 
 
         mteTriggerSampleType is 'deltaValue'."))
+
 (defoid |mteTriggerDeltaDiscontinuityIDType| (|mteTriggerDeltaEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -449,6 +490,7 @@
         mteTriggerDeltaDiscontinuityID of this row is of syntax
         TimeTicks.  The value 'timeStamp' indicates syntax TimeStamp.
         The value 'dateAndTime' indicates syntax DateAndTime."))
+
 (defoid |mteTriggerExistenceTable| (|mteTrigger| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -457,6 +499,7 @@
   (:description
    "A table of management event trigger information for existence
         triggers."))
+
 (defoid |mteTriggerExistenceEntry| (|mteTriggerExistenceTable| 1)
   (:type 'object-type)
   (:syntax '|MteTriggerExistenceEntry|)
@@ -466,7 +509,9 @@
    "Information about a single existence trigger.  Entries
         automatically exist in this this table for each mteTriggerEntry
         that has 'existence' set in mteTriggerTest."))
+
 (deftype |MteTriggerExistenceEntry| () 't)
+
 (defoid |mteTriggerExistenceTest| (|mteTriggerExistenceEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -489,6 +534,7 @@
         Once the trigger has fired for either presence or absence it
         will not fire again for that state until the object has been
         to the other state. "))
+
 (defoid |mteTriggerExistenceStartup| (|mteTriggerExistenceEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -499,6 +545,7 @@
         is first set to 'active' and the test specified by
         mteTriggerExistenceTest is true.  Setting an option causes
         that trigger to fire when its test is true."))
+
 (defoid |mteTriggerExistenceObjectsOwner|
         (|mteTriggerExistenceEntry| 3)
   (:type 'object-type)
@@ -508,6 +555,7 @@
   (:description
    "To go with mteTriggerExistenceObjects, the mteOwner of a
         group of objects from mteObjectsTable."))
+
 (defoid |mteTriggerExistenceObjects| (|mteTriggerExistenceEntry| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -523,6 +571,7 @@
         trigger, the event or other settings in mteTriggerTest.
 
         A length of 0 indicates no additional objects."))
+
 (defoid |mteTriggerExistenceEventOwner| (|mteTriggerExistenceEntry| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -531,6 +580,7 @@
   (:description
    "To go with mteTriggerExistenceEvent, the mteOwner of an event
         entry from the mteEventTable."))
+
 (defoid |mteTriggerExistenceEvent| (|mteTriggerExistenceEntry| 6)
   (:type 'object-type)
   (:syntax 't)
@@ -540,6 +590,7 @@
    "The mteEventName of the event to invoke when mteTriggerType is
         'existence' and this trigger fires.  A length of 0 indicates no
         event."))
+
 (defoid |mteTriggerBooleanTable| (|mteTrigger| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -548,6 +599,7 @@
   (:description
    "A table of management event trigger information for boolean
         triggers."))
+
 (defoid |mteTriggerBooleanEntry| (|mteTriggerBooleanTable| 1)
   (:type 'object-type)
   (:syntax '|MteTriggerBooleanEntry|)
@@ -557,7 +609,9 @@
    "Information about a single boolean trigger.  Entries
         automatically exist in this this table for each mteTriggerEntry
         that has 'boolean' set in mteTriggerTest."))
+
 (deftype |MteTriggerBooleanEntry| () 't)
+
 (defoid |mteTriggerBooleanComparison| (|mteTriggerBooleanEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -571,6 +625,7 @@
         mteTriggerBooleanComparison is 'less' the result would be true
         if the value at mteTriggerValueID is less than the value of
         mteTriggerBooleanValue."))
+
 (defoid |mteTriggerBooleanValue| (|mteTriggerBooleanEntry| 2)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -579,6 +634,7 @@
   (:description
    "The value to use for the test specified by
         mteTriggerBooleanTest."))
+
 (defoid |mteTriggerBooleanStartup| (|mteTriggerBooleanEntry| 3)
   (:type 'object-type)
   (:syntax '|TruthValue|)
@@ -590,6 +646,7 @@
         mteTriggerValueID is found and the test specified by
         mteTriggerBooleanComparison is true.  In that case an event is
         triggered if mteTriggerBooleanStartup is 'true'."))
+
 (defoid |mteTriggerBooleanObjectsOwner| (|mteTriggerBooleanEntry| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -598,6 +655,7 @@
   (:description
    "To go with mteTriggerBooleanObjects, the mteOwner of a group
         of objects from mteObjectsTable."))
+
 (defoid |mteTriggerBooleanObjects| (|mteTriggerBooleanEntry| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -613,6 +671,7 @@
         trigger, the event or other settings in mteTriggerTest.
 
         A length of 0 indicates no additional objects."))
+
 (defoid |mteTriggerBooleanEventOwner| (|mteTriggerBooleanEntry| 6)
   (:type 'object-type)
   (:syntax 't)
@@ -621,6 +680,7 @@
   (:description
    "To go with mteTriggerBooleanEvent, the mteOwner of an event
         entry from mteEventTable."))
+
 (defoid |mteTriggerBooleanEvent| (|mteTriggerBooleanEntry| 7)
   (:type 'object-type)
   (:syntax 't)
@@ -630,6 +690,7 @@
    "The mteEventName of the event to invoke when mteTriggerType is
         'boolean' and this trigger fires.  A length of 0 indicates no
         event."))
+
 (defoid |mteTriggerThresholdTable| (|mteTrigger| 6)
   (:type 'object-type)
   (:syntax 't)
@@ -638,6 +699,7 @@
   (:description
    "A table of management event trigger information for threshold
         triggers."))
+
 (defoid |mteTriggerThresholdEntry| (|mteTriggerThresholdTable| 1)
   (:type 'object-type)
   (:syntax '|MteTriggerThresholdEntry|)
@@ -647,7 +709,9 @@
    "Information about a single threshold trigger.  Entries
         automatically exist in this table for each mteTriggerEntry
         that has 'threshold' set in mteTriggerTest."))
+
 (deftype |MteTriggerThresholdEntry| () 't)
+
 (defoid |mteTriggerThresholdStartup| (|mteTriggerThresholdEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -666,6 +730,7 @@
         mteTriggerThresholdStartup is equal to 'falling' or
         'risingOrFalling', then one mteTriggerThresholdRisingEvent is
         triggered for that instance."))
+
 (defoid |mteTriggerThresholdRising| (|mteTriggerThresholdEntry| 2)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -687,6 +752,7 @@
         After a rising event is generated, another such event is not
         triggered until the sampled value falls below this threshold
         and reaches mteTriggerThresholdFalling."))
+
 (defoid |mteTriggerThresholdFalling| (|mteTriggerThresholdEntry| 3)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -708,6 +774,7 @@
         After a falling event is generated, another such event is not
         triggered until the sampled value rises above this threshold
         and reaches mteTriggerThresholdRising."))
+
 (defoid |mteTriggerThresholdDeltaRising| (|mteTriggerThresholdEntry| 4)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -731,6 +798,7 @@
         After a rising event is generated, another such event is not
         triggered until the delta value falls below this threshold and
         reaches mteTriggerThresholdDeltaFalling."))
+
 (defoid |mteTriggerThresholdDeltaFalling|
         (|mteTriggerThresholdEntry| 5)
   (:type 'object-type)
@@ -755,6 +823,7 @@
         After a falling event is generated, another such event is not
         triggered until the delta value falls below this threshold and
         reaches mteTriggerThresholdDeltaRising."))
+
 (defoid |mteTriggerThresholdObjectsOwner|
         (|mteTriggerThresholdEntry| 6)
   (:type 'object-type)
@@ -764,6 +833,7 @@
   (:description
    "To go with mteTriggerThresholdObjects, the mteOwner of a group
         of objects from mteObjectsTable."))
+
 (defoid |mteTriggerThresholdObjects| (|mteTriggerThresholdEntry| 7)
   (:type 'object-type)
   (:syntax 't)
@@ -781,6 +851,7 @@
         trigger, the event or other settings in mteTriggerTest.
 
         A length of 0 indicates no additional objects."))
+
 (defoid |mteTriggerThresholdRisingEventOwner|
         (|mteTriggerThresholdEntry| 8)
   (:type 'object-type)
@@ -790,6 +861,7 @@
   (:description
    "To go with mteTriggerThresholdRisingEvent, the mteOwner of an
         event entry from mteEventTable."))
+
 (defoid |mteTriggerThresholdRisingEvent| (|mteTriggerThresholdEntry| 9)
   (:type 'object-type)
   (:syntax 't)
@@ -799,6 +871,7 @@
    "The mteEventName of the event to invoke when mteTriggerType is
         'threshold' and this trigger fires based on
         mteTriggerThresholdRising.  A length of 0 indicates no event."))
+
 (defoid |mteTriggerThresholdFallingEventOwner|
         (|mteTriggerThresholdEntry| 10)
   (:type 'object-type)
@@ -808,6 +881,7 @@
   (:description
    "To go with mteTriggerThresholdFallingEvent, the mteOwner of an
         event entry from mteEventTable."))
+
 (defoid |mteTriggerThresholdFallingEvent|
         (|mteTriggerThresholdEntry| 11)
   (:type 'object-type)
@@ -818,6 +892,7 @@
    "The mteEventName of the event to invoke when mteTriggerType is
         'threshold' and this trigger fires based on
         mteTriggerThresholdFalling.  A length of 0 indicates no event."))
+
 (defoid |mteTriggerThresholdDeltaRisingEventOwner|
         (|mteTriggerThresholdEntry| 12)
   (:type 'object-type)
@@ -827,6 +902,7 @@
   (:description
    "To go with mteTriggerThresholdDeltaRisingEvent, the mteOwner
         of an event entry from mteEventTable."))
+
 (defoid |mteTriggerThresholdDeltaRisingEvent|
         (|mteTriggerThresholdEntry| 13)
   (:type 'object-type)
@@ -838,6 +914,7 @@
         'threshold' and this trigger fires based on
         mteTriggerThresholdDeltaRising. A length of 0 indicates
         no event."))
+
 (defoid |mteTriggerThresholdDeltaFallingEventOwner|
         (|mteTriggerThresholdEntry| 14)
   (:type 'object-type)
@@ -847,6 +924,7 @@
   (:description
    "To go with mteTriggerThresholdDeltaFallingEvent, the mteOwner
         of an event entry from mteEventTable."))
+
 (defoid |mteTriggerThresholdDeltaFallingEvent|
         (|mteTriggerThresholdEntry| 15)
   (:type 'object-type)
@@ -858,6 +936,7 @@
         'threshold' and this trigger fires based on
         mteTriggerThresholdDeltaFalling.  A length of 0 indicates
         no event."))
+
 (defoid |mteObjectsTable| (|mteObjects| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -867,6 +946,7 @@
    "A table of objects that can be added to notifications based
         on the trigger, trigger test, or event, as pointed to by
         entries in those tables."))
+
 (defoid |mteObjectsEntry| (|mteObjectsTable| 1)
   (:type 'object-type)
   (:syntax '|MteObjectsEntry|)
@@ -879,7 +959,9 @@
         When adding objects to a notification they are added in the
         lexical order of their index in this table.  Those associated
         with a trigger come first, then trigger test, then event."))
+
 (deftype |MteObjectsEntry| () 't)
+
 (defoid |mteObjectsName| (|mteObjectsEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -888,6 +970,7 @@
   (:description
    "A locally-unique, administratively assigned name for a group
         of objects."))
+
 (defoid |mteObjectsIndex| (|mteObjectsEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -912,6 +995,7 @@
         wrong identifier to a Get operation.  The Get will fail or get
         the wrong object.  If the object is not available it is omitted
         from the notification."))
+
 (defoid |mteObjectsID| (|mteObjectsEntry| 3)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -933,6 +1017,7 @@
         as if there were a separate table entry for each instance
         that fills the wildcard without having to actually predict
         all possible instances ahead of time."))
+
 (defoid |mteObjectsIDWildcard| (|mteObjectsEntry| 4)
   (:type 'object-type)
   (:syntax '|TruthValue|)
@@ -941,6 +1026,7 @@
   (:description
    "Control for whether mteObjectsID is to be treated as
         fully-specified or wildcarded, with 'true' indicating wildcard."))
+
 (defoid |mteObjectsEntryStatus| (|mteObjectsEntry| 5)
   (:type 'object-type)
   (:syntax '|RowStatus|)
@@ -950,6 +1036,7 @@
    "The control that allows creation and deletion of entries.
         Once made active an entry MAY not be modified except to
         delete it."))
+
 (defoid |mteEventFailures| (|mteEvent| 1)
   (:type 'object-type)
   (:syntax '|Counter32|)
@@ -960,12 +1047,14 @@
         has failed.  This counts individually for each
         attempt in a group of targets or each attempt for a
         wildcarded trigger object."))
+
 (defoid |mteEventTable| (|mteEvent| 2)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A table of management event action information."))
+
 (defoid |mteEventEntry| (|mteEventTable| 1)
   (:type 'object-type)
   (:syntax '|MteEventEntry|)
@@ -974,7 +1063,9 @@
   (:description
    "Information about a single event.  Applications create and
         delete entries using mteEventEntryStatus."))
+
 (deftype |MteEventEntry| () 't)
+
 (defoid |mteEventName| (|mteEventEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -983,12 +1074,14 @@
   (:description
    "A locally-unique, administratively assigned name for the
         event."))
+
 (defoid |mteEventComment| (|mteEventEntry| 2)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
   (:max-access '|read-create|)
   (:status '|current|)
   (:description "A description of the event's function and use."))
+
 (defoid |mteEventActions| (|mteEventEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -1002,6 +1095,7 @@
 
         For 'set', an SNMP Set operation is performed according to
         control values in this entry."))
+
 (defoid |mteEventEnabled| (|mteEventEntry| 4)
   (:type 'object-type)
   (:syntax '|TruthValue|)
@@ -1013,6 +1107,7 @@
 
 
         triggered."))
+
 (defoid |mteEventEntryStatus| (|mteEventEntry| 5)
   (:type 'object-type)
   (:syntax '|RowStatus|)
@@ -1022,6 +1117,7 @@
    "The control that allows creation and deletion of entries.
         Once made active an entry MAY not be modified except to
         delete it."))
+
 (defoid |mteEventNotificationTable| (|mteEvent| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -1030,6 +1126,7 @@
   (:description
    "A table of information about notifications to be sent as a
         consequence of management events."))
+
 (defoid |mteEventNotificationEntry| (|mteEventNotificationTable| 1)
   (:type 'object-type)
   (:syntax '|MteEventNotificationEntry|)
@@ -1039,7 +1136,9 @@
    "Information about a single event's notification.  Entries
         automatically exist in this this table for each mteEventEntry
         that has 'notification' set in mteEventActions."))
+
 (deftype |MteEventNotificationEntry| () 't)
+
 (defoid |mteEventNotification| (|mteEventNotificationEntry| 1)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -1048,6 +1147,7 @@
   (:description
    "The object identifier from the NOTIFICATION-TYPE for the
         notification to use if metEventActions has 'notification' set."))
+
 (defoid |mteEventNotificationObjectsOwner|
         (|mteEventNotificationEntry| 2)
   (:type 'object-type)
@@ -1057,6 +1157,7 @@
   (:description
    "To go with mteEventNotificationObjects, the mteOwner of a
         group of objects from mteObjectsTable."))
+
 (defoid |mteEventNotificationObjects| (|mteEventNotificationEntry| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -1072,12 +1173,14 @@
         the event.
 
         A length of 0 indicates no additional objects."))
+
 (defoid |mteEventSetTable| (|mteEvent| 4)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A table of management event action information."))
+
 (defoid |mteEventSetEntry| (|mteEventSetTable| 1)
   (:type 'object-type)
   (:syntax '|MteEventSetEntry|)
@@ -1087,7 +1190,9 @@
    "Information about a single event's set option.  Entries
         automatically exist in this this table for each mteEventEntry
         that has 'set' set in mteEventActions."))
+
 (deftype |MteEventSetEntry| () 't)
+
 (defoid |mteEventSetObject| (|mteEventSetEntry| 1)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -1118,6 +1223,7 @@
         the wrong object.  If the value syntax of the destination
         object is not correct, the Set fails with the normal SNMP
         error code."))
+
 (defoid |mteEventSetObjectWildcard| (|mteEventSetEntry| 2)
   (:type 'object-type)
   (:syntax '|TruthValue|)
@@ -1127,6 +1233,7 @@
    "Control over whether mteEventSetObject is to be treated as
         fully-specified or wildcarded, with 'true' indicating wildcard
         if mteEventActions has 'set' set."))
+
 (defoid |mteEventSetValue| (|mteEventSetEntry| 3)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -1135,6 +1242,7 @@
   (:description
    "The value to which to set the object at mteEventSetObject
         if mteEventActions has 'set' set."))
+
 (defoid |mteEventSetTargetTag| (|mteEventSetEntry| 4)
   (:type 'object-type)
   (:syntax '|SnmpTagValue|)
@@ -1157,6 +1265,7 @@
 
         Otherwise access rights are checked according to the security
         parameters resulting from the tag."))
+
 (defoid |mteEventSetContextName| (|mteEventSetEntry| 5)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
@@ -1172,6 +1281,7 @@
 
         If this context name is wildcarded the value used to complete
         the wildcarding of mteTriggerContextName will be appended."))
+
 (defoid |mteEventSetContextNameWildcard| (|mteEventSetEntry| 6)
   (:type 'object-type)
   (:syntax '|TruthValue|)
@@ -1181,20 +1291,25 @@
    "Control for whether mteEventSetContextName is to be treated as
         fully-specified or wildcarded, with 'true' indicating wildcard
         if mteEventActions has 'set' set."))
+
 (defoid |dismanEventMIBNotificationPrefix| (|dismanEventMIB| 2)
   (:type 'object-identity))
+
 (defoid |dismanEventMIBNotifications|
         (|dismanEventMIBNotificationPrefix| 0)
   (:type 'object-identity))
+
 (defoid |dismanEventMIBNotificationObjects|
         (|dismanEventMIBNotificationPrefix| 1)
   (:type 'object-identity))
+
 (defoid |mteHotTrigger| (|dismanEventMIBNotificationObjects| 1)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
   (:max-access '|accessible-for-notify|)
   (:status '|current|)
   (:description "The name of the trigger causing the notification."))
+
 (defoid |mteHotTargetName| (|dismanEventMIBNotificationObjects| 2)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
@@ -1203,6 +1318,7 @@
   (:description
    "The SNMP Target MIB's snmpTargetAddrName related to the
         notification."))
+
 (defoid |mteHotContextName| (|dismanEventMIBNotificationObjects| 3)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
@@ -1212,6 +1328,7 @@
    "The context name related to the notification.  This MUST be as
         fully-qualified as possible, including filling in wildcard
         information determined in processing."))
+
 (defoid |mteHotOID| (|dismanEventMIBNotificationObjects| 4)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -1227,6 +1344,7 @@
         mteTriggerValueID.
 
         For a set failure this is from mteEventSetObject."))
+
 (defoid |mteHotValue| (|dismanEventMIBNotificationObjects| 5)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -1235,6 +1353,7 @@
   (:description
    "The value of the object at mteTriggerValueID when a
         trigger fired."))
+
 (defoid |mteFailedReason| (|dismanEventMIBNotificationObjects| 6)
   (:type 'object-type)
   (:syntax '|FailureReason|)
@@ -1243,6 +1362,7 @@
   (:description
    "The reason for the failure of an attempt to check for a
         trigger condition or set an object in response to an event."))
+
 (defoid |mteTriggerFired| (|dismanEventMIBNotifications| 1)
   (:type 'notification-type)
   (:status '|current|)
@@ -1250,18 +1370,21 @@
    "Notification that the trigger indicated by the object
         instances has fired, for triggers with mteTriggerType
         'boolean' or 'existence'."))
+
 (defoid |mteTriggerRising| (|dismanEventMIBNotifications| 2)
   (:type 'notification-type)
   (:status '|current|)
   (:description
    "Notification that the rising threshold was met for triggers
         with mteTriggerType 'threshold'."))
+
 (defoid |mteTriggerFalling| (|dismanEventMIBNotifications| 3)
   (:type 'notification-type)
   (:status '|current|)
   (:description
    "Notification that the falling threshold was met for triggers
         with mteTriggerType 'threshold'."))
+
 (defoid |mteTriggerFailure| (|dismanEventMIBNotifications| 4)
   (:type 'notification-type)
   (:status '|current|)
@@ -1273,6 +1396,7 @@
         important information.  It should be used only to help diagnose
         a problem that has appeared in the error counters and can not
         be found otherwise."))
+
 (defoid |mteEventSetFailure| (|dismanEventMIBNotifications| 5)
   (:type 'notification-type)
   (:status '|current|)
@@ -1285,40 +1409,52 @@
         important information.  It should be used only to help diagnose
         a problem that has appeared in the error counters and can not
         be found otherwise."))
+
 (defoid |dismanEventMIBConformance| (|dismanEventMIB| 3)
   (:type 'object-identity))
+
 (defoid |dismanEventMIBCompliances| (|dismanEventMIBConformance| 1)
   (:type 'object-identity))
+
 (defoid |dismanEventMIBGroups| (|dismanEventMIBConformance| 2)
   (:type 'object-identity))
+
 (defoid |dismanEventMIBCompliance| (|dismanEventMIBCompliances| 1)
   (:type 'module-compliance)
   (:status '|current|)
   (:description
    "The compliance statement for entities which implement
                 the Event MIB."))
+
 (defoid |dismanEventResourceGroup| (|dismanEventMIBGroups| 1)
   (:type 'object-group)
   (:status '|current|)
   (:description "Event resource status and control objects."))
+
 (defoid |dismanEventTriggerGroup| (|dismanEventMIBGroups| 2)
   (:type 'object-group)
   (:status '|current|)
   (:description "Event triggers."))
+
 (defoid |dismanEventObjectsGroup| (|dismanEventMIBGroups| 3)
   (:type 'object-group)
   (:status '|current|)
   (:description "Supplemental objects."))
+
 (defoid |dismanEventEventGroup| (|dismanEventMIBGroups| 4)
   (:type 'object-group)
   (:status '|current|)
   (:description "Events."))
+
 (defoid |dismanEventNotificationObjectGroup| (|dismanEventMIBGroups| 5)
   (:type 'object-group)
   (:status '|current|)
   (:description "Notification objects."))
+
 (defoid |dismanEventNotificationGroup| (|dismanEventMIBGroups| 6)
   (:type 'notification-group)
   (:status '|current|)
   (:description "Notifications."))
+
 (eval-when (:load-toplevel :execute) (setf *current-module* nil))
+

@@ -2,9 +2,11 @@
 ;;;; Auto-generated from MIB:NET-SNMP;DISMAN-TRACEROUTE-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'disman-traceroute-mib *mib-modules*)
   (setf *current-module* 'disman-traceroute-mib))
+
 (defpackage :asn.1/disman-traceroute-mib
   (:nicknames :disman-traceroute-mib)
   (:use :common-lisp :asn.1)
@@ -20,7 +22,9 @@
   (:import-from :asn.1/inet-address-mib |InetAddressType|
                 |InetAddress|)
   (:import-from :asn.1/disman-ping-mib |OperationResponseStatus|))
+
 (in-package :disman-traceroute-mib)
+
 (defoid |traceRouteMIB| (|mib-2| 81)
   (:type 'module-identity)
   (:description
@@ -30,14 +34,19 @@
         Copyright (C) The Internet Society (2006). This version of
         this MIB module is part of RFC 4560; see the RFC itself for
         full legal notices."))
+
 (defoid |traceRouteNotifications| (|traceRouteMIB| 0)
   (:type 'object-identity))
+
 (defoid |traceRouteObjects| (|traceRouteMIB| 1)
   (:type 'object-identity))
+
 (defoid |traceRouteConformance| (|traceRouteMIB| 2)
   (:type 'object-identity))
+
 (defoid |traceRouteImplementationTypeDomains| (|traceRouteMIB| 3)
   (:type 'object-identity))
+
 (defoid |traceRouteUsingUdpProbes|
         (|traceRouteImplementationTypeDomains| 1)
   (:type 'object-identity)
@@ -45,6 +54,7 @@
   (:description
    "Indicates that an implementation is using UDP probes to
         perform the traceroute operation."))
+
 (defoid |traceRouteMaxConcurrentRequests| (|traceRouteObjects| 1)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -60,6 +70,7 @@
        When a new value is set, the agent will continue processing
        all the requests already active, even if their number
        exceeds the limit just imposed."))
+
 (defoid |traceRouteCtlTable| (|traceRouteObjects| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -71,6 +82,7 @@
         host.  The results of traceroute operations can be stored in
         the traceRouteResultsTable, traceRouteProbeHistoryTable, and
         the traceRouteHopsTable."))
+
 (defoid |traceRouteCtlEntry| (|traceRouteCtlTable| 1)
   (:type 'object-type)
   (:syntax '|TraceRouteCtlEntry|)
@@ -86,7 +98,9 @@
         traceRouteCtlTestName (also an SnmpAdminString),
         enables the same management application to have
         multiple requests outstanding."))
+
 (deftype |TraceRouteCtlEntry| () 't)
+
 (defoid |traceRouteCtlOwnerIndex| (|traceRouteCtlEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -117,6 +131,7 @@
        portion, and vacmViewTreeFamilyMask 'wildcarding' the
        column subidentifier.  More elaborate configurations
        are possible."))
+
 (defoid |traceRouteCtlTestName| (|traceRouteCtlEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -125,6 +140,7 @@
   (:description
    "The name of a traceroute test.  This is locally unique,
         within the scope of a traceRouteCtlOwnerIndex."))
+
 (defoid |traceRouteCtlTargetAddressType| (|traceRouteCtlEntry| 3)
   (:type 'object-type)
   (:syntax '|InetAddressType|)
@@ -133,6 +149,7 @@
   (:description
    "Specifies the type of host address to be used on the
         traceroute request at the remote host."))
+
 (defoid |traceRouteCtlTargetAddress| (|traceRouteCtlEntry| 4)
   (:type 'object-type)
   (:syntax '|InetAddress|)
@@ -148,6 +165,7 @@
         A value for this object MUST be set prior to
         transitioning its corresponding traceRouteCtlEntry to
         active(1) via traceRouteCtlRowStatus."))
+
 (defoid |traceRouteCtlByPassRouteTable| (|traceRouteCtlEntry| 5)
   (:type 'object-type)
   (:syntax '|TruthValue|)
@@ -163,6 +181,7 @@
        the traceroute operation to a local host through an
        interface that has no route defined (e.g., after the
        interface was dropped by the routing daemon at the host)."))
+
 (defoid |traceRouteCtlDataSize| (|traceRouteCtlEntry| 6)
   (:type 'object-type)
   (:syntax 't)
@@ -184,6 +203,7 @@
         header size of 8 octets from the maximum IP packet size.
         An IP packet has a maximum size of 65535 octets
         (excluding IPv6 Jumbograms)."))
+
 (defoid |traceRouteCtlTimeOut| (|traceRouteCtlEntry| 7)
   (:type 'object-type)
   (:syntax 't)
@@ -192,6 +212,7 @@
   (:description
    "Specifies the time-out value, in seconds, for
         a traceroute request."))
+
 (defoid |traceRouteCtlProbesPerHop| (|traceRouteCtlEntry| 8)
   (:type 'object-type)
   (:syntax 't)
@@ -200,6 +221,7 @@
   (:description
    "Specifies the number of times to reissue a traceroute
         request with the same time-to-live (TTL) value."))
+
 (defoid |traceRouteCtlPort| (|traceRouteCtlEntry| 9)
   (:type 'object-type)
   (:syntax 't)
@@ -211,12 +233,14 @@
         use at the destination (target) host.  The default
         value for this object is the IANA assigned port,
         33434, for the traceroute function."))
+
 (defoid |traceRouteCtlMaxTtl| (|traceRouteCtlEntry| 10)
   (:type 'object-type)
   (:syntax 't)
   (:max-access '|read-create|)
   (:status '|current|)
   (:description "Specifies the maximum time-to-live value."))
+
 (defoid |traceRouteCtlDSField| (|traceRouteCtlEntry| 11)
   (:type 'object-type)
   (:syntax 't)
@@ -240,6 +264,7 @@
         by IP implementations, and not all values are supported.
         Refer to RFC 2474 and RFC 3260 for guidance on usage of
         this field."))
+
 (defoid |traceRouteCtlSourceAddressType| (|traceRouteCtlEntry| 12)
   (:type 'object-type)
   (:syntax '|InetAddressType|)
@@ -249,6 +274,7 @@
    "Specifies the type of the source address,
         traceRouteCtlSourceAddress, to be used at a remote host
         when a traceroute operation is performed."))
+
 (defoid |traceRouteCtlSourceAddress| (|traceRouteCtlEntry| 13)
   (:type 'object-type)
   (:syntax '|InetAddress|)
@@ -266,6 +292,7 @@
         The address type (InetAddressType) that relates to
         this object is specified by the corresponding value
         of traceRouteCtlSourceAddressType."))
+
 (defoid |traceRouteCtlIfIndex| (|traceRouteCtlEntry| 14)
   (:type 'object-type)
   (:syntax '|InterfaceIndexOrZero|)
@@ -277,6 +304,7 @@
         the traceroute probes to be transmitted over the
         specified interface.  A value of zero for this object
         implies that this option is not enabled."))
+
 (defoid |traceRouteCtlMiscOptions| (|traceRouteCtlEntry| 15)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
@@ -285,6 +313,7 @@
   (:description
    "Enables an application to specify implementation-dependent
         options."))
+
 (defoid |traceRouteCtlMaxFailures| (|traceRouteCtlEntry| 16)
   (:type 'object-type)
   (:syntax 't)
@@ -298,6 +327,7 @@
         function of terminating a remote traceroute request when a
         specific number of consecutive timeouts are detected is
         disabled."))
+
 (defoid |traceRouteCtlDontFragment| (|traceRouteCtlEntry| 17)
   (:type 'object-type)
   (:syntax '|TruthValue|)
@@ -307,6 +337,7 @@
    "This object enables setting of the don't fragment flag (DF)
         in the IP header for a probe.  Use of this object enables
         a manual PATH MTU test is performed."))
+
 (defoid |traceRouteCtlInitialTtl| (|traceRouteCtlEntry| 18)
   (:type 'object-type)
   (:syntax 't)
@@ -316,6 +347,7 @@
    "The value of this object specifies the initial TTL value to
         use.  This enables bypassing the initial (often well known)
         portion of a path."))
+
 (defoid |traceRouteCtlFrequency| (|traceRouteCtlEntry| 19)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -334,6 +366,7 @@
         as defined by the corresponding entry will not be
 
         repeated."))
+
 (defoid |traceRouteCtlStorageType| (|traceRouteCtlEntry| 20)
   (:type 'object-type)
   (:syntax '|StorageType|)
@@ -343,6 +376,7 @@
    "The storage type for this conceptual row.
         Conceptual rows having the value 'permanent' need not
         allow write-access to any columnar objects in the row."))
+
 (defoid |traceRouteCtlAdminStatus| (|traceRouteCtlEntry| 21)
   (:type 'object-type)
   (:syntax 't)
@@ -360,6 +394,7 @@
         Refer to the corresponding traceRouteResultsOperStatus to
         determine the operational state of the test defined by
         this entry."))
+
 (defoid |traceRouteCtlDescr| (|traceRouteCtlEntry| 22)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
@@ -369,6 +404,7 @@
    "The purpose of this object is to provide a
         descriptive name of the remote traceroute
         test."))
+
 (defoid |traceRouteCtlMaxRows| (|traceRouteCtlEntry| 23)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -389,6 +425,7 @@
         is reached before entries begin to be removed.
         A value of 0 for this object disables creation of
         traceRouteProbeHistoryTable entries."))
+
 (defoid |traceRouteCtlTrapGeneration| (|traceRouteCtlEntry| 24)
   (:type 'object-type)
   (:syntax 't)
@@ -411,6 +448,7 @@
         The value of this object defaults to an empty set,
         indicating that none of the above options has been
         selected."))
+
 (defoid |traceRouteCtlCreateHopsEntries| (|traceRouteCtlEntry| 25)
   (:type 'object-type)
   (:syntax '|TruthValue|)
@@ -420,6 +458,7 @@
    "The current path for a traceroute test is kept in the
         traceRouteHopsTable on a per-hop basis when the value of
         this object is true(1)."))
+
 (defoid |traceRouteCtlType| (|traceRouteCtlEntry| 26)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -436,6 +475,7 @@
         required by implementers of the DISMAN-TRACEROUTE-MIB
         under their enterprise specific registration point,
         not beneath traceRouteImplementationTypeDomains."))
+
 (defoid |traceRouteCtlRowStatus| (|traceRouteCtlEntry| 27)
   (:type 'object-type)
   (:syntax '|RowStatus|)
@@ -471,6 +511,7 @@
         The operational state of an traceroute operation
         can be determined by examination of the corresponding
         traceRouteResultsOperStatus object."))
+
 (defoid |traceRouteResultsTable| (|traceRouteObjects| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -496,6 +537,7 @@
         An entry is removed from the traceRouteResultsTable when
 
         its corresponding traceRouteCtlEntry is deleted."))
+
 (defoid |traceRouteResultsEntry| (|traceRouteResultsTable| 1)
   (:type 'object-type)
   (:syntax '|TraceRouteResultsEntry|)
@@ -507,7 +549,9 @@
         traceRouteCtlTable so that a traceRouteResultsEntry
         corresponds to the traceRouteCtlEntry that caused it to
         be created."))
+
 (deftype |TraceRouteResultsEntry| () 't)
+
 (defoid |traceRouteResultsOperStatus| (|traceRouteResultsEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -519,6 +563,7 @@
            enabled(1)   - Test is active.
            disabled(2)  - Test has stopped.
            completed(3) - Test is completed."))
+
 (defoid |traceRouteResultsCurHopCount| (|traceRouteResultsEntry| 2)
   (:type 'object-type)
   (:syntax '|Gauge32|)
@@ -529,6 +574,7 @@
         255) for a remote traceroute operation.
         Maximum TTL value is determined by
         traceRouteCtlMaxTtl."))
+
 (defoid |traceRouteResultsCurProbeCount| (|traceRouteResultsEntry| 3)
   (:type 'object-type)
   (:syntax '|Gauge32|)
@@ -539,6 +585,7 @@
         a remote traceroute operation.  The maximum
         probe count is determined by
         traceRouteCtlProbesPerHop."))
+
 (defoid |traceRouteResultsIpTgtAddrType| (|traceRouteResultsEntry| 4)
   (:type 'object-type)
   (:syntax '|InetAddressType|)
@@ -548,6 +595,7 @@
    "This object indicates the type of address stored
         in the corresponding traceRouteResultsIpTgtAddr
         object."))
+
 (defoid |traceRouteResultsIpTgtAddr| (|traceRouteResultsEntry| 5)
   (:type 'object-type)
   (:syntax '|InetAddress|)
@@ -560,6 +608,7 @@
         The value of this object should be a zero-length
         octet string when a DNS name is not specified or
         when a specified DNS name fails to resolve."))
+
 (defoid |traceRouteResultsTestAttempts| (|traceRouteResultsEntry| 6)
   (:type 'object-type)
   (:syntax '|Gauge32|)
@@ -569,6 +618,7 @@
    "The current number of attempts to determine a path
         to a target.  The value of this object MUST be started
         at 0."))
+
 (defoid |traceRouteResultsTestSuccesses| (|traceRouteResultsEntry| 7)
   (:type 'object-type)
   (:syntax '|Gauge32|)
@@ -579,6 +629,7 @@
         to a target that have succeeded.  The value of this
         object MUST be reported as 0 when no attempts have
         succeeded."))
+
 (defoid |traceRouteResultsLastGoodPath| (|traceRouteResultsEntry| 8)
   (:type 'object-type)
   (:syntax '|DateAndTime|)
@@ -593,6 +644,7 @@
         up to the end of the path or (if no reply from the
         target IP address was received) up to the value of
         the corresponding traceRouteCtlMaxTtl object."))
+
 (defoid |traceRouteProbeHistoryTable| (|traceRouteObjects| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -610,6 +662,7 @@
         the traceRouteProbeHistoryTable reaches the value specified
         by traceRouteCtlMaxRows for the corresponding entry in the
         traceRouteCtlTable."))
+
 (defoid |traceRouteProbeHistoryEntry| (|traceRouteProbeHistoryTable| 1)
   (:type 'object-type)
   (:syntax '|TraceRouteProbeHistoryEntry|)
@@ -627,7 +680,9 @@
         traceroute operation result.  The fourth and fifth indexes
         select the hop and the probe for a particular
         traceroute operation."))
+
 (deftype |TraceRouteProbeHistoryEntry| () 't)
+
 (defoid |traceRouteProbeHistoryIndex| (|traceRouteProbeHistoryEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -645,6 +700,7 @@
         traceRouteProbeHistoryIndex values at 1 and wrap after
         exceeding the maximum possible value, as defined by the
         limit of this object ('ffffffff'h)."))
+
 (defoid |traceRouteProbeHistoryHopIndex|
         (|traceRouteProbeHistoryEntry| 2)
   (:type 'object-type)
@@ -655,6 +711,7 @@
    "Indicates which hop in a traceroute path the probe's
        results are for.  The value of this object is initially
        determined by the value of traceRouteCtlInitialTtl."))
+
 (defoid |traceRouteProbeHistoryProbeIndex|
         (|traceRouteProbeHistoryEntry| 3)
   (:type 'object-type)
@@ -666,6 +723,7 @@
        hop in a traceroute path.  The number of probes per
        hop is determined by the value of the corresponding
        traceRouteCtlProbesPerHop object."))
+
 (defoid |traceRouteProbeHistoryHAddrType|
         (|traceRouteProbeHistoryEntry| 4)
   (:type 'object-type)
@@ -676,6 +734,7 @@
    "This objects indicates the type of address stored
         in the corresponding traceRouteProbeHistoryHAddr
         object."))
+
 (defoid |traceRouteProbeHistoryHAddr| (|traceRouteProbeHistoryEntry| 5)
   (:type 'object-type)
   (:syntax '|InetAddress|)
@@ -686,6 +745,7 @@
        is not allowed to be a DNS name.  The value of the
        corresponding object, traceRouteProbeHistoryHAddrType,
        indicates this object's IP address type."))
+
 (defoid |traceRouteProbeHistoryResponse|
         (|traceRouteProbeHistoryEntry| 6)
   (:type 'object-type)
@@ -697,6 +757,7 @@
         a probe was sent to when its response was received or
         when it timed out.  The value of this object is reported
         as 0 when it is not possible to transmit a probe."))
+
 (defoid |traceRouteProbeHistoryStatus|
         (|traceRouteProbeHistoryEntry| 7)
   (:type 'object-type)
@@ -706,6 +767,7 @@
   (:description
    "The result of a traceroute operation made by a remote
         host for a particular probe."))
+
 (defoid |traceRouteProbeHistoryLastRC|
         (|traceRouteProbeHistoryEntry| 8)
   (:type 'object-type)
@@ -722,6 +784,7 @@
         the probe packets (probe's TTL too small, ICMP reply) until
         either the maximum TTL is exceeded or the target host is
         received."))
+
 (defoid |traceRouteProbeHistoryTime| (|traceRouteProbeHistoryEntry| 9)
   (:type 'object-type)
   (:syntax '|DateAndTime|)
@@ -729,6 +792,7 @@
   (:status '|current|)
   (:description
    "Timestamp for when this probe's results were determined."))
+
 (defoid |traceRouteHopsTable| (|traceRouteObjects| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -738,6 +802,7 @@
    "Defines the Remote Operations Traceroute Hop Table for
         keeping track of the results of traceroute tests on a
         per-hop basis."))
+
 (defoid |traceRouteHopsEntry| (|traceRouteHopsTable| 1)
   (:type 'object-type)
   (:syntax '|TraceRouteHopsEntry|)
@@ -750,7 +815,9 @@
         belongs to.  The third index element,
         traceRouteHopsHopIndex, selects a
         hop in a traceroute path."))
+
 (deftype |TraceRouteHopsEntry| () 't)
+
 (defoid |traceRouteHopsHopIndex| (|traceRouteHopsEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -777,6 +844,7 @@
         same traceRouteHopsHopIndex values.  The remaining portion
         of the path SHOULD be assigned new traceRouteHopsHopIndex
         values."))
+
 (defoid |traceRouteHopsIpTgtAddressType| (|traceRouteHopsEntry| 2)
   (:type 'object-type)
   (:syntax '|InetAddressType|)
@@ -786,6 +854,7 @@
    "This object indicates the type of address stored
         in the corresponding traceRouteHopsIpTgtAddress
         object."))
+
 (defoid |traceRouteHopsIpTgtAddress| (|traceRouteHopsEntry| 3)
   (:type 'object-type)
   (:syntax '|InetAddress|)
@@ -800,6 +869,7 @@
         The address type (InetAddressType) that relates to
         this object is specified by the corresponding value
         of pingCtlSourceAddressType."))
+
 (defoid |traceRouteHopsMinRtt| (|traceRouteHopsEntry| 4)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -809,6 +879,7 @@
    "The minimum traceroute round-trip-time (RTT) received for
         this hop.  A value of 0 for this object implies that no
         RTT has been received."))
+
 (defoid |traceRouteHopsMaxRtt| (|traceRouteHopsEntry| 5)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -818,6 +889,7 @@
    "The maximum traceroute round-trip-time (RTT) received for
         this hop.  A value of 0 for this object implies that no
         RTT has been received."))
+
 (defoid |traceRouteHopsAverageRtt| (|traceRouteHopsEntry| 6)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -826,6 +898,7 @@
   (:description
    "The current average traceroute round-trip-time (RTT) for
         this hop."))
+
 (defoid |traceRouteHopsRttSumOfSquares| (|traceRouteHopsEntry| 7)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -835,6 +908,7 @@
    "This object contains the sum of the squares of all
         round-trip-times received for this hop.  Its purpose is
         to enable standard deviation calculation."))
+
 (defoid |traceRouteHopsSentProbes| (|traceRouteHopsEntry| 8)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -844,6 +918,7 @@
    "The value of this object reflects the number of probes sent
         for this hop during this traceroute test.  The value of this
         object should start at 0."))
+
 (defoid |traceRouteHopsProbeResponses| (|traceRouteHopsEntry| 9)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -853,6 +928,7 @@
    "Number of responses received for this hop during this
         traceroute test.  This value of this object should start
         at 0."))
+
 (defoid |traceRouteHopsLastGoodProbe| (|traceRouteHopsEntry| 10)
   (:type 'object-type)
   (:syntax '|DateAndTime|)
@@ -861,28 +937,35 @@
   (:description
    "Date and time at which the last response was received for a
          probe for this hop during this traceroute test."))
+
 (defoid |traceRoutePathChange| (|traceRouteNotifications| 1)
   (:type 'notification-type)
   (:status '|current|)
   (:description "The path to a target has changed."))
+
 (defoid |traceRouteTestFailed| (|traceRouteNotifications| 2)
   (:type 'notification-type)
   (:status '|current|)
   (:description "Could not determine the path to a target."))
+
 (defoid |traceRouteTestCompleted| (|traceRouteNotifications| 3)
   (:type 'notification-type)
   (:status '|current|)
   (:description "The path to a target has just been determined."))
+
 (defoid |traceRouteCompliances| (|traceRouteConformance| 1)
   (:type 'object-identity))
+
 (defoid |traceRouteGroups| (|traceRouteConformance| 2)
   (:type 'object-identity))
+
 (defoid |traceRouteFullCompliance| (|traceRouteCompliances| 2)
   (:type 'module-compliance)
   (:status '|current|)
   (:description
    "The compliance statement for SNMP entities that
             fully implement the DISMAN-TRACEROUTE-MIB."))
+
 (defoid |traceRouteMinimumCompliance| (|traceRouteCompliances| 3)
   (:type 'module-compliance)
   (:status '|current|)
@@ -891,6 +974,7 @@
             which implement the minimal subset of the
             DISMAN-TRACEROUTE-MIB.  Implementors might choose this
             subset for small devices with limited resources."))
+
 (defoid |traceRouteCompliance| (|traceRouteCompliances| 1)
   (:type 'module-compliance)
   (:status '|deprecated|)
@@ -901,42 +985,51 @@
             have been split and deprecated. The
             traceRouteFullCompliance is semantically identical to the
             deprecated traceRouteCompliance statement."))
+
 (defoid |traceRouteMinimumGroup| (|traceRouteGroups| 5)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "The group of objects that constitute the remote traceroute
        operation."))
+
 (defoid |traceRouteCtlRowStatusGroup| (|traceRouteGroups| 6)
   (:type 'object-group)
   (:status '|current|)
   (:description "The RowStatus object of the traceRouteCtlTable."))
+
 (defoid |traceRouteHistoryGroup| (|traceRouteGroups| 7)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "The group of objects that constitute the history
        capability."))
+
 (defoid |traceRouteNotificationsGroup| (|traceRouteGroups| 3)
   (:type 'notification-group)
   (:status '|current|)
   (:description
    "The notifications that are required to be supported by
        implementations of this MIB."))
+
 (defoid |traceRouteHopsTableGroup| (|traceRouteGroups| 4)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "The group of objects that constitute the
         traceRouteHopsTable."))
+
 (defoid |traceRouteGroup| (|traceRouteGroups| 1)
   (:type 'object-group)
   (:status '|deprecated|)
   (:description
    "The group of objects that constitute the remote traceroute
        operation."))
+
 (defoid |traceRouteTimeStampGroup| (|traceRouteGroups| 2)
   (:type 'object-group)
   (:status '|deprecated|)
   (:description "The group of DateAndTime objects."))
+
 (eval-when (:load-toplevel :execute) (setf *current-module* nil))
+

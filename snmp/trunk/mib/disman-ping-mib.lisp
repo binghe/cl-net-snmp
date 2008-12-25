@@ -2,9 +2,11 @@
 ;;;; Auto-generated from MIB:NET-SNMP;DISMAN-PING-MIB.TXT by ASN.1 5.0
 
 (in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'disman-ping-mib *mib-modules*)
   (setf *current-module* 'disman-ping-mib))
+
 (defpackage :asn.1/disman-ping-mib
   (:nicknames :disman-ping-mib)
   (:use :common-lisp :asn.1)
@@ -19,7 +21,9 @@
   (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|)
   (:import-from :asn.1/inet-address-mib |InetAddressType|
                 |InetAddress|))
+
 (in-package :disman-ping-mib)
+
 (defoid |pingMIB| (|mib-2| 80)
   (:type 'module-identity)
   (:description
@@ -30,30 +34,39 @@
         Copyright (C) The Internet Society (2006).  This version of
         this MIB module is part of RFC 4560; see the RFC itself for
         full legal notices."))
+
 (deftype |OperationResponseStatus| () 't)
+
 (defoid |pingNotifications| (|pingMIB| 0) (:type 'object-identity))
+
 (defoid |pingObjects| (|pingMIB| 1) (:type 'object-identity))
+
 (defoid |pingConformance| (|pingMIB| 2) (:type 'object-identity))
+
 (defoid |pingImplementationTypeDomains| (|pingMIB| 3)
   (:type 'object-identity))
+
 (defoid |pingIcmpEcho| (|pingImplementationTypeDomains| 1)
   (:type 'object-identity)
   (:status '|current|)
   (:description
    "Indicates that an implementation is using the Internet
         Control Message Protocol (ICMP) 'ECHO' facility."))
+
 (defoid |pingUdpEcho| (|pingImplementationTypeDomains| 2)
   (:type 'object-identity)
   (:status '|current|)
   (:description
    "Indicates that an implementation is using the UDP echo
         port (7)."))
+
 (defoid |pingSnmpQuery| (|pingImplementationTypeDomains| 3)
   (:type 'object-identity)
   (:status '|current|)
   (:description
    "Indicates that an implementation is using an SNMP query
          to calculate a round trip time."))
+
 (defoid |pingTcpConnectionAttempt| (|pingImplementationTypeDomains| 4)
   (:type 'object-identity)
   (:status '|current|)
@@ -61,6 +74,7 @@
    "Indicates that an implementation is attempting to
         connect to a TCP port in order to calculate a round
         trip time."))
+
 (defoid |pingMaxConcurrentRequests| (|pingObjects| 1)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -76,6 +90,7 @@
        When a new value is set, the agent will continue processing
        all the requests already active, even if their number
        exceeds the limit just imposed."))
+
 (defoid |pingCtlTable| (|pingObjects| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -87,6 +102,7 @@
         a remote host.  The results of these operations are
         stored in the pingResultsTable and the
         pingProbeHistoryTable."))
+
 (defoid |pingCtlEntry| (|pingCtlTable| 1)
   (:type 'object-type)
   (:syntax '|PingCtlEntry|)
@@ -101,7 +117,9 @@
         entries.  The second index, pingCtlTestName (also an
         SnmpAdminString), enables the same management
         application to have multiple outstanding requests."))
+
 (deftype |PingCtlEntry| () 't)
+
 (defoid |pingCtlOwnerIndex| (|pingCtlEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -131,6 +149,7 @@
        the owner index portion, and vacmViewTreeFamilyMask
        'wildcarding' the column subidentifier.  More elaborate
        configurations are possible."))
+
 (defoid |pingCtlTestName| (|pingCtlEntry| 2)
   (:type 'object-type)
   (:syntax 't)
@@ -139,6 +158,7 @@
   (:description
    "The name of the ping test.  This is locally unique, within
         the scope of a pingCtlOwnerIndex."))
+
 (defoid |pingCtlTargetAddressType| (|pingCtlEntry| 3)
   (:type 'object-type)
   (:syntax '|InetAddressType|)
@@ -147,6 +167,7 @@
   (:description
    "Specifies the type of host address to be used at a remote
         host for performing a ping operation."))
+
 (defoid |pingCtlTargetAddress| (|pingCtlEntry| 4)
   (:type 'object-type)
   (:syntax '|InetAddress|)
@@ -161,6 +182,7 @@
         A value for this object MUST be set prior to transitioning
         its corresponding pingCtlEntry to active(1) via
         pingCtlRowStatus."))
+
 (defoid |pingCtlDataSize| (|pingCtlEntry| 5)
   (:type 'object-type)
   (:syntax 't)
@@ -185,6 +207,7 @@
         header size of 8 octets from the maximum IP packet size.
         An IP packet has a maximum size of 65535 octets
         (excluding IPv6 Jumbograms)."))
+
 (defoid |pingCtlTimeOut| (|pingCtlEntry| 6)
   (:type 'object-type)
   (:syntax 't)
@@ -193,6 +216,7 @@
   (:description
    "Specifies the time-out value, in seconds, for a
         remote ping operation."))
+
 (defoid |pingCtlProbeCount| (|pingCtlEntry| 7)
   (:type 'object-type)
   (:syntax 't)
@@ -201,6 +225,7 @@
   (:description
    "Specifies the number of times to perform a ping
         operation at a remote host as part of a single ping test."))
+
 (defoid |pingCtlAdminStatus| (|pingCtlEntry| 8)
   (:type 'object-type)
   (:syntax 't)
@@ -218,6 +243,7 @@
         Refer to the corresponding pingResultsOperStatus to
         determine the operational state of the test defined by
         this entry."))
+
 (defoid |pingCtlDataFill| (|pingCtlEntry| 9)
   (:type 'object-type)
   (:syntax 't)
@@ -232,6 +258,7 @@
         contents of pingCtlDataFill should be repeated in a ping
         packet when the size of the data portion of the ping
         packet is greater than the size of pingCtlDataFill."))
+
 (defoid |pingCtlFrequency| (|pingCtlEntry| 10)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -252,6 +279,7 @@
         A value of 0 for this object implies that the test
         as defined by the corresponding entry will not be
         repeated."))
+
 (defoid |pingCtlMaxRows| (|pingCtlEntry| 11)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -272,6 +300,7 @@
 
         A value of 0 for this object disables creation of
         pingProbeHistoryTable entries."))
+
 (defoid |pingCtlStorageType| (|pingCtlEntry| 12)
   (:type 'object-type)
   (:syntax '|StorageType|)
@@ -281,6 +310,7 @@
    "The storage type for this conceptual row.
         Conceptual rows having the value 'permanent' need not
         allow write-access to any columnar objects in the row."))
+
 (defoid |pingCtlTrapGeneration| (|pingCtlEntry| 13)
   (:type 'object-type)
   (:syntax 't)
@@ -307,6 +337,7 @@
 
         By default, no bits are set, indicating that
         none of the above options is selected."))
+
 (defoid |pingCtlTrapProbeFailureFilter| (|pingCtlEntry| 14)
   (:type 'object-type)
   (:syntax 't)
@@ -324,6 +355,7 @@
         value of pingCtlTrapProbeFailureFilter fail within
         a given ping test.  After triggering the notification,
         the probe failure counter is reset to zero."))
+
 (defoid |pingCtlTrapTestFailureFilter| (|pingCtlEntry| 15)
   (:type 'object-type)
   (:syntax 't)
@@ -341,6 +373,7 @@
         value of pingCtlTrapProbeFailureFilter fail.
         After triggering the notification, the test failure
         counter is reset to zero."))
+
 (defoid |pingCtlType| (|pingCtlEntry| 16)
   (:type 'object-type)
   (:syntax 'object-id)
@@ -356,6 +389,7 @@
         required by implementers of the DISMAN-PING-MIB under
         their enterprise-specific registration point and not
         beneath pingImplementationTypeDomains."))
+
 (defoid |pingCtlDescr| (|pingCtlEntry| 17)
   (:type 'object-type)
   (:syntax '|SnmpAdminString|)
@@ -364,6 +398,7 @@
   (:description
    "The purpose of this object is to provide a
         descriptive name of the remote ping test."))
+
 (defoid |pingCtlSourceAddressType| (|pingCtlEntry| 18)
   (:type 'object-type)
   (:syntax '|InetAddressType|)
@@ -373,6 +408,7 @@
    "Specifies the type of the source address,
         pingCtlSourceAddress, to be used at a remote host
         when a ping operation is performed."))
+
 (defoid |pingCtlSourceAddress| (|pingCtlEntry| 19)
   (:type 'object-type)
   (:syntax '|InetAddress|)
@@ -391,6 +427,7 @@
         The address type (InetAddressType) that relates to
         this object is specified by the corresponding value
         of pingCtlSourceAddressType."))
+
 (defoid |pingCtlIfIndex| (|pingCtlEntry| 20)
   (:type 'object-type)
   (:syntax '|InterfaceIndexOrZero|)
@@ -402,6 +439,7 @@
         the ping probes to be transmitted over the
         specified interface.  A value of zero for this object
         means that this option is not enabled."))
+
 (defoid |pingCtlByPassRouteTable| (|pingCtlEntry| 21)
   (:type 'object-type)
   (:syntax '|TruthValue|)
@@ -417,6 +455,7 @@
        the ping operation to a local host through an
        interface that has no route defined (e.g., after the
        interface was dropped by the routing daemon at the host)."))
+
 (defoid |pingCtlDSField| (|pingCtlEntry| 22)
   (:type 'object-type)
   (:syntax 't)
@@ -440,6 +479,7 @@
         by IP implementations, and not all values are supported.
         Refer to RFC 2474 and RFC 3260 for guidance on usage of
         this field."))
+
 (defoid |pingCtlRowStatus| (|pingCtlEntry| 23)
   (:type 'object-type)
   (:syntax '|RowStatus|)
@@ -473,6 +513,7 @@
         The operational state of a ping operation
         can be determined by examination of its
         pingResultsOperStatus object."))
+
 (defoid |pingResultsTable| (|pingObjects| 3)
   (:type 'object-type)
   (:syntax 't)
@@ -498,6 +539,7 @@
 
         An entry is removed from the pingResultsTable when
         its corresponding pingCtlEntry is deleted."))
+
 (defoid |pingResultsEntry| (|pingResultsTable| 1)
   (:type 'object-type)
   (:syntax '|PingResultsEntry|)
@@ -509,7 +551,9 @@
         pingCtlTable so that a pingResultsEntry
         corresponds to the pingCtlEntry that caused it to
         be created."))
+
 (deftype |PingResultsEntry| () 't)
+
 (defoid |pingResultsOperStatus| (|pingResultsEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -521,6 +565,7 @@
            enabled(1)    - Test is active.
            disabled(2)   - Test has stopped.
            completed(3)  - Test is completed."))
+
 (defoid |pingResultsIpTargetAddressType| (|pingResultsEntry| 2)
   (:type 'object-type)
   (:syntax '|InetAddressType|)
@@ -530,6 +575,7 @@
    "This object indicates the type of address stored
         in the corresponding pingResultsIpTargetAddress
         object."))
+
 (defoid |pingResultsIpTargetAddress| (|pingResultsEntry| 3)
   (:type 'object-type)
   (:syntax '|InetAddress|)
@@ -546,6 +592,7 @@
         The address type (InetAddressType) that relates to
         this object is specified by the corresponding value
         of pingResultsIpTargetAddressType."))
+
 (defoid |pingResultsMinRtt| (|pingResultsEntry| 4)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -554,6 +601,7 @@
   (:description
    "The minimum ping round-trip-time (RTT) received.  A value
         of 0 for this object implies that no RTT has been received."))
+
 (defoid |pingResultsMaxRtt| (|pingResultsEntry| 5)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -562,12 +610,14 @@
   (:description
    "The maximum ping round-trip-time (RTT) received.  A value
         of 0 for this object implies that no RTT has been received."))
+
 (defoid |pingResultsAverageRtt| (|pingResultsEntry| 6)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The current average ping round-trip-time (RTT)."))
+
 (defoid |pingResultsProbeResponses| (|pingResultsEntry| 7)
   (:type 'object-type)
   (:syntax '|Gauge32|)
@@ -578,6 +628,7 @@
         pingCtlEntry and pingResultsEntry.  The value of this object
         MUST be reported as 0 when no probe responses have been
         received."))
+
 (defoid |pingResultsSentProbes| (|pingResultsEntry| 8)
   (:type 'object-type)
   (:syntax '|Gauge32|)
@@ -588,6 +639,7 @@
         for the corresponding pingCtlEntry and pingResultsEntry.
         The value of this object MUST be reported as 0 when no probes
         have been sent."))
+
 (defoid |pingResultsRttSumOfSquares| (|pingResultsEntry| 9)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -599,6 +651,7 @@
         deviation calculation.  The value of this object MUST
         be reported as 0 when no ping responses have been
         received."))
+
 (defoid |pingResultsLastGoodProbe| (|pingResultsEntry| 10)
   (:type 'object-type)
   (:syntax '|DateAndTime|)
@@ -607,6 +660,7 @@
   (:description
    "Date and time when the last response was received for
         a probe."))
+
 (defoid |pingProbeHistoryTable| (|pingObjects| 4)
   (:type 'object-type)
   (:syntax 't)
@@ -632,6 +686,7 @@
         in the pingProbeHistoryTable reaches the value
         specified by pingCtlMaxRows for the corresponding
         entry in the pingCtlTable."))
+
 (defoid |pingProbeHistoryEntry| (|pingProbeHistoryTable| 1)
   (:type 'object-type)
   (:syntax '|PingProbeHistoryEntry|)
@@ -643,7 +698,9 @@
         pingCtlEntry that a pingProbeHistoryEntry belongs
         to.  The third index element selects a single
         probe result."))
+
 (deftype |PingProbeHistoryEntry| () 't)
+
 (defoid |pingProbeHistoryIndex| (|pingProbeHistoryEntry| 1)
   (:type 'object-type)
   (:syntax 't)
@@ -660,6 +717,7 @@
         pingProbeHistoryIndex values at 1 and wrap after
         exceeding the maximum possible value as defined by
         the limit of this object ('ffffffff'h)."))
+
 (defoid |pingProbeHistoryResponse| (|pingProbeHistoryEntry| 2)
   (:type 'object-type)
   (:syntax '|Unsigned32|)
@@ -670,6 +728,7 @@
         a probe was sent to when its response was received or
         when it timed out.  The value of this object is reported
         as 0 when it is not possible to transmit a probe."))
+
 (defoid |pingProbeHistoryStatus| (|pingProbeHistoryEntry| 3)
   (:type 'object-type)
   (:syntax '|OperationResponseStatus|)
@@ -677,6 +736,7 @@
   (:status '|current|)
   (:description
    "The result of a particular probe done by a remote host."))
+
 (defoid |pingProbeHistoryLastRC| (|pingProbeHistoryEntry| 4)
   (:type 'object-type)
   (:syntax '|Integer32|)
@@ -691,12 +751,14 @@
         http://www.iana.org/assignments/icmp-parameters.
         The ICMPv6 codes are listed at
         http://www.iana.org/assignments/icmpv6-parameters."))
+
 (defoid |pingProbeHistoryTime| (|pingProbeHistoryEntry| 5)
   (:type 'object-type)
   (:syntax '|DateAndTime|)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "Timestamp for when this probe result was determined."))
+
 (defoid |pingProbeFailed| (|pingNotifications| 1)
   (:type 'notification-type)
   (:status '|current|)
@@ -709,6 +771,7 @@
           pingCtlTrapProbeFailureFilter can be used to specify the
           number of consecutive probe failures that are required
           before this notification can be generated."))
+
 (defoid |pingTestFailed| (|pingNotifications| 2)
   (:type 'notification-type)
   (:status '|current|)
@@ -719,6 +782,7 @@
           pingCtlTrapTestFailureFilter should specify the number of
           probes in a test required to have failed in order to
           consider the test failed."))
+
 (defoid |pingTestCompleted| (|pingNotifications| 3)
   (:type 'notification-type)
   (:status '|current|)
@@ -726,15 +790,19 @@
    "Generated at the completion of a ping test when the
           corresponding pingCtlTrapGeneration object has the
           testCompletion(2) bit set."))
+
 (defoid |pingCompliances| (|pingConformance| 1)
   (:type 'object-identity))
+
 (defoid |pingGroups| (|pingConformance| 2) (:type 'object-identity))
+
 (defoid |pingFullCompliance| (|pingCompliances| 2)
   (:type 'module-compliance)
   (:status '|current|)
   (:description
    "The compliance statement for SNMP entities that
             fully implement the DISMAN-PING-MIB."))
+
 (defoid |pingMinimumCompliance| (|pingCompliances| 3)
   (:type 'module-compliance)
   (:status '|current|)
@@ -743,6 +811,7 @@
             that implement the minimal subset of the
             DISMAN-PING-MIB.  Implementors might choose this
             subset for small devices with limited resources."))
+
 (defoid |pingCompliance| (|pingCompliances| 1)
   (:type 'module-compliance)
   (:status '|deprecated|)
@@ -753,36 +822,44 @@
             split and deprecated.  The pingFullCompliance statement
             is semantically identical to the deprecated
             pingCompliance statement."))
+
 (defoid |pingMinimumGroup| (|pingGroups| 4)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "The group of objects that constitute the remote ping
        capability."))
+
 (defoid |pingCtlRowStatusGroup| (|pingGroups| 5)
   (:type 'object-group)
   (:status '|current|)
   (:description "The RowStatus object of the pingCtlTable."))
+
 (defoid |pingHistoryGroup| (|pingGroups| 6)
   (:type 'object-group)
   (:status '|current|)
   (:description
    "The group of objects that constitute the history
        capability."))
+
 (defoid |pingNotificationsGroup| (|pingGroups| 3)
   (:type 'notification-group)
   (:status '|current|)
   (:description
    "The notification that are required to be supported by
        implementations of this MIB."))
+
 (defoid |pingGroup| (|pingGroups| 1)
   (:type 'object-group)
   (:status '|deprecated|)
   (:description
    "The group of objects that constitute the remote ping
        capability."))
+
 (defoid |pingTimeStampGroup| (|pingGroups| 2)
   (:type 'object-group)
   (:status '|deprecated|)
   (:description "The group of DateAndTime objects."))
+
 (eval-when (:load-toplevel :execute) (setf *current-module* nil))
+
