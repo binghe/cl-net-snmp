@@ -24,6 +24,11 @@ cl-net-snmp's TODO List
 
 9. [done] Add more details in MIB Browser.
 
-10. SNMP-WALK support (GET-NEXT) for "MIB Table" in snmp-server.
+10. [done] SNMP-WALK support (GET-NEXT) for "MIB Table" in snmp-server.
 
 11. VACM support for snmp-server (classes already defined but not used)
+
+12. Detect big SNMP query to make sure packet size not exceed the limit, if sending packet is OK but receiving packet overflow, lost part should be re-queried automatically.
+
+13. Networking rate limit
+
