@@ -32,3 +32,4 @@ cl-net-snmp's TODO List
 
 13. Networking rate limit
 
+14. Ability to handle malform SNMP PDU and Traps
