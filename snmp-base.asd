@@ -1,9 +1,11 @@
 ;;;; -*- Mode: Lisp -*-
 ;;;; $Id$
 
-;;;; XX
+(unless (find-package ':snmp-system)
+  (make-package ':snmp-system
+                :use '(:common-lisp :asdf)))
 
-(in-package :asdf)
+(in-package :snmp-system)
 
 #+(and lispworks4 win32)
 (pushnew :mswindows *features*)

@@ -1,10 +1,9 @@
 ;;;; -*- Mode: Lisp -*-
 ;;;; $Id$
 
-(in-package :cl-user)
-
-(defpackage snmp-system
-  (:use :common-lisp :asdf))
+(unless (find-package ':snmp-system)
+  (make-package ':snmp-system
+                :use '(:common-lisp :asdf)))
 
 (in-package :snmp-system)
 
