@@ -1,7 +1,11 @@
 ;;;; -*- Mode: Lisp -*-
 ;;;; $Id$
 
-(in-package :asdf)
+(unless (find-package ':snmp-system)
+  (make-package ':snmp-system
+                :use '(:common-lisp :asdf)))
+
+(in-package :snmp-system)
 
 (defsystem snmp-client
   :description "High-level SNMP Client"

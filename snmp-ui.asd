@@ -1,7 +1,11 @@
 ;;;; -*- Mode: Lisp -*-
 ;;;; $Id$
 
-(in-package :asdf)
+(unless (find-package ':snmp-system)
+  (make-package ':snmp-system
+                :use '(:common-lisp :asdf)))
+
+(in-package :snmp-system)
 
 #+(and lispworks capi)
 (defsystem snmp-ui
