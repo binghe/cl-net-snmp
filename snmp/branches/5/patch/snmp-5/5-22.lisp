@@ -1,3 +1,5 @@
+;;;; Patch 5.22
+
 ;;;; Handle terminal condition correctly, just detect duplicate return OIDs.
 ;;;; Thanks for John Fremlin from MSI
 
@@ -22,3 +24,5 @@
                          (mapcar #'nreverse acc))
                      (iter new-vars (mapcar #'cons temp acc) nil)))))
         (iter base-vars (make-list (length vars)) t)))))
+
+(setf *minor-version* 22)
