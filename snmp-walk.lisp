@@ -10,19 +10,22 @@
   (with-open-session (s host)
     (snmp-walk s vars :context context)))
 
+(defun walk-terminate-p (new-vars current-vars base-vars)
+  (or (some #'oid->= new-vars base-vars)
+      (some #'ber-equal new-vars current-vars)))
+
 (defmethod snmp-walk ((session session) (vars list) &key context)
   "SNMP Walk for v1, v2c and v3"
   (when vars
     (let ((base-vars (mapcar #'oid vars)))
       (labels ((iter (current-vars acc first-p)
                  (let* ((temp (snmp-get-next session current-vars :context context))
-                        (new-vars (mapcar #'first temp))
-                        (new-values (mapcar #'second temp)))
-                   (if (or (some #'oid->= new-vars base-vars)
-                           (member (smi :end-of-mibview) new-values
-                                   :test #'ber-equal))
+                        (new-vars (mapcar #'first temp)))
+                   (if (walk-terminate-p new-vars
+                                         current-vars
+                                         base-vars)
                        (if first-p
-                         (snmp-get session vars)
+                           (snmp-get session vars)
                          (mapcar #'nreverse acc))
                      (iter new-vars (mapcar #'cons temp acc) nil)))))
         (iter base-vars (make-list (length vars)) t)))))
