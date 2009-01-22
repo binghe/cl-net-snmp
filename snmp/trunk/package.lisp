@@ -38,7 +38,6 @@
            #:snmp-server
            #:snmp-trap
            #:snmp-walk
-           #:update-mib
            #:with-open-session)
   (:import-from :usocket
            #:rtt-rtocalc
