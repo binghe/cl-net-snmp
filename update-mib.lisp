@@ -15,6 +15,9 @@
 
 (in-package :snmp)
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (export 'update-mib))
+
 (defparameter *mib-list*
   '(#p"MIB:NET-SNMP;SNMP-COMMUNITY-MIB.TXT"
     #p"MIB:NET-SNMP;SNMP-FRAMEWORK-MIB.TXT"
@@ -111,6 +114,7 @@
                    #p"SNMP:"))
 
 (defun update-mib (&optional (mib-list *mib-list*))
+  "Update mib.lisp-expr"
   (let ((mib.lisp-expr '())
         (mib-depend.lisp '())
         (*package* (find-package :asn.1)))
