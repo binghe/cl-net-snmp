@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'ucd-demo-mib *mib-modules*)
   (setf *current-module* 'ucd-demo-mib))
 
 (defpackage :asn.1/ucd-demo-mib
@@ -65,5 +64,7 @@
    "The demo passphrase that ucdDemoResetKeys changes each 
 	 users localized key to based on the P->Ku->Kul transformation."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'ucd-demo-mib *mib-modules*)
+  (setf *current-module* nil))
 

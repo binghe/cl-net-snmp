@@ -3,9 +3,7 @@
 
 (in-package :asn.1)
 
-(eval-when (:load-toplevel :execute)
-  (pushnew 'hcnum-tc *mib-modules*)
-  (setf *current-module* 'hcnum-tc))
+(eval-when (:load-toplevel :execute) (setf *current-module* 'hcnum-tc))
 
 (defpackage :asn.1/hcnum-tc
   (:nicknames :hcnum-tc)
@@ -30,5 +28,7 @@
 
 (deftype |ZeroBasedCounter64| () 't)
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'hcnum-tc *mib-modules*)
+  (setf *current-module* nil))
 

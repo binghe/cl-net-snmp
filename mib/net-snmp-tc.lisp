@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'net-snmp-tc *mib-modules*)
   (setf *current-module* 'net-snmp-tc))
 
 (defpackage :asn.1/net-snmp-tc
@@ -76,5 +75,7 @@
 (defoid |netSnmpCallbackDomain| (|netSnmpDomains| 6)
   (:type 'object-identity))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'net-snmp-tc *mib-modules*)
+  (setf *current-module* nil))
 

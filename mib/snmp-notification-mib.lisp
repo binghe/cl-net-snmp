@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'snmp-notification-mib *mib-modules*)
   (setf *current-module* 'snmp-notification-mib))
 
 (defpackage :asn.1/snmp-notification-mib
@@ -64,7 +63,13 @@
          Entries in the snmpNotifyTable are created and
          deleted using the snmpNotifyRowStatus object."))
 
-(deftype |SnmpNotifyEntry| () 't)
+(defclass |SnmpNotifyEntry|
+          (asn.1-type)
+          ((|snmpNotifyName| :type |SnmpAdminString|)
+           (|snmpNotifyTag| :type |SnmpTagValue|)
+           (|snmpNotifyType| :type integer)
+           (|snmpNotifyStorageType| :type |StorageType|)
+           (|snmpNotifyRowStatus| :type |RowStatus|)))
 
 (defoid |snmpNotifyName| (|snmpNotifyEntry| 1)
   (:type 'object-type)
@@ -161,7 +166,11 @@
          and deleted using the snmpNotifyFilterProfileRowStatus
          object."))
 
-(deftype |SnmpNotifyFilterProfileEntry| () 't)
+(defclass |SnmpNotifyFilterProfileEntry|
+          (asn.1-type)
+          ((|snmpNotifyFilterProfileName| :type |SnmpAdminString|)
+           (|snmpNotifyFilterProfileStorType| :type |StorageType|)
+           (|snmpNotifyFilterProfileRowStatus| :type |RowStatus|)))
 
 (defoid |snmpNotifyFilterProfileName|
         (|snmpNotifyFilterProfileEntry| 1)
@@ -237,7 +246,13 @@
          Entries in the snmpNotifyFilterTable are created and
          deleted using the snmpNotifyFilterRowStatus object."))
 
-(deftype |SnmpNotifyFilterEntry| () 't)
+(defclass |SnmpNotifyFilterEntry|
+          (asn.1-type)
+          ((|snmpNotifyFilterSubtree| :type object-id)
+           (|snmpNotifyFilterMask| :type t)
+           (|snmpNotifyFilterType| :type integer)
+           (|snmpNotifyFilterStorageType| :type |StorageType|)
+           (|snmpNotifyFilterRowStatus| :type |RowStatus|)))
 
 (defoid |snmpNotifyFilterSubtree| (|snmpNotifyFilterEntry| 1)
   (:type 'object-type)
@@ -383,5 +398,7 @@
    "A collection of objects providing remote configuration
          of notification filters."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'snmp-notification-mib *mib-modules*)
+  (setf *current-module* nil))
 

@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'network-services-mib *mib-modules*)
   (setf *current-module* 'network-services-mib))
 
 (defpackage :asn.1/network-services-mib
@@ -47,7 +46,25 @@
    "An entry associated with a single network service
        application."))
 
-(deftype |ApplEntry| () 't)
+(defclass |ApplEntry|
+          (asn.1-type)
+          ((|applIndex| :type integer)
+           (|applName| :type |SnmpAdminString|)
+           (|applDirectoryName| :type |DistinguishedName|)
+           (|applVersion| :type |SnmpAdminString|)
+           (|applUptime| :type |TimeStamp|)
+           (|applOperStatus| :type integer)
+           (|applLastChange| :type |TimeStamp|)
+           (|applInboundAssociations| :type |Gauge32|)
+           (|applOutboundAssociations| :type |Gauge32|)
+           (|applAccumulatedInboundAssociations| :type |Counter32|)
+           (|applAccumulatedOutboundAssociations| :type |Counter32|)
+           (|applLastInboundActivity| :type |TimeStamp|)
+           (|applLastOutboundActivity| :type |TimeStamp|)
+           (|applRejectedInboundAssociations| :type |Counter32|)
+           (|applFailedOutboundAssociations| :type |Counter32|)
+           (|applDescription| :type |SnmpAdminString|)
+           (|applURL| :type |URLString|)))
 
 (defoid |applIndex| (|applEntry| 1)
   (:type 'object-type)
@@ -262,7 +279,13 @@
    "An entry associated with an association for a network
        service application."))
 
-(deftype |AssocEntry| () 't)
+(defclass |AssocEntry|
+          (asn.1-type)
+          ((|assocIndex| :type integer)
+           (|assocRemoteApplication| :type |SnmpAdminString|)
+           (|assocApplicationProtocol| :type object-id)
+           (|assocApplicationType| :type integer)
+           (|assocDuration| :type |TimeStamp|)))
 
 (defoid |assocIndex| (|assocEntry| 1)
   (:type 'object-type)
@@ -448,5 +471,7 @@
 
 (defoid |applUDPProtoID| (|application| 5) (:type 'object-identity))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'network-services-mib *mib-modules*)
+  (setf *current-module* nil))
 

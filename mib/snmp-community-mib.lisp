@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'snmp-community-mib *mib-modules*)
   (setf *current-module* 'snmp-community-mib))
 
 (defpackage :asn.1/snmp-community-mib
@@ -49,7 +48,16 @@
   (:status '|current|)
   (:description "Information about a particular community string."))
 
-(deftype |SnmpCommunityEntry| () 't)
+(defclass |SnmpCommunityEntry|
+          (asn.1-type)
+          ((|snmpCommunityIndex| :type |SnmpAdminString|)
+           (|snmpCommunityName| :type t)
+           (|snmpCommunitySecurityName| :type |SnmpAdminString|)
+           (|snmpCommunityContextEngineID| :type |SnmpEngineID|)
+           (|snmpCommunityContextName| :type |SnmpAdminString|)
+           (|snmpCommunityTransportTag| :type |SnmpTagValue|)
+           (|snmpCommunityStorageType| :type |StorageType|)
+           (|snmpCommunityStatus| :type |RowStatus|)))
 
 (defoid |snmpCommunityIndex| (|snmpCommunityEntry| 1)
   (:type 'object-type)
@@ -179,7 +187,10 @@
   (:status '|current|)
   (:description "Information about a particular mask and mms value."))
 
-(deftype |SnmpTargetAddrExtEntry| () 't)
+(defclass |SnmpTargetAddrExtEntry|
+          (asn.1-type)
+          ((|snmpTargetAddrTMask| :type t)
+           (|snmpTargetAddrMMS| :type |Integer32|)))
 
 (defoid |snmpTargetAddrTMask| (|snmpTargetAddrExtEntry| 1)
   (:type 'object-type)
@@ -292,5 +303,7 @@
 
          translating to SNMPv2c or SNMPv3."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'snmp-community-mib *mib-modules*)
+  (setf *current-module* nil))
 

@@ -3,9 +3,7 @@
 
 (in-package :asn.1)
 
-(eval-when (:load-toplevel :execute)
-  (pushnew 'bgp4-mib *mib-modules*)
-  (setf *current-module* 'bgp4-mib))
+(eval-when (:load-toplevel :execute) (setf *current-module* 'bgp4-mib))
 
 (defpackage :asn.1/bgp4-mib
   (:nicknames :bgp4-mib)
@@ -67,7 +65,32 @@
    "Entry containing information about the
                     connection with a BGP peer."))
 
-(deftype |BgpPeerEntry| () 't)
+(defclass |BgpPeerEntry|
+          (asn.1-type)
+          ((|bgpPeerIdentifier| :type |IpAddress|)
+           (|bgpPeerState| :type integer)
+           (|bgpPeerAdminStatus| :type integer)
+           (|bgpPeerNegotiatedVersion| :type |Integer32|)
+           (|bgpPeerLocalAddr| :type |IpAddress|)
+           (|bgpPeerLocalPort| :type integer)
+           (|bgpPeerRemoteAddr| :type |IpAddress|)
+           (|bgpPeerRemotePort| :type integer)
+           (|bgpPeerRemoteAs| :type integer)
+           (|bgpPeerInUpdates| :type |Counter32|)
+           (|bgpPeerOutUpdates| :type |Counter32|)
+           (|bgpPeerInTotalMessages| :type |Counter32|)
+           (|bgpPeerOutTotalMessages| :type |Counter32|)
+           (|bgpPeerLastError| :type t)
+           (|bgpPeerFsmEstablishedTransitions| :type |Counter32|)
+           (|bgpPeerFsmEstablishedTime| :type |Gauge32|)
+           (|bgpPeerConnectRetryInterval| :type integer)
+           (|bgpPeerHoldTime| :type integer)
+           (|bgpPeerKeepAlive| :type integer)
+           (|bgpPeerHoldTimeConfigured| :type integer)
+           (|bgpPeerKeepAliveConfigured| :type integer)
+           (|bgpPeerMinASOriginationInterval| :type integer)
+           (|bgpPeerMinRouteAdvertisementInterval| :type integer)
+           (|bgpPeerInUpdateElapsedTime| :type |Gauge32|)))
 
 (defoid |bgpPeerIdentifier| (|bgpPeerEntry| 1)
   (:type 'object-type)
@@ -372,7 +395,14 @@
   (:status '|obsolete|)
   (:description "Information about a path to a network."))
 
-(deftype |BgpPathAttrEntry| () 't)
+(defclass |BgpPathAttrEntry|
+          (asn.1-type)
+          ((|bgpPathAttrPeer| :type |IpAddress|)
+           (|bgpPathAttrDestNetwork| :type |IpAddress|)
+           (|bgpPathAttrOrigin| :type integer)
+           (|bgpPathAttrASPath| :type t)
+           (|bgpPathAttrNextHop| :type |IpAddress|)
+           (|bgpPathAttrInterASMetric| :type |Integer32|)))
 
 (defoid |bgpPathAttrPeer| (|bgpPathAttrEntry| 1)
   (:type 'object-type)
@@ -449,7 +479,22 @@
   (:status '|current|)
   (:description "Information about a path to a network."))
 
-(deftype |Bgp4PathAttrEntry| () 't)
+(defclass |Bgp4PathAttrEntry|
+          (asn.1-type)
+          ((|bgp4PathAttrPeer| :type |IpAddress|)
+           (|bgp4PathAttrIpAddrPrefixLen| :type integer)
+           (|bgp4PathAttrIpAddrPrefix| :type |IpAddress|)
+           (|bgp4PathAttrOrigin| :type integer)
+           (|bgp4PathAttrASPathSegment| :type t)
+           (|bgp4PathAttrNextHop| :type |IpAddress|)
+           (|bgp4PathAttrMultiExitDisc| :type integer)
+           (|bgp4PathAttrLocalPref| :type integer)
+           (|bgp4PathAttrAtomicAggregate| :type integer)
+           (|bgp4PathAttrAggregatorAS| :type integer)
+           (|bgp4PathAttrAggregatorAddr| :type |IpAddress|)
+           (|bgp4PathAttrCalcLocalPref| :type integer)
+           (|bgp4PathAttrBest| :type integer)
+           (|bgp4PathAttrUnknown| :type t)))
 
 (defoid |bgp4PathAttrPeer| (|bgp4PathAttrEntry| 1)
   (:type 'object-type)
@@ -680,5 +725,7 @@
    "A collection of notifications for signaling
                     changes in BGP peer relationships."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'bgp4-mib *mib-modules*)
+  (setf *current-module* nil))
 

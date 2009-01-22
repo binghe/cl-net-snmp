@@ -3,9 +3,7 @@
 
 (in-package :asn.1)
 
-(eval-when (:load-toplevel :execute)
-  (pushnew 'smux-mib *mib-modules*)
-  (setf *current-module* 'smux-mib))
+(eval-when (:load-toplevel :execute) (setf *current-module* 'smux-mib))
 
 (defpackage :asn.1/smux-mib
   (:nicknames :smux-mib)
@@ -30,11 +28,16 @@
   (:status '|mandatory|)
   (:description "An entry in the SMUX peer table."))
 
-(deftype |SmuxPeerEntry| () 't)
+(defclass |SmuxPeerEntry|
+          (asn.1-type)
+          ((|smuxPindex| :type integer)
+           (|smuxPidentity| :type object-id)
+           (|smuxPdescription| :type |DisplayString|)
+           (|smuxPstatus| :type integer)))
 
 (defoid |smuxPindex| (|smuxPeerEntry| 1)
   (:type 'object-type)
-  (:syntax ':integer)
+  (:syntax 'integer)
   (:status '|mandatory|)
   (:description "An index which uniquely identifies a SMUX peer."))
 
@@ -80,7 +83,12 @@
   (:status '|mandatory|)
   (:description "An entry in the SMUX tree table."))
 
-(deftype |SmuxTreeEntry| () 't)
+(defclass |SmuxTreeEntry|
+          (asn.1-type)
+          ((|smuxTsubtree| :type object-id)
+           (|smuxTpriority| :type integer)
+           (|smuxTindex| :type integer)
+           (|smuxTstatus| :type integer)))
 
 (defoid |smuxTsubtree| (|smuxTreeEntry| 1)
   (:type 'object-type)
@@ -98,7 +106,7 @@
 
 (defoid |smuxTindex| (|smuxTreeEntry| 3)
   (:type 'object-type)
-  (:syntax ':integer)
+  (:syntax 'integer)
   (:status '|mandatory|)
   (:description "The SMUX peer's identity."))
 
@@ -120,5 +128,7 @@
             interpretation of such entries requires
             examination of the relative smuxTstatus object."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'smux-mib *mib-modules*)
+  (setf *current-module* nil))
 

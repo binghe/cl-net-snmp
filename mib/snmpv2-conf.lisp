@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew '|SNMPv2-CONF| *mib-modules*)
   (setf *current-module* '|SNMPv2-CONF|))
 
 (defpackage :|ASN.1/SNMPv2-CONF|
@@ -23,5 +22,7 @@
 
 (defmacro agent-capabilities ())
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew '|SNMPv2-CONF| *mib-modules*)
+  (setf *current-module* nil))
 

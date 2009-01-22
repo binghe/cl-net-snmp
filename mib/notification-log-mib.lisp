@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'notification-log-mib *mib-modules*)
   (setf *current-module* 'notification-log-mib))
 
 (defpackage :asn.1/notification-log-mib
@@ -103,7 +102,15 @@
      entries may be supplied by the system or created and deleted by
      applications using nlmConfigLogEntryStatus."))
 
-(deftype |NlmConfigLogEntry| () 't)
+(defclass |NlmConfigLogEntry|
+          (asn.1-type)
+          ((|nlmLogName| :type |SnmpAdminString|)
+           (|nlmConfigLogFilterName| :type |SnmpAdminString|)
+           (|nlmConfigLogEntryLimit| :type |Unsigned32|)
+           (|nlmConfigLogAdminStatus| :type integer)
+           (|nlmConfigLogOperStatus| :type integer)
+           (|nlmConfigLogStorageType| :type |StorageType|)
+           (|nlmConfigLogEntryStatus| :type |RowStatus|)))
 
 (defoid |nlmLogName| (|nlmConfigLogEntry| 1)
   (:type 'object-type)
@@ -243,7 +250,10 @@
   (:status '|current|)
   (:description "A Notification log statistics entry."))
 
-(deftype |NlmStatsLogEntry| () 't)
+(defclass |NlmStatsLogEntry|
+          (asn.1-type)
+          ((|nlmStatsLogNotificationsLogged| :type |Counter32|)
+           (|nlmStatsLogNotificationsBumped| :type |Counter32|)))
 
 (defoid |nlmStatsLogNotificationsLogged| (|nlmStatsLogEntry| 1)
   (:type 'object-type)
@@ -309,7 +319,17 @@
      has access to the information in the Notification.  If not it
      does not log that Notification in that log."))
 
-(deftype |NlmLogEntry| () 't)
+(defclass |NlmLogEntry|
+          (asn.1-type)
+          ((|nlmLogIndex| :type |Unsigned32|)
+           (|nlmLogTime| :type |TimeStamp|)
+           (|nlmLogDateAndTime| :type |DateAndTime|)
+           (|nlmLogEngineID| :type |SnmpEngineID|)
+           (|nlmLogEngineTAddress| :type |TAddress|)
+           (|nlmLogEngineTDomain| :type |TDomain|)
+           (|nlmLogContextEngineID| :type |SnmpEngineID|)
+           (|nlmLogContextName| :type |SnmpAdminString|)
+           (|nlmLogNotificationID| :type object-id)))
 
 (defoid |nlmLogIndex| (|nlmLogEntry| 1)
   (:type 'object-type)
@@ -439,7 +459,20 @@
      Entries appear in this table when there are variables in
      the varbind list of a Notification in nlmLogTable."))
 
-(deftype |NlmLogVariableEntry| () 't)
+(defclass |NlmLogVariableEntry|
+          (asn.1-type)
+          ((|nlmLogVariableIndex| :type |Unsigned32|)
+           (|nlmLogVariableID| :type object-id)
+           (|nlmLogVariableValueType| :type integer)
+           (|nlmLogVariableCounter32Val| :type |Counter32|)
+           (|nlmLogVariableUnsigned32Val| :type |Unsigned32|)
+           (|nlmLogVariableTimeTicksVal| :type |TimeTicks|)
+           (|nlmLogVariableInteger32Val| :type |Integer32|)
+           (|nlmLogVariableOctetStringVal| :type t)
+           (|nlmLogVariableIpAddressVal| :type |IpAddress|)
+           (|nlmLogVariableOidVal| :type object-id)
+           (|nlmLogVariableCounter64Val| :type |Counter64|)
+           (|nlmLogVariableOpaqueVal| :type |Opaque|)))
 
 (defoid |nlmLogVariableIndex| (|nlmLogVariableEntry| 1)
   (:type 'object-type)
@@ -584,5 +617,7 @@
           clock date and time and should not be implemented
           on systems that do not have a wall clock date."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'notification-log-mib *mib-modules*)
+  (setf *current-module* nil))
 

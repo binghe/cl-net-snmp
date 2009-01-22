@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'snmp-usm-dh-objects-mib *mib-modules*)
   (setf *current-module* 'snmp-usm-dh-objects-mib))
 
 (defpackage :asn.1/snmp-usm-dh-objects-mib
@@ -88,7 +87,12 @@
    "A row of DHKeyChange objects which augment or replace the
     functionality of the KeyChange objects in the base table row."))
 
-(deftype |UsmDHUserKeyEntry| () 't)
+(defclass |UsmDHUserKeyEntry|
+          (asn.1-type)
+          ((|usmDHUserAuthKeyChange| :type |DHKeyChange|)
+           (|usmDHUserOwnAuthKeyChange| :type |DHKeyChange|)
+           (|usmDHUserPrivKeyChange| :type |DHKeyChange|)
+           (|usmDHUserOwnPrivKeyChange| :type |DHKeyChange|)))
 
 (defoid |usmDHUserAuthKeyChange| (|usmDHUserKeyEntry| 1)
   (:type 'object-type)
@@ -192,7 +196,12 @@
     particular security name, the row in this table with that same
     security name is no longer useful or meaningful."))
 
-(deftype |UsmDHKickstartEntry| () 't)
+(defclass |UsmDHKickstartEntry|
+          (asn.1-type)
+          ((|usmDHKickstartIndex| :type |Integer32|)
+           (|usmDHKickstartMyPublic| :type t)
+           (|usmDHKickstartMgrPublic| :type t)
+           (|usmDHKickstartSecurityName| :type |SnmpAdminString|)))
 
 (defoid |usmDHKickstartIndex| (|usmDHKickstartEntry| 1)
   (:type 'object-type)
@@ -339,5 +348,7 @@
     associations via a configuration file or other out of band,
     non-confidential access."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'snmp-usm-dh-objects-mib *mib-modules*)
+  (setf *current-module* nil))
 

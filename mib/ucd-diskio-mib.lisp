@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'ucd-diskio-mib *mib-modules*)
   (setf *current-module* 'ucd-diskio-mib))
 
 (defpackage :asn.1/ucd-diskio-mib
@@ -37,7 +36,16 @@
   (:status '|current|)
   (:description "An entry containing a device and its statistics."))
 
-(deftype |DiskIOEntry| () 't)
+(defclass |DiskIOEntry|
+          (asn.1-type)
+          ((|diskIOIndex| :type |Integer32|)
+           (|diskIODevice| :type |DisplayString|)
+           (|diskIONRead| :type |Counter32|)
+           (|diskIONWritten| :type |Counter32|)
+           (|diskIOReads| :type |Counter32|)
+           (|diskIOWrites| :type |Counter32|)
+           (|diskIONReadX| :type |Counter64|)
+           (|diskIONWrittenX| :type |Counter64|)))
 
 (defoid |diskIOIndex| (|diskIOEntry| 1)
   (:type 'object-type)
@@ -122,5 +130,7 @@
   (:description
    "The number of bytes written to this device since boot."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'ucd-diskio-mib *mib-modules*)
+  (setf *current-module* nil))
 

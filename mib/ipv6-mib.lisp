@@ -3,9 +3,7 @@
 
 (in-package :asn.1)
 
-(eval-when (:load-toplevel :execute)
-  (pushnew 'ipv6-mib *mib-modules*)
-  (setf *current-module* 'ipv6-mib))
+(eval-when (:load-toplevel :execute) (setf *current-module* 'ipv6-mib))
 
 (defpackage :asn.1/ipv6-mib
   (:nicknames :ipv6-mib)
@@ -108,7 +106,19 @@
    "An interface entry containing objects
         about a particular IPv6 interface."))
 
-(deftype |Ipv6IfEntry| () 't)
+(defclass |Ipv6IfEntry|
+          (asn.1-type)
+          ((|ipv6IfIndex| :type |Ipv6IfIndex|)
+           (|ipv6IfDescr| :type |DisplayString|)
+           (|ipv6IfLowerLayer| :type |VariablePointer|)
+           (|ipv6IfEffectiveMtu| :type |Unsigned32|)
+           (|ipv6IfReasmMaxSize| :type |Unsigned32|)
+           (|ipv6IfIdentifier| :type |Ipv6AddressIfIdentifier|)
+           (|ipv6IfIdentifierLength| :type integer)
+           (|ipv6IfPhysicalAddress| :type |PhysAddress|)
+           (|ipv6IfAdminStatus| :type integer)
+           (|ipv6IfOperStatus| :type integer)
+           (|ipv6IfLastChange| :type |TimeStamp|)))
 
 (defoid |ipv6IfIndex| (|ipv6IfEntry| 1)
   (:type 'object-type)
@@ -277,7 +287,28 @@
    "An interface statistics entry containing objects
          at a particular IPv6 interface."))
 
-(deftype |Ipv6IfStatsEntry| () 't)
+(defclass |Ipv6IfStatsEntry|
+          (asn.1-type)
+          ((|ipv6IfStatsInReceives| :type |Counter32|)
+           (|ipv6IfStatsInHdrErrors| :type |Counter32|)
+           (|ipv6IfStatsInTooBigErrors| :type |Counter32|)
+           (|ipv6IfStatsInNoRoutes| :type |Counter32|)
+           (|ipv6IfStatsInAddrErrors| :type |Counter32|)
+           (|ipv6IfStatsInUnknownProtos| :type |Counter32|)
+           (|ipv6IfStatsInTruncatedPkts| :type |Counter32|)
+           (|ipv6IfStatsInDiscards| :type |Counter32|)
+           (|ipv6IfStatsInDelivers| :type |Counter32|)
+           (|ipv6IfStatsOutForwDatagrams| :type |Counter32|)
+           (|ipv6IfStatsOutRequests| :type |Counter32|)
+           (|ipv6IfStatsOutDiscards| :type |Counter32|)
+           (|ipv6IfStatsOutFragOKs| :type |Counter32|)
+           (|ipv6IfStatsOutFragFails| :type |Counter32|)
+           (|ipv6IfStatsOutFragCreates| :type |Counter32|)
+           (|ipv6IfStatsReasmReqds| :type |Counter32|)
+           (|ipv6IfStatsReasmOKs| :type |Counter32|)
+           (|ipv6IfStatsReasmFails| :type |Counter32|)
+           (|ipv6IfStatsInMcastPkts| :type |Counter32|)
+           (|ipv6IfStatsOutMcastPkts| :type |Counter32|)))
 
 (defoid |ipv6IfStatsInReceives| (|ipv6IfStatsEntry| 1)
   (:type 'object-type)
@@ -536,7 +567,14 @@
    "An interface entry containing objects of
          a particular IPv6 address prefix."))
 
-(deftype |Ipv6AddrPrefixEntry| () 't)
+(defclass |Ipv6AddrPrefixEntry|
+          (asn.1-type)
+          ((|ipv6AddrPrefix| :type |Ipv6AddressPrefix|)
+           (|ipv6AddrPrefixLength| :type t)
+           (|ipv6AddrPrefixOnLinkFlag| :type |TruthValue|)
+           (|ipv6AddrPrefixAutonomousFlag| :type |TruthValue|)
+           (|ipv6AddrPrefixAdvPreferredLifetime| :type |Unsigned32|)
+           (|ipv6AddrPrefixAdvValidLifetime| :type |Unsigned32|)))
 
 (defoid |ipv6AddrPrefix| (|ipv6AddrPrefixEntry| 1)
   (:type 'object-type)
@@ -624,7 +662,13 @@
    "The addressing information for one of this
         node's interface addresses."))
 
-(deftype |Ipv6AddrEntry| () 't)
+(defclass |Ipv6AddrEntry|
+          (asn.1-type)
+          ((|ipv6AddrAddress| :type |Ipv6Address|)
+           (|ipv6AddrPfxLength| :type integer)
+           (|ipv6AddrType| :type integer)
+           (|ipv6AddrAnycastFlag| :type |TruthValue|)
+           (|ipv6AddrStatus| :type integer)))
 
 (defoid |ipv6AddrAddress| (|ipv6AddrEntry| 1)
   (:type 'object-type)
@@ -727,7 +771,22 @@
   (:status '|current|)
   (:description "A routing entry."))
 
-(deftype |Ipv6RouteEntry| () 't)
+(defclass |Ipv6RouteEntry|
+          (asn.1-type)
+          ((|ipv6RouteDest| :type |Ipv6Address|)
+           (|ipv6RoutePfxLength| :type integer)
+           (|ipv6RouteIndex| :type |Unsigned32|)
+           (|ipv6RouteIfIndex| :type |Ipv6IfIndexOrZero|)
+           (|ipv6RouteNextHop| :type |Ipv6Address|)
+           (|ipv6RouteType| :type integer)
+           (|ipv6RouteProtocol| :type integer)
+           (|ipv6RoutePolicy| :type |Integer32|)
+           (|ipv6RouteAge| :type |Unsigned32|)
+           (|ipv6RouteNextHopRDI| :type |Unsigned32|)
+           (|ipv6RouteMetric| :type |Unsigned32|)
+           (|ipv6RouteWeight| :type |Unsigned32|)
+           (|ipv6RouteInfo| :type |RowPointer|)
+           (|ipv6RouteValid| :type |TruthValue|)))
 
 (defoid |ipv6RouteDest| (|ipv6RouteEntry| 1)
   (:type 'object-type)
@@ -947,7 +1006,14 @@
    "Each entry contains one IPv6 address to `physical'
        address equivalence."))
 
-(deftype |Ipv6NetToMediaEntry| () 't)
+(defclass |Ipv6NetToMediaEntry|
+          (asn.1-type)
+          ((|ipv6NetToMediaNetAddress| :type |Ipv6Address|)
+           (|ipv6NetToMediaPhysAddress| :type |PhysAddress|)
+           (|ipv6NetToMediaType| :type integer)
+           (|ipv6IfNetToMediaState| :type integer)
+           (|ipv6IfNetToMediaLastUpdated| :type |TimeStamp|)
+           (|ipv6NetToMediaValid| :type |TruthValue|)))
 
 (defoid |ipv6NetToMediaNetAddress| (|ipv6NetToMediaEntry| 1)
   (:type 'object-type)
@@ -1066,5 +1132,7 @@
    "The notification that an IPv6 entity is required
           to implement."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'ipv6-mib *mib-modules*)
+  (setf *current-module* nil))
 

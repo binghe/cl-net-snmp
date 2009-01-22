@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'ip-forward-mib *mib-modules*)
   (setf *current-module* 'ip-forward-mib))
 
 (defpackage :asn.1/ip-forward-mib
@@ -80,7 +79,27 @@
             identifiers and cannot be accessed using SNMPv1,
             SNMPv2c, or SNMPv3."))
 
-(deftype |InetCidrRouteEntry| () 't)
+(defclass |InetCidrRouteEntry|
+          (asn.1-type)
+          ((|inetCidrRouteDestType| :type |InetAddressType|)
+           (|inetCidrRouteDest| :type |InetAddress|)
+           (|inetCidrRoutePfxLen| :type |InetAddressPrefixLength|)
+           (|inetCidrRoutePolicy| :type object-id)
+           (|inetCidrRouteNextHopType| :type |InetAddressType|)
+           (|inetCidrRouteNextHop| :type |InetAddress|)
+           (|inetCidrRouteIfIndex| :type |InterfaceIndexOrZero|)
+           (|inetCidrRouteType| :type integer)
+           (|inetCidrRouteProto| :type |IANAipRouteProtocol|)
+           (|inetCidrRouteAge| :type |Gauge32|)
+           (|inetCidrRouteNextHopAS|
+            :type
+            |InetAutonomousSystemNumber|)
+           (|inetCidrRouteMetric1| :type |Integer32|)
+           (|inetCidrRouteMetric2| :type |Integer32|)
+           (|inetCidrRouteMetric3| :type |Integer32|)
+           (|inetCidrRouteMetric4| :type |Integer32|)
+           (|inetCidrRouteMetric5| :type |Integer32|)
+           (|inetCidrRouteStatus| :type |RowStatus|)))
 
 (defoid |inetCidrRouteDestType| (|inetCidrRouteEntry| 1)
   (:type 'object-type)
@@ -422,7 +441,24 @@
 
             particular policy."))
 
-(deftype |IpCidrRouteEntry| () 't)
+(defclass |IpCidrRouteEntry|
+          (asn.1-type)
+          ((|ipCidrRouteDest| :type |IpAddress|)
+           (|ipCidrRouteMask| :type |IpAddress|)
+           (|ipCidrRouteTos| :type |Integer32|)
+           (|ipCidrRouteNextHop| :type |IpAddress|)
+           (|ipCidrRouteIfIndex| :type |Integer32|)
+           (|ipCidrRouteType| :type integer)
+           (|ipCidrRouteProto| :type integer)
+           (|ipCidrRouteAge| :type |Integer32|)
+           (|ipCidrRouteInfo| :type object-id)
+           (|ipCidrRouteNextHopAS| :type |Integer32|)
+           (|ipCidrRouteMetric1| :type |Integer32|)
+           (|ipCidrRouteMetric2| :type |Integer32|)
+           (|ipCidrRouteMetric3| :type |Integer32|)
+           (|ipCidrRouteMetric4| :type |Integer32|)
+           (|ipCidrRouteMetric5| :type |Integer32|)
+           (|ipCidrRouteStatus| :type |RowStatus|)))
 
 (defoid |ipCidrRouteDest| (|ipCidrRouteEntry| 1)
   (:type 'object-type)
@@ -699,7 +735,23 @@
    "A particular route to a particular destination, under a
             particular policy."))
 
-(deftype |IpForwardEntry| () 't)
+(defclass |IpForwardEntry|
+          (asn.1-type)
+          ((|ipForwardDest| :type |IpAddress|)
+           (|ipForwardMask| :type |IpAddress|)
+           (|ipForwardPolicy| :type |Integer32|)
+           (|ipForwardNextHop| :type |IpAddress|)
+           (|ipForwardIfIndex| :type |Integer32|)
+           (|ipForwardType| :type integer)
+           (|ipForwardProto| :type integer)
+           (|ipForwardAge| :type |Integer32|)
+           (|ipForwardInfo| :type object-id)
+           (|ipForwardNextHopAS| :type |Integer32|)
+           (|ipForwardMetric1| :type |Integer32|)
+           (|ipForwardMetric2| :type |Integer32|)
+           (|ipForwardMetric3| :type |Integer32|)
+           (|ipForwardMetric4| :type |Integer32|)
+           (|ipForwardMetric5| :type |Integer32|)))
 
 (defoid |ipForwardDest| (|ipForwardEntry| 1)
   (:type 'object-type)
@@ -946,5 +998,7 @@
   (:status '|obsolete|)
   (:description "IP Multipath Route Table."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'ip-forward-mib *mib-modules*)
+  (setf *current-module* nil))
 

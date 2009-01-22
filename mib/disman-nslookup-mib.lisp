@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'disman-nslookup-mib *mib-modules*)
   (setf *current-module* 'disman-nslookup-mib))
 
 (defpackage :asn.1/disman-nslookup-mib
@@ -99,7 +98,16 @@
         requests.  The value of lookupCtlTargetAddressType
         determines which lookup function to perform."))
 
-(deftype |LookupCtlEntry| () 't)
+(defclass |LookupCtlEntry|
+          (asn.1-type)
+          ((|lookupCtlOwnerIndex| :type |SnmpAdminString|)
+           (|lookupCtlOperationName| :type |SnmpAdminString|)
+           (|lookupCtlTargetAddressType| :type |InetAddressType|)
+           (|lookupCtlTargetAddress| :type |InetAddress|)
+           (|lookupCtlOperStatus| :type integer)
+           (|lookupCtlTime| :type |Unsigned32|)
+           (|lookupCtlRc| :type |Integer32|)
+           (|lookupCtlRowStatus| :type |RowStatus|)))
 
 (defoid |lookupCtlOwnerIndex| (|lookupCtlEntry| 1)
   (:type 'object-type)
@@ -312,7 +320,11 @@
         to.  The third index element selects a single
         lookup operation result."))
 
-(deftype |LookupResultsEntry| () 't)
+(defclass |LookupResultsEntry|
+          (asn.1-type)
+          ((|lookupResultsIndex| :type |Unsigned32|)
+           (|lookupResultsAddressType| :type |InetAddressType|)
+           (|lookupResultsAddress| :type |InetAddress|)))
 
 (defoid |lookupResultsIndex| (|lookupResultsEntry| 1)
   (:type 'object-type)
@@ -380,5 +392,7 @@
    "The group of objects that constitute the remote
        Lookup operation."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'disman-nslookup-mib *mib-modules*)
+  (setf *current-module* nil))
 

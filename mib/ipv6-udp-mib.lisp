@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'ipv6-udp-mib *mib-modules*)
   (setf *current-module* 'ipv6-udp-mib))
 
 (defpackage :asn.1/ipv6-udp-mib
@@ -46,7 +45,11 @@
          IPv6 addresses are not guaranteed to be unique on the
          managed node."))
 
-(deftype |Ipv6UdpEntry| () 't)
+(defclass |Ipv6UdpEntry|
+          (asn.1-type)
+          ((|ipv6UdpLocalAddress| :type |Ipv6Address|)
+           (|ipv6UdpLocalPort| :type t)
+           (|ipv6UdpIfIndex| :type |Ipv6IfIndexOrZero|)))
 
 (defoid |ipv6UdpLocalAddress| (|ipv6UdpEntry| 1)
   (:type 'object-type)
@@ -112,5 +115,7 @@
    "The group of objects providing management of
          UDP over IPv6."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'ipv6-udp-mib *mib-modules*)
+  (setf *current-module* nil))
 

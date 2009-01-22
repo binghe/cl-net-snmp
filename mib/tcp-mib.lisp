@@ -3,9 +3,7 @@
 
 (in-package :asn.1)
 
-(eval-when (:load-toplevel :execute)
-  (pushnew 'tcp-mib *mib-modules*)
-  (setf *current-module* 'tcp-mib))
+(eval-when (:load-toplevel :execute) (setf *current-module* 'tcp-mib))
 
 (defpackage :asn.1/tcp-mib
   (:nicknames :tcp-mib)
@@ -251,7 +249,16 @@
             exist when (or soon after) the connection makes the
             transition to the CLOSED state."))
 
-(deftype |TcpConnectionEntry| () 't)
+(defclass |TcpConnectionEntry|
+          (asn.1-type)
+          ((|tcpConnectionLocalAddressType| :type |InetAddressType|)
+           (|tcpConnectionLocalAddress| :type |InetAddress|)
+           (|tcpConnectionLocalPort| :type |InetPortNumber|)
+           (|tcpConnectionRemAddressType| :type |InetAddressType|)
+           (|tcpConnectionRemAddress| :type |InetAddress|)
+           (|tcpConnectionRemPort| :type |InetPortNumber|)
+           (|tcpConnectionState| :type integer)
+           (|tcpConnectionProcess| :type |Unsigned32|)))
 
 (defoid |tcpConnectionLocalAddressType| (|tcpConnectionEntry| 1)
   (:type 'object-type)
@@ -397,7 +404,12 @@
    "A conceptual row of the tcpListenerTable containing
             information about a particular TCP listener."))
 
-(deftype |TcpListenerEntry| () 't)
+(defclass |TcpListenerEntry|
+          (asn.1-type)
+          ((|tcpListenerLocalAddressType| :type |InetAddressType|)
+           (|tcpListenerLocalAddress| :type |InetAddress|)
+           (|tcpListenerLocalPort| :type |InetPortNumber|)
+           (|tcpListenerProcess| :type |Unsigned32|)))
 
 (defoid |tcpListenerLocalAddressType| (|tcpListenerEntry| 1)
   (:type 'object-type)
@@ -487,7 +499,13 @@
             (or soon after) the connection makes the transition to the
             CLOSED state."))
 
-(deftype |TcpConnEntry| () 't)
+(defclass |TcpConnEntry|
+          (asn.1-type)
+          ((|tcpConnState| :type integer)
+           (|tcpConnLocalAddress| :type |IpAddress|)
+           (|tcpConnLocalPort| :type |Integer32|)
+           (|tcpConnRemAddress| :type |IpAddress|)
+           (|tcpConnRemPort| :type |Integer32|)))
 
 (defoid |tcpConnState| (|tcpConnEntry| 1)
   (:type 'object-type)
@@ -632,5 +650,7 @@
    "The group of objects providing for counters of high speed
             TCP implementations."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'tcp-mib *mib-modules*)
+  (setf *current-module* nil))
 

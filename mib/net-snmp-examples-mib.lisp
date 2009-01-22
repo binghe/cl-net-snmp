@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'net-snmp-examples-mib *mib-modules*)
   (setf *current-module* 'net-snmp-examples-mib))
 
 (defpackage :asn.1/net-snmp-examples-mib
@@ -113,7 +112,11 @@
   (:status '|current|)
   (:description "A row describing a given working group"))
 
-(deftype |NetSnmpIETFWGEntry| () 't)
+(defclass |NetSnmpIETFWGEntry|
+          (asn.1-type)
+          ((|nsIETFWGName| :type t)
+           (|nsIETFWGChair1| :type t)
+           (|nsIETFWGChair2| :type t)))
 
 (defoid |nsIETFWGName| (|netSnmpIETFWGEntry| 1)
   (:type 'object-type)
@@ -156,7 +159,13 @@
   (:status '|current|)
   (:description "A host name mapped to an ip address"))
 
-(deftype |NetSnmpHostsEntry| () 't)
+(defclass |NetSnmpHostsEntry|
+          (asn.1-type)
+          ((|netSnmpHostName| :type t)
+           (|netSnmpHostAddressType| :type |InetAddressType|)
+           (|netSnmpHostAddress| :type |InetAddress|)
+           (|netSnmpHostStorage| :type |StorageType|)
+           (|netSnmpHostRowStatus| :type |RowStatus|)))
 
 (defoid |netSnmpHostName| (|netSnmpHostsEntry| 1)
   (:type 'object-type)
@@ -243,5 +252,7 @@
    "This object was improperly defined for its original purpose,
          and should no longer be used."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'net-snmp-examples-mib *mib-modules*)
+  (setf *current-module* nil))
 
