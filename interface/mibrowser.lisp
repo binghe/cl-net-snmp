@@ -8,17 +8,19 @@
 (defvar *switched-modules* nil)
 (defvar *enabled-modules*)
 
+(defvar *root-module* '|ASN.1/SNMPv2-SMI|::|SNMPv2-SMI|)
+
 (defun make-switched-modules ()
   (setf *switched-modules* (copy-list asn.1::*mib-modules*)
         *enabled-modules*  (copy-list *default-enabled-modules*))
-  (delete 'asn.1::|SNMPv2-SMI| *switched-modules*)
+  (delete *root-module* *switched-modules*)
   (sort *switched-modules*
         #'(lambda (a b) (string< (symbol-name a)
                                  (symbol-name b)))))
 
 (defun children-function (x)
   (let ((children (mapcar #'(lambda (x) (if (slot-boundp x 'asn.1::name) x nil))
-                          (asn.1::list-children x))))
+                          (asn.1:list-children x))))
     (sort (delete-if-not #'(lambda (x)
                              (or (not (asn.1::oid-module-p x))
                                  (member (asn.1::oid-module x) *enabled-modules*)))
