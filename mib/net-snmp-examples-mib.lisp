@@ -250,6 +250,8 @@
    "This object was improperly defined for its original purpose,
          and should no longer be used."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'net-snmp-examples-mib *mib-modules*)
   (setf *current-module* nil))

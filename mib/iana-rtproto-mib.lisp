@@ -33,6 +33,8 @@
 
 (deftype |IANAipMRouteProtocol| () 't)
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'iana-rtproto-mib *mib-modules*)
   (setf *current-module* nil))

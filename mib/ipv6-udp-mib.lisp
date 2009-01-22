@@ -114,6 +114,8 @@
    "The group of objects providing management of
          UDP over IPv6."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'ipv6-udp-mib *mib-modules*)
   (setf *current-module* nil))

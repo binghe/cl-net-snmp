@@ -1043,6 +1043,8 @@
   (:status '|current|)
   (:description "Expression value."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'disman-expression-mib *mib-modules*)
   (setf *current-module* nil))

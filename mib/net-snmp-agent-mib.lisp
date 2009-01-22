@@ -421,6 +421,8 @@
   (:description
    "The notifications relating to the basic operation of the Net-SNMP agent."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'net-snmp-agent-mib *mib-modules*)
   (setf *current-module* nil))

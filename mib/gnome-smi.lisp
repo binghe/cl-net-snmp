@@ -52,6 +52,8 @@
    "gnomeLDAP defines the subtree for GNOME related LDAP
 		registrations."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'gnome-smi *mib-modules*)
   (setf *current-module* nil))

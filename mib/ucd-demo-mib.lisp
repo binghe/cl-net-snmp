@@ -64,6 +64,8 @@
    "The demo passphrase that ucdDemoResetKeys changes each 
 	 users localized key to based on the P->Ku->Kul transformation."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'ucd-demo-mib *mib-modules*)
   (setf *current-module* nil))

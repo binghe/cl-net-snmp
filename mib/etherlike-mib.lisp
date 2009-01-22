@@ -1521,6 +1521,8 @@
                     about the Rate Control function on ethernet-like
                     interfaces."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew '|EtherLike-MIB| *mib-modules*)
   (setf *current-module* nil))

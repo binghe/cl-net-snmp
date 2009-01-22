@@ -120,6 +120,8 @@
    "A collection of objects providing inverted information on
           the layering of MIB-II interfaces."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'if-inverted-stack-mib *mib-modules*)
   (setf *current-module* nil))

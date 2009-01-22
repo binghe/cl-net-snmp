@@ -1189,6 +1189,8 @@
   (:status '|current|)
   (:description "The Host Resources Installed Software Group."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'host-resources-mib *mib-modules*)
   (setf *current-module* nil))

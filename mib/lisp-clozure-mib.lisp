@@ -19,6 +19,8 @@
   (:type 'module-identity)
   (:description "The MIB module for Clozure CL"))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'lisp-clozure-mib *mib-modules*)
   (setf *current-module* nil))

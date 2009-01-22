@@ -916,6 +916,8 @@
       detailed MTA errors.  This is the appropriate group
       for RFC 2789 error monitoring."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'mta-mib *mib-modules*)
   (setf *current-module* nil))

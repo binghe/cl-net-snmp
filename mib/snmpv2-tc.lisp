@@ -47,6 +47,8 @@
 
 (deftype |TAddress| () 't)
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew '|SNMPv2-TC| *mib-modules*)
   (setf *current-module* nil))

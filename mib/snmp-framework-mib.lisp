@@ -141,6 +141,8 @@
                  values of an SNMP engine.
                 "))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'snmp-framework-mib *mib-modules*)
   (setf *current-module* nil))

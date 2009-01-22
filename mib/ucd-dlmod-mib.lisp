@@ -88,6 +88,8 @@
   (:status '|current|)
   (:description "The current status of the loaded module."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'ucd-dlmod-mib *mib-modules*)
   (setf *current-module* nil))

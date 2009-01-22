@@ -433,6 +433,8 @@
    "The ICMPv6 group of objects providing information
           specific to ICMPv6."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'ipv6-icmp-mib *mib-modules*)
   (setf *current-module* nil))
