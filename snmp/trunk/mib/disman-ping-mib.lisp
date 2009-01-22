@@ -92,7 +92,7 @@
 
 (defoid |pingCtlTable| (|pingObjects| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |PingCtlEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -538,7 +538,7 @@
 
 (defoid |pingResultsTable| (|pingObjects| 3)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |PingResultsEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -695,7 +695,7 @@
 
 (defoid |pingProbeHistoryTable| (|pingObjects| 4)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |PingProbeHistoryEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

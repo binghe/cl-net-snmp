@@ -29,7 +29,7 @@
 
 (defoid |ifInvStackTable| (|ifInvMIBObjects| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |IfInvStackEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

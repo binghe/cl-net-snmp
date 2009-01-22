@@ -31,7 +31,7 @@
 
 (defoid |ipfInTable| (|ucdIpFilter| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |IpfInEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -73,7 +73,7 @@
 
 (defoid |ipfOutTable| (|ucdIpFilter| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |IpfOutEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A table with IP Filter outgoing rules and statistic."))
@@ -114,7 +114,7 @@
 
 (defoid |ipfAccInTable| (|ucdIpFilter| 3)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |IpfAccInEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -170,7 +170,7 @@
 
 (defoid |ipfAccOutTable| (|ucdIpFilter| 4)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |IpfAccOutEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

@@ -67,7 +67,7 @@
 
 (defoid |usmDHUserKeyTable| (|usmDHPublicObjects| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |UsmDHUserKeyEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -154,7 +154,7 @@
 
 (defoid |usmDHKickstartTable| (|usmDHKickstartGroup| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |UsmDHKickstartEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

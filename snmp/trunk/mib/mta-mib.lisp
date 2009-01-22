@@ -24,7 +24,7 @@
 
 (defoid |mtaTable| (|mta| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |MtaEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The table holding information specific to an MTA."))
@@ -222,7 +222,7 @@
 
 (defoid |mtaGroupTable| (|mta| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |MtaGroupEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -652,7 +652,7 @@
 
 (defoid |mtaGroupAssociationTable| (|mta| 3)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |MtaGroupAssociationEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -682,7 +682,7 @@
 
 (defoid |mtaGroupErrorTable| (|mta| 5)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |MtaGroupErrorEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

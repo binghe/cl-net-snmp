@@ -230,7 +230,7 @@
 
 (defoid |ospfAreaTable| (|ospf| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |OspfAreaEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -376,7 +376,7 @@
 
 (defoid |ospfStubAreaTable| (|ospf| 3)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |OspfStubAreaEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -453,7 +453,7 @@
 
 (defoid |ospfLsdbTable| (|ospf| 4)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |OspfLsdbEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The OSPF Process's Link State Database."))
@@ -562,7 +562,7 @@
 
 (defoid |ospfAreaRangeTable| (|ospf| 5)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |OspfAreaRangeEntry|))
   (:max-access '|not-accessible|)
   (:status '|obsolete|)
   (:description
@@ -642,7 +642,7 @@
 
 (defoid |ospfHostTable| (|ospf| 6)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |OspfHostEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -711,7 +711,7 @@
 
 (defoid |ospfIfTable| (|ospf| 7)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |OspfIfEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -978,7 +978,7 @@
 
 (defoid |ospfIfMetricTable| (|ospf| 8)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |OspfIfMetricEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -1057,7 +1057,7 @@
 
 (defoid |ospfVirtIfTable| (|ospf| 9)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |OspfVirtIfEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -1207,7 +1207,7 @@
 
 (defoid |ospfNbrTable| (|ospf| 10)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |OspfNbrEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A table of non-virtual neighbor information."))
@@ -1365,7 +1365,7 @@
 
 (defoid |ospfVirtNbrTable| (|ospf| 11)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |OspfVirtNbrEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A table of virtual neighbor information."))
@@ -1468,7 +1468,7 @@
 
 (defoid |ospfExtLsdbTable| (|ospf| 12)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |OspfExtLsdbEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The OSPF Process's Links State Database."))
@@ -1579,7 +1579,7 @@
 
 (defoid |ospfAreaAggregateTable| (|ospf| 14)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |OspfAreaAggregateEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

@@ -142,7 +142,7 @@
 
 (defoid |sysORTable| (|system| 9)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |SysOREntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

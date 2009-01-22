@@ -126,7 +126,7 @@
 
 (defoid |expExpressionTable| (|expDefine| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |ExpExpressionEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A table of expression definitions."))
@@ -532,7 +532,7 @@
 
 (defoid |expErrorTable| (|expDefine| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |ExpErrorEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A table of expression errors."))
@@ -640,7 +640,7 @@
 
 (defoid |expObjectTable| (|expDefine| 3)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |ExpObjectEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -869,7 +869,7 @@
 
 (defoid |expValueTable| (|expValue| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |ExpValueEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A table of values from evaluated expressions."))

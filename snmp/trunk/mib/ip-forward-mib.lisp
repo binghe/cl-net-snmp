@@ -54,7 +54,7 @@
 
 (defoid |inetCidrRouteTable| (|ipForward| 7)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |InetCidrRouteEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "This entity's IP Routing table."))
@@ -418,7 +418,7 @@
 
 (defoid |ipCidrRouteTable| (|ipForward| 4)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |IpCidrRouteEntry|))
   (:max-access '|not-accessible|)
   (:status '|deprecated|)
   (:description
@@ -717,7 +717,7 @@
 
 (defoid |ipForwardTable| (|ipForward| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |IpForwardEntry|))
   (:max-access '|not-accessible|)
   (:status '|obsolete|)
   (:description "This entity's IP Routing table."))

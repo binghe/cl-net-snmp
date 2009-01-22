@@ -33,7 +33,7 @@
 
 (defoid |smLangTable| (|smObjects| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |SmLangEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "This table lists supported script languages."))
@@ -126,7 +126,7 @@
 
 (defoid |smExtsnTable| (|smObjects| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |SmExtsnEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "This table lists supported language extensions."))
@@ -217,7 +217,7 @@
 
 (defoid |smScriptTable| (|smScriptObjects| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |SmScriptEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -516,7 +516,7 @@
 
 (defoid |smCodeTable| (|smScriptObjects| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |SmCodeEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -569,7 +569,7 @@
 
 (defoid |smLaunchTable| (|smRunObjects| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |SmLaunchEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -1002,7 +1002,7 @@
 
 (defoid |smRunTable| (|smRunObjects| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |SmRunEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

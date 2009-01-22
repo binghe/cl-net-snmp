@@ -38,7 +38,7 @@
 
 (defoid |tunnelIfTable| (|tunnel| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |TunnelIfEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -220,7 +220,7 @@
 
 (defoid |tunnelConfigTable| (|tunnel| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |TunnelConfigEntry|))
   (:max-access '|not-accessible|)
   (:status '|deprecated|)
   (:description
@@ -373,7 +373,7 @@
 
 (defoid |tunnelInetConfigTable| (|tunnel| 3)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |TunnelInetConfigEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
