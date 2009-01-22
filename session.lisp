@@ -134,13 +134,15 @@
 (defun open-session (host &key (port *default-snmp-port*)
                                (version *default-snmp-version*)
                                (community *default-snmp-community*)
+                               (create-socket t)
                                user auth priv)
   ;; first, what version we are talking about if version not been set?
   (let* ((real-version (or (gethash version *snmp-version-table*)
                            (if user +snmp-version-3+ *default-snmp-version*)))
          (args (list (gethash real-version *snmp-class-table*)
                      :host host :port port)))
-    (nconc args (list :socket (snmp-connect host port)))
+    (when create-socket
+      (nconc args (list :socket (snmp-connect host port))))
     (if (/= real-version +snmp-version-3+)
       ;; for SNMPv1 and v2c, only set the community
       (nconc args (list :community (or community *default-snmp-community*)))
