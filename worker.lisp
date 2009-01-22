@@ -30,6 +30,7 @@
 
 ;;; SNMP-WORKER is a low-level API for sync lots of SNMP messages once.
 
+#+ignore
 (defun snmp-worker (op-list)
   (declare (type list op-list)) ; each item is (session . pdu-list)
   (let ((operation-list
@@ -42,8 +43,10 @@
     (mapcar #'(lambda (o) (process-operation o :push))
             operation-list)))
 
+#+ignore
 (defgeneric process-operation (object action))
 
+#+ignore
 (defmethod process-operation ((operation snmp-operation) (action (eql :push)))
   (with-slots (session pdu context send-time) operation
     (let ((message (make-instance (gethash (type-of session) *session->message*)
