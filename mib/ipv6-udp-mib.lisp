@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/ipv6-udp-mib
   (:nicknames :ipv6-udp-mib)
-  (:use :common-lisp :asn.1)
+  (:use :closer-common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type |mib-2|
                 |experimental|)
@@ -45,11 +45,10 @@
          IPv6 addresses are not guaranteed to be unique on the
          managed node."))
 
-(defclass |Ipv6UdpEntry|
-          (asn.1-type)
-          ((|ipv6UdpLocalAddress| :type |Ipv6Address|)
-           (|ipv6UdpLocalPort| :type t)
-           (|ipv6UdpIfIndex| :type |Ipv6IfIndexOrZero|)))
+(defclass |Ipv6UdpEntry| (sequence-type)
+  ((|ipv6UdpLocalAddress| :type |Ipv6Address|)
+   (|ipv6UdpLocalPort| :type t)
+   (|ipv6UdpIfIndex| :type |Ipv6IfIndexOrZero|)))
 
 (defoid |ipv6UdpLocalAddress| (|ipv6UdpEntry| 1)
   (:type 'object-type)

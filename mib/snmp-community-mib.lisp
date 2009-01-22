@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/snmp-community-mib
   (:nicknames :snmp-community-mib)
-  (:use :common-lisp :asn.1)
+  (:use :closer-common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| |IpAddress| module-identity
                 object-type |Integer32| |snmpModules|)
   (:import-from :|ASN.1/SNMPv2-TC| |RowStatus| |StorageType|)
@@ -48,16 +48,15 @@
   (:status '|current|)
   (:description "Information about a particular community string."))
 
-(defclass |SnmpCommunityEntry|
-          (asn.1-type)
-          ((|snmpCommunityIndex| :type |SnmpAdminString|)
-           (|snmpCommunityName| :type t)
-           (|snmpCommunitySecurityName| :type |SnmpAdminString|)
-           (|snmpCommunityContextEngineID| :type |SnmpEngineID|)
-           (|snmpCommunityContextName| :type |SnmpAdminString|)
-           (|snmpCommunityTransportTag| :type |SnmpTagValue|)
-           (|snmpCommunityStorageType| :type |StorageType|)
-           (|snmpCommunityStatus| :type |RowStatus|)))
+(defclass |SnmpCommunityEntry| (sequence-type)
+  ((|snmpCommunityIndex| :type |SnmpAdminString|)
+   (|snmpCommunityName| :type t)
+   (|snmpCommunitySecurityName| :type |SnmpAdminString|)
+   (|snmpCommunityContextEngineID| :type |SnmpEngineID|)
+   (|snmpCommunityContextName| :type |SnmpAdminString|)
+   (|snmpCommunityTransportTag| :type |SnmpTagValue|)
+   (|snmpCommunityStorageType| :type |StorageType|)
+   (|snmpCommunityStatus| :type |RowStatus|)))
 
 (defoid |snmpCommunityIndex| (|snmpCommunityEntry| 1)
   (:type 'object-type)
@@ -187,10 +186,9 @@
   (:status '|current|)
   (:description "Information about a particular mask and mms value."))
 
-(defclass |SnmpTargetAddrExtEntry|
-          (asn.1-type)
-          ((|snmpTargetAddrTMask| :type t)
-           (|snmpTargetAddrMMS| :type |Integer32|)))
+(defclass |SnmpTargetAddrExtEntry| (sequence-type)
+  ((|snmpTargetAddrTMask| :type t)
+   (|snmpTargetAddrMMS| :type |Integer32|)))
 
 (defoid |snmpTargetAddrTMask| (|snmpTargetAddrExtEntry| 1)
   (:type 'object-type)

@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/net-snmp-tc
   (:nicknames :net-snmp-tc)
-  (:use :common-lisp :asn.1)
+  (:use :closer-common-lisp :asn.1)
   (:import-from :asn.1/net-snmp-mib |netSnmpModuleIDs|
                 |netSnmpAgentOIDs| |netSnmpDomains|)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity |Opaque|)

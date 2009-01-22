@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/snmp-view-based-acm-mib
   (:nicknames :snmp-view-based-acm-mib)
-  (:use :common-lisp :asn.1)
+  (:use :closer-common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |snmpModules|)
@@ -79,9 +79,8 @@
   (:status '|current|)
   (:description "Information about a particular context."))
 
-(defclass |VacmContextEntry|
-          (asn.1-type)
-          ((|vacmContextName| :type |SnmpAdminString|)))
+(defclass |VacmContextEntry| (sequence-type)
+  ((|vacmContextName| :type |SnmpAdminString|)))
 
 (defoid |vacmContextName| (|vacmContextEntry| 1)
   (:type 'object-type)
@@ -117,13 +116,12 @@
                  securityModel and securityName into a groupName.
                 "))
 
-(defclass |VacmSecurityToGroupEntry|
-          (asn.1-type)
-          ((|vacmSecurityModel| :type |SnmpSecurityModel|)
-           (|vacmSecurityName| :type |SnmpAdminString|)
-           (|vacmGroupName| :type |SnmpAdminString|)
-           (|vacmSecurityToGroupStorageType| :type |StorageType|)
-           (|vacmSecurityToGroupStatus| :type |RowStatus|)))
+(defclass |VacmSecurityToGroupEntry| (sequence-type)
+  ((|vacmSecurityModel| :type |SnmpSecurityModel|)
+   (|vacmSecurityName| :type |SnmpAdminString|)
+   (|vacmGroupName| :type |SnmpAdminString|)
+   (|vacmSecurityToGroupStorageType| :type |StorageType|)
+   (|vacmSecurityToGroupStatus| :type |RowStatus|)))
 
 (defoid |vacmSecurityModel| (|vacmSecurityToGroupEntry| 1)
   (:type 'object-type)
@@ -269,17 +267,16 @@
                  value for object vacmGroupName.
                 "))
 
-(defclass |VacmAccessEntry|
-          (asn.1-type)
-          ((|vacmAccessContextPrefix| :type |SnmpAdminString|)
-           (|vacmAccessSecurityModel| :type |SnmpSecurityModel|)
-           (|vacmAccessSecurityLevel| :type |SnmpSecurityLevel|)
-           (|vacmAccessContextMatch| :type integer)
-           (|vacmAccessReadViewName| :type |SnmpAdminString|)
-           (|vacmAccessWriteViewName| :type |SnmpAdminString|)
-           (|vacmAccessNotifyViewName| :type |SnmpAdminString|)
-           (|vacmAccessStorageType| :type |StorageType|)
-           (|vacmAccessStatus| :type |RowStatus|)))
+(defclass |VacmAccessEntry| (sequence-type)
+  ((|vacmAccessContextPrefix| :type |SnmpAdminString|)
+   (|vacmAccessSecurityModel| :type |SnmpSecurityModel|)
+   (|vacmAccessSecurityLevel| :type |SnmpSecurityLevel|)
+   (|vacmAccessContextMatch| :type integer)
+   (|vacmAccessReadViewName| :type |SnmpAdminString|)
+   (|vacmAccessWriteViewName| :type |SnmpAdminString|)
+   (|vacmAccessNotifyViewName| :type |SnmpAdminString|)
+   (|vacmAccessStorageType| :type |StorageType|)
+   (|vacmAccessStatus| :type |RowStatus|)))
 
 (defoid |vacmAccessContextPrefix| (|vacmAccessEntry| 1)
   (:type 'object-type)
@@ -544,14 +541,13 @@
                  consisting of the empty set of view subtrees.
                 "))
 
-(defclass |VacmViewTreeFamilyEntry|
-          (asn.1-type)
-          ((|vacmViewTreeFamilyViewName| :type |SnmpAdminString|)
-           (|vacmViewTreeFamilySubtree| :type object-id)
-           (|vacmViewTreeFamilyMask| :type t)
-           (|vacmViewTreeFamilyType| :type integer)
-           (|vacmViewTreeFamilyStorageType| :type |StorageType|)
-           (|vacmViewTreeFamilyStatus| :type |RowStatus|)))
+(defclass |VacmViewTreeFamilyEntry| (sequence-type)
+  ((|vacmViewTreeFamilyViewName| :type |SnmpAdminString|)
+   (|vacmViewTreeFamilySubtree| :type object-id)
+   (|vacmViewTreeFamilyMask| :type t)
+   (|vacmViewTreeFamilyType| :type integer)
+   (|vacmViewTreeFamilyStorageType| :type |StorageType|)
+   (|vacmViewTreeFamilyStatus| :type |RowStatus|)))
 
 (defoid |vacmViewTreeFamilyViewName| (|vacmViewTreeFamilyEntry| 1)
   (:type 'object-type)

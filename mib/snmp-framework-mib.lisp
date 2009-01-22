@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/snmp-framework-mib
   (:nicknames :snmp-framework-mib)
-  (:use :common-lisp :asn.1)
+  (:use :closer-common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 object-identity |snmpModules|)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention)

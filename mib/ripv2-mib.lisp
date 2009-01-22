@@ -8,7 +8,7 @@
 
 (defpackage :|ASN.1/RIPv2-MIB|
   (:nicknames :|RIPv2-MIB|)
-  (:use :common-lisp :asn.1)
+  (:use :closer-common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |Counter32| |TimeTicks| |IpAddress|)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention |RowStatus|)
@@ -61,13 +61,12 @@
   (:status '|current|)
   (:description "A Single Routing Domain in a single Subnet."))
 
-(defclass |Rip2IfStatEntry|
-          (asn.1-type)
-          ((|rip2IfStatAddress| :type |IpAddress|)
-           (|rip2IfStatRcvBadPackets| :type |Counter32|)
-           (|rip2IfStatRcvBadRoutes| :type |Counter32|)
-           (|rip2IfStatSentUpdates| :type |Counter32|)
-           (|rip2IfStatStatus| :type |RowStatus|)))
+(defclass |Rip2IfStatEntry| (sequence-type)
+  ((|rip2IfStatAddress| :type |IpAddress|)
+   (|rip2IfStatRcvBadPackets| :type |Counter32|)
+   (|rip2IfStatRcvBadRoutes| :type |Counter32|)
+   (|rip2IfStatSentUpdates| :type |Counter32|)
+   (|rip2IfStatStatus| :type |RowStatus|)))
 
 (defoid |rip2IfStatAddress| (|rip2IfStatEntry| 1)
   (:type 'object-type)
@@ -137,17 +136,16 @@
   (:status '|current|)
   (:description "A Single Routing Domain in a single Subnet."))
 
-(defclass |Rip2IfConfEntry|
-          (asn.1-type)
-          ((|rip2IfConfAddress| :type |IpAddress|)
-           (|rip2IfConfDomain| :type |RouteTag|)
-           (|rip2IfConfAuthType| :type integer)
-           (|rip2IfConfAuthKey| :type t)
-           (|rip2IfConfSend| :type integer)
-           (|rip2IfConfReceive| :type integer)
-           (|rip2IfConfDefaultMetric| :type integer)
-           (|rip2IfConfStatus| :type |RowStatus|)
-           (|rip2IfConfSrcAddress| :type |IpAddress|)))
+(defclass |Rip2IfConfEntry| (sequence-type)
+  ((|rip2IfConfAddress| :type |IpAddress|)
+   (|rip2IfConfDomain| :type |RouteTag|)
+   (|rip2IfConfAuthType| :type integer)
+   (|rip2IfConfAuthKey| :type t)
+   (|rip2IfConfSend| :type integer)
+   (|rip2IfConfReceive| :type integer)
+   (|rip2IfConfDefaultMetric| :type integer)
+   (|rip2IfConfStatus| :type |RowStatus|)
+   (|rip2IfConfSrcAddress| :type |IpAddress|)))
 
 (defoid |rip2IfConfAddress| (|rip2IfConfEntry| 1)
   (:type 'object-type)
@@ -274,14 +272,13 @@
   (:status '|current|)
   (:description "Information regarding a single routing peer."))
 
-(defclass |Rip2PeerEntry|
-          (asn.1-type)
-          ((|rip2PeerAddress| :type |IpAddress|)
-           (|rip2PeerDomain| :type |RouteTag|)
-           (|rip2PeerLastUpdate| :type |TimeTicks|)
-           (|rip2PeerVersion| :type integer)
-           (|rip2PeerRcvBadPackets| :type |Counter32|)
-           (|rip2PeerRcvBadRoutes| :type |Counter32|)))
+(defclass |Rip2PeerEntry| (sequence-type)
+  ((|rip2PeerAddress| :type |IpAddress|)
+   (|rip2PeerDomain| :type |RouteTag|)
+   (|rip2PeerLastUpdate| :type |TimeTicks|)
+   (|rip2PeerVersion| :type integer)
+   (|rip2PeerRcvBadPackets| :type |Counter32|)
+   (|rip2PeerRcvBadRoutes| :type |Counter32|)))
 
 (defoid |rip2PeerAddress| (|rip2PeerEntry| 1)
   (:type 'object-type)

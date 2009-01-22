@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/net-snmp-system-mib
   (:nicknames :net-snmp-system-mib)
-  (:use :common-lisp :asn.1)
+  (:use :closer-common-lisp :asn.1)
   (:import-from :asn.1/net-snmp-mib |netSnmpObjects|
                 |netSnmpModuleIDs|)
   (:import-from :asn.1/net-snmp-tc |Float|)

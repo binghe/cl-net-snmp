@@ -7,7 +7,7 @@
 
 (defpackage :asn.1/lisp-mib
   (:nicknames :lisp-mib)
-  (:use :common-lisp :asn.1)
+  (:use :closer-common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 object-identity notification-type |enterprises|)
   (:import-from :|ASN.1/SNMPv2-TC| |DisplayString|))
@@ -135,10 +135,9 @@
   (:status '|current|)
   (:description "An entry (conceptual row) in the lispFeatureTable."))
 
-(defclass |LispFeatureEntry|
-          (asn.1-type)
-          ((|lispFeatureIndex| :type integer)
-           (|lispFeatureName| :type |DisplayString|)))
+(defclass |LispFeatureEntry| (sequence-type)
+  ((|lispFeatureIndex| :type integer)
+   (|lispFeatureName| :type |DisplayString|)))
 
 (defoid |lispFeatureIndex| (|lispFeatureEntry| 1)
   (:type 'object-type)
@@ -170,10 +169,9 @@
   (:status '|current|)
   (:description "An entry (conceptual row) in the lispPackageTable."))
 
-(defclass |LispPackageEntry|
-          (asn.1-type)
-          ((|lispPackageIndex| :type integer)
-           (|lispPackageName| :type |DisplayString|)))
+(defclass |LispPackageEntry| (sequence-type)
+  ((|lispPackageIndex| :type integer)
+   (|lispPackageName| :type |DisplayString|)))
 
 (defoid |lispPackageIndex| (|lispPackageEntry| 1)
   (:type 'object-type)
@@ -206,10 +204,9 @@
   (:status '|current|)
   (:description "An entry (conceptual row) in the lispModuleTable."))
 
-(defclass |LispModuleEntry|
-          (asn.1-type)
-          ((|lispModuleIndex| :type integer)
-           (|lispModuleName| :type |DisplayString|)))
+(defclass |LispModuleEntry| (sequence-type)
+  ((|lispModuleIndex| :type integer)
+   (|lispModuleName| :type |DisplayString|)))
 
 (defoid |lispModuleIndex| (|lispModuleEntry| 1)
   (:type 'object-type)

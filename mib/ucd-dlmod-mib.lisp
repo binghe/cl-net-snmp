@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/ucd-dlmod-mib
   (:nicknames :ucd-dlmod-mib)
-  (:use :common-lisp :asn.1)
+  (:use :closer-common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| object-type module-identity
                 |Integer32|)
   (:import-from :|ASN.1/SNMPv2-TC| |DisplayString|)
@@ -45,13 +45,12 @@
   (:status '|current|)
   (:description "The parameters of dynamically loaded MIB module."))
 
-(defclass |DlmodEntry|
-          (asn.1-type)
-          ((|dlmodIndex| :type |Integer32|)
-           (|dlmodName| :type |DisplayString|)
-           (|dlmodPath| :type |DisplayString|)
-           (|dlmodError| :type |DisplayString|)
-           (|dlmodStatus| :type integer)))
+(defclass |DlmodEntry| (sequence-type)
+  ((|dlmodIndex| :type |Integer32|)
+   (|dlmodName| :type |DisplayString|)
+   (|dlmodPath| :type |DisplayString|)
+   (|dlmodError| :type |DisplayString|)
+   (|dlmodStatus| :type integer)))
 
 (defoid |dlmodIndex| (|dlmodEntry| 1)
   (:type 'object-type)

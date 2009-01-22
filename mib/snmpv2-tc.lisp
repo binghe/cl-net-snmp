@@ -8,7 +8,7 @@
 
 (defpackage :|ASN.1/SNMPv2-TC|
   (:nicknames :|SNMPv2-TC|)
-  (:use :common-lisp :asn.1)
+  (:use :closer-common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| |TimeTicks|))
 
 (in-package :|SNMPv2-TC|)

@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/snmp-user-based-sm-mib
   (:nicknames :snmp-user-based-sm-mib)
-  (:use :common-lisp :asn.1)
+  (:use :closer-common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 object-identity |snmpModules| |Counter32|)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention |TestAndIncr|
@@ -225,21 +225,20 @@
                  Security Model.
                 "))
 
-(defclass |UsmUserEntry|
-          (asn.1-type)
-          ((|usmUserEngineID| :type |SnmpEngineID|)
-           (|usmUserName| :type |SnmpAdminString|)
-           (|usmUserSecurityName| :type |SnmpAdminString|)
-           (|usmUserCloneFrom| :type |RowPointer|)
-           (|usmUserAuthProtocol| :type |AutonomousType|)
-           (|usmUserAuthKeyChange| :type |KeyChange|)
-           (|usmUserOwnAuthKeyChange| :type |KeyChange|)
-           (|usmUserPrivProtocol| :type |AutonomousType|)
-           (|usmUserPrivKeyChange| :type |KeyChange|)
-           (|usmUserOwnPrivKeyChange| :type |KeyChange|)
-           (|usmUserPublic| :type t)
-           (|usmUserStorageType| :type |StorageType|)
-           (|usmUserStatus| :type |RowStatus|)))
+(defclass |UsmUserEntry| (sequence-type)
+  ((|usmUserEngineID| :type |SnmpEngineID|)
+   (|usmUserName| :type |SnmpAdminString|)
+   (|usmUserSecurityName| :type |SnmpAdminString|)
+   (|usmUserCloneFrom| :type |RowPointer|)
+   (|usmUserAuthProtocol| :type |AutonomousType|)
+   (|usmUserAuthKeyChange| :type |KeyChange|)
+   (|usmUserOwnAuthKeyChange| :type |KeyChange|)
+   (|usmUserPrivProtocol| :type |AutonomousType|)
+   (|usmUserPrivKeyChange| :type |KeyChange|)
+   (|usmUserOwnPrivKeyChange| :type |KeyChange|)
+   (|usmUserPublic| :type t)
+   (|usmUserStorageType| :type |StorageType|)
+   (|usmUserStatus| :type |RowStatus|)))
 
 (defoid |usmUserEngineID| (|usmUserEntry| 1)
   (:type 'object-type)

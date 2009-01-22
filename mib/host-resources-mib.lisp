@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/host-resources-mib
   (:nicknames :host-resources-mib)
-  (:use :common-lisp :asn.1)
+  (:use :closer-common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type |mib-2|
                 |Integer32| |Counter32| |Gauge32| |TimeTicks|)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention |DisplayString|
@@ -194,15 +194,14 @@
         the host.  As an example, an instance of the
         hrStorageType object might be named hrStorageType.3"))
 
-(defclass |HrStorageEntry|
-          (asn.1-type)
-          ((|hrStorageIndex| :type |Integer32|)
-           (|hrStorageType| :type |AutonomousType|)
-           (|hrStorageDescr| :type |DisplayString|)
-           (|hrStorageAllocationUnits| :type |Integer32|)
-           (|hrStorageSize| :type |Integer32|)
-           (|hrStorageUsed| :type |Integer32|)
-           (|hrStorageAllocationFailures| :type |Counter32|)))
+(defclass |HrStorageEntry| (sequence-type)
+  ((|hrStorageIndex| :type |Integer32|)
+   (|hrStorageType| :type |AutonomousType|)
+   (|hrStorageDescr| :type |DisplayString|)
+   (|hrStorageAllocationUnits| :type |Integer32|)
+   (|hrStorageSize| :type |Integer32|)
+   (|hrStorageUsed| :type |Integer32|)
+   (|hrStorageAllocationFailures| :type |Counter32|)))
 
 (defoid |hrStorageIndex| (|hrStorageEntry| 1)
   (:type 'object-type)
@@ -302,14 +301,13 @@
         host.  As an example, an instance of the hrDeviceType
         object might be named hrDeviceType.3"))
 
-(defclass |HrDeviceEntry|
-          (asn.1-type)
-          ((|hrDeviceIndex| :type |Integer32|)
-           (|hrDeviceType| :type |AutonomousType|)
-           (|hrDeviceDescr| :type |DisplayString|)
-           (|hrDeviceID| :type |ProductID|)
-           (|hrDeviceStatus| :type integer)
-           (|hrDeviceErrors| :type |Counter32|)))
+(defclass |HrDeviceEntry| (sequence-type)
+  ((|hrDeviceIndex| :type |Integer32|)
+   (|hrDeviceType| :type |AutonomousType|)
+   (|hrDeviceDescr| :type |DisplayString|)
+   (|hrDeviceID| :type |ProductID|)
+   (|hrDeviceStatus| :type integer)
+   (|hrDeviceErrors| :type |Counter32|)))
 
 (defoid |hrDeviceIndex| (|hrDeviceEntry| 1)
   (:type 'object-type)
@@ -431,10 +429,9 @@
         an instance of the hrProcessorFrwID object might be
         named hrProcessorFrwID.3"))
 
-(defclass |HrProcessorEntry|
-          (asn.1-type)
-          ((|hrProcessorFrwID| :type |ProductID|)
-           (|hrProcessorLoad| :type |Integer32|)))
+(defclass |HrProcessorEntry| (sequence-type)
+  ((|hrProcessorFrwID| :type |ProductID|)
+   (|hrProcessorLoad| :type |Integer32|)))
 
 (defoid |hrProcessorFrwID| (|hrProcessorEntry| 1)
   (:type 'object-type)
@@ -485,9 +482,8 @@
         an instance of the hrNetworkIfIndex object might be
         named hrNetworkIfIndex.3"))
 
-(defclass |HrNetworkEntry|
-          (asn.1-type)
-          ((|hrNetworkIfIndex| :type |InterfaceIndexOrZero|)))
+(defclass |HrNetworkEntry| (sequence-type)
+  ((|hrNetworkIfIndex| :type |InterfaceIndexOrZero|)))
 
 (defoid |hrNetworkIfIndex| (|hrNetworkEntry| 1)
   (:type 'object-type)
@@ -527,10 +523,9 @@
         an instance of the hrPrinterStatus object might be
         named hrPrinterStatus.3"))
 
-(defclass |HrPrinterEntry|
-          (asn.1-type)
-          ((|hrPrinterStatus| :type integer)
-           (|hrPrinterDetectedErrorState| :type t)))
+(defclass |HrPrinterEntry| (sequence-type)
+  ((|hrPrinterStatus| :type integer)
+   (|hrPrinterDetectedErrorState| :type t)))
 
 (defoid |hrPrinterStatus| (|hrPrinterEntry| 1)
   (:type 'object-type)
@@ -610,12 +605,11 @@
         an instance of the hrDiskStorageCapacity object might
         be named hrDiskStorageCapacity.3"))
 
-(defclass |HrDiskStorageEntry|
-          (asn.1-type)
-          ((|hrDiskStorageAccess| :type integer)
-           (|hrDiskStorageMedia| :type integer)
-           (|hrDiskStorageRemoveble| :type |TruthValue|)
-           (|hrDiskStorageCapacity| :type |KBytes|)))
+(defclass |HrDiskStorageEntry| (sequence-type)
+  ((|hrDiskStorageAccess| :type integer)
+   (|hrDiskStorageMedia| :type integer)
+   (|hrDiskStorageRemoveble| :type |TruthValue|)
+   (|hrDiskStorageCapacity| :type |KBytes|)))
 
 (defoid |hrDiskStorageAccess| (|hrDiskStorageEntry| 1)
   (:type 'object-type)
@@ -683,13 +677,12 @@
         an instance of the hrPartitionSize object might be
         named hrPartitionSize.3.1"))
 
-(defclass |HrPartitionEntry|
-          (asn.1-type)
-          ((|hrPartitionIndex| :type |Integer32|)
-           (|hrPartitionLabel| :type |InternationalDisplayString|)
-           (|hrPartitionID| :type t)
-           (|hrPartitionSize| :type |KBytes|)
-           (|hrPartitionFSIndex| :type |Integer32|)))
+(defclass |HrPartitionEntry| (sequence-type)
+  ((|hrPartitionIndex| :type |Integer32|)
+   (|hrPartitionLabel| :type |InternationalDisplayString|)
+   (|hrPartitionID| :type t)
+   (|hrPartitionSize| :type |KBytes|)
+   (|hrPartitionFSIndex| :type |Integer32|)))
 
 (defoid |hrPartitionIndex| (|hrPartitionEntry| 1)
   (:type 'object-type)
@@ -770,17 +763,16 @@
         an instance of the hrFSMountPoint object might be
         named hrFSMountPoint.3"))
 
-(defclass |HrFSEntry|
-          (asn.1-type)
-          ((|hrFSIndex| :type |Integer32|)
-           (|hrFSMountPoint| :type |InternationalDisplayString|)
-           (|hrFSRemoteMountPoint| :type |InternationalDisplayString|)
-           (|hrFSType| :type |AutonomousType|)
-           (|hrFSAccess| :type integer)
-           (|hrFSBootable| :type |TruthValue|)
-           (|hrFSStorageIndex| :type |Integer32|)
-           (|hrFSLastFullBackupDate| :type |DateAndTime|)
-           (|hrFSLastPartialBackupDate| :type |DateAndTime|)))
+(defclass |HrFSEntry| (sequence-type)
+  ((|hrFSIndex| :type |Integer32|)
+   (|hrFSMountPoint| :type |InternationalDisplayString|)
+   (|hrFSRemoteMountPoint| :type |InternationalDisplayString|)
+   (|hrFSType| :type |AutonomousType|)
+   (|hrFSAccess| :type integer)
+   (|hrFSBootable| :type |TruthValue|)
+   (|hrFSStorageIndex| :type |Integer32|)
+   (|hrFSLastFullBackupDate| :type |DateAndTime|)
+   (|hrFSLastPartialBackupDate| :type |DateAndTime|)))
 
 (defoid |hrFSIndex| (|hrFSEntry| 1)
   (:type 'object-type)
@@ -928,15 +920,14 @@
         an instance of the hrSWRunName object might be named
         hrSWRunName.1287"))
 
-(defclass |HrSWRunEntry|
-          (asn.1-type)
-          ((|hrSWRunIndex| :type |Integer32|)
-           (|hrSWRunName| :type |InternationalDisplayString|)
-           (|hrSWRunID| :type |ProductID|)
-           (|hrSWRunPath| :type |InternationalDisplayString|)
-           (|hrSWRunParameters| :type |InternationalDisplayString|)
-           (|hrSWRunType| :type integer)
-           (|hrSWRunStatus| :type integer)))
+(defclass |HrSWRunEntry| (sequence-type)
+  ((|hrSWRunIndex| :type |Integer32|)
+   (|hrSWRunName| :type |InternationalDisplayString|)
+   (|hrSWRunID| :type |ProductID|)
+   (|hrSWRunPath| :type |InternationalDisplayString|)
+   (|hrSWRunParameters| :type |InternationalDisplayString|)
+   (|hrSWRunType| :type integer)
+   (|hrSWRunStatus| :type integer)))
 
 (defoid |hrSWRunIndex| (|hrSWRunEntry| 1)
   (:type 'object-type)
@@ -1025,10 +1016,9 @@
         hrSWRunPerfCPU object might be named
         hrSWRunPerfCPU.1287"))
 
-(defclass |HrSWRunPerfEntry|
-          (asn.1-type)
-          ((|hrSWRunPerfCPU| :type |Integer32|)
-           (|hrSWRunPerfMem| :type |KBytes|)))
+(defclass |HrSWRunPerfEntry| (sequence-type)
+  ((|hrSWRunPerfCPU| :type |Integer32|)
+   (|hrSWRunPerfMem| :type |KBytes|)))
 
 (defoid |hrSWRunPerfCPU| (|hrSWRunPerfEntry| 1)
   (:type 'object-type)
@@ -1099,13 +1089,12 @@
         an instance of the hrSWInstalledName object might be
         named hrSWInstalledName.96"))
 
-(defclass |HrSWInstalledEntry|
-          (asn.1-type)
-          ((|hrSWInstalledIndex| :type |Integer32|)
-           (|hrSWInstalledName| :type |InternationalDisplayString|)
-           (|hrSWInstalledID| :type |ProductID|)
-           (|hrSWInstalledType| :type integer)
-           (|hrSWInstalledDate| :type |DateAndTime|)))
+(defclass |HrSWInstalledEntry| (sequence-type)
+  ((|hrSWInstalledIndex| :type |Integer32|)
+   (|hrSWInstalledName| :type |InternationalDisplayString|)
+   (|hrSWInstalledID| :type |ProductID|)
+   (|hrSWInstalledType| :type integer)
+   (|hrSWInstalledDate| :type |DateAndTime|)))
 
 (defoid |hrSWInstalledIndex| (|hrSWInstalledEntry| 1)
   (:type 'object-type)

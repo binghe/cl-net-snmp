@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/ipv6-tcp-mib
   (:nicknames :ipv6-tcp-mib)
-  (:use :common-lisp :asn.1)
+  (:use :closer-common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type |mib-2|
                 |experimental|)
@@ -48,14 +48,13 @@
          index object compared to tcpConnTable, since IPv6 addresses
          are not guaranteed to be unique on the managed node."))
 
-(defclass |Ipv6TcpConnEntry|
-          (asn.1-type)
-          ((|ipv6TcpConnLocalAddress| :type |Ipv6Address|)
-           (|ipv6TcpConnLocalPort| :type t)
-           (|ipv6TcpConnRemAddress| :type |Ipv6Address|)
-           (|ipv6TcpConnRemPort| :type t)
-           (|ipv6TcpConnIfIndex| :type |Ipv6IfIndexOrZero|)
-           (|ipv6TcpConnState| :type integer)))
+(defclass |Ipv6TcpConnEntry| (sequence-type)
+  ((|ipv6TcpConnLocalAddress| :type |Ipv6Address|)
+   (|ipv6TcpConnLocalPort| :type t)
+   (|ipv6TcpConnRemAddress| :type |Ipv6Address|)
+   (|ipv6TcpConnRemPort| :type t)
+   (|ipv6TcpConnIfIndex| :type |Ipv6IfIndexOrZero|)
+   (|ipv6TcpConnState| :type integer)))
 
 (defoid |ipv6TcpConnLocalAddress| (|ipv6TcpConnEntry| 1)
   (:type 'object-type)
