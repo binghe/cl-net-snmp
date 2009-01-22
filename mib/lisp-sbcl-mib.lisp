@@ -19,6 +19,8 @@
   (:type 'module-identity)
   (:description "The MIB module for SBCL"))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'lisp-sbcl-mib *mib-modules*)
   (setf *current-module* nil))

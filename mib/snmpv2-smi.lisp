@@ -83,6 +83,8 @@
   (:status '|current|)
   (:description "A value used for null identifiers."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew '|SNMPv2-SMI| *mib-modules*)
   (setf *current-module* nil))

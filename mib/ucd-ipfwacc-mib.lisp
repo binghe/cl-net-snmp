@@ -277,6 +277,8 @@
   (:status '|current|)
   (:description "Port number 10."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'ucd-ipfwacc-mib *mib-modules*)
   (setf *current-module* nil))

@@ -613,6 +613,8 @@
           clock date and time and should not be implemented
           on systems that do not have a wall clock date."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'notification-log-mib *mib-modules*)
   (setf *current-module* nil))

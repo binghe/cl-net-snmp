@@ -703,6 +703,8 @@
    "A collection of objects from RFC 1213 made obsolete
             by this MIB module."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew '|SNMPv2-MIB| *mib-modules*)
   (setf *current-module* nil))

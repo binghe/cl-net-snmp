@@ -408,6 +408,8 @@
    "A collection of objects required for command responder
          applications, used for counting error conditions."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'snmp-target-mib *mib-modules*)
   (setf *current-module* nil))

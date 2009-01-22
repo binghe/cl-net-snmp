@@ -4226,6 +4226,8 @@
             As part of the version independence, this group has been
             deprecated.  "))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'ip-mib *mib-modules*)
   (setf *current-module* nil))

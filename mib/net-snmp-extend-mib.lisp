@@ -247,6 +247,8 @@
   (:description
    "Objects relating to the output of extension commands."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'net-snmp-extend-mib *mib-modules*)
   (setf *current-module* nil))

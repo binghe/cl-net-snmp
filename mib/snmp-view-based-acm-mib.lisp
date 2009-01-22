@@ -690,6 +690,8 @@
                  the SNMP View-based Access Control Model.
                 "))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'snmp-view-based-acm-mib *mib-modules*)
   (setf *current-module* nil))

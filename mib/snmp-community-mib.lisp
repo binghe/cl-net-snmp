@@ -301,6 +301,8 @@
 
          translating to SNMPv2c or SNMPv3."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'snmp-community-mib *mib-modules*)
   (setf *current-module* nil))

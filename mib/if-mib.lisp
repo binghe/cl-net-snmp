@@ -1365,6 +1365,8 @@
             this MIB module, for SNMP entities which have network
             interfaces."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'if-mib *mib-modules*)
   (setf *current-module* nil))

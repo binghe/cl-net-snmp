@@ -898,6 +898,8 @@
   (:status '|deprecated|)
   (:description "The group of DateAndTime objects."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'disman-ping-mib *mib-modules*)
   (setf *current-module* nil))

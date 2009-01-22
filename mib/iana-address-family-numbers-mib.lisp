@@ -22,6 +22,8 @@
 
 (deftype |AddressFamilyNumbers| () 't)
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'iana-address-family-numbers-mib *mib-modules*)
   (setf *current-module* nil))

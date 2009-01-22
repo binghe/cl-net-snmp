@@ -184,6 +184,8 @@
 
 (deftype |TransportAddressDns| () 't)
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'transport-address-mib *mib-modules*)
   (setf *current-module* nil))

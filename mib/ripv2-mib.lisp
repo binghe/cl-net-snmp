@@ -372,6 +372,8 @@
   (:description
    "This group defines peer information for RIP-II systems."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew '|RIPv2-MIB| *mib-modules*)
   (setf *current-module* nil))

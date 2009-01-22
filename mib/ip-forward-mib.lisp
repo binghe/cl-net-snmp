@@ -993,6 +993,8 @@
   (:status '|obsolete|)
   (:description "IP Multipath Route Table."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'ip-forward-mib *mib-modules*)
   (setf *current-module* nil))

@@ -28,6 +28,8 @@
 
 (deftype |ZeroBasedCounter64| () 't)
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'hcnum-tc *mib-modules*)
   (setf *current-module* nil))

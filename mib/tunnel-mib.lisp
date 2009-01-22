@@ -587,6 +587,8 @@
    "A collection of objects to support basic management
             of IPv4 and IPv6 Tunnels."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'tunnel-mib *mib-modules*)
   (setf *current-module* nil))

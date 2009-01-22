@@ -647,6 +647,8 @@
    "The group of objects providing for counters of high speed
             TCP implementations."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'tcp-mib *mib-modules*)
   (setf *current-module* nil))

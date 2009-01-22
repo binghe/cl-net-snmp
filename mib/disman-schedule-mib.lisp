@@ -463,6 +463,8 @@
   (:description
    "A collection of objects providing scheduling capabilities."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'disman-schedule-mib *mib-modules*)
   (setf *current-module* nil))

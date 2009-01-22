@@ -75,6 +75,8 @@
 (defoid |netSnmpCallbackDomain| (|netSnmpDomains| 6)
   (:type 'object-identity))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'net-snmp-tc *mib-modules*)
   (setf *current-module* nil))

@@ -452,6 +452,8 @@
    "All accessible objects in the AgentX MIB.
      "))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'agentx-mib *mib-modules*)
   (setf *current-module* nil))

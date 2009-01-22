@@ -1522,6 +1522,8 @@
   (:status '|current|)
   (:description "Notifications."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'disman-event-mib *mib-modules*)
   (setf *current-module* nil))

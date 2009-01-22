@@ -224,6 +224,8 @@
    "Bytes passed thru the outgoing accounting
 	 IP Filter rule."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'ucd-ipfilter-mib *mib-modules*)
   (setf *current-module* nil))
