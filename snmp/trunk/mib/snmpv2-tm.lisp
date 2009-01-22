@@ -81,6 +81,8 @@
             The corresponding transport address is of type
             SnmpUDPAddress."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew '|SNMPv2-TM| *mib-modules*)
   (setf *current-module* nil))

@@ -34,6 +34,8 @@
   (:status '|current|)
   (:description "The CFB128-AES-128 Privacy Protocol."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'snmp-usm-aes-mib *mib-modules*)
   (setf *current-module* nil))

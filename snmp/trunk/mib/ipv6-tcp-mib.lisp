@@ -164,6 +164,8 @@
    "The group of objects providing management of
          TCP over IPv6."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'ipv6-tcp-mib *mib-modules*)
   (setf *current-module* nil))

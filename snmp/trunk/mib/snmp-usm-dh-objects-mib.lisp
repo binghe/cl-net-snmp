@@ -346,6 +346,8 @@
     associations via a configuration file or other out of band,
     non-confidential access."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'snmp-usm-dh-objects-mib *mib-modules*)
   (setf *current-module* nil))

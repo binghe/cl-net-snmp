@@ -90,6 +90,8 @@
          in the SMSL language is transferred in the SMSL source code
          format."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'iana-language-mib *mib-modules*)
   (setf *current-module* nil))

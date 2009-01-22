@@ -390,6 +390,8 @@
    "The group of objects that constitute the remote
        Lookup operation."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'disman-nslookup-mib *mib-modules*)
   (setf *current-module* nil))

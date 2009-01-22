@@ -3190,6 +3190,8 @@
   (:status '|current|)
   (:description "The RMON Notification Group."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'rmon-mib *mib-modules*)
   (setf *current-module* nil))

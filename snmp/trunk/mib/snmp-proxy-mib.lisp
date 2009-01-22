@@ -202,6 +202,8 @@
          management target translation parameters for use by
          proxy forwarder applications."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'snmp-proxy-mib *mib-modules*)
   (setf *current-module* nil))

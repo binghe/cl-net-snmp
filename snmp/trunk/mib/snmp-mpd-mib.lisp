@@ -94,6 +94,8 @@
                  Dispatching process.
                 "))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'snmp-mpd-mib *mib-modules*)
   (setf *current-module* nil))

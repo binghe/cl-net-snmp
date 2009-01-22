@@ -129,6 +129,8 @@
   (:description
    "The number of bytes written to this device since boot."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'ucd-diskio-mib *mib-modules*)
   (setf *current-module* nil))

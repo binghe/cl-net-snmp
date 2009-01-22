@@ -361,6 +361,8 @@
    "The file system type identifier used for the
         Linux EXT2 File System."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'host-resources-types *mib-modules*)
   (setf *current-module* nil))

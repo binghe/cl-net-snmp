@@ -1400,6 +1400,8 @@
   (:status '|deprecated|)
   (:description "The notifications emitted by the Script MIB."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'disman-script-mib *mib-modules*)
   (setf *current-module* nil))

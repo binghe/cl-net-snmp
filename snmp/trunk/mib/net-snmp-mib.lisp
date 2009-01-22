@@ -53,6 +53,8 @@
 (defoid |netSnmpGroups| (|netSnmpConformance| 2)
   (:type 'object-identity))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'net-snmp-mib *mib-modules*)
   (setf *current-module* nil))

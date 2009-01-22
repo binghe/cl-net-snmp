@@ -1126,6 +1126,8 @@
    "The notification that an IPv6 entity is required
           to implement."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'ipv6-mib *mib-modules*)
   (setf *current-module* nil))

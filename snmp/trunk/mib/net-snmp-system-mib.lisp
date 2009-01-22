@@ -32,6 +32,8 @@
 
 (defoid |nsDiskIO| (|netSnmpObjects| 35) (:type 'object-identity))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'net-snmp-system-mib *mib-modules*)
   (setf *current-module* nil))

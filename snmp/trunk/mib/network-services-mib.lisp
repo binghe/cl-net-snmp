@@ -469,6 +469,8 @@
 
 (defoid |applUDPProtoID| (|application| 5) (:type 'object-identity))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'network-services-mib *mib-modules*)
   (setf *current-module* nil))

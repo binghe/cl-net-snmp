@@ -672,6 +672,8 @@
                  User-based Security Model.
                 "))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'snmp-user-based-sm-mib *mib-modules*)
   (setf *current-module* nil))

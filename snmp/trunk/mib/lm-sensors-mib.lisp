@@ -184,6 +184,8 @@
   (:status '|current|)
   (:description "The value of this sensor."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'lm-sensors-mib *mib-modules*)
   (setf *current-module* nil))

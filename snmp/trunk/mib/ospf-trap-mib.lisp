@@ -265,6 +265,8 @@
    "These objects are required  to  control  traps
            from OSPF systems."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'ospf-trap-mib *mib-modules*)
   (setf *current-module* nil))

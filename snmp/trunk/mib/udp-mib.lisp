@@ -451,6 +451,8 @@
    "The group of objects providing for the IP version
             independent management of UDP 'endpoints'."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'udp-mib *mib-modules*)
   (setf *current-module* nil))

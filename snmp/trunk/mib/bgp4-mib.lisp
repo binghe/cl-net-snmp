@@ -722,6 +722,8 @@
    "A collection of notifications for signaling
                     changes in BGP peer relationships."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'bgp4-mib *mib-modules*)
   (setf *current-module* nil))

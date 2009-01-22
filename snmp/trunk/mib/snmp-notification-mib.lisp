@@ -395,6 +395,8 @@
    "A collection of objects providing remote configuration
          of notification filters."))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'snmp-notification-mib *mib-modules*)
   (setf *current-module* nil))

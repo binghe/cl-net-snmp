@@ -23,6 +23,8 @@
 
 (deftype |Ipv6IfIndexOrZero| () 't)
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'ipv6-tc *mib-modules*)
   (setf *current-module* nil))

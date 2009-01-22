@@ -19,6 +19,8 @@
   (:type 'module-identity)
   (:description "The MIB module for Allegro CL"))
 
+(in-package :asn.1)
+
 (eval-when (:load-toplevel :execute)
   (pushnew 'lisp-allegro-mib *mib-modules*)
   (setf *current-module* nil))
