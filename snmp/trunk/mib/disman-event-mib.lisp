@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/disman-event-mib
   (:nicknames :disman-event-mib)
-  (:use :common-lisp :asn.1)
+  (:use :closer-common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |Integer32| |Unsigned32| notification-type |Counter32|
                 |Gauge32| |mib-2| |zeroDotZero|)
@@ -146,23 +146,22 @@
    "Information about a single trigger.  Applications create and
         delete entries using mteTriggerEntryStatus."))
 
-(defclass |MteTriggerEntry|
-          (asn.1-type)
-          ((|mteOwner| :type |SnmpAdminString|)
-           (|mteTriggerName| :type |SnmpAdminString|)
-           (|mteTriggerComment| :type |SnmpAdminString|)
-           (|mteTriggerTest| :type bits)
-           (|mteTriggerSampleType| :type integer)
-           (|mteTriggerValueID| :type object-id)
-           (|mteTriggerValueIDWildcard| :type |TruthValue|)
-           (|mteTriggerTargetTag| :type |SnmpTagValue|)
-           (|mteTriggerContextName| :type |SnmpAdminString|)
-           (|mteTriggerContextNameWildcard| :type |TruthValue|)
-           (|mteTriggerFrequency| :type |Unsigned32|)
-           (|mteTriggerObjectsOwner| :type |SnmpAdminString|)
-           (|mteTriggerObjects| :type |SnmpAdminString|)
-           (|mteTriggerEnabled| :type |TruthValue|)
-           (|mteTriggerEntryStatus| :type |RowStatus|)))
+(defclass |MteTriggerEntry| (sequence-type)
+  ((|mteOwner| :type |SnmpAdminString|)
+   (|mteTriggerName| :type |SnmpAdminString|)
+   (|mteTriggerComment| :type |SnmpAdminString|)
+   (|mteTriggerTest| :type bits)
+   (|mteTriggerSampleType| :type integer)
+   (|mteTriggerValueID| :type object-id)
+   (|mteTriggerValueIDWildcard| :type |TruthValue|)
+   (|mteTriggerTargetTag| :type |SnmpTagValue|)
+   (|mteTriggerContextName| :type |SnmpAdminString|)
+   (|mteTriggerContextNameWildcard| :type |TruthValue|)
+   (|mteTriggerFrequency| :type |Unsigned32|)
+   (|mteTriggerObjectsOwner| :type |SnmpAdminString|)
+   (|mteTriggerObjects| :type |SnmpAdminString|)
+   (|mteTriggerEnabled| :type |TruthValue|)
+   (|mteTriggerEntryStatus| :type |RowStatus|)))
 
 (defoid |mteOwner| (|mteTriggerEntry| 1)
   (:type 'object-type)
@@ -446,13 +445,10 @@
         automatically exist in this this table for each mteTriggerEntry
         that has mteTriggerSampleType set to 'deltaValue'."))
 
-(defclass |MteTriggerDeltaEntry|
-          (asn.1-type)
-          ((|mteTriggerDeltaDiscontinuityID| :type object-id)
-           (|mteTriggerDeltaDiscontinuityIDWildcard|
-            :type
-            |TruthValue|)
-           (|mteTriggerDeltaDiscontinuityIDType| :type integer)))
+(defclass |MteTriggerDeltaEntry| (sequence-type)
+  ((|mteTriggerDeltaDiscontinuityID| :type object-id)
+   (|mteTriggerDeltaDiscontinuityIDWildcard| :type |TruthValue|)
+   (|mteTriggerDeltaDiscontinuityIDType| :type integer)))
 
 (defoid |sysUpTimeInstance| (|sysUpTime| 0) (:type 'object-identity))
 
@@ -531,14 +527,13 @@
         automatically exist in this this table for each mteTriggerEntry
         that has 'existence' set in mteTriggerTest."))
 
-(defclass |MteTriggerExistenceEntry|
-          (asn.1-type)
-          ((|mteTriggerExistenceTest| :type bits)
-           (|mteTriggerExistenceStartup| :type bits)
-           (|mteTriggerExistenceObjectsOwner| :type |SnmpAdminString|)
-           (|mteTriggerExistenceObjects| :type |SnmpAdminString|)
-           (|mteTriggerExistenceEventOwner| :type |SnmpAdminString|)
-           (|mteTriggerExistenceEvent| :type |SnmpAdminString|)))
+(defclass |MteTriggerExistenceEntry| (sequence-type)
+  ((|mteTriggerExistenceTest| :type bits)
+   (|mteTriggerExistenceStartup| :type bits)
+   (|mteTriggerExistenceObjectsOwner| :type |SnmpAdminString|)
+   (|mteTriggerExistenceObjects| :type |SnmpAdminString|)
+   (|mteTriggerExistenceEventOwner| :type |SnmpAdminString|)
+   (|mteTriggerExistenceEvent| :type |SnmpAdminString|)))
 
 (defoid |mteTriggerExistenceTest| (|mteTriggerExistenceEntry| 1)
   (:type 'object-type)
@@ -638,15 +633,14 @@
         automatically exist in this this table for each mteTriggerEntry
         that has 'boolean' set in mteTriggerTest."))
 
-(defclass |MteTriggerBooleanEntry|
-          (asn.1-type)
-          ((|mteTriggerBooleanComparison| :type integer)
-           (|mteTriggerBooleanValue| :type |Integer32|)
-           (|mteTriggerBooleanStartup| :type |TruthValue|)
-           (|mteTriggerBooleanObjectsOwner| :type |SnmpAdminString|)
-           (|mteTriggerBooleanObjects| :type |SnmpAdminString|)
-           (|mteTriggerBooleanEventOwner| :type |SnmpAdminString|)
-           (|mteTriggerBooleanEvent| :type |SnmpAdminString|)))
+(defclass |MteTriggerBooleanEntry| (sequence-type)
+  ((|mteTriggerBooleanComparison| :type integer)
+   (|mteTriggerBooleanValue| :type |Integer32|)
+   (|mteTriggerBooleanStartup| :type |TruthValue|)
+   (|mteTriggerBooleanObjectsOwner| :type |SnmpAdminString|)
+   (|mteTriggerBooleanObjects| :type |SnmpAdminString|)
+   (|mteTriggerBooleanEventOwner| :type |SnmpAdminString|)
+   (|mteTriggerBooleanEvent| :type |SnmpAdminString|)))
 
 (defoid |mteTriggerBooleanComparison| (|mteTriggerBooleanEntry| 1)
   (:type 'object-type)
@@ -746,35 +740,24 @@
         automatically exist in this table for each mteTriggerEntry
         that has 'threshold' set in mteTriggerTest."))
 
-(defclass |MteTriggerThresholdEntry|
-          (asn.1-type)
-          ((|mteTriggerThresholdStartup| :type integer)
-           (|mteTriggerThresholdRising| :type |Integer32|)
-           (|mteTriggerThresholdFalling| :type |Integer32|)
-           (|mteTriggerThresholdDeltaRising| :type |Integer32|)
-           (|mteTriggerThresholdDeltaFalling| :type |Integer32|)
-           (|mteTriggerThresholdObjectsOwner| :type |SnmpAdminString|)
-           (|mteTriggerThresholdObjects| :type |SnmpAdminString|)
-           (|mteTriggerThresholdRisingEventOwner|
-            :type
-            |SnmpAdminString|)
-           (|mteTriggerThresholdRisingEvent| :type |SnmpAdminString|)
-           (|mteTriggerThresholdFallingEventOwner|
-            :type
-            |SnmpAdminString|)
-           (|mteTriggerThresholdFallingEvent| :type |SnmpAdminString|)
-           (|mteTriggerThresholdDeltaRisingEventOwner|
-            :type
-            |SnmpAdminString|)
-           (|mteTriggerThresholdDeltaRisingEvent|
-            :type
-            |SnmpAdminString|)
-           (|mteTriggerThresholdDeltaFallingEventOwner|
-            :type
-            |SnmpAdminString|)
-           (|mteTriggerThresholdDeltaFallingEvent|
-            :type
-            |SnmpAdminString|)))
+(defclass |MteTriggerThresholdEntry| (sequence-type)
+  ((|mteTriggerThresholdStartup| :type integer)
+   (|mteTriggerThresholdRising| :type |Integer32|)
+   (|mteTriggerThresholdFalling| :type |Integer32|)
+   (|mteTriggerThresholdDeltaRising| :type |Integer32|)
+   (|mteTriggerThresholdDeltaFalling| :type |Integer32|)
+   (|mteTriggerThresholdObjectsOwner| :type |SnmpAdminString|)
+   (|mteTriggerThresholdObjects| :type |SnmpAdminString|)
+   (|mteTriggerThresholdRisingEventOwner| :type |SnmpAdminString|)
+   (|mteTriggerThresholdRisingEvent| :type |SnmpAdminString|)
+   (|mteTriggerThresholdFallingEventOwner| :type |SnmpAdminString|)
+   (|mteTriggerThresholdFallingEvent| :type |SnmpAdminString|)
+   (|mteTriggerThresholdDeltaRisingEventOwner| :type |SnmpAdminString|)
+   (|mteTriggerThresholdDeltaRisingEvent| :type |SnmpAdminString|)
+   (|mteTriggerThresholdDeltaFallingEventOwner|
+    :type
+    |SnmpAdminString|)
+   (|mteTriggerThresholdDeltaFallingEvent| :type |SnmpAdminString|)))
 
 (defoid |mteTriggerThresholdStartup| (|mteTriggerThresholdEntry| 1)
   (:type 'object-type)
@@ -1024,13 +1007,12 @@
         lexical order of their index in this table.  Those associated
         with a trigger come first, then trigger test, then event."))
 
-(defclass |MteObjectsEntry|
-          (asn.1-type)
-          ((|mteObjectsName| :type |SnmpAdminString|)
-           (|mteObjectsIndex| :type |Unsigned32|)
-           (|mteObjectsID| :type object-id)
-           (|mteObjectsIDWildcard| :type |TruthValue|)
-           (|mteObjectsEntryStatus| :type |RowStatus|)))
+(defclass |MteObjectsEntry| (sequence-type)
+  ((|mteObjectsName| :type |SnmpAdminString|)
+   (|mteObjectsIndex| :type |Unsigned32|)
+   (|mteObjectsID| :type object-id)
+   (|mteObjectsIDWildcard| :type |TruthValue|)
+   (|mteObjectsEntryStatus| :type |RowStatus|)))
 
 (defoid |mteObjectsName| (|mteObjectsEntry| 1)
   (:type 'object-type)
@@ -1134,13 +1116,12 @@
    "Information about a single event.  Applications create and
         delete entries using mteEventEntryStatus."))
 
-(defclass |MteEventEntry|
-          (asn.1-type)
-          ((|mteEventName| :type |SnmpAdminString|)
-           (|mteEventComment| :type |SnmpAdminString|)
-           (|mteEventActions| :type bits)
-           (|mteEventEnabled| :type |TruthValue|)
-           (|mteEventEntryStatus| :type |RowStatus|)))
+(defclass |MteEventEntry| (sequence-type)
+  ((|mteEventName| :type |SnmpAdminString|)
+   (|mteEventComment| :type |SnmpAdminString|)
+   (|mteEventActions| :type bits)
+   (|mteEventEnabled| :type |TruthValue|)
+   (|mteEventEntryStatus| :type |RowStatus|)))
 
 (defoid |mteEventName| (|mteEventEntry| 1)
   (:type 'object-type)
@@ -1213,11 +1194,10 @@
         automatically exist in this this table for each mteEventEntry
         that has 'notification' set in mteEventActions."))
 
-(defclass |MteEventNotificationEntry|
-          (asn.1-type)
-          ((|mteEventNotification| :type object-id)
-           (|mteEventNotificationObjectsOwner| :type |SnmpAdminString|)
-           (|mteEventNotificationObjects| :type |SnmpAdminString|)))
+(defclass |MteEventNotificationEntry| (sequence-type)
+  ((|mteEventNotification| :type object-id)
+   (|mteEventNotificationObjectsOwner| :type |SnmpAdminString|)
+   (|mteEventNotificationObjects| :type |SnmpAdminString|)))
 
 (defoid |mteEventNotification| (|mteEventNotificationEntry| 1)
   (:type 'object-type)
@@ -1271,14 +1251,13 @@
         automatically exist in this this table for each mteEventEntry
         that has 'set' set in mteEventActions."))
 
-(defclass |MteEventSetEntry|
-          (asn.1-type)
-          ((|mteEventSetObject| :type object-id)
-           (|mteEventSetObjectWildcard| :type |TruthValue|)
-           (|mteEventSetValue| :type |Integer32|)
-           (|mteEventSetTargetTag| :type |SnmpTagValue|)
-           (|mteEventSetContextName| :type |SnmpAdminString|)
-           (|mteEventSetContextNameWildcard| :type |TruthValue|)))
+(defclass |MteEventSetEntry| (sequence-type)
+  ((|mteEventSetObject| :type object-id)
+   (|mteEventSetObjectWildcard| :type |TruthValue|)
+   (|mteEventSetValue| :type |Integer32|)
+   (|mteEventSetTargetTag| :type |SnmpTagValue|)
+   (|mteEventSetContextName| :type |SnmpAdminString|)
+   (|mteEventSetContextNameWildcard| :type |TruthValue|)))
 
 (defoid |mteEventSetObject| (|mteEventSetEntry| 1)
   (:type 'object-type)

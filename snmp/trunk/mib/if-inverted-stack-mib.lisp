@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/if-inverted-stack-mib
   (:nicknames :if-inverted-stack-mib)
-  (:use :common-lisp :asn.1)
+  (:use :closer-common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |mib-2|)
   (:import-from :|ASN.1/SNMPv2-TC| |RowStatus|)
@@ -73,9 +73,8 @@
           other sub-layer.  Each sub-layer corresponds to a conceptual
           row in the ifTable."))
 
-(defclass |IfInvStackEntry|
-          (asn.1-type)
-          ((|ifInvStackStatus| :type |RowStatus|)))
+(defclass |IfInvStackEntry| (sequence-type)
+  ((|ifInvStackStatus| :type |RowStatus|)))
 
 (defoid |ifInvStackStatus| (|ifInvStackEntry| 1)
   (:type 'object-type)

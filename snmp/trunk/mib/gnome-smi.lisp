@@ -7,7 +7,7 @@
 
 (defpackage :asn.1/gnome-smi
   (:nicknames :gnome-smi)
-  (:use :common-lisp :asn.1)
+  (:use :closer-common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-identity
                 |enterprises|))
 

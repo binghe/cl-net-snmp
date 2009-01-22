@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/ucd-ipfilter-mib
   (:nicknames :ucd-ipfilter-mib)
-  (:use :common-lisp :asn.1)
+  (:use :closer-common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| object-type module-identity
                 |Counter32| |Integer32|)
   (:import-from :asn.1/ucd-snmp-mib |ucdExperimental|))
@@ -44,11 +44,10 @@
   (:status '|current|)
   (:description "IP Filter incoming rules table entry."))
 
-(defclass |IpfInEntry|
-          (asn.1-type)
-          ((|ipfInIndex| :type |Integer32|)
-           (|ipfInRule| :type t)
-           (|ipfInHits| :type |Counter32|)))
+(defclass |IpfInEntry| (sequence-type)
+  ((|ipfInIndex| :type |Integer32|)
+   (|ipfInRule| :type t)
+   (|ipfInHits| :type |Counter32|)))
 
 (defoid |ipfInIndex| (|ipfInEntry| 1)
   (:type 'object-type)
@@ -86,11 +85,10 @@
   (:status '|current|)
   (:description "IP Filter outgoing rules table entry."))
 
-(defclass |IpfOutEntry|
-          (asn.1-type)
-          ((|ipfOutIndex| :type |Integer32|)
-           (|ipfOutRule| :type t)
-           (|ipfOutHits| :type |Counter32|)))
+(defclass |IpfOutEntry| (sequence-type)
+  ((|ipfOutIndex| :type |Integer32|)
+   (|ipfOutRule| :type t)
+   (|ipfOutHits| :type |Counter32|)))
 
 (defoid |ipfOutIndex| (|ipfOutEntry| 1)
   (:type 'object-type)
@@ -130,12 +128,11 @@
   (:status '|current|)
   (:description "IP FIlter incoming accounting rules table entry."))
 
-(defclass |IpfAccInEntry|
-          (asn.1-type)
-          ((|ipfAccInIndex| :type |Integer32|)
-           (|ipfAccInRule| :type t)
-           (|ipfAccInHits| :type |Counter32|)
-           (|ipfAccInBytes| :type |Counter32|)))
+(defclass |IpfAccInEntry| (sequence-type)
+  ((|ipfAccInIndex| :type |Integer32|)
+   (|ipfAccInRule| :type t)
+   (|ipfAccInHits| :type |Counter32|)
+   (|ipfAccInBytes| :type |Counter32|)))
 
 (defoid |ipfAccInIndex| (|ipfAccInEntry| 1)
   (:type 'object-type)
@@ -187,12 +184,11 @@
   (:status '|current|)
   (:description "IP Filter outgoing accounting rules table entry."))
 
-(defclass |IpfAccOutEntry|
-          (asn.1-type)
-          ((|ipfAccOutIndex| :type |Integer32|)
-           (|ipfAccOutRule| :type t)
-           (|ipfAccOutHits| :type |Counter32|)
-           (|ipfAccOutBytes| :type |Counter32|)))
+(defclass |IpfAccOutEntry| (sequence-type)
+  ((|ipfAccOutIndex| :type |Integer32|)
+   (|ipfAccOutRule| :type t)
+   (|ipfAccOutHits| :type |Counter32|)
+   (|ipfAccOutBytes| :type |Counter32|)))
 
 (defoid |ipfAccOutIndex| (|ipfAccOutEntry| 1)
   (:type 'object-type)

@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/ucd-demo-mib
   (:nicknames :ucd-demo-mib)
-  (:use :common-lisp :asn.1)
+  (:use :closer-common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |Integer32|)
   (:import-from :asn.1/ucd-snmp-mib |ucdavis|))

@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/inet-address-mib
   (:nicknames :inet-address-mib)
-  (:use :common-lisp :asn.1)
+  (:use :closer-common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity |mib-2|
                 |Unsigned32|)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention))

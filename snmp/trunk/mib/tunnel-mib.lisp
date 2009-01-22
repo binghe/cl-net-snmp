@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/tunnel-mib
   (:nicknames :tunnel-mib)
-  (:use :common-lisp :asn.1)
+  (:use :closer-common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |transmission| |Integer32| |IpAddress|)
   (:import-from :|ASN.1/SNMPv2-TC| |RowStatus| |StorageType|)
@@ -54,19 +54,18 @@
    "An entry (conceptual row) containing the information
             on a particular configured tunnel."))
 
-(defclass |TunnelIfEntry|
-          (asn.1-type)
-          ((|tunnelIfLocalAddress| :type |IpAddress|)
-           (|tunnelIfRemoteAddress| :type |IpAddress|)
-           (|tunnelIfEncapsMethod| :type |IANAtunnelType|)
-           (|tunnelIfHopLimit| :type |Integer32|)
-           (|tunnelIfSecurity| :type integer)
-           (|tunnelIfTOS| :type |Integer32|)
-           (|tunnelIfFlowLabel| :type |IPv6FlowLabelOrAny|)
-           (|tunnelIfAddressType| :type |InetAddressType|)
-           (|tunnelIfLocalInetAddress| :type |InetAddress|)
-           (|tunnelIfRemoteInetAddress| :type |InetAddress|)
-           (|tunnelIfEncapsLimit| :type |Integer32|)))
+(defclass |TunnelIfEntry| (sequence-type)
+  ((|tunnelIfLocalAddress| :type |IpAddress|)
+   (|tunnelIfRemoteAddress| :type |IpAddress|)
+   (|tunnelIfEncapsMethod| :type |IANAtunnelType|)
+   (|tunnelIfHopLimit| :type |Integer32|)
+   (|tunnelIfSecurity| :type integer)
+   (|tunnelIfTOS| :type |Integer32|)
+   (|tunnelIfFlowLabel| :type |IPv6FlowLabelOrAny|)
+   (|tunnelIfAddressType| :type |InetAddressType|)
+   (|tunnelIfLocalInetAddress| :type |InetAddress|)
+   (|tunnelIfRemoteInetAddress| :type |InetAddress|)
+   (|tunnelIfEncapsLimit| :type |Integer32|)))
 
 (defoid |tunnelIfLocalAddress| (|tunnelIfEntry| 1)
   (:type 'object-type)
@@ -249,14 +248,13 @@
             Since this entry does not support IPv6, it is
             deprecated in favor of tunnelInetConfigEntry."))
 
-(defclass |TunnelConfigEntry|
-          (asn.1-type)
-          ((|tunnelConfigLocalAddress| :type |IpAddress|)
-           (|tunnelConfigRemoteAddress| :type |IpAddress|)
-           (|tunnelConfigEncapsMethod| :type |IANAtunnelType|)
-           (|tunnelConfigID| :type |Integer32|)
-           (|tunnelConfigIfIndex| :type |InterfaceIndexOrZero|)
-           (|tunnelConfigStatus| :type |RowStatus|)))
+(defclass |TunnelConfigEntry| (sequence-type)
+  ((|tunnelConfigLocalAddress| :type |IpAddress|)
+   (|tunnelConfigRemoteAddress| :type |IpAddress|)
+   (|tunnelConfigEncapsMethod| :type |IANAtunnelType|)
+   (|tunnelConfigID| :type |Integer32|)
+   (|tunnelConfigIfIndex| :type |InterfaceIndexOrZero|)
+   (|tunnelConfigStatus| :type |RowStatus|)))
 
 (defoid |tunnelConfigLocalAddress| (|tunnelConfigEntry| 1)
   (:type 'object-type)
@@ -409,16 +407,15 @@
             that the sum of the lengths do not cause the limit to
             be exceeded."))
 
-(defclass |TunnelInetConfigEntry|
-          (asn.1-type)
-          ((|tunnelInetConfigAddressType| :type |InetAddressType|)
-           (|tunnelInetConfigLocalAddress| :type |InetAddress|)
-           (|tunnelInetConfigRemoteAddress| :type |InetAddress|)
-           (|tunnelInetConfigEncapsMethod| :type |IANAtunnelType|)
-           (|tunnelInetConfigID| :type |Integer32|)
-           (|tunnelInetConfigIfIndex| :type |InterfaceIndexOrZero|)
-           (|tunnelInetConfigStatus| :type |RowStatus|)
-           (|tunnelInetConfigStorageType| :type |StorageType|)))
+(defclass |TunnelInetConfigEntry| (sequence-type)
+  ((|tunnelInetConfigAddressType| :type |InetAddressType|)
+   (|tunnelInetConfigLocalAddress| :type |InetAddress|)
+   (|tunnelInetConfigRemoteAddress| :type |InetAddress|)
+   (|tunnelInetConfigEncapsMethod| :type |IANAtunnelType|)
+   (|tunnelInetConfigID| :type |Integer32|)
+   (|tunnelInetConfigIfIndex| :type |InterfaceIndexOrZero|)
+   (|tunnelInetConfigStatus| :type |RowStatus|)
+   (|tunnelInetConfigStorageType| :type |StorageType|)))
 
 (defoid |tunnelInetConfigAddressType| (|tunnelInetConfigEntry| 1)
   (:type 'object-type)

@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/host-resources-types
   (:nicknames :host-resources-types)
-  (:use :common-lisp :asn.1)
+  (:use :closer-common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-identity)
   (:import-from :asn.1/host-resources-mib |hrMIBAdminInfo| |hrStorage|
                 |hrDevice|))
