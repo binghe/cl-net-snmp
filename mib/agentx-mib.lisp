@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/agentx-mib
   (:nicknames :agentx-mib)
-  (:use :common-lisp :asn.1)
+  (:use :closer-common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |Unsigned32| |mib-2|)
   (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|)
@@ -107,12 +107,11 @@
       and is destroyed when the transport connection is terminated.
      "))
 
-(defclass |AgentxConnectionEntry|
-          (asn.1-type)
-          ((|agentxConnIndex| :type |Unsigned32|)
-           (|agentxConnOpenTime| :type |TimeStamp|)
-           (|agentxConnTransportDomain| :type |TDomain|)
-           (|agentxConnTransportAddress| :type |AgentxTAddress|)))
+(defclass |AgentxConnectionEntry| (sequence-type)
+  ((|agentxConnIndex| :type |Unsigned32|)
+   (|agentxConnOpenTime| :type |TimeStamp|)
+   (|agentxConnTransportDomain| :type |TDomain|)
+   (|agentxConnTransportAddress| :type |AgentxTAddress|)))
 
 (defoid |agentxConnIndex| (|agentxConnectionEntry| 1)
   (:type 'object-type)
@@ -192,15 +191,14 @@
       has terminated or when the subagent session is closed.
      "))
 
-(defclass |AgentxSessionEntry|
-          (asn.1-type)
-          ((|agentxSessionIndex| :type |Unsigned32|)
-           (|agentxSessionObjectID| :type object-id)
-           (|agentxSessionDescr| :type |SnmpAdminString|)
-           (|agentxSessionAdminStatus| :type integer)
-           (|agentxSessionOpenTime| :type |TimeStamp|)
-           (|agentxSessionAgentXVer| :type integer)
-           (|agentxSessionTimeout| :type integer)))
+(defclass |AgentxSessionEntry| (sequence-type)
+  ((|agentxSessionIndex| :type |Unsigned32|)
+   (|agentxSessionObjectID| :type object-id)
+   (|agentxSessionDescr| :type |SnmpAdminString|)
+   (|agentxSessionAdminStatus| :type integer)
+   (|agentxSessionOpenTime| :type |TimeStamp|)
+   (|agentxSessionAgentXVer| :type integer)
+   (|agentxSessionTimeout| :type integer)))
 
 (defoid |agentxSessionIndex| (|agentxSessionEntry| 1)
   (:type 'object-type)
@@ -323,16 +321,15 @@
       or the subagent connection is closed.
      "))
 
-(defclass |AgentxRegistrationEntry|
-          (asn.1-type)
-          ((|agentxRegIndex| :type |Unsigned32|)
-           (|agentxRegContext| :type t)
-           (|agentxRegStart| :type object-id)
-           (|agentxRegRangeSubId| :type |Unsigned32|)
-           (|agentxRegUpperBound| :type |Unsigned32|)
-           (|agentxRegPriority| :type |Unsigned32|)
-           (|agentxRegTimeout| :type integer)
-           (|agentxRegInstance| :type |TruthValue|)))
+(defclass |AgentxRegistrationEntry| (sequence-type)
+  ((|agentxRegIndex| :type |Unsigned32|)
+   (|agentxRegContext| :type t)
+   (|agentxRegStart| :type object-id)
+   (|agentxRegRangeSubId| :type |Unsigned32|)
+   (|agentxRegUpperBound| :type |Unsigned32|)
+   (|agentxRegPriority| :type |Unsigned32|)
+   (|agentxRegTimeout| :type integer)
+   (|agentxRegInstance| :type |TruthValue|)))
 
 (defoid |agentxRegIndex| (|agentxRegistrationEntry| 1)
   (:type 'object-type)

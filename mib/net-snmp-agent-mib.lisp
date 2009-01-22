@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/net-snmp-agent-mib
   (:nicknames :net-snmp-agent-mib)
-  (:use :common-lisp :asn.1)
+  (:use :closer-common-lisp :asn.1)
   (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|)
   (:import-from :asn.1/net-snmp-mib |netSnmpObjects| |netSnmpModuleIDs|
                 |netSnmpNotifications| |netSnmpGroups|)
@@ -73,11 +73,10 @@
   (:status '|current|)
   (:description "A conceptual row within the cache table."))
 
-(defclass |NsCacheEntry|
-          (asn.1-type)
-          ((|nsCachedOID| :type object-id)
-           (|nsCacheTimeout| :type integer)
-           (|nsCacheStatus| :type |NetsnmpCacheStatus|)))
+(defclass |NsCacheEntry| (sequence-type)
+  ((|nsCachedOID| :type object-id)
+   (|nsCacheTimeout| :type integer)
+   (|nsCacheStatus| :type |NetsnmpCacheStatus|)))
 
 (defoid |nsCachedOID| (|nsCacheEntry| 1)
   (:type 'object-type)
@@ -157,10 +156,9 @@
   (:status '|current|)
   (:description "A conceptual row within the debug token table."))
 
-(defclass |NsDebugTokenEntry|
-          (asn.1-type)
-          ((|nsDebugTokenPrefix| :type |DisplayString|)
-           (|nsDebugTokenStatus| :type |RowStatus|)))
+(defclass |NsDebugTokenEntry| (sequence-type)
+  ((|nsDebugTokenPrefix| :type |DisplayString|)
+   (|nsDebugTokenStatus| :type |RowStatus|)))
 
 (defoid |nsDebugTokenPrefix| (|nsDebugTokenEntry| 2)
   (:type 'object-type)
@@ -204,13 +202,12 @@
   (:status '|current|)
   (:description "A conceptual row within the logging table."))
 
-(defclass |NsLoggingEntry|
-          (asn.1-type)
-          ((|nsLogLevel| :type integer)
-           (|nsLogToken| :type |DisplayString|)
-           (|nsLogType| :type integer)
-           (|nsLogMaxLevel| :type integer)
-           (|nsLogStatus| :type |RowStatus|)))
+(defclass |NsLoggingEntry| (sequence-type)
+  ((|nsLogLevel| :type integer)
+   (|nsLogToken| :type |DisplayString|)
+   (|nsLogType| :type integer)
+   (|nsLogMaxLevel| :type integer)
+   (|nsLogStatus| :type |RowStatus|)))
 
 (defoid |nsLogLevel| (|nsLoggingEntry| 1)
   (:type 'object-type)
@@ -275,10 +272,9 @@
   (:status '|current|)
   (:description "A row describing a given transaction."))
 
-(defclass |NsTransactionEntry|
-          (asn.1-type)
-          ((|nsTransactionID| :type |Unsigned32|)
-           (|nsTransactionMode| :type |Integer32|)))
+(defclass |NsTransactionEntry| (sequence-type)
+  ((|nsTransactionID| :type |Unsigned32|)
+   (|nsTransactionMode| :type |Integer32|)))
 
 (defoid |nsTransactionID| (|nsTransactionEntry| 1)
   (:type 'object-type)
@@ -312,14 +308,13 @@
   (:status '|current|)
   (:description "An entry containing a registered mib oid."))
 
-(defclass |NsModuleEntry|
-          (asn.1-type)
-          ((|nsmContextName| :type |SnmpAdminString|)
-           (|nsmRegistrationPoint| :type object-id)
-           (|nsmRegistrationPriority| :type integer)
-           (|nsModuleName| :type |DisplayString|)
-           (|nsModuleModes| :type bits)
-           (|nsModuleTimeout| :type |Integer32|)))
+(defclass |NsModuleEntry| (sequence-type)
+  ((|nsmContextName| :type |SnmpAdminString|)
+   (|nsmRegistrationPoint| :type object-id)
+   (|nsmRegistrationPriority| :type integer)
+   (|nsModuleName| :type |DisplayString|)
+   (|nsModuleModes| :type bits)
+   (|nsModuleTimeout| :type |Integer32|)))
 
 (defoid |nsmContextName| (|nsModuleEntry| 1)
   (:type 'object-type)

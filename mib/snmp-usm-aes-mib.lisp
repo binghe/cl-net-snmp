@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/snmp-usm-aes-mib
   (:nicknames :snmp-usm-aes-mib)
-  (:use :common-lisp :asn.1)
+  (:use :closer-common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-identity
                 |snmpModules|)
   (:import-from :asn.1/snmp-framework-mib |snmpPrivProtocols|))

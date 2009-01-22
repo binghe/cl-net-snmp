@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/snmp-usm-dh-objects-mib
   (:nicknames :snmp-usm-dh-objects-mib)
-  (:use :common-lisp :asn.1)
+  (:use :closer-common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |experimental| |Integer32|)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention)
@@ -87,12 +87,11 @@
    "A row of DHKeyChange objects which augment or replace the
     functionality of the KeyChange objects in the base table row."))
 
-(defclass |UsmDHUserKeyEntry|
-          (asn.1-type)
-          ((|usmDHUserAuthKeyChange| :type |DHKeyChange|)
-           (|usmDHUserOwnAuthKeyChange| :type |DHKeyChange|)
-           (|usmDHUserPrivKeyChange| :type |DHKeyChange|)
-           (|usmDHUserOwnPrivKeyChange| :type |DHKeyChange|)))
+(defclass |UsmDHUserKeyEntry| (sequence-type)
+  ((|usmDHUserAuthKeyChange| :type |DHKeyChange|)
+   (|usmDHUserOwnAuthKeyChange| :type |DHKeyChange|)
+   (|usmDHUserPrivKeyChange| :type |DHKeyChange|)
+   (|usmDHUserOwnPrivKeyChange| :type |DHKeyChange|)))
 
 (defoid |usmDHUserAuthKeyChange| (|usmDHUserKeyEntry| 1)
   (:type 'object-type)
@@ -196,12 +195,11 @@
     particular security name, the row in this table with that same
     security name is no longer useful or meaningful."))
 
-(defclass |UsmDHKickstartEntry|
-          (asn.1-type)
-          ((|usmDHKickstartIndex| :type |Integer32|)
-           (|usmDHKickstartMyPublic| :type t)
-           (|usmDHKickstartMgrPublic| :type t)
-           (|usmDHKickstartSecurityName| :type |SnmpAdminString|)))
+(defclass |UsmDHKickstartEntry| (sequence-type)
+  ((|usmDHKickstartIndex| :type |Integer32|)
+   (|usmDHKickstartMyPublic| :type t)
+   (|usmDHKickstartMgrPublic| :type t)
+   (|usmDHKickstartSecurityName| :type |SnmpAdminString|)))
 
 (defoid |usmDHKickstartIndex| (|usmDHKickstartEntry| 1)
   (:type 'object-type)

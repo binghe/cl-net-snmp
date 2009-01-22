@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/ipv6-flow-label-mib
   (:nicknames :ipv6-flow-label-mib)
-  (:use :common-lisp :asn.1)
+  (:use :closer-common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity |mib-2|
                 |Integer32|)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention))

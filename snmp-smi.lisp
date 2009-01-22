@@ -13,10 +13,10 @@
     (when value
       (make-instance 'smi :value value))))
 
-(defclass smi (general-type) ())
+(defclass smi (number-type) ())
 
-(defmethod plain-value ((object smi))
-  (gethash (value-of object) *smi-value->symbol-table*))
+(defmethod plain-value ((object smi) &key default)
+  (gethash (value-of object) *smi-value->symbol-table* default))
 
 (defmethod print-object ((obj smi) stream)
   (print-unreadable-object (obj stream :type t)

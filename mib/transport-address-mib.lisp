@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/transport-address-mib
   (:nicknames :transport-address-mib)
-  (:use :common-lisp :asn.1)
+  (:use :closer-common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-identity
                 |mib-2|)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention))

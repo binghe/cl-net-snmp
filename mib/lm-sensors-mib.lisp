@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/lm-sensors-mib
   (:nicknames :lm-sensors-mib)
-  (:use :common-lisp :asn.1)
+  (:use :closer-common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |Integer32| |Gauge32|)
   (:import-from :|ASN.1/SNMPv2-TC| |DisplayString|)
@@ -37,11 +37,10 @@
   (:status '|current|)
   (:description "An entry containing a device and its statistics."))
 
-(defclass |LMTempSensorsEntry|
-          (asn.1-type)
-          ((|lmTempSensorsIndex| :type |Integer32|)
-           (|lmTempSensorsDevice| :type |DisplayString|)
-           (|lmTempSensorsValue| :type |Gauge32|)))
+(defclass |LMTempSensorsEntry| (sequence-type)
+  ((|lmTempSensorsIndex| :type |Integer32|)
+   (|lmTempSensorsDevice| :type |DisplayString|)
+   (|lmTempSensorsValue| :type |Gauge32|)))
 
 (defoid |lmTempSensorsIndex| (|lmTempSensorsEntry| 1)
   (:type 'object-type)
@@ -78,11 +77,10 @@
   (:status '|current|)
   (:description "An entry containing a device and its statistics."))
 
-(defclass |LMFanSensorsEntry|
-          (asn.1-type)
-          ((|lmFanSensorsIndex| :type |Integer32|)
-           (|lmFanSensorsDevice| :type |DisplayString|)
-           (|lmFanSensorsValue| :type |Gauge32|)))
+(defclass |LMFanSensorsEntry| (sequence-type)
+  ((|lmFanSensorsIndex| :type |Integer32|)
+   (|lmFanSensorsDevice| :type |DisplayString|)
+   (|lmFanSensorsValue| :type |Gauge32|)))
 
 (defoid |lmFanSensorsIndex| (|lmFanSensorsEntry| 1)
   (:type 'object-type)
@@ -119,11 +117,10 @@
   (:status '|current|)
   (:description "An entry containing a device and its statistics."))
 
-(defclass |LMVoltSensorsEntry|
-          (asn.1-type)
-          ((|lmVoltSensorsIndex| :type |Integer32|)
-           (|lmVoltSensorsDevice| :type |DisplayString|)
-           (|lmVoltSensorsValue| :type |Gauge32|)))
+(defclass |LMVoltSensorsEntry| (sequence-type)
+  ((|lmVoltSensorsIndex| :type |Integer32|)
+   (|lmVoltSensorsDevice| :type |DisplayString|)
+   (|lmVoltSensorsValue| :type |Gauge32|)))
 
 (defoid |lmVoltSensorsIndex| (|lmVoltSensorsEntry| 1)
   (:type 'object-type)
@@ -161,11 +158,10 @@
   (:status '|current|)
   (:description "An entry containing a device and its statistics."))
 
-(defclass |LMMiscSensorsEntry|
-          (asn.1-type)
-          ((|lmMiscSensorsIndex| :type |Integer32|)
-           (|lmMiscSensorsDevice| :type |DisplayString|)
-           (|lmMiscSensorsValue| :type |Gauge32|)))
+(defclass |LMMiscSensorsEntry| (sequence-type)
+  ((|lmMiscSensorsIndex| :type |Integer32|)
+   (|lmMiscSensorsDevice| :type |DisplayString|)
+   (|lmMiscSensorsValue| :type |Gauge32|)))
 
 (defoid |lmMiscSensorsIndex| (|lmMiscSensorsEntry| 1)
   (:type 'object-type)

@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/net-snmp-vacm-mib
   (:nicknames :net-snmp-vacm-mib)
-  (:use :common-lisp :asn.1)
+  (:use :closer-common-lisp :asn.1)
   (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|)
   (:import-from :asn.1/net-snmp-mib |netSnmpObjects| |netSnmpGroups|)
   (:import-from :asn.1/snmp-view-based-acm-mib |vacmGroupName|
@@ -40,13 +40,12 @@
   (:status '|current|)
   (:description "Net-SNMP extensions to vacmAccessTable."))
 
-(defclass |NsVacmAccessEntry|
-          (asn.1-type)
-          ((|nsVacmAuthType| :type |SnmpAdminString|)
-           (|nsVacmContextMatch| :type integer)
-           (|nsVacmViewName| :type |SnmpAdminString|)
-           (|nsVacmStorageType| :type |StorageType|)
-           (|nsVacmStatus| :type |RowStatus|)))
+(defclass |NsVacmAccessEntry| (sequence-type)
+  ((|nsVacmAuthType| :type |SnmpAdminString|)
+   (|nsVacmContextMatch| :type integer)
+   (|nsVacmViewName| :type |SnmpAdminString|)
+   (|nsVacmStorageType| :type |StorageType|)
+   (|nsVacmStatus| :type |RowStatus|)))
 
 (defoid |nsVacmAuthType| (|nsVacmAccessEntry| 1)
   (:type 'object-type)

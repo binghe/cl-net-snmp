@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/ucd-diskio-mib
   (:nicknames :ucd-diskio-mib)
-  (:use :common-lisp :asn.1)
+  (:use :closer-common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |Integer32| |Counter32| |Counter64|)
   (:import-from :|ASN.1/SNMPv2-TC| |DisplayString|)
@@ -36,16 +36,15 @@
   (:status '|current|)
   (:description "An entry containing a device and its statistics."))
 
-(defclass |DiskIOEntry|
-          (asn.1-type)
-          ((|diskIOIndex| :type |Integer32|)
-           (|diskIODevice| :type |DisplayString|)
-           (|diskIONRead| :type |Counter32|)
-           (|diskIONWritten| :type |Counter32|)
-           (|diskIOReads| :type |Counter32|)
-           (|diskIOWrites| :type |Counter32|)
-           (|diskIONReadX| :type |Counter64|)
-           (|diskIONWrittenX| :type |Counter64|)))
+(defclass |DiskIOEntry| (sequence-type)
+  ((|diskIOIndex| :type |Integer32|)
+   (|diskIODevice| :type |DisplayString|)
+   (|diskIONRead| :type |Counter32|)
+   (|diskIONWritten| :type |Counter32|)
+   (|diskIOReads| :type |Counter32|)
+   (|diskIOWrites| :type |Counter32|)
+   (|diskIONReadX| :type |Counter64|)
+   (|diskIONWrittenX| :type |Counter64|)))
 
 (defoid |diskIOIndex| (|diskIOEntry| 1)
   (:type 'object-type)
