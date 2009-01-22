@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'snmp-proxy-mib *mib-modules*)
   (setf *current-module* 'snmp-proxy-mib))
 
 (defpackage :asn.1/snmp-proxy-mib
@@ -58,7 +57,17 @@
          Entries in the snmpProxyTable are created and deleted
          using the snmpProxyRowStatus object."))
 
-(deftype |SnmpProxyEntry| () 't)
+(defclass |SnmpProxyEntry|
+          (asn.1-type)
+          ((|snmpProxyName| :type |SnmpAdminString|)
+           (|snmpProxyType| :type integer)
+           (|snmpProxyContextEngineID| :type |SnmpEngineID|)
+           (|snmpProxyContextName| :type |SnmpAdminString|)
+           (|snmpProxyTargetParamsIn| :type |SnmpAdminString|)
+           (|snmpProxySingleTargetOut| :type |SnmpAdminString|)
+           (|snmpProxyMultipleTargetOut| :type |SnmpTagValue|)
+           (|snmpProxyStorageType| :type |StorageType|)
+           (|snmpProxyRowStatus| :type |RowStatus|)))
 
 (defoid |snmpProxyName| (|snmpProxyEntry| 1)
   (:type 'object-type)
@@ -194,5 +203,7 @@
          management target translation parameters for use by
          proxy forwarder applications."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'snmp-proxy-mib *mib-modules*)
+  (setf *current-module* nil))
 

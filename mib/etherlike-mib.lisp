@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew '|EtherLike-MIB| *mib-modules*)
   (setf *current-module* '|EtherLike-MIB|))
 
 (defpackage :|ASN.1/EtherLike-MIB|
@@ -75,7 +74,26 @@
    "Statistics for a particular interface to an
                     ethernet-like medium."))
 
-(deftype |Dot3StatsEntry| () 't)
+(defclass |Dot3StatsEntry|
+          (asn.1-type)
+          ((|dot3StatsIndex| :type |InterfaceIndex|)
+           (|dot3StatsAlignmentErrors| :type |Counter32|)
+           (|dot3StatsFCSErrors| :type |Counter32|)
+           (|dot3StatsSingleCollisionFrames| :type |Counter32|)
+           (|dot3StatsMultipleCollisionFrames| :type |Counter32|)
+           (|dot3StatsSQETestErrors| :type |Counter32|)
+           (|dot3StatsDeferredTransmissions| :type |Counter32|)
+           (|dot3StatsLateCollisions| :type |Counter32|)
+           (|dot3StatsExcessiveCollisions| :type |Counter32|)
+           (|dot3StatsInternalMacTransmitErrors| :type |Counter32|)
+           (|dot3StatsCarrierSenseErrors| :type |Counter32|)
+           (|dot3StatsFrameTooLongs| :type |Counter32|)
+           (|dot3StatsInternalMacReceiveErrors| :type |Counter32|)
+           (|dot3StatsEtherChipSet| :type object-id)
+           (|dot3StatsSymbolErrors| :type |Counter32|)
+           (|dot3StatsDuplexStatus| :type integer)
+           (|dot3StatsRateControlAbility| :type |TruthValue|)
+           (|dot3StatsRateControlStatus| :type integer)))
 
 (defoid |dot3StatsIndex| (|dot3StatsEntry| 1)
   (:type 'object-type)
@@ -613,7 +631,10 @@
                     particular interface is accompanied by a
                     particular number of media collisions."))
 
-(deftype |Dot3CollEntry| () 't)
+(defclass |Dot3CollEntry|
+          (asn.1-type)
+          ((|dot3CollCount| :type |Integer32|)
+           (|dot3CollFrequencies| :type |Counter32|)))
 
 (defoid |dot3CollCount| (|dot3CollEntry| 2)
   (:type 'object-type)
@@ -682,7 +703,11 @@
                     about the MAC Control sublayer on a single
                     ethernet-like interface."))
 
-(deftype |Dot3ControlEntry| () 't)
+(defclass |Dot3ControlEntry|
+          (asn.1-type)
+          ((|dot3ControlFunctionsSupported| :type bits)
+           (|dot3ControlInUnknownOpcodes| :type |Counter32|)
+           (|dot3HCControlInUnknownOpcodes| :type |Counter64|)))
 
 (defoid |dot3ControlFunctionsSupported| (|dot3ControlEntry| 1)
   (:type 'object-type)
@@ -768,7 +793,14 @@
                     about the MAC Control PAUSE function on a single
                     ethernet-like interface."))
 
-(deftype |Dot3PauseEntry| () 't)
+(defclass |Dot3PauseEntry|
+          (asn.1-type)
+          ((|dot3PauseAdminMode| :type integer)
+           (|dot3PauseOperMode| :type integer)
+           (|dot3InPauseFrames| :type |Counter32|)
+           (|dot3OutPauseFrames| :type |Counter32|)
+           (|dot3HCInPauseFrames| :type |Counter64|)
+           (|dot3HCOutPauseFrames| :type |Counter64|)))
 
 (defoid |dot3PauseAdminMode| (|dot3PauseEntry| 1)
   (:type 'object-type)
@@ -972,7 +1004,14 @@
    "An entry containing 64-bit statistics for a
                     single ethernet-like interface."))
 
-(deftype |Dot3HCStatsEntry| () 't)
+(defclass |Dot3HCStatsEntry|
+          (asn.1-type)
+          ((|dot3HCStatsAlignmentErrors| :type |Counter64|)
+           (|dot3HCStatsFCSErrors| :type |Counter64|)
+           (|dot3HCStatsInternalMacTransmitErrors| :type |Counter64|)
+           (|dot3HCStatsFrameTooLongs| :type |Counter64|)
+           (|dot3HCStatsInternalMacReceiveErrors| :type |Counter64|)
+           (|dot3HCStatsSymbolErrors| :type |Counter64|)))
 
 (defoid |dot3HCStatsAlignmentErrors| (|dot3HCStatsEntry| 1)
   (:type 'object-type)
@@ -1487,5 +1526,7 @@
                     about the Rate Control function on ethernet-like
                     interfaces."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew '|EtherLike-MIB| *mib-modules*)
+  (setf *current-module* nil))
 

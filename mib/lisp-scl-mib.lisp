@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'lisp-scl-mib *mib-modules*)
   (setf *current-module* 'lisp-scl-mib))
 
 (defpackage :asn.1/lisp-scl-mib
@@ -20,5 +19,7 @@
   (:type 'module-identity)
   (:description "The MIB module for Scieneer CL"))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'lisp-scl-mib *mib-modules*)
+  (setf *current-module* nil))
 

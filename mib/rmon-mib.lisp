@@ -3,9 +3,7 @@
 
 (in-package :asn.1)
 
-(eval-when (:load-toplevel :execute)
-  (pushnew 'rmon-mib *mib-modules*)
-  (setf *current-module* 'rmon-mib))
+(eval-when (:load-toplevel :execute) (setf *current-module* 'rmon-mib))
 
 (defpackage :asn.1/rmon-mib
   (:nicknames :rmon-mib)
@@ -70,7 +68,29 @@
         Ethernet interface.  As an example, an instance of the
         etherStatsPkts object might be named etherStatsPkts.1"))
 
-(deftype |EtherStatsEntry| () 't)
+(defclass |EtherStatsEntry|
+          (asn.1-type)
+          ((|etherStatsIndex| :type |Integer32|)
+           (|etherStatsDataSource| :type object-id)
+           (|etherStatsDropEvents| :type |Counter32|)
+           (|etherStatsOctets| :type |Counter32|)
+           (|etherStatsPkts| :type |Counter32|)
+           (|etherStatsBroadcastPkts| :type |Counter32|)
+           (|etherStatsMulticastPkts| :type |Counter32|)
+           (|etherStatsCRCAlignErrors| :type |Counter32|)
+           (|etherStatsUndersizePkts| :type |Counter32|)
+           (|etherStatsOversizePkts| :type |Counter32|)
+           (|etherStatsFragments| :type |Counter32|)
+           (|etherStatsJabbers| :type |Counter32|)
+           (|etherStatsCollisions| :type |Counter32|)
+           (|etherStatsPkts64Octets| :type |Counter32|)
+           (|etherStatsPkts65to127Octets| :type |Counter32|)
+           (|etherStatsPkts128to255Octets| :type |Counter32|)
+           (|etherStatsPkts256to511Octets| :type |Counter32|)
+           (|etherStatsPkts512to1023Octets| :type |Counter32|)
+           (|etherStatsPkts1024to1518Octets| :type |Counter32|)
+           (|etherStatsOwner| :type |OwnerString|)
+           (|etherStatsStatus| :type |EntryStatus|)))
 
 (defoid |etherStatsIndex| (|etherStatsEntry| 1)
   (:type 'object-type)
@@ -390,7 +410,15 @@
         historyControlInterval object might be named
         historyControlInterval.2"))
 
-(deftype |HistoryControlEntry| () 't)
+(defclass |HistoryControlEntry|
+          (asn.1-type)
+          ((|historyControlIndex| :type |Integer32|)
+           (|historyControlDataSource| :type object-id)
+           (|historyControlBucketsRequested| :type |Integer32|)
+           (|historyControlBucketsGranted| :type |Integer32|)
+           (|historyControlInterval| :type |Integer32|)
+           (|historyControlOwner| :type |OwnerString|)
+           (|historyControlStatus| :type |EntryStatus|)))
 
 (defoid |historyControlIndex| (|historyControlEntry| 1)
   (:type 'object-type)
@@ -567,7 +595,23 @@
         instance of the etherHistoryPkts object might be named
         etherHistoryPkts.2.89"))
 
-(deftype |EtherHistoryEntry| () 't)
+(defclass |EtherHistoryEntry|
+          (asn.1-type)
+          ((|etherHistoryIndex| :type |Integer32|)
+           (|etherHistorySampleIndex| :type |Integer32|)
+           (|etherHistoryIntervalStart| :type |TimeTicks|)
+           (|etherHistoryDropEvents| :type |Counter32|)
+           (|etherHistoryOctets| :type |Counter32|)
+           (|etherHistoryPkts| :type |Counter32|)
+           (|etherHistoryBroadcastPkts| :type |Counter32|)
+           (|etherHistoryMulticastPkts| :type |Counter32|)
+           (|etherHistoryCRCAlignErrors| :type |Counter32|)
+           (|etherHistoryUndersizePkts| :type |Counter32|)
+           (|etherHistoryOversizePkts| :type |Counter32|)
+           (|etherHistoryFragments| :type |Counter32|)
+           (|etherHistoryJabbers| :type |Counter32|)
+           (|etherHistoryCollisions| :type |Counter32|)
+           (|etherHistoryUtilization| :type |Integer32|)))
 
 (defoid |etherHistoryIndex| (|etherHistoryEntry| 1)
   (:type 'object-type)
@@ -805,7 +849,20 @@
         for alarm conditions.  For example, an instance of the
         alarmValue object might be named alarmValue.8"))
 
-(deftype |AlarmEntry| () 't)
+(defclass |AlarmEntry|
+          (asn.1-type)
+          ((|alarmIndex| :type |Integer32|)
+           (|alarmInterval| :type |Integer32|)
+           (|alarmVariable| :type object-id)
+           (|alarmSampleType| :type integer)
+           (|alarmValue| :type |Integer32|)
+           (|alarmStartupAlarm| :type integer)
+           (|alarmRisingThreshold| :type |Integer32|)
+           (|alarmFallingThreshold| :type |Integer32|)
+           (|alarmRisingEventIndex| :type |Integer32|)
+           (|alarmFallingEventIndex| :type |Integer32|)
+           (|alarmOwner| :type |OwnerString|)
+           (|alarmStatus| :type |EntryStatus|)))
 
 (defoid |alarmIndex| (|alarmEntry| 1)
   (:type 'object-type)
@@ -1052,7 +1109,14 @@
         hostControlTableSize object might be named
         hostControlTableSize.1"))
 
-(deftype |HostControlEntry| () 't)
+(defclass |HostControlEntry|
+          (asn.1-type)
+          ((|hostControlIndex| :type |Integer32|)
+           (|hostControlDataSource| :type object-id)
+           (|hostControlTableSize| :type |Integer32|)
+           (|hostControlLastDeleteTime| :type |TimeTicks|)
+           (|hostControlOwner| :type |OwnerString|)
+           (|hostControlStatus| :type |EntryStatus|)))
 
 (defoid |hostControlIndex| (|hostControlEntry| 1)
   (:type 'object-type)
@@ -1156,7 +1220,18 @@
         an instance of the hostOutBroadcastPkts object might be
         named hostOutBroadcastPkts.1.6.8.0.32.27.3.176"))
 
-(deftype |HostEntry| () 't)
+(defclass |HostEntry|
+          (asn.1-type)
+          ((|hostAddress| :type t)
+           (|hostCreationOrder| :type |Integer32|)
+           (|hostIndex| :type |Integer32|)
+           (|hostInPkts| :type |Counter32|)
+           (|hostOutPkts| :type |Counter32|)
+           (|hostInOctets| :type |Counter32|)
+           (|hostOutOctets| :type |Counter32|)
+           (|hostOutErrors| :type |Counter32|)
+           (|hostOutBroadcastPkts| :type |Counter32|)
+           (|hostOutMulticastPkts| :type |Counter32|)))
 
 (defoid |hostAddress| (|hostEntry| 1)
   (:type 'object-type)
@@ -1295,7 +1370,18 @@
         hostTimeOutBroadcastPkts object might be named
         hostTimeOutBroadcastPkts.1.687"))
 
-(deftype |HostTimeEntry| () 't)
+(defclass |HostTimeEntry|
+          (asn.1-type)
+          ((|hostTimeAddress| :type t)
+           (|hostTimeCreationOrder| :type |Integer32|)
+           (|hostTimeIndex| :type |Integer32|)
+           (|hostTimeInPkts| :type |Counter32|)
+           (|hostTimeOutPkts| :type |Counter32|)
+           (|hostTimeInOctets| :type |Counter32|)
+           (|hostTimeOutOctets| :type |Counter32|)
+           (|hostTimeOutErrors| :type |Counter32|)
+           (|hostTimeOutBroadcastPkts| :type |Counter32|)
+           (|hostTimeOutMulticastPkts| :type |Counter32|)))
 
 (defoid |hostTimeAddress| (|hostTimeEntry| 1)
   (:type 'object-type)
@@ -1438,7 +1524,18 @@
         example, an instance of the hostTopNDuration object might
         be named hostTopNDuration.3"))
 
-(deftype |HostTopNControlEntry| () 't)
+(defclass |HostTopNControlEntry|
+          (asn.1-type)
+          ((|hostTopNControlIndex| :type |Integer32|)
+           (|hostTopNHostIndex| :type |Integer32|)
+           (|hostTopNRateBase| :type integer)
+           (|hostTopNTimeRemaining| :type |Integer32|)
+           (|hostTopNDuration| :type |Integer32|)
+           (|hostTopNRequestedSize| :type |Integer32|)
+           (|hostTopNGrantedSize| :type |Integer32|)
+           (|hostTopNStartTime| :type |TimeTicks|)
+           (|hostTopNOwner| :type |OwnerString|)
+           (|hostTopNStatus| :type |EntryStatus|)))
 
 (defoid |hostTopNControlIndex| (|hostTopNControlEntry| 1)
   (:type 'object-type)
@@ -1606,7 +1703,12 @@
         report.  For example, an instance of the hostTopNRate
         object might be named hostTopNRate.3.10"))
 
-(deftype |HostTopNEntry| () 't)
+(defclass |HostTopNEntry|
+          (asn.1-type)
+          ((|hostTopNReport| :type |Integer32|)
+           (|hostTopNIndex| :type |Integer32|)
+           (|hostTopNAddress| :type t)
+           (|hostTopNRate| :type |Integer32|)))
 
 (defoid |hostTopNReport| (|hostTopNEntry| 1)
   (:type 'object-type)
@@ -1674,7 +1776,14 @@
         matrixControlLastDeleteTime object might be named
         matrixControlLastDeleteTime.1"))
 
-(deftype |MatrixControlEntry| () 't)
+(defclass |MatrixControlEntry|
+          (asn.1-type)
+          ((|matrixControlIndex| :type |Integer32|)
+           (|matrixControlDataSource| :type object-id)
+           (|matrixControlTableSize| :type |Integer32|)
+           (|matrixControlLastDeleteTime| :type |TimeTicks|)
+           (|matrixControlOwner| :type |OwnerString|)
+           (|matrixControlStatus| :type |EntryStatus|)))
 
 (defoid |matrixControlIndex| (|matrixControlEntry| 1)
   (:type 'object-type)
@@ -1784,7 +1893,14 @@
         an instance of the matrixSDPkts object might be named
         matrixSDPkts.1.6.8.0.32.27.3.176.6.8.0.32.10.8.113"))
 
-(deftype |MatrixSDEntry| () 't)
+(defclass |MatrixSDEntry|
+          (asn.1-type)
+          ((|matrixSDSourceAddress| :type t)
+           (|matrixSDDestAddress| :type t)
+           (|matrixSDIndex| :type |Integer32|)
+           (|matrixSDPkts| :type |Counter32|)
+           (|matrixSDOctets| :type |Counter32|)
+           (|matrixSDErrors| :type |Counter32|)))
 
 (defoid |matrixSDSourceAddress| (|matrixSDEntry| 1)
   (:type 'object-type)
@@ -1862,7 +1978,14 @@
         an instance of the matrixSDPkts object might be named
         matrixSDPkts.1.6.8.0.32.10.8.113.6.8.0.32.27.3.176"))
 
-(deftype |MatrixDSEntry| () 't)
+(defclass |MatrixDSEntry|
+          (asn.1-type)
+          ((|matrixDSSourceAddress| :type t)
+           (|matrixDSDestAddress| :type t)
+           (|matrixDSIndex| :type |Integer32|)
+           (|matrixDSPkts| :type |Counter32|)
+           (|matrixDSOctets| :type |Counter32|)
+           (|matrixDSErrors| :type |Counter32|)))
 
 (defoid |matrixDSSourceAddress| (|matrixDSEntry| 1)
   (:type 'object-type)
@@ -1937,7 +2060,19 @@
         particular interface.  As an example, an instance of the
         filterPktData object might be named filterPktData.12"))
 
-(deftype |FilterEntry| () 't)
+(defclass |FilterEntry|
+          (asn.1-type)
+          ((|filterIndex| :type |Integer32|)
+           (|filterChannelIndex| :type |Integer32|)
+           (|filterPktDataOffset| :type |Integer32|)
+           (|filterPktData| :type t)
+           (|filterPktDataMask| :type t)
+           (|filterPktDataNotMask| :type t)
+           (|filterPktStatus| :type |Integer32|)
+           (|filterPktStatusMask| :type |Integer32|)
+           (|filterPktStatusNotMask| :type |Integer32|)
+           (|filterOwner| :type |OwnerString|)
+           (|filterStatus| :type |EntryStatus|)))
 
 (defoid |filterIndex| (|filterEntry| 1)
   (:type 'object-type)
@@ -2195,7 +2330,20 @@
         particular interface.  As an example, an instance of the
         channelMatches object might be named channelMatches.3"))
 
-(deftype |ChannelEntry| () 't)
+(defclass |ChannelEntry|
+          (asn.1-type)
+          ((|channelIndex| :type |Integer32|)
+           (|channelIfIndex| :type |Integer32|)
+           (|channelAcceptType| :type integer)
+           (|channelDataControl| :type integer)
+           (|channelTurnOnEventIndex| :type |Integer32|)
+           (|channelTurnOffEventIndex| :type |Integer32|)
+           (|channelEventIndex| :type |Integer32|)
+           (|channelEventStatus| :type integer)
+           (|channelMatches| :type |Counter32|)
+           (|channelDescription| :type |DisplayString|)
+           (|channelOwner| :type |OwnerString|)
+           (|channelStatus| :type |EntryStatus|)))
 
 (defoid |channelIndex| (|channelEntry| 1)
   (:type 'object-type)
@@ -2413,7 +2561,21 @@
         instance of the bufferControlCaptureSliceSize object might
         be named bufferControlCaptureSliceSize.3"))
 
-(deftype |BufferControlEntry| () 't)
+(defclass |BufferControlEntry|
+          (asn.1-type)
+          ((|bufferControlIndex| :type |Integer32|)
+           (|bufferControlChannelIndex| :type |Integer32|)
+           (|bufferControlFullStatus| :type integer)
+           (|bufferControlFullAction| :type integer)
+           (|bufferControlCaptureSliceSize| :type |Integer32|)
+           (|bufferControlDownloadSliceSize| :type |Integer32|)
+           (|bufferControlDownloadOffset| :type |Integer32|)
+           (|bufferControlMaxOctetsRequested| :type |Integer32|)
+           (|bufferControlMaxOctetsGranted| :type |Integer32|)
+           (|bufferControlCapturedPackets| :type |Integer32|)
+           (|bufferControlTurnOnTime| :type |TimeTicks|)
+           (|bufferControlOwner| :type |OwnerString|)
+           (|bufferControlStatus| :type |EntryStatus|)))
 
 (defoid |bufferControlIndex| (|bufferControlEntry| 1)
   (:type 'object-type)
@@ -2656,7 +2818,15 @@
         example, an instance of the captureBufferPacketData
         object might be named captureBufferPacketData.3.1783"))
 
-(deftype |CaptureBufferEntry| () 't)
+(defclass |CaptureBufferEntry|
+          (asn.1-type)
+          ((|captureBufferControlIndex| :type |Integer32|)
+           (|captureBufferIndex| :type |Integer32|)
+           (|captureBufferPacketID| :type |Integer32|)
+           (|captureBufferPacketData| :type t)
+           (|captureBufferPacketLength| :type |Integer32|)
+           (|captureBufferPacketTime| :type |Integer32|)
+           (|captureBufferPacketStatus| :type |Integer32|)))
 
 (defoid |captureBufferControlIndex| (|captureBufferEntry| 1)
   (:type 'object-type)
@@ -2788,7 +2958,15 @@
         of the eventLastTimeSent object might be named
         eventLastTimeSent.6"))
 
-(deftype |EventEntry| () 't)
+(defclass |EventEntry|
+          (asn.1-type)
+          ((|eventIndex| :type |Integer32|)
+           (|eventDescription| :type |DisplayString|)
+           (|eventType| :type integer)
+           (|eventCommunity| :type t)
+           (|eventLastTimeSent| :type |TimeTicks|)
+           (|eventOwner| :type |OwnerString|)
+           (|eventStatus| :type |EntryStatus|)))
 
 (defoid |eventIndex| (|eventEntry| 1)
   (:type 'object-type)
@@ -2883,7 +3061,12 @@
         logged.  For example, an instance of the logDescription
         object might be named logDescription.6.47"))
 
-(deftype |LogEntry| () 't)
+(defclass |LogEntry|
+          (asn.1-type)
+          ((|logEventIndex| :type |Integer32|)
+           (|logIndex| :type |Integer32|)
+           (|logTime| :type |TimeTicks|)
+           (|logDescription| :type |DisplayString|)))
 
 (defoid |logEventIndex| (|logEntry| 1)
   (:type 'object-type)
@@ -3025,5 +3208,7 @@
   (:status '|current|)
   (:description "The RMON Notification Group."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'rmon-mib *mib-modules*)
+  (setf *current-module* nil))
 

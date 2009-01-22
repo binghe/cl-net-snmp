@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'agentx-mib *mib-modules*)
   (setf *current-module* 'agentx-mib))
 
 (defpackage :asn.1/agentx-mib
@@ -108,7 +107,12 @@
       and is destroyed when the transport connection is terminated.
      "))
 
-(deftype |AgentxConnectionEntry| () 't)
+(defclass |AgentxConnectionEntry|
+          (asn.1-type)
+          ((|agentxConnIndex| :type |Unsigned32|)
+           (|agentxConnOpenTime| :type |TimeStamp|)
+           (|agentxConnTransportDomain| :type |TDomain|)
+           (|agentxConnTransportAddress| :type |AgentxTAddress|)))
 
 (defoid |agentxConnIndex| (|agentxConnectionEntry| 1)
   (:type 'object-type)
@@ -188,7 +192,15 @@
       has terminated or when the subagent session is closed.
      "))
 
-(deftype |AgentxSessionEntry| () 't)
+(defclass |AgentxSessionEntry|
+          (asn.1-type)
+          ((|agentxSessionIndex| :type |Unsigned32|)
+           (|agentxSessionObjectID| :type object-id)
+           (|agentxSessionDescr| :type |SnmpAdminString|)
+           (|agentxSessionAdminStatus| :type integer)
+           (|agentxSessionOpenTime| :type |TimeStamp|)
+           (|agentxSessionAgentXVer| :type integer)
+           (|agentxSessionTimeout| :type integer)))
 
 (defoid |agentxSessionIndex| (|agentxSessionEntry| 1)
   (:type 'object-type)
@@ -311,7 +323,16 @@
       or the subagent connection is closed.
      "))
 
-(deftype |AgentxRegistrationEntry| () 't)
+(defclass |AgentxRegistrationEntry|
+          (asn.1-type)
+          ((|agentxRegIndex| :type |Unsigned32|)
+           (|agentxRegContext| :type t)
+           (|agentxRegStart| :type object-id)
+           (|agentxRegRangeSubId| :type |Unsigned32|)
+           (|agentxRegUpperBound| :type |Unsigned32|)
+           (|agentxRegPriority| :type |Unsigned32|)
+           (|agentxRegTimeout| :type integer)
+           (|agentxRegInstance| :type |TruthValue|)))
 
 (defoid |agentxRegIndex| (|agentxRegistrationEntry| 1)
   (:type 'object-type)
@@ -434,5 +455,7 @@
    "All accessible objects in the AgentX MIB.
      "))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'agentx-mib *mib-modules*)
+  (setf *current-module* nil))
 

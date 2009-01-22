@@ -3,15 +3,14 @@
 
 (in-package :asn.1)
 
-(eval-when (:load-toplevel :execute)
-  (pushnew 'lisp-mib *mib-modules*)
-  (setf *current-module* 'lisp-mib))
+(eval-when (:load-toplevel :execute) (setf *current-module* 'lisp-mib))
 
 (defpackage :asn.1/lisp-mib
   (:nicknames :lisp-mib)
   (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
-                object-identity notification-type |enterprises|))
+                object-identity notification-type |enterprises|)
+  (:import-from :|ASN.1/SNMPv2-TC| |DisplayString|))
 
 (in-package :lisp-mib)
 
@@ -96,28 +95,28 @@
 
 (defoid |lispInternalRealTime| (|lispSystem| 10)
   (:type 'object-type)
-  (:syntax ':integer)
+  (:syntax 'integer)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "(get-internal-real-time)"))
 
 (defoid |lispInternalRunTime| (|lispSystem| 11)
   (:type 'object-type)
-  (:syntax ':integer)
+  (:syntax 'integer)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "(get-internal-run-time)"))
 
 (defoid |lispInternalTimeUnitsPerSecond| (|lispSystem| 12)
   (:type 'object-type)
-  (:syntax ':integer)
+  (:syntax 'integer)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "internal-time-units-per-second"))
 
 (defoid |lispUniversalTime| (|lispSystem| 13)
   (:type 'object-type)
-  (:syntax ':integer)
+  (:syntax 'integer)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "(get-universal-time)"))
@@ -136,11 +135,14 @@
   (:status '|current|)
   (:description "An entry (conceptual row) in the lispFeatureTable."))
 
-(deftype |LispFeatureEntry| () 't)
+(defclass |LispFeatureEntry|
+          (asn.1-type)
+          ((|lispFeatureIndex| :type integer)
+           (|lispFeatureName| :type |DisplayString|)))
 
 (defoid |lispFeatureIndex| (|lispFeatureEntry| 1)
   (:type 'object-type)
-  (:syntax ':integer)
+  (:syntax 'integer)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -168,11 +170,14 @@
   (:status '|current|)
   (:description "An entry (conceptual row) in the lispPackageTable."))
 
-(deftype |LispPackageEntry| () 't)
+(defclass |LispPackageEntry|
+          (asn.1-type)
+          ((|lispPackageIndex| :type integer)
+           (|lispPackageName| :type |DisplayString|)))
 
 (defoid |lispPackageIndex| (|lispPackageEntry| 1)
   (:type 'object-type)
-  (:syntax ':integer)
+  (:syntax 'integer)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -201,11 +206,14 @@
   (:status '|current|)
   (:description "An entry (conceptual row) in the lispModuleTable."))
 
-(deftype |LispModuleEntry| () 't)
+(defclass |LispModuleEntry|
+          (asn.1-type)
+          ((|lispModuleIndex| :type integer)
+           (|lispModuleName| :type |DisplayString|)))
 
 (defoid |lispModuleIndex| (|lispModuleEntry| 1)
   (:type 'object-type)
-  (:syntax ':integer)
+  (:syntax 'integer)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -395,5 +403,7 @@
 (defoid |clNetSnmpAgentSCL| (|clNetSnmpAgentOIDs| 10)
   (:type 'object-identity))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'lisp-mib *mib-modules*)
+  (setf *current-module* nil))
 

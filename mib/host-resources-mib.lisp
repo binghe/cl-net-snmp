@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'host-resources-mib *mib-modules*)
   (setf *current-module* 'host-resources-mib))
 
 (defpackage :asn.1/host-resources-mib
@@ -195,7 +194,15 @@
         the host.  As an example, an instance of the
         hrStorageType object might be named hrStorageType.3"))
 
-(deftype |HrStorageEntry| () 't)
+(defclass |HrStorageEntry|
+          (asn.1-type)
+          ((|hrStorageIndex| :type |Integer32|)
+           (|hrStorageType| :type |AutonomousType|)
+           (|hrStorageDescr| :type |DisplayString|)
+           (|hrStorageAllocationUnits| :type |Integer32|)
+           (|hrStorageSize| :type |Integer32|)
+           (|hrStorageUsed| :type |Integer32|)
+           (|hrStorageAllocationFailures| :type |Counter32|)))
 
 (defoid |hrStorageIndex| (|hrStorageEntry| 1)
   (:type 'object-type)
@@ -295,7 +302,14 @@
         host.  As an example, an instance of the hrDeviceType
         object might be named hrDeviceType.3"))
 
-(deftype |HrDeviceEntry| () 't)
+(defclass |HrDeviceEntry|
+          (asn.1-type)
+          ((|hrDeviceIndex| :type |Integer32|)
+           (|hrDeviceType| :type |AutonomousType|)
+           (|hrDeviceDescr| :type |DisplayString|)
+           (|hrDeviceID| :type |ProductID|)
+           (|hrDeviceStatus| :type integer)
+           (|hrDeviceErrors| :type |Counter32|)))
 
 (defoid |hrDeviceIndex| (|hrDeviceEntry| 1)
   (:type 'object-type)
@@ -417,7 +431,10 @@
         an instance of the hrProcessorFrwID object might be
         named hrProcessorFrwID.3"))
 
-(deftype |HrProcessorEntry| () 't)
+(defclass |HrProcessorEntry|
+          (asn.1-type)
+          ((|hrProcessorFrwID| :type |ProductID|)
+           (|hrProcessorLoad| :type |Integer32|)))
 
 (defoid |hrProcessorFrwID| (|hrProcessorEntry| 1)
   (:type 'object-type)
@@ -468,7 +485,9 @@
         an instance of the hrNetworkIfIndex object might be
         named hrNetworkIfIndex.3"))
 
-(deftype |HrNetworkEntry| () 't)
+(defclass |HrNetworkEntry|
+          (asn.1-type)
+          ((|hrNetworkIfIndex| :type |InterfaceIndexOrZero|)))
 
 (defoid |hrNetworkIfIndex| (|hrNetworkEntry| 1)
   (:type 'object-type)
@@ -508,7 +527,10 @@
         an instance of the hrPrinterStatus object might be
         named hrPrinterStatus.3"))
 
-(deftype |HrPrinterEntry| () 't)
+(defclass |HrPrinterEntry|
+          (asn.1-type)
+          ((|hrPrinterStatus| :type integer)
+           (|hrPrinterDetectedErrorState| :type t)))
 
 (defoid |hrPrinterStatus| (|hrPrinterEntry| 1)
   (:type 'object-type)
@@ -588,7 +610,12 @@
         an instance of the hrDiskStorageCapacity object might
         be named hrDiskStorageCapacity.3"))
 
-(deftype |HrDiskStorageEntry| () 't)
+(defclass |HrDiskStorageEntry|
+          (asn.1-type)
+          ((|hrDiskStorageAccess| :type integer)
+           (|hrDiskStorageMedia| :type integer)
+           (|hrDiskStorageRemoveble| :type |TruthValue|)
+           (|hrDiskStorageCapacity| :type |KBytes|)))
 
 (defoid |hrDiskStorageAccess| (|hrDiskStorageEntry| 1)
   (:type 'object-type)
@@ -656,7 +683,13 @@
         an instance of the hrPartitionSize object might be
         named hrPartitionSize.3.1"))
 
-(deftype |HrPartitionEntry| () 't)
+(defclass |HrPartitionEntry|
+          (asn.1-type)
+          ((|hrPartitionIndex| :type |Integer32|)
+           (|hrPartitionLabel| :type |InternationalDisplayString|)
+           (|hrPartitionID| :type t)
+           (|hrPartitionSize| :type |KBytes|)
+           (|hrPartitionFSIndex| :type |Integer32|)))
 
 (defoid |hrPartitionIndex| (|hrPartitionEntry| 1)
   (:type 'object-type)
@@ -737,7 +770,17 @@
         an instance of the hrFSMountPoint object might be
         named hrFSMountPoint.3"))
 
-(deftype |HrFSEntry| () 't)
+(defclass |HrFSEntry|
+          (asn.1-type)
+          ((|hrFSIndex| :type |Integer32|)
+           (|hrFSMountPoint| :type |InternationalDisplayString|)
+           (|hrFSRemoteMountPoint| :type |InternationalDisplayString|)
+           (|hrFSType| :type |AutonomousType|)
+           (|hrFSAccess| :type integer)
+           (|hrFSBootable| :type |TruthValue|)
+           (|hrFSStorageIndex| :type |Integer32|)
+           (|hrFSLastFullBackupDate| :type |DateAndTime|)
+           (|hrFSLastPartialBackupDate| :type |DateAndTime|)))
 
 (defoid |hrFSIndex| (|hrFSEntry| 1)
   (:type 'object-type)
@@ -885,7 +928,15 @@
         an instance of the hrSWRunName object might be named
         hrSWRunName.1287"))
 
-(deftype |HrSWRunEntry| () 't)
+(defclass |HrSWRunEntry|
+          (asn.1-type)
+          ((|hrSWRunIndex| :type |Integer32|)
+           (|hrSWRunName| :type |InternationalDisplayString|)
+           (|hrSWRunID| :type |ProductID|)
+           (|hrSWRunPath| :type |InternationalDisplayString|)
+           (|hrSWRunParameters| :type |InternationalDisplayString|)
+           (|hrSWRunType| :type integer)
+           (|hrSWRunStatus| :type integer)))
 
 (defoid |hrSWRunIndex| (|hrSWRunEntry| 1)
   (:type 'object-type)
@@ -974,7 +1025,10 @@
         hrSWRunPerfCPU object might be named
         hrSWRunPerfCPU.1287"))
 
-(deftype |HrSWRunPerfEntry| () 't)
+(defclass |HrSWRunPerfEntry|
+          (asn.1-type)
+          ((|hrSWRunPerfCPU| :type |Integer32|)
+           (|hrSWRunPerfMem| :type |KBytes|)))
 
 (defoid |hrSWRunPerfCPU| (|hrSWRunPerfEntry| 1)
   (:type 'object-type)
@@ -1045,7 +1099,13 @@
         an instance of the hrSWInstalledName object might be
         named hrSWInstalledName.96"))
 
-(deftype |HrSWInstalledEntry| () 't)
+(defclass |HrSWInstalledEntry|
+          (asn.1-type)
+          ((|hrSWInstalledIndex| :type |Integer32|)
+           (|hrSWInstalledName| :type |InternationalDisplayString|)
+           (|hrSWInstalledID| :type |ProductID|)
+           (|hrSWInstalledType| :type integer)
+           (|hrSWInstalledDate| :type |DateAndTime|)))
 
 (defoid |hrSWInstalledIndex| (|hrSWInstalledEntry| 1)
   (:type 'object-type)
@@ -1140,5 +1200,7 @@
   (:status '|current|)
   (:description "The Host Resources Installed Software Group."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'host-resources-mib *mib-modules*)
+  (setf *current-module* nil))
 

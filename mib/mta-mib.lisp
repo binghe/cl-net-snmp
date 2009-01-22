@@ -3,9 +3,7 @@
 
 (in-package :asn.1)
 
-(eval-when (:load-toplevel :execute)
-  (pushnew 'mta-mib *mib-modules*)
-  (setf *current-module* 'mta-mib))
+(eval-when (:load-toplevel :execute) (setf *current-module* 'mta-mib))
 
 (defpackage :asn.1/mta-mib
   (:nicknames :mta-mib)
@@ -38,7 +36,20 @@
   (:status '|current|)
   (:description "The entry associated with each MTA."))
 
-(deftype |MtaEntry| () 't)
+(defclass |MtaEntry|
+          (asn.1-type)
+          ((|mtaReceivedMessages| :type |Counter32|)
+           (|mtaStoredMessages| :type |Gauge32|)
+           (|mtaTransmittedMessages| :type |Counter32|)
+           (|mtaReceivedVolume| :type |Counter32|)
+           (|mtaStoredVolume| :type |Gauge32|)
+           (|mtaTransmittedVolume| :type |Counter32|)
+           (|mtaReceivedRecipients| :type |Counter32|)
+           (|mtaStoredRecipients| :type |Gauge32|)
+           (|mtaTransmittedRecipients| :type |Counter32|)
+           (|mtaSuccessfulConvertedMessages| :type |Counter32|)
+           (|mtaFailedConvertedMessages| :type |Counter32|)
+           (|mtaLoopsDetected| :type |Counter32|)))
 
 (defoid |mtaReceivedMessages| (|mtaEntry| 1)
   (:type 'object-type)
@@ -225,7 +236,48 @@
   (:status '|current|)
   (:description "The entry associated with each MTA group."))
 
-(deftype |MtaGroupEntry| () 't)
+(defclass |MtaGroupEntry|
+          (asn.1-type)
+          ((|mtaGroupIndex| :type integer)
+           (|mtaGroupReceivedMessages| :type |Counter32|)
+           (|mtaGroupRejectedMessages| :type |Counter32|)
+           (|mtaGroupStoredMessages| :type |Gauge32|)
+           (|mtaGroupTransmittedMessages| :type |Counter32|)
+           (|mtaGroupReceivedVolume| :type |Counter32|)
+           (|mtaGroupStoredVolume| :type |Gauge32|)
+           (|mtaGroupTransmittedVolume| :type |Counter32|)
+           (|mtaGroupReceivedRecipients| :type |Counter32|)
+           (|mtaGroupStoredRecipients| :type |Gauge32|)
+           (|mtaGroupTransmittedRecipients| :type |Counter32|)
+           (|mtaGroupOldestMessageStored| :type |TimeInterval|)
+           (|mtaGroupInboundAssociations| :type |Gauge32|)
+           (|mtaGroupOutboundAssociations| :type |Gauge32|)
+           (|mtaGroupAccumulatedInboundAssociations| :type |Counter32|)
+           (|mtaGroupAccumulatedOutboundAssociations|
+            :type
+            |Counter32|)
+           (|mtaGroupLastInboundActivity| :type |TimeInterval|)
+           (|mtaGroupLastOutboundActivity| :type |TimeInterval|)
+           (|mtaGroupLastOutboundAssociationAttempt|
+            :type
+            |TimeInterval|)
+           (|mtaGroupRejectedInboundAssociations| :type |Counter32|)
+           (|mtaGroupFailedOutboundAssociations| :type |Counter32|)
+           (|mtaGroupInboundRejectionReason| :type |SnmpAdminString|)
+           (|mtaGroupOutboundConnectFailureReason|
+            :type
+            |SnmpAdminString|)
+           (|mtaGroupScheduledRetry| :type |TimeInterval|)
+           (|mtaGroupMailProtocol| :type object-id)
+           (|mtaGroupName| :type |SnmpAdminString|)
+           (|mtaGroupSuccessfulConvertedMessages| :type |Counter32|)
+           (|mtaGroupFailedConvertedMessages| :type |Counter32|)
+           (|mtaGroupDescription| :type |SnmpAdminString|)
+           (|mtaGroupURL| :type |URLString|)
+           (|mtaGroupCreationTime| :type |TimeInterval|)
+           (|mtaGroupHierarchy| :type integer)
+           (|mtaGroupOldestMessageId| :type |SnmpAdminString|)
+           (|mtaGroupLoopsDetected| :type |Counter32|)))
 
 (defoid |mtaGroupIndex| (|mtaGroupEntry| 1)
   (:type 'object-type)
@@ -624,7 +676,9 @@
    "The entry holding information regarding the associations
       for each MTA group."))
 
-(deftype |MtaGroupAssociationEntry| () 't)
+(defclass |MtaGroupAssociationEntry|
+          (asn.1-type)
+          ((|mtaGroupAssociationIndex| :type integer)))
 
 (defoid |mtaGroupAssociationIndex| (|mtaGroupAssociationEntry| 1)
   (:type 'object-type)
@@ -653,7 +707,12 @@
    "The entry holding information regarding accumulated
       errors for each MTA group."))
 
-(deftype |MtaGroupErrorEntry| () 't)
+(defclass |MtaGroupErrorEntry|
+          (asn.1-type)
+          ((|mtaStatusCode| :type t)
+           (|mtaGroupInboundErrorCount| :type |Counter32|)
+           (|mtaGroupInternalErrorCount| :type |Counter32|)
+           (|mtaGroupOutboundErrorCount| :type |Counter32|)))
 
 (defoid |mtaGroupInboundErrorCount| (|mtaGroupErrorEntry| 1)
   (:type 'object-type)
@@ -867,5 +926,7 @@
       detailed MTA errors.  This is the appropriate group
       for RFC 2789 error monitoring."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'mta-mib *mib-modules*)
+  (setf *current-module* nil))
 

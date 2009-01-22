@@ -3,9 +3,7 @@
 
 (in-package :asn.1)
 
-(eval-when (:load-toplevel :execute)
-  (pushnew 'ip-mib *mib-modules*)
-  (setf *current-module* 'ip-mib))
+(eval-when (:load-toplevel :execute) (setf *current-module* 'ip-mib))
 
 (defpackage :asn.1/ip-mib
   (:nicknames :ip-mib)
@@ -156,7 +154,12 @@
    "An entry containing IPv4-specific information for a specific
             interface."))
 
-(deftype |Ipv4InterfaceEntry| () 't)
+(defclass |Ipv4InterfaceEntry|
+          (asn.1-type)
+          ((|ipv4InterfaceIfIndex| :type |InterfaceIndex|)
+           (|ipv4InterfaceReasmMaxSize| :type |Integer32|)
+           (|ipv4InterfaceEnableStatus| :type integer)
+           (|ipv4InterfaceRetransmitTime| :type |Unsigned32|)))
 
 (defoid |ipv4InterfaceIfIndex| (|ipv4InterfaceEntry| 1)
   (:type 'object-type)
@@ -237,7 +240,17 @@
    "An entry containing IPv6-specific information for a given
             interface."))
 
-(deftype |Ipv6InterfaceEntry| () 't)
+(defclass |Ipv6InterfaceEntry|
+          (asn.1-type)
+          ((|ipv6InterfaceIfIndex| :type |InterfaceIndex|)
+           (|ipv6InterfaceReasmMaxSize| :type |Unsigned32|)
+           (|ipv6InterfaceIdentifier|
+            :type
+            |Ipv6AddressIfIdentifierTC|)
+           (|ipv6InterfaceEnableStatus| :type integer)
+           (|ipv6InterfaceReachableTime| :type |Unsigned32|)
+           (|ipv6InterfaceRetransmitTime| :type |Unsigned32|)
+           (|ipv6InterfaceForwarding| :type integer)))
 
 (defoid |ipv6InterfaceIfIndex| (|ipv6InterfaceEntry| 1)
   (:type 'object-type)
@@ -362,7 +375,54 @@
    "A statistics entry containing system-wide objects for a
             particular IP version."))
 
-(deftype |IpSystemStatsEntry| () 't)
+(defclass |IpSystemStatsEntry|
+          (asn.1-type)
+          ((|ipSystemStatsIPVersion| :type |InetVersion|)
+           (|ipSystemStatsInReceives| :type |Counter32|)
+           (|ipSystemStatsHCInReceives| :type |Counter64|)
+           (|ipSystemStatsInOctets| :type |Counter32|)
+           (|ipSystemStatsHCInOctets| :type |Counter64|)
+           (|ipSystemStatsInHdrErrors| :type |Counter32|)
+           (|ipSystemStatsInNoRoutes| :type |Counter32|)
+           (|ipSystemStatsInAddrErrors| :type |Counter32|)
+           (|ipSystemStatsInUnknownProtos| :type |Counter32|)
+           (|ipSystemStatsInTruncatedPkts| :type |Counter32|)
+           (|ipSystemStatsInForwDatagrams| :type |Counter32|)
+           (|ipSystemStatsHCInForwDatagrams| :type |Counter64|)
+           (|ipSystemStatsReasmReqds| :type |Counter32|)
+           (|ipSystemStatsReasmOKs| :type |Counter32|)
+           (|ipSystemStatsReasmFails| :type |Counter32|)
+           (|ipSystemStatsInDiscards| :type |Counter32|)
+           (|ipSystemStatsInDelivers| :type |Counter32|)
+           (|ipSystemStatsHCInDelivers| :type |Counter64|)
+           (|ipSystemStatsOutRequests| :type |Counter32|)
+           (|ipSystemStatsHCOutRequests| :type |Counter64|)
+           (|ipSystemStatsOutNoRoutes| :type |Counter32|)
+           (|ipSystemStatsOutForwDatagrams| :type |Counter32|)
+           (|ipSystemStatsHCOutForwDatagrams| :type |Counter64|)
+           (|ipSystemStatsOutDiscards| :type |Counter32|)
+           (|ipSystemStatsOutFragReqds| :type |Counter32|)
+           (|ipSystemStatsOutFragOKs| :type |Counter32|)
+           (|ipSystemStatsOutFragFails| :type |Counter32|)
+           (|ipSystemStatsOutFragCreates| :type |Counter32|)
+           (|ipSystemStatsOutTransmits| :type |Counter32|)
+           (|ipSystemStatsHCOutTransmits| :type |Counter64|)
+           (|ipSystemStatsOutOctets| :type |Counter32|)
+           (|ipSystemStatsHCOutOctets| :type |Counter64|)
+           (|ipSystemStatsInMcastPkts| :type |Counter32|)
+           (|ipSystemStatsHCInMcastPkts| :type |Counter64|)
+           (|ipSystemStatsInMcastOctets| :type |Counter32|)
+           (|ipSystemStatsHCInMcastOctets| :type |Counter64|)
+           (|ipSystemStatsOutMcastPkts| :type |Counter32|)
+           (|ipSystemStatsHCOutMcastPkts| :type |Counter64|)
+           (|ipSystemStatsOutMcastOctets| :type |Counter32|)
+           (|ipSystemStatsHCOutMcastOctets| :type |Counter64|)
+           (|ipSystemStatsInBcastPkts| :type |Counter32|)
+           (|ipSystemStatsHCInBcastPkts| :type |Counter64|)
+           (|ipSystemStatsOutBcastPkts| :type |Counter32|)
+           (|ipSystemStatsHCOutBcastPkts| :type |Counter64|)
+           (|ipSystemStatsDiscontinuityTime| :type |TimeStamp|)
+           (|ipSystemStatsRefreshRate| :type |Unsigned32|)))
 
 (defoid |ipSystemStatsIPVersion| (|ipSystemStatsEntry| 1)
   (:type 'object-type)
@@ -1164,7 +1224,54 @@
    "An interface statistics entry containing objects for a
             particular interface and version of IP."))
 
-(deftype |IpIfStatsEntry| () 't)
+(defclass |IpIfStatsEntry|
+          (asn.1-type)
+          ((|ipIfStatsIPVersion| :type |InetVersion|)
+           (|ipIfStatsIfIndex| :type |InterfaceIndex|)
+           (|ipIfStatsInReceives| :type |Counter32|)
+           (|ipIfStatsHCInReceives| :type |Counter64|)
+           (|ipIfStatsInOctets| :type |Counter32|)
+           (|ipIfStatsHCInOctets| :type |Counter64|)
+           (|ipIfStatsInHdrErrors| :type |Counter32|)
+           (|ipIfStatsInNoRoutes| :type |Counter32|)
+           (|ipIfStatsInAddrErrors| :type |Counter32|)
+           (|ipIfStatsInUnknownProtos| :type |Counter32|)
+           (|ipIfStatsInTruncatedPkts| :type |Counter32|)
+           (|ipIfStatsInForwDatagrams| :type |Counter32|)
+           (|ipIfStatsHCInForwDatagrams| :type |Counter64|)
+           (|ipIfStatsReasmReqds| :type |Counter32|)
+           (|ipIfStatsReasmOKs| :type |Counter32|)
+           (|ipIfStatsReasmFails| :type |Counter32|)
+           (|ipIfStatsInDiscards| :type |Counter32|)
+           (|ipIfStatsInDelivers| :type |Counter32|)
+           (|ipIfStatsHCInDelivers| :type |Counter64|)
+           (|ipIfStatsOutRequests| :type |Counter32|)
+           (|ipIfStatsHCOutRequests| :type |Counter64|)
+           (|ipIfStatsOutForwDatagrams| :type |Counter32|)
+           (|ipIfStatsHCOutForwDatagrams| :type |Counter64|)
+           (|ipIfStatsOutDiscards| :type |Counter32|)
+           (|ipIfStatsOutFragReqds| :type |Counter32|)
+           (|ipIfStatsOutFragOKs| :type |Counter32|)
+           (|ipIfStatsOutFragFails| :type |Counter32|)
+           (|ipIfStatsOutFragCreates| :type |Counter32|)
+           (|ipIfStatsOutTransmits| :type |Counter32|)
+           (|ipIfStatsHCOutTransmits| :type |Counter64|)
+           (|ipIfStatsOutOctets| :type |Counter32|)
+           (|ipIfStatsHCOutOctets| :type |Counter64|)
+           (|ipIfStatsInMcastPkts| :type |Counter32|)
+           (|ipIfStatsHCInMcastPkts| :type |Counter64|)
+           (|ipIfStatsInMcastOctets| :type |Counter32|)
+           (|ipIfStatsHCInMcastOctets| :type |Counter64|)
+           (|ipIfStatsOutMcastPkts| :type |Counter32|)
+           (|ipIfStatsHCOutMcastPkts| :type |Counter64|)
+           (|ipIfStatsOutMcastOctets| :type |Counter32|)
+           (|ipIfStatsHCOutMcastOctets| :type |Counter64|)
+           (|ipIfStatsInBcastPkts| :type |Counter32|)
+           (|ipIfStatsHCInBcastPkts| :type |Counter64|)
+           (|ipIfStatsOutBcastPkts| :type |Counter32|)
+           (|ipIfStatsHCOutBcastPkts| :type |Counter64|)
+           (|ipIfStatsDiscontinuityTime| :type |TimeStamp|)
+           (|ipIfStatsRefreshRate| :type |Unsigned32|)))
 
 (defoid |ipIfStatsIPVersion| (|ipIfStatsEntry| 1)
   (:type 'object-type)
@@ -1966,7 +2073,17 @@
   (:status '|current|)
   (:description "An entry in the ipAddressPrefixTable."))
 
-(deftype |IpAddressPrefixEntry| () 't)
+(defclass |IpAddressPrefixEntry|
+          (asn.1-type)
+          ((|ipAddressPrefixIfIndex| :type |InterfaceIndex|)
+           (|ipAddressPrefixType| :type |InetAddressType|)
+           (|ipAddressPrefixPrefix| :type |InetAddress|)
+           (|ipAddressPrefixLength| :type |InetAddressPrefixLength|)
+           (|ipAddressPrefixOrigin| :type |IpAddressPrefixOriginTC|)
+           (|ipAddressPrefixOnLinkFlag| :type |TruthValue|)
+           (|ipAddressPrefixAutonomousFlag| :type |TruthValue|)
+           (|ipAddressPrefixAdvPreferredLifetime| :type |Unsigned32|)
+           (|ipAddressPrefixAdvValidLifetime| :type |Unsigned32|)))
 
 (defoid |ipAddressPrefixIfIndex| (|ipAddressPrefixEntry| 1)
   (:type 'object-type)
@@ -2144,7 +2261,19 @@
   (:status '|current|)
   (:description "An address mapping for a particular interface."))
 
-(deftype |IpAddressEntry| () 't)
+(defclass |IpAddressEntry|
+          (asn.1-type)
+          ((|ipAddressAddrType| :type |InetAddressType|)
+           (|ipAddressAddr| :type |InetAddress|)
+           (|ipAddressIfIndex| :type |InterfaceIndex|)
+           (|ipAddressType| :type integer)
+           (|ipAddressPrefix| :type |RowPointer|)
+           (|ipAddressOrigin| :type |IpAddressOriginTC|)
+           (|ipAddressStatus| :type |IpAddressStatusTC|)
+           (|ipAddressCreated| :type |TimeStamp|)
+           (|ipAddressLastChanged| :type |TimeStamp|)
+           (|ipAddressRowStatus| :type |RowStatus|)
+           (|ipAddressStorageType| :type |StorageType|)))
 
 (defoid |ipAddressAddrType| (|ipAddressEntry| 1)
   (:type 'object-type)
@@ -2300,7 +2429,16 @@
    "Each entry contains one IP address to `physical' address
             equivalence."))
 
-(deftype |IpNetToPhysicalEntry| () 't)
+(defclass |IpNetToPhysicalEntry|
+          (asn.1-type)
+          ((|ipNetToPhysicalIfIndex| :type |InterfaceIndex|)
+           (|ipNetToPhysicalNetAddressType| :type |InetAddressType|)
+           (|ipNetToPhysicalNetAddress| :type |InetAddress|)
+           (|ipNetToPhysicalPhysAddress| :type |PhysAddress|)
+           (|ipNetToPhysicalLastUpdated| :type |TimeStamp|)
+           (|ipNetToPhysicalType| :type integer)
+           (|ipNetToPhysicalState| :type integer)
+           (|ipNetToPhysicalRowStatus| :type |RowStatus|)))
 
 (defoid |ipNetToPhysicalIfIndex| (|ipNetToPhysicalEntry| 1)
   (:type 'object-type)
@@ -2456,7 +2594,23 @@
    "Each entry contains the list of scope identifiers on a given
             interface."))
 
-(deftype |Ipv6ScopeZoneIndexEntry| () 't)
+(defclass |Ipv6ScopeZoneIndexEntry|
+          (asn.1-type)
+          ((|ipv6ScopeZoneIndexIfIndex| :type |InterfaceIndex|)
+           (|ipv6ScopeZoneIndexLinkLocal| :type |InetZoneIndex|)
+           (|ipv6ScopeZoneIndex3| :type |InetZoneIndex|)
+           (|ipv6ScopeZoneIndexAdminLocal| :type |InetZoneIndex|)
+           (|ipv6ScopeZoneIndexSiteLocal| :type |InetZoneIndex|)
+           (|ipv6ScopeZoneIndex6| :type |InetZoneIndex|)
+           (|ipv6ScopeZoneIndex7| :type |InetZoneIndex|)
+           (|ipv6ScopeZoneIndexOrganizationLocal|
+            :type
+            |InetZoneIndex|)
+           (|ipv6ScopeZoneIndex9| :type |InetZoneIndex|)
+           (|ipv6ScopeZoneIndexA| :type |InetZoneIndex|)
+           (|ipv6ScopeZoneIndexB| :type |InetZoneIndex|)
+           (|ipv6ScopeZoneIndexC| :type |InetZoneIndex|)
+           (|ipv6ScopeZoneIndexD| :type |InetZoneIndex|)))
 
 (defoid |ipv6ScopeZoneIndexIfIndex| (|ipv6ScopeZoneIndexEntry| 1)
   (:type 'object-type)
@@ -2580,7 +2734,13 @@
    "Each entry contains information about a default router known
             to this entity."))
 
-(deftype |IpDefaultRouterEntry| () 't)
+(defclass |IpDefaultRouterEntry|
+          (asn.1-type)
+          ((|ipDefaultRouterAddressType| :type |InetAddressType|)
+           (|ipDefaultRouterAddress| :type |InetAddress|)
+           (|ipDefaultRouterIfIndex| :type |InterfaceIndex|)
+           (|ipDefaultRouterLifetime| :type |Unsigned32|)
+           (|ipDefaultRouterPreference| :type integer)))
 
 (defoid |ipDefaultRouterAddressType| (|ipDefaultRouterEntry| 1)
   (:type 'object-type)
@@ -2693,7 +2853,20 @@
             object is written, the entity SHOULD save the change to
             non-volatile storage."))
 
-(deftype |Ipv6RouterAdvertEntry| () 't)
+(defclass |Ipv6RouterAdvertEntry|
+          (asn.1-type)
+          ((|ipv6RouterAdvertIfIndex| :type |InterfaceIndex|)
+           (|ipv6RouterAdvertSendAdverts| :type |TruthValue|)
+           (|ipv6RouterAdvertMaxInterval| :type |Unsigned32|)
+           (|ipv6RouterAdvertMinInterval| :type |Unsigned32|)
+           (|ipv6RouterAdvertManagedFlag| :type |TruthValue|)
+           (|ipv6RouterAdvertOtherConfigFlag| :type |TruthValue|)
+           (|ipv6RouterAdvertLinkMTU| :type |Unsigned32|)
+           (|ipv6RouterAdvertReachableTime| :type |Unsigned32|)
+           (|ipv6RouterAdvertRetransmitTime| :type |Unsigned32|)
+           (|ipv6RouterAdvertCurHopLimit| :type |Unsigned32|)
+           (|ipv6RouterAdvertDefaultLifetime| :type |Unsigned32|)
+           (|ipv6RouterAdvertRowStatus| :type |RowStatus|)))
 
 (defoid |ipv6RouterAdvertIfIndex| (|ipv6RouterAdvertEntry| 1)
   (:type 'object-type)
@@ -2869,7 +3042,13 @@
   (:status '|current|)
   (:description "A conceptual row in the icmpStatsTable."))
 
-(deftype |IcmpStatsEntry| () 't)
+(defclass |IcmpStatsEntry|
+          (asn.1-type)
+          ((|icmpStatsIPVersion| :type |InetVersion|)
+           (|icmpStatsInMsgs| :type |Counter32|)
+           (|icmpStatsInErrors| :type |Counter32|)
+           (|icmpStatsOutMsgs| :type |Counter32|)
+           (|icmpStatsOutErrors| :type |Counter32|)))
 
 (defoid |icmpStatsIPVersion| (|icmpStatsEntry| 1)
   (:type 'object-type)
@@ -2949,7 +3128,12 @@
             any succeeding messages with Type=X, the relevant counter
             must be incremented."))
 
-(deftype |IcmpMsgStatsEntry| () 't)
+(defclass |IcmpMsgStatsEntry|
+          (asn.1-type)
+          ((|icmpMsgStatsIPVersion| :type |InetVersion|)
+           (|icmpMsgStatsType| :type |Integer32|)
+           (|icmpMsgStatsInPkts| :type |Counter32|)
+           (|icmpMsgStatsOutPkts| :type |Counter32|)))
 
 (defoid |icmpMsgStatsIPVersion| (|icmpMsgStatsEntry| 1)
   (:type 'object-type)
@@ -3537,7 +3721,13 @@
    "The addressing information for one of this entity's IPv4
             addresses."))
 
-(deftype |IpAddrEntry| () 't)
+(defclass |IpAddrEntry|
+          (asn.1-type)
+          ((|ipAdEntAddr| :type |IpAddress|)
+           (|ipAdEntIfIndex| :type integer)
+           (|ipAdEntNetMask| :type |IpAddress|)
+           (|ipAdEntBcastAddr| :type integer)
+           (|ipAdEntReasmMaxSize| :type integer)))
 
 (defoid |ipAdEntAddr| (|ipAddrEntry| 1)
   (:type 'object-type)
@@ -3615,7 +3805,12 @@
    "Each entry contains one IpAddress to `physical' address
             equivalence."))
 
-(deftype |IpNetToMediaEntry| () 't)
+(defclass |IpNetToMediaEntry|
+          (asn.1-type)
+          ((|ipNetToMediaIfIndex| :type integer)
+           (|ipNetToMediaPhysAddress| :type |PhysAddress|)
+           (|ipNetToMediaNetAddress| :type |IpAddress|)
+           (|ipNetToMediaType| :type integer)))
 
 (defoid |ipNetToMediaIfIndex| (|ipNetToMediaEntry| 1)
   (:type 'object-type)
@@ -4049,5 +4244,7 @@
             As part of the version independence, this group has been
             deprecated.  "))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'ip-mib *mib-modules*)
+  (setf *current-module* nil))
 

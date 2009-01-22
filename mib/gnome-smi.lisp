@@ -3,9 +3,7 @@
 
 (in-package :asn.1)
 
-(eval-when (:load-toplevel :execute)
-  (pushnew 'gnome-smi *mib-modules*)
-  (setf *current-module* 'gnome-smi))
+(eval-when (:load-toplevel :execute) (setf *current-module* 'gnome-smi))
 
 (defpackage :asn.1/gnome-smi
   (:nicknames :gnome-smi)
@@ -54,5 +52,7 @@
    "gnomeLDAP defines the subtree for GNOME related LDAP
 		registrations."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'gnome-smi *mib-modules*)
+  (setf *current-module* nil))
 

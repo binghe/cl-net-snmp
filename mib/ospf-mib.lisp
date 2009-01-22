@@ -3,9 +3,7 @@
 
 (in-package :asn.1)
 
-(eval-when (:load-toplevel :execute)
-  (pushnew 'ospf-mib *mib-modules*)
-  (setf *current-module* 'ospf-mib))
+(eval-when (:load-toplevel :execute) (setf *current-module* 'ospf-mib))
 
 (defpackage :asn.1/ospf-mib
   (:nicknames :ospf-mib)
@@ -250,7 +248,18 @@
            ters  and  cumulative  statistics of one of the
            router's attached areas."))
 
-(deftype |OspfAreaEntry| () 't)
+(defclass |OspfAreaEntry|
+          (asn.1-type)
+          ((|ospfAreaId| :type |AreaID|)
+           (|ospfAuthType| :type |Integer32|)
+           (|ospfImportAsExtern| :type integer)
+           (|ospfSpfRuns| :type |Counter32|)
+           (|ospfAreaBdrRtrCount| :type |Gauge32|)
+           (|ospfAsBdrRtrCount| :type |Gauge32|)
+           (|ospfAreaLsaCount| :type |Gauge32|)
+           (|ospfAreaLsaCksumSum| :type |Integer32|)
+           (|ospfAreaSummary| :type integer)
+           (|ospfAreaStatus| :type |RowStatus|)))
 
 (defoid |ospfAreaId| (|ospfAreaEntry| 1)
   (:type 'object-type)
@@ -385,7 +394,13 @@
            will  be  advertised  by  a default Area Border
            Router into a stub area."))
 
-(deftype |OspfStubAreaEntry| () 't)
+(defclass |OspfStubAreaEntry|
+          (asn.1-type)
+          ((|ospfStubAreaId| :type |AreaID|)
+           (|ospfStubTOS| :type |TOSType|)
+           (|ospfStubMetric| :type |BigMetric|)
+           (|ospfStubStatus| :type |RowStatus|)
+           (|ospfStubMetricType| :type integer)))
 
 (defoid |ospfStubAreaId| (|ospfStubAreaEntry| 1)
   (:type 'object-type)
@@ -452,7 +467,16 @@
   (:status '|current|)
   (:description "A single Link State Advertisement."))
 
-(deftype |OspfLsdbEntry| () 't)
+(defclass |OspfLsdbEntry|
+          (asn.1-type)
+          ((|ospfLsdbAreaId| :type |AreaID|)
+           (|ospfLsdbType| :type integer)
+           (|ospfLsdbLsid| :type |IpAddress|)
+           (|ospfLsdbRouterId| :type |RouterID|)
+           (|ospfLsdbSequence| :type |Integer32|)
+           (|ospfLsdbAge| :type |Integer32|)
+           (|ospfLsdbChecksum| :type |Integer32|)
+           (|ospfLsdbAdvertisement| :type t)))
 
 (defoid |ospfLsdbAreaId| (|ospfLsdbEntry| 1)
   (:type 'object-type)
@@ -563,7 +587,13 @@
            mask  of  255.255.0.0 includes all IP addresses
            from X.X.0.0 to X.X.255.255"))
 
-(deftype |OspfAreaRangeEntry| () 't)
+(defclass |OspfAreaRangeEntry|
+          (asn.1-type)
+          ((|ospfAreaRangeAreaId| :type |AreaID|)
+           (|ospfAreaRangeNet| :type |IpAddress|)
+           (|ospfAreaRangeMask| :type |IpAddress|)
+           (|ospfAreaRangeStatus| :type |RowStatus|)
+           (|ospfAreaRangeEffect| :type integer)))
 
 (defoid |ospfAreaRangeAreaId| (|ospfAreaRangeEntry| 1)
   (:type 'object-type)
@@ -632,7 +662,13 @@
    "A metric to be advertised, for a given type of
            service, when a given host is reachable."))
 
-(deftype |OspfHostEntry| () 't)
+(defclass |OspfHostEntry|
+          (asn.1-type)
+          ((|ospfHostIpAddress| :type |IpAddress|)
+           (|ospfHostTOS| :type |TOSType|)
+           (|ospfHostMetric| :type |Metric|)
+           (|ospfHostStatus| :type |RowStatus|)
+           (|ospfHostAreaID| :type |AreaID|)))
 
 (defoid |ospfHostIpAddress| (|ospfHostEntry| 1)
   (:type 'object-type)
@@ -696,7 +732,28 @@
    "The OSPF Interface Entry describes one  inter-
            face from the viewpoint of OSPF."))
 
-(deftype |OspfIfEntry| () 't)
+(defclass |OspfIfEntry|
+          (asn.1-type)
+          ((|ospfIfIpAddress| :type |IpAddress|)
+           (|ospfAddressLessIf| :type |Integer32|)
+           (|ospfIfAreaId| :type |AreaID|)
+           (|ospfIfType| :type integer)
+           (|ospfIfAdminStat| :type |Status|)
+           (|ospfIfRtrPriority| :type |DesignatedRouterPriority|)
+           (|ospfIfTransitDelay| :type |UpToMaxAge|)
+           (|ospfIfRetransInterval| :type |UpToMaxAge|)
+           (|ospfIfHelloInterval| :type |HelloRange|)
+           (|ospfIfRtrDeadInterval| :type |PositiveInteger|)
+           (|ospfIfPollInterval| :type |PositiveInteger|)
+           (|ospfIfState| :type integer)
+           (|ospfIfDesignatedRouter| :type |IpAddress|)
+           (|ospfIfBackupDesignatedRouter| :type |IpAddress|)
+           (|ospfIfEvents| :type |Counter32|)
+           (|ospfIfAuthType| :type integer)
+           (|ospfIfAuthKey| :type t)
+           (|ospfIfStatus| :type |RowStatus|)
+           (|ospfIfMulticastForwarding| :type integer)
+           (|ospfIfDemand| :type |TruthValue|)))
 
 (defoid |ospfIfIpAddress| (|ospfIfEntry| 1)
   (:type 'object-type)
@@ -943,7 +1000,13 @@
    "A particular TOS metric for a non-virtual  in-
            terface identified by the interface index."))
 
-(deftype |OspfIfMetricEntry| () 't)
+(defclass |OspfIfMetricEntry|
+          (asn.1-type)
+          ((|ospfIfMetricIpAddress| :type |IpAddress|)
+           (|ospfIfMetricAddressLessIf| :type |Integer32|)
+           (|ospfIfMetricTOS| :type |TOSType|)
+           (|ospfIfMetricValue| :type |Metric|)
+           (|ospfIfMetricStatus| :type |RowStatus|)))
 
 (defoid |ospfIfMetricIpAddress| (|ospfIfMetricEntry| 1)
   (:type 'object-type)
@@ -1015,7 +1078,19 @@
   (:status '|current|)
   (:description "Information about a single Virtual Interface."))
 
-(deftype |OspfVirtIfEntry| () 't)
+(defclass |OspfVirtIfEntry|
+          (asn.1-type)
+          ((|ospfVirtIfAreaId| :type |AreaID|)
+           (|ospfVirtIfNeighbor| :type |RouterID|)
+           (|ospfVirtIfTransitDelay| :type |UpToMaxAge|)
+           (|ospfVirtIfRetransInterval| :type |UpToMaxAge|)
+           (|ospfVirtIfHelloInterval| :type |HelloRange|)
+           (|ospfVirtIfRtrDeadInterval| :type |PositiveInteger|)
+           (|ospfVirtIfState| :type integer)
+           (|ospfVirtIfEvents| :type |Counter32|)
+           (|ospfVirtIfAuthType| :type integer)
+           (|ospfVirtIfAuthKey| :type t)
+           (|ospfVirtIfStatus| :type |RowStatus|)))
 
 (defoid |ospfVirtIfAreaId| (|ospfVirtIfEntry| 1)
   (:type 'object-type)
@@ -1152,7 +1227,19 @@
   (:status '|current|)
   (:description "The information regarding a single neighbor."))
 
-(deftype |OspfNbrEntry| () 't)
+(defclass |OspfNbrEntry|
+          (asn.1-type)
+          ((|ospfNbrIpAddr| :type |IpAddress|)
+           (|ospfNbrAddressLessIndex| :type |InterfaceIndex|)
+           (|ospfNbrRtrId| :type |RouterID|)
+           (|ospfNbrOptions| :type |Integer32|)
+           (|ospfNbrPriority| :type |DesignatedRouterPriority|)
+           (|ospfNbrState| :type integer)
+           (|ospfNbrEvents| :type |Counter32|)
+           (|ospfNbrLsRetransQLen| :type |Gauge32|)
+           (|ospfNbmaNbrStatus| :type |RowStatus|)
+           (|ospfNbmaNbrPermanence| :type integer)
+           (|ospfNbrHelloSuppressed| :type |TruthValue|)))
 
 (defoid |ospfNbrIpAddr| (|ospfNbrEntry| 1)
   (:type 'object-type)
@@ -1299,7 +1386,16 @@
   (:status '|current|)
   (:description "Virtual neighbor information."))
 
-(deftype |OspfVirtNbrEntry| () 't)
+(defclass |OspfVirtNbrEntry|
+          (asn.1-type)
+          ((|ospfVirtNbrArea| :type |AreaID|)
+           (|ospfVirtNbrRtrId| :type |RouterID|)
+           (|ospfVirtNbrIpAddr| :type |IpAddress|)
+           (|ospfVirtNbrOptions| :type |Integer32|)
+           (|ospfVirtNbrState| :type integer)
+           (|ospfVirtNbrEvents| :type |Counter32|)
+           (|ospfVirtNbrLsRetransQLen| :type |Gauge32|)
+           (|ospfVirtNbrHelloSuppressed| :type |TruthValue|)))
 
 (defoid |ospfVirtNbrArea| (|ospfVirtNbrEntry| 1)
   (:type 'object-type)
@@ -1394,7 +1490,15 @@
   (:status '|current|)
   (:description "A single Link State Advertisement."))
 
-(deftype |OspfExtLsdbEntry| () 't)
+(defclass |OspfExtLsdbEntry|
+          (asn.1-type)
+          ((|ospfExtLsdbType| :type integer)
+           (|ospfExtLsdbLsid| :type |IpAddress|)
+           (|ospfExtLsdbRouterId| :type |RouterID|)
+           (|ospfExtLsdbSequence| :type |Integer32|)
+           (|ospfExtLsdbAge| :type |Integer32|)
+           (|ospfExtLsdbChecksum| :type |Integer32|)
+           (|ospfExtLsdbAdvertisement| :type t)))
 
 (defoid |ospfExtLsdbType| (|ospfExtLsdbEntry| 1)
   (:type 'object-type)
@@ -1516,7 +1620,14 @@
            255.0.0.0  and  10.1.0.0 mask 255.255.0.0), the
            most specific match is the preferred one."))
 
-(deftype |OspfAreaAggregateEntry| () 't)
+(defclass |OspfAreaAggregateEntry|
+          (asn.1-type)
+          ((|ospfAreaAggregateAreaID| :type |AreaID|)
+           (|ospfAreaAggregateLsdbType| :type integer)
+           (|ospfAreaAggregateNet| :type |IpAddress|)
+           (|ospfAreaAggregateMask| :type |IpAddress|)
+           (|ospfAreaAggregateStatus| :type |RowStatus|)
+           (|ospfAreaAggregateEffect| :type integer)))
 
 (defoid |ospfAreaAggregateAreaID| (|ospfAreaAggregateEntry| 1)
   (:type 'object-type)
@@ -1666,5 +1777,7 @@
   (:status '|current|)
   (:description "These objects are required for OSPF systems."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'ospf-mib *mib-modules*)
+  (setf *current-module* nil))
 

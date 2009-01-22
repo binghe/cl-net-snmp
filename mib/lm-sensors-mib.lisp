@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'lm-sensors-mib *mib-modules*)
   (setf *current-module* 'lm-sensors-mib))
 
 (defpackage :asn.1/lm-sensors-mib
@@ -38,7 +37,11 @@
   (:status '|current|)
   (:description "An entry containing a device and its statistics."))
 
-(deftype |LMTempSensorsEntry| () 't)
+(defclass |LMTempSensorsEntry|
+          (asn.1-type)
+          ((|lmTempSensorsIndex| :type |Integer32|)
+           (|lmTempSensorsDevice| :type |DisplayString|)
+           (|lmTempSensorsValue| :type |Gauge32|)))
 
 (defoid |lmTempSensorsIndex| (|lmTempSensorsEntry| 1)
   (:type 'object-type)
@@ -75,7 +78,11 @@
   (:status '|current|)
   (:description "An entry containing a device and its statistics."))
 
-(deftype |LMFanSensorsEntry| () 't)
+(defclass |LMFanSensorsEntry|
+          (asn.1-type)
+          ((|lmFanSensorsIndex| :type |Integer32|)
+           (|lmFanSensorsDevice| :type |DisplayString|)
+           (|lmFanSensorsValue| :type |Gauge32|)))
 
 (defoid |lmFanSensorsIndex| (|lmFanSensorsEntry| 1)
   (:type 'object-type)
@@ -112,7 +119,11 @@
   (:status '|current|)
   (:description "An entry containing a device and its statistics."))
 
-(deftype |LMVoltSensorsEntry| () 't)
+(defclass |LMVoltSensorsEntry|
+          (asn.1-type)
+          ((|lmVoltSensorsIndex| :type |Integer32|)
+           (|lmVoltSensorsDevice| :type |DisplayString|)
+           (|lmVoltSensorsValue| :type |Gauge32|)))
 
 (defoid |lmVoltSensorsIndex| (|lmVoltSensorsEntry| 1)
   (:type 'object-type)
@@ -150,7 +161,11 @@
   (:status '|current|)
   (:description "An entry containing a device and its statistics."))
 
-(deftype |LMMiscSensorsEntry| () 't)
+(defclass |LMMiscSensorsEntry|
+          (asn.1-type)
+          ((|lmMiscSensorsIndex| :type |Integer32|)
+           (|lmMiscSensorsDevice| :type |DisplayString|)
+           (|lmMiscSensorsValue| :type |Gauge32|)))
 
 (defoid |lmMiscSensorsIndex| (|lmMiscSensorsEntry| 1)
   (:type 'object-type)
@@ -173,5 +188,7 @@
   (:status '|current|)
   (:description "The value of this sensor."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'lm-sensors-mib *mib-modules*)
+  (setf *current-module* nil))
 

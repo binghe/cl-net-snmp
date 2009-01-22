@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'lisp-lispworks-mib *mib-modules*)
   (setf *current-module* 'lisp-lispworks-mib))
 
 (defpackage :asn.1/lisp-lispworks-mib
@@ -20,5 +19,7 @@
   (:type 'module-identity)
   (:description "The MIB module for LispWorks."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'lisp-lispworks-mib *mib-modules*)
+  (setf *current-module* nil))
 

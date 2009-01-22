@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'snmp-framework-mib *mib-modules*)
   (setf *current-module* 'snmp-framework-mib))
 
 (defpackage :asn.1/snmp-framework-mib
@@ -142,5 +141,7 @@
                  values of an SNMP engine.
                 "))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'snmp-framework-mib *mib-modules*)
+  (setf *current-module* nil))
 

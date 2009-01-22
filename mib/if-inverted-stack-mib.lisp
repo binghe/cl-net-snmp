@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'if-inverted-stack-mib *mib-modules*)
   (setf *current-module* 'if-inverted-stack-mib))
 
 (defpackage :asn.1/if-inverted-stack-mib
@@ -74,7 +73,9 @@
           other sub-layer.  Each sub-layer corresponds to a conceptual
           row in the ifTable."))
 
-(deftype |IfInvStackEntry| () 't)
+(defclass |IfInvStackEntry|
+          (asn.1-type)
+          ((|ifInvStackStatus| :type |RowStatus|)))
 
 (defoid |ifInvStackStatus| (|ifInvStackEntry| 1)
   (:type 'object-type)
@@ -120,5 +121,7 @@
    "A collection of objects providing inverted information on
           the layering of MIB-II interfaces."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'if-inverted-stack-mib *mib-modules*)
+  (setf *current-module* nil))
 

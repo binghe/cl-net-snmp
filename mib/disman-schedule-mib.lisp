@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'disman-schedule-mib *mib-modules*)
   (setf *current-module* 'disman-schedule-mib))
 
 (defpackage :asn.1/disman-schedule-mib
@@ -73,7 +72,29 @@
          schedRowStatus is active and schedAdminStatus and
          schedOperStatus are both enabled."))
 
-(deftype |SchedEntry| () 't)
+(defclass |SchedEntry|
+          (asn.1-type)
+          ((|schedOwner| :type |SnmpAdminString|)
+           (|schedName| :type |SnmpAdminString|)
+           (|schedDescr| :type |SnmpAdminString|)
+           (|schedInterval| :type |Unsigned32|)
+           (|schedWeekDay| :type bits)
+           (|schedMonth| :type bits)
+           (|schedDay| :type bits)
+           (|schedHour| :type bits)
+           (|schedMinute| :type bits)
+           (|schedContextName| :type |SnmpAdminString|)
+           (|schedVariable| :type |VariablePointer|)
+           (|schedValue| :type |Integer32|)
+           (|schedType| :type integer)
+           (|schedAdminStatus| :type integer)
+           (|schedOperStatus| :type integer)
+           (|schedFailures| :type |Counter32|)
+           (|schedLastFailure| :type |SnmpPduErrorStatus|)
+           (|schedLastFailed| :type |DateAndTime|)
+           (|schedStorageType| :type |StorageType|)
+           (|schedRowStatus| :type |RowStatus|)
+           (|schedTriggers| :type |Counter32|)))
 
 (defoid |schedOwner| (|schedEntry| 1)
   (:type 'object-type)
@@ -443,5 +464,7 @@
   (:description
    "A collection of objects providing scheduling capabilities."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'disman-schedule-mib *mib-modules*)
+  (setf *current-module* nil))
 

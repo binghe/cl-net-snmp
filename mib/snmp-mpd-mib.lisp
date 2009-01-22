@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'snmp-mpd-mib *mib-modules*)
   (setf *current-module* 'snmp-mpd-mib))
 
 (defpackage :asn.1/snmp-mpd-mib
@@ -95,5 +94,7 @@
                  Dispatching process.
                 "))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'snmp-mpd-mib *mib-modules*)
+  (setf *current-module* nil))
 

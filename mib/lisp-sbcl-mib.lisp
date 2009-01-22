@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'lisp-sbcl-mib *mib-modules*)
   (setf *current-module* 'lisp-sbcl-mib))
 
 (defpackage :asn.1/lisp-sbcl-mib
@@ -20,5 +19,7 @@
   (:type 'module-identity)
   (:description "The MIB module for SBCL"))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'lisp-sbcl-mib *mib-modules*)
+  (setf *current-module* nil))
 

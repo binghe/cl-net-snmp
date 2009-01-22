@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew '|SNMPv2-SMI| *mib-modules*)
   (setf *current-module* '|SNMPv2-SMI|))
 
 (defpackage :|ASN.1/SNMPv2-SMI|
@@ -49,9 +48,9 @@
 
 (defmacro object-identity ())
 
-(deftype |ObjectName| () 'object-id)
+(deftype |ObjectName| () 't)
 
-(deftype |NotificationName| () 'object-id)
+(deftype |NotificationName| () 't)
 
 (deftype |ObjectSyntax| () 't)
 
@@ -84,5 +83,7 @@
   (:status '|current|)
   (:description "A value used for null identifiers."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew '|SNMPv2-SMI| *mib-modules*)
+  (setf *current-module* nil))
 

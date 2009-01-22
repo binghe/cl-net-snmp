@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew '|SNMPv2-MIB| *mib-modules*)
   (setf *current-module* '|SNMPv2-MIB|))
 
 (defpackage :|ASN.1/SNMPv2-MIB|
@@ -161,7 +160,12 @@
   (:status '|current|)
   (:description "An entry (conceptual row) in the sysORTable."))
 
-(deftype |SysOREntry| () 't)
+(defclass |SysOREntry|
+          (asn.1-type)
+          ((|sysORIndex| :type integer)
+           (|sysORID| :type object-id)
+           (|sysORDescr| :type |DisplayString|)
+           (|sysORUpTime| :type |TimeStamp|)))
 
 (defoid |sysORIndex| (|sysOREntry| 1)
   (:type 'object-type)
@@ -700,5 +704,7 @@
    "A collection of objects from RFC 1213 made obsolete
             by this MIB module."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew '|SNMPv2-MIB| *mib-modules*)
+  (setf *current-module* nil))
 

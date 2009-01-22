@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'ipv6-flow-label-mib *mib-modules*)
   (setf *current-module* 'ipv6-flow-label-mib))
 
 (defpackage :asn.1/ipv6-flow-label-mib
@@ -31,5 +30,7 @@
 
 (deftype |IPv6FlowLabelOrAny| () 't)
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'ipv6-flow-label-mib *mib-modules*)
+  (setf *current-module* nil))
 

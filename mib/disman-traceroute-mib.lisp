@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'disman-traceroute-mib *mib-modules*)
   (setf *current-module* 'disman-traceroute-mib))
 
 (defpackage :asn.1/disman-traceroute-mib
@@ -99,7 +98,35 @@
         enables the same management application to have
         multiple requests outstanding."))
 
-(deftype |TraceRouteCtlEntry| () 't)
+(defclass |TraceRouteCtlEntry|
+          (asn.1-type)
+          ((|traceRouteCtlOwnerIndex| :type |SnmpAdminString|)
+           (|traceRouteCtlTestName| :type |SnmpAdminString|)
+           (|traceRouteCtlTargetAddressType| :type |InetAddressType|)
+           (|traceRouteCtlTargetAddress| :type |InetAddress|)
+           (|traceRouteCtlByPassRouteTable| :type |TruthValue|)
+           (|traceRouteCtlDataSize| :type |Unsigned32|)
+           (|traceRouteCtlTimeOut| :type |Unsigned32|)
+           (|traceRouteCtlProbesPerHop| :type |Unsigned32|)
+           (|traceRouteCtlPort| :type |Unsigned32|)
+           (|traceRouteCtlMaxTtl| :type |Unsigned32|)
+           (|traceRouteCtlDSField| :type |Unsigned32|)
+           (|traceRouteCtlSourceAddressType| :type |InetAddressType|)
+           (|traceRouteCtlSourceAddress| :type |InetAddress|)
+           (|traceRouteCtlIfIndex| :type |InterfaceIndexOrZero|)
+           (|traceRouteCtlMiscOptions| :type |SnmpAdminString|)
+           (|traceRouteCtlMaxFailures| :type |Unsigned32|)
+           (|traceRouteCtlDontFragment| :type |TruthValue|)
+           (|traceRouteCtlInitialTtl| :type |Unsigned32|)
+           (|traceRouteCtlFrequency| :type |Unsigned32|)
+           (|traceRouteCtlStorageType| :type |StorageType|)
+           (|traceRouteCtlAdminStatus| :type integer)
+           (|traceRouteCtlDescr| :type |SnmpAdminString|)
+           (|traceRouteCtlMaxRows| :type |Unsigned32|)
+           (|traceRouteCtlTrapGeneration| :type bits)
+           (|traceRouteCtlCreateHopsEntries| :type |TruthValue|)
+           (|traceRouteCtlType| :type object-id)
+           (|traceRouteCtlRowStatus| :type |RowStatus|)))
 
 (defoid |traceRouteCtlOwnerIndex| (|traceRouteCtlEntry| 1)
   (:type 'object-type)
@@ -550,7 +577,16 @@
         corresponds to the traceRouteCtlEntry that caused it to
         be created."))
 
-(deftype |TraceRouteResultsEntry| () 't)
+(defclass |TraceRouteResultsEntry|
+          (asn.1-type)
+          ((|traceRouteResultsOperStatus| :type integer)
+           (|traceRouteResultsCurHopCount| :type |Gauge32|)
+           (|traceRouteResultsCurProbeCount| :type |Gauge32|)
+           (|traceRouteResultsIpTgtAddrType| :type |InetAddressType|)
+           (|traceRouteResultsIpTgtAddr| :type |InetAddress|)
+           (|traceRouteResultsTestAttempts| :type |Gauge32|)
+           (|traceRouteResultsTestSuccesses| :type |Gauge32|)
+           (|traceRouteResultsLastGoodPath| :type |DateAndTime|)))
 
 (defoid |traceRouteResultsOperStatus| (|traceRouteResultsEntry| 1)
   (:type 'object-type)
@@ -681,7 +717,19 @@
         select the hop and the probe for a particular
         traceroute operation."))
 
-(deftype |TraceRouteProbeHistoryEntry| () 't)
+(defclass |TraceRouteProbeHistoryEntry|
+          (asn.1-type)
+          ((|traceRouteProbeHistoryIndex| :type |Unsigned32|)
+           (|traceRouteProbeHistoryHopIndex| :type |Unsigned32|)
+           (|traceRouteProbeHistoryProbeIndex| :type |Unsigned32|)
+           (|traceRouteProbeHistoryHAddrType| :type |InetAddressType|)
+           (|traceRouteProbeHistoryHAddr| :type |InetAddress|)
+           (|traceRouteProbeHistoryResponse| :type |Unsigned32|)
+           (|traceRouteProbeHistoryStatus|
+            :type
+            |OperationResponseStatus|)
+           (|traceRouteProbeHistoryLastRC| :type |Integer32|)
+           (|traceRouteProbeHistoryTime| :type |DateAndTime|)))
 
 (defoid |traceRouteProbeHistoryIndex| (|traceRouteProbeHistoryEntry| 1)
   (:type 'object-type)
@@ -816,7 +864,18 @@
         traceRouteHopsHopIndex, selects a
         hop in a traceroute path."))
 
-(deftype |TraceRouteHopsEntry| () 't)
+(defclass |TraceRouteHopsEntry|
+          (asn.1-type)
+          ((|traceRouteHopsHopIndex| :type |Unsigned32|)
+           (|traceRouteHopsIpTgtAddressType| :type |InetAddressType|)
+           (|traceRouteHopsIpTgtAddress| :type |InetAddress|)
+           (|traceRouteHopsMinRtt| :type |Unsigned32|)
+           (|traceRouteHopsMaxRtt| :type |Unsigned32|)
+           (|traceRouteHopsAverageRtt| :type |Unsigned32|)
+           (|traceRouteHopsRttSumOfSquares| :type |Unsigned32|)
+           (|traceRouteHopsSentProbes| :type |Unsigned32|)
+           (|traceRouteHopsProbeResponses| :type |Unsigned32|)
+           (|traceRouteHopsLastGoodProbe| :type |DateAndTime|)))
 
 (defoid |traceRouteHopsHopIndex| (|traceRouteHopsEntry| 1)
   (:type 'object-type)
@@ -1031,5 +1090,7 @@
   (:status '|deprecated|)
   (:description "The group of DateAndTime objects."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'disman-traceroute-mib *mib-modules*)
+  (setf *current-module* nil))
 

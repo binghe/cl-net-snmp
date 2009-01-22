@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'ucd-dlmod-mib *mib-modules*)
   (setf *current-module* 'ucd-dlmod-mib))
 
 (defpackage :asn.1/ucd-dlmod-mib
@@ -46,7 +45,13 @@
   (:status '|current|)
   (:description "The parameters of dynamically loaded MIB module."))
 
-(deftype |DlmodEntry| () 't)
+(defclass |DlmodEntry|
+          (asn.1-type)
+          ((|dlmodIndex| :type |Integer32|)
+           (|dlmodName| :type |DisplayString|)
+           (|dlmodPath| :type |DisplayString|)
+           (|dlmodError| :type |DisplayString|)
+           (|dlmodStatus| :type integer)))
 
 (defoid |dlmodIndex| (|dlmodEntry| 1)
   (:type 'object-type)
@@ -84,5 +89,7 @@
   (:status '|current|)
   (:description "The current status of the loaded module."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'ucd-dlmod-mib *mib-modules*)
+  (setf *current-module* nil))
 
