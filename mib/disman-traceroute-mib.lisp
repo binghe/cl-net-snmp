@@ -72,7 +72,7 @@
 
 (defoid |traceRouteCtlTable| (|traceRouteObjects| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |TraceRouteCtlEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -540,7 +540,7 @@
 
 (defoid |traceRouteResultsTable| (|traceRouteObjects| 3)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |TraceRouteResultsEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -681,7 +681,7 @@
 
 (defoid |traceRouteProbeHistoryTable| (|traceRouteObjects| 4)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |TraceRouteProbeHistoryEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -838,7 +838,7 @@
 
 (defoid |traceRouteHopsTable| (|traceRouteObjects| 5)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |TraceRouteHopsEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

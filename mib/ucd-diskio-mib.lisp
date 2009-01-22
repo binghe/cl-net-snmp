@@ -23,7 +23,7 @@
 
 (defoid |diskIOTable| (|ucdDiskIOMIB| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |DiskIOEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

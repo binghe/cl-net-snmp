@@ -132,7 +132,7 @@
 
 (defoid |mteTriggerTable| (|mteTrigger| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |MteTriggerEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A table of management event trigger information."))
@@ -428,7 +428,7 @@
 
 (defoid |mteTriggerDeltaTable| (|mteTrigger| 3)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |MteTriggerDeltaEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -510,7 +510,7 @@
 
 (defoid |mteTriggerExistenceTable| (|mteTrigger| 4)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |MteTriggerExistenceEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -616,7 +616,7 @@
 
 (defoid |mteTriggerBooleanTable| (|mteTrigger| 5)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |MteTriggerBooleanEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -723,7 +723,7 @@
 
 (defoid |mteTriggerThresholdTable| (|mteTrigger| 6)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |MteTriggerThresholdEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -986,7 +986,7 @@
 
 (defoid |mteObjectsTable| (|mteObjects| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |MteObjectsEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -1102,7 +1102,7 @@
 
 (defoid |mteEventTable| (|mteEvent| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |MteEventEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A table of management event action information."))
@@ -1177,7 +1177,7 @@
 
 (defoid |mteEventNotificationTable| (|mteEvent| 3)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |MteEventNotificationEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -1236,7 +1236,7 @@
 
 (defoid |mteEventSetTable| (|mteEvent| 4)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |MteEventSetEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A table of management event action information."))

@@ -87,7 +87,7 @@
 
 (defoid |nlmConfigLogTable| (|nlmConfig| 3)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |NlmConfigLogEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A table of logging control entries."))
@@ -237,7 +237,7 @@
 
 (defoid |nlmStatsLogTable| (|nlmStats| 3)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |NlmStatsLogEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A table of Notification log statistics entries."))
@@ -274,7 +274,7 @@
 
 (defoid |nlmLogTable| (|nlmLog| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |NlmLogEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -439,7 +439,7 @@
 
 (defoid |nlmLogVariableTable| (|nlmLog| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |NlmLogVariableEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

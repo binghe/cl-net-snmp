@@ -25,7 +25,7 @@
 
 (defoid |ipv6UdpTable| (|udp| 6)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |Ipv6UdpEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

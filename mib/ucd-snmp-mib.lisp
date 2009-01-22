@@ -68,7 +68,7 @@
 
 (defoid |prTable| (|ucdavis| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |PrEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -179,7 +179,7 @@
 
 (defoid |extTable| (|ucdavis| 8)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |ExtEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -488,7 +488,7 @@
 
 (defoid |dskTable| (|ucdavis| 9)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |DskEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -613,7 +613,7 @@
 
 (defoid |laTable| (|ucdavis| 10)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |LaEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "Load average information."))
@@ -824,7 +824,7 @@
 
 (defoid |mrTable| (|ucdavis| 102)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |MrEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -1171,7 +1171,7 @@
 
 (defoid |fileTable| (|ucdavis| 15)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |FileEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "Table of monitored files."))
@@ -1246,7 +1246,7 @@
 
 (defoid |logMatchTable| (|logMatch| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |LogMatchEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "Table of monitored files."))

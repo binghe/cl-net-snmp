@@ -151,7 +151,7 @@
 
 (defoid |hrStorageTable| (|hrStorage| 3)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |HrStorageEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -284,7 +284,7 @@
 
 (defoid |hrDeviceTable| (|hrDevice| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |HrDeviceEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -402,7 +402,7 @@
 
 (defoid |hrProcessorTable| (|hrDevice| 3)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |HrProcessorEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -455,7 +455,7 @@
 
 (defoid |hrNetworkTable| (|hrDevice| 4)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |HrNetworkEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -497,7 +497,7 @@
 
 (defoid |hrPrinterTable| (|hrDevice| 5)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |HrPrinterEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -578,7 +578,7 @@
 
 (defoid |hrDiskStorageTable| (|hrDevice| 6)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |HrDiskStorageEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -653,7 +653,7 @@
 
 (defoid |hrPartitionTable| (|hrDevice| 7)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |HrPartitionEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -738,7 +738,7 @@
 
 (defoid |hrFSTable| (|hrDevice| 8)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |HrFSEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -894,7 +894,7 @@
 
 (defoid |hrSWRunTable| (|hrSWRun| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |HrSWRunEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -998,7 +998,7 @@
 
 (defoid |hrSWRunPerfTable| (|hrSWRunPerf| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |HrSWRunPerfEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -1069,7 +1069,7 @@
 
 (defoid |hrSWInstalledTable| (|hrSWInstalled| 3)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |HrSWInstalledEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

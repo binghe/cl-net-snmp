@@ -25,7 +25,7 @@
 
 (defoid |lmTempSensorsTable| (|lmSensors| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |LMTempSensorsEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "Table of temperature sensors and their values."))
@@ -65,7 +65,7 @@
 
 (defoid |lmFanSensorsTable| (|lmSensors| 3)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |LMFanSensorsEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "Table of fan sensors and their values."))
@@ -105,7 +105,7 @@
 
 (defoid |lmVoltSensorsTable| (|lmSensors| 4)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |LMVoltSensorsEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "Table of voltage sensors and their values."))
@@ -145,7 +145,7 @@
 
 (defoid |lmMiscSensorsTable| (|lmSensors| 5)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |LMMiscSensorsEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

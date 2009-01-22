@@ -147,7 +147,7 @@
 
 (defoid |usmUserTable| (|usmUser| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |UsmUserEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

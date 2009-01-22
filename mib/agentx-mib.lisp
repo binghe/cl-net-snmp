@@ -84,7 +84,7 @@
 
 (defoid |agentxConnectionTable| (|agentxConnection| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |AgentxConnectionEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -171,7 +171,7 @@
 
 (defoid |agentxSessionTable| (|agentxSession| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |AgentxSessionEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -301,7 +301,7 @@
 
 (defoid |agentxRegistrationTable| (|agentxRegistration| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |AgentxRegistrationEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

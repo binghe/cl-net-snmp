@@ -71,7 +71,7 @@
 
 (defoid |lookupCtlTable| (|lookupObjects| 3)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |LookupCtlEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -262,7 +262,7 @@
 
 (defoid |lookupResultsTable| (|lookupObjects| 4)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |LookupResultsEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

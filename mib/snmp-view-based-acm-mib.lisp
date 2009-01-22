@@ -36,7 +36,7 @@
 
 (defoid |vacmContextTable| (|vacmMIBObjects| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |VacmContextEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -97,7 +97,7 @@
 
 (defoid |vacmSecurityToGroupTable| (|vacmMIBObjects| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |VacmSecurityToGroupEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -200,7 +200,7 @@
 
 (defoid |vacmAccessTable| (|vacmMIBObjects| 4)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |VacmAccessEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -451,7 +451,7 @@
 
 (defoid |vacmViewTreeFamilyTable| (|vacmMIBViews| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |VacmViewTreeFamilyEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

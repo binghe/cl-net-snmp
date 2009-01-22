@@ -34,7 +34,7 @@
 
 (defoid |snmpCommunityTable| (|snmpCommunityMIBObjects| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |SnmpCommunityEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -161,7 +161,7 @@
 
 (defoid |snmpTargetAddrExtTable| (|snmpCommunityMIBObjects| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |SnmpTargetAddrExtEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

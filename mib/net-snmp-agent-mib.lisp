@@ -61,7 +61,7 @@
 
 (defoid |nsCacheTable| (|nsCache| 3)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |NsCacheEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A table of individual MIB module data caches."))
@@ -140,7 +140,7 @@
 
 (defoid |nsDebugTokenTable| (|nsConfigDebug| 4)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |NsDebugTokenEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -188,7 +188,7 @@
 
 (defoid |nsLoggingTable| (|nsConfigLogging| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |NsLoggingEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -258,7 +258,7 @@
 
 (defoid |nsTransactionTable| (|nsTransactions| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |NsTransactionEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -293,7 +293,7 @@
 
 (defoid |nsModuleTable| (|nsMibRegistry| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |NsModuleEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

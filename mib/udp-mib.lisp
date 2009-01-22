@@ -116,7 +116,7 @@
 
 (defoid |udpEndpointTable| (|udp| 7)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |UdpEndpointEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -325,7 +325,7 @@
 
 (defoid |udpTable| (|udp| 5)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |UdpEntry|))
   (:max-access '|not-accessible|)
   (:status '|deprecated|)
   (:description
