@@ -40,7 +40,7 @@
 
 (defoid |snmpNotifyTable| (|snmpNotifyObjects| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |SnmpNotifyEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -143,7 +143,7 @@
 
 (defoid |snmpNotifyFilterProfileTable| (|snmpNotifyObjects| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |SnmpNotifyFilterProfileEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -216,7 +216,7 @@
 
 (defoid |snmpNotifyFilterTable| (|snmpNotifyObjects| 3)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |SnmpNotifyFilterEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

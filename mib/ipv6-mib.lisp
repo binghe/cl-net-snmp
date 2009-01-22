@@ -85,7 +85,7 @@
 
 (defoid |ipv6IfTable| (|ipv6MIBObjects| 5)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |Ipv6IfEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -272,7 +272,7 @@
 
 (defoid |ipv6IfStatsTable| (|ipv6MIBObjects| 6)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |Ipv6IfStatsEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "IPv6 interface traffic statistics."))
@@ -549,7 +549,7 @@
 
 (defoid |ipv6AddrPrefixTable| (|ipv6MIBObjects| 7)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |Ipv6AddrPrefixEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -643,7 +643,7 @@
 
 (defoid |ipv6AddrTable| (|ipv6MIBObjects| 8)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |Ipv6AddrEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -751,7 +751,7 @@
 
 (defoid |ipv6RouteTable| (|ipv6MIBObjects| 11)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |Ipv6RouteEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -977,7 +977,7 @@
 
 (defoid |ipv6NetToMediaTable| (|ipv6MIBObjects| 12)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |Ipv6NetToMediaEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

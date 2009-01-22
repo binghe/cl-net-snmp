@@ -38,7 +38,7 @@
 
 (defoid |snmpProxyTable| (|snmpProxyObjects| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |SnmpProxyEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

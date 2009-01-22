@@ -229,7 +229,7 @@
 
 (defoid |tcpConnectionTable| (|tcp| 19)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |TcpConnectionEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -360,7 +360,7 @@
 
 (defoid |tcpListenerTable| (|tcp| 20)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |TcpListenerEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -476,7 +476,7 @@
 
 (defoid |tcpConnTable| (|tcp| 13)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |TcpConnEntry|))
   (:max-access '|not-accessible|)
   (:status '|deprecated|)
   (:description

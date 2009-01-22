@@ -93,7 +93,7 @@
 
 (defoid |netSnmpIETFWGTable| (|netSnmpExampleTables| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |NetSnmpIETFWGEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -144,7 +144,7 @@
 
 (defoid |netSnmpHostsTable| (|netSnmpExampleTables| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |NetSnmpHostsEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

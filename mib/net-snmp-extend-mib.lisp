@@ -36,7 +36,7 @@
 
 (defoid |nsExtendConfigTable| (|nsExtendObjects| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |NsExtendConfigEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -149,7 +149,7 @@
 
 (defoid |nsExtendOutput1Table| (|nsExtendObjects| 3)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |NsExtendOutput1Entry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -201,7 +201,7 @@
 
 (defoid |nsExtendOutput2Table| (|nsExtendObjects| 4)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |NsExtendOutput2Entry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

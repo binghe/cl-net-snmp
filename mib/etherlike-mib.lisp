@@ -56,7 +56,7 @@
 
 (defoid |dot3StatsTable| (|dot3| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |Dot3StatsEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -608,7 +608,7 @@
 
 (defoid |dot3CollTable| (|dot3| 5)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |Dot3CollEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -676,7 +676,7 @@
 
 (defoid |dot3ControlTable| (|dot3| 9)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |Dot3ControlEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -761,7 +761,7 @@
 
 (defoid |dot3PauseTable| (|dot3| 10)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |Dot3PauseEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -963,7 +963,7 @@
 
 (defoid |dot3HCStatsTable| (|dot3| 11)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |Dot3HCStatsEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

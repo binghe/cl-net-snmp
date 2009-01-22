@@ -49,7 +49,7 @@
 
 (defoid |schedTable| (|schedObjects| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |SchedEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

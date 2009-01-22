@@ -26,7 +26,7 @@
 
 (defoid |ipv6IfIcmpTable| (|ipv6IcmpMIBObjects| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |Ipv6IfIcmpEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

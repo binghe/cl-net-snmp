@@ -28,7 +28,7 @@
 
 (defoid |nsVacmAccessTable| (|netSnmpVacmMIB| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |NsVacmAccessEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "Net-SNMP extensions to vacmAccessTable."))

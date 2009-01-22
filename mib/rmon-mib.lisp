@@ -53,7 +53,7 @@
 
 (defoid |etherStatsTable| (|statistics| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |EtherStatsEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A list of Ethernet statistics entries."))
@@ -393,7 +393,7 @@
 
 (defoid |historyControlTable| (|history| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |HistoryControlEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A list of history control entries."))
@@ -575,7 +575,7 @@
 
 (defoid |etherHistoryTable| (|history| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |EtherHistoryEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A list of Ethernet history entries."))
@@ -831,7 +831,7 @@
 
 (defoid |alarmTable| (|alarm| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |AlarmEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A list of alarm entries."))
@@ -1088,7 +1088,7 @@
 
 (defoid |hostControlTable| (|hosts| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |HostControlEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A list of host table control entries."))
@@ -1199,7 +1199,7 @@
 
 (defoid |hostTable| (|hosts| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |HostEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A list of host entries."))
@@ -1346,7 +1346,7 @@
 
 (defoid |hostTimeTable| (|hosts| 3)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |HostTimeEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A list of time-ordered host table entries."))
@@ -1501,7 +1501,7 @@
 
 (defoid |hostTopNControlTable| (|hostTopN| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |HostTopNControlEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A list of top N host control entries."))
@@ -1680,7 +1680,7 @@
 
 (defoid |hostTopNTable| (|hostTopN| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |HostTopNEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A list of top N host entries."))
@@ -1748,7 +1748,7 @@
 
 (defoid |matrixControlTable| (|matrix| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |MatrixControlEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -1865,7 +1865,7 @@
 
 (defoid |matrixSDTable| (|matrix| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |MatrixSDEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -1949,7 +1949,7 @@
 
 (defoid |matrixDSTable| (|matrix| 3)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |MatrixDSEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -2033,7 +2033,7 @@
 
 (defoid |filterTable| (|filter| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |FilterEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A list of packet filter entries."))
@@ -2302,7 +2302,7 @@
 
 (defoid |channelTable| (|filter| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |ChannelEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A list of packet channel entries."))
@@ -2531,7 +2531,7 @@
 
 (defoid |bufferControlTable| (|capture| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |BufferControlEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A list of buffers control entries."))
@@ -2788,7 +2788,7 @@
 
 (defoid |captureBufferTable| (|capture| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |CaptureBufferEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A list of packets captured off of a channel."))
@@ -2926,7 +2926,7 @@
 
 (defoid |eventTable| (|event| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |EventEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A list of events to be generated."))
@@ -3029,7 +3029,7 @@
 
 (defoid |logTable| (|event| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |LogEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A list of events that have been logged."))

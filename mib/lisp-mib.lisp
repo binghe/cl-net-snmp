@@ -123,7 +123,7 @@
 
 (defoid |lispFeatureTable| (|lispSystem| 14)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |lispFeatureEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "*features*"))
@@ -157,7 +157,7 @@
 
 (defoid |lispPackageTable| (|lispSystem| 15)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |lispPackageEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "(list-all-packages)"))
@@ -192,7 +192,7 @@
 
 (defoid |lispModuleTable| (|lispSystem| 16)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |lispModuleEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "*modules*"))

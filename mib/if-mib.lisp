@@ -62,7 +62,7 @@
 
 (defoid |ifTable| (|interfaces| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |IfEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -439,7 +439,7 @@
 
 (defoid |ifXTable| (|ifMIBObjects| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |IfXEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -802,7 +802,7 @@
 
 (defoid |ifStackTable| (|ifMIBObjects| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |IfStackEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -902,7 +902,7 @@
 
 (defoid |ifRcvAddressTable| (|ifMIBObjects| 4)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |IfRcvAddressEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -1087,7 +1087,7 @@
 
 (defoid |ifTestTable| (|ifMIBObjects| 3)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |IfTestEntry|))
   (:max-access '|not-accessible|)
   (:status '|deprecated|)
   (:description

@@ -32,7 +32,7 @@
 
 (defoid |ipFwAccTable| (|ucdIpFwAccMIB| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |IpFwAccEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A table with the accounting rules of the IP firewall"))

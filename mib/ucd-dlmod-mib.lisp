@@ -33,7 +33,7 @@
 
 (defoid |dlmodTable| (|ucdDlmodMIB| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |DlmodEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A table of dlmodEntry."))

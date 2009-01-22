@@ -48,7 +48,7 @@
 
 (defoid |bgpPeerTable| (|bgp| 3)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |BgpPeerEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -378,7 +378,7 @@
 
 (defoid |bgpRcvdPathAttrTable| (|bgp| 5)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |BgpPathAttrEntry|))
   (:max-access '|not-accessible|)
   (:status '|obsolete|)
   (:description
@@ -462,7 +462,7 @@
 
 (defoid |bgp4PathAttrTable| (|bgp| 6)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |Bgp4PathAttrEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

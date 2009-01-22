@@ -70,7 +70,7 @@
 
 (defoid |snmpTargetAddrTable| (|snmpTargetObjects| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |SnmpTargetAddrEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -230,7 +230,7 @@
 
 (defoid |snmpTargetParamsTable| (|snmpTargetObjects| 3)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |SnmpTargetParamsEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

@@ -25,7 +25,7 @@
 
 (defoid |ipv6TcpConnTable| (|tcp| 16)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |Ipv6TcpConnEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

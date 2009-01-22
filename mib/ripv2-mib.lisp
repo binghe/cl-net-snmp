@@ -47,7 +47,7 @@
 
 (defoid |rip2IfStatTable| (|rip2| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |Rip2IfStatEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -122,7 +122,7 @@
 
 (defoid |rip2IfConfTable| (|rip2| 3)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |Rip2IfConfEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -260,7 +260,7 @@
 
 (defoid |rip2PeerTable| (|rip2| 4)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |Rip2PeerEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "A list of RIP Peers."))

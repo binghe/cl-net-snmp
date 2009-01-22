@@ -28,7 +28,7 @@
 
 (defoid |applTable| (|application| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |ApplEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -261,7 +261,7 @@
 
 (defoid |assocTable| (|application| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |AssocEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

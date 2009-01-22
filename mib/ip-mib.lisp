@@ -138,7 +138,7 @@
 
 (defoid |ipv4InterfaceTable| (|ip| 28)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |Ipv4InterfaceEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -223,7 +223,7 @@
 
 (defoid |ipv6InterfaceTable| (|ip| 30)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |Ipv6InterfaceEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -351,7 +351,7 @@
 
 (defoid |ipSystemStatsTable| (|ipTrafficStats| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |IpSystemStatsEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -1199,7 +1199,7 @@
 
 (defoid |ipIfStatsTable| (|ipTrafficStats| 3)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |IpIfStatsEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -2031,7 +2031,7 @@
 
 (defoid |ipAddressPrefixTable| (|ip| 32)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |IpAddressPrefixEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -2219,7 +2219,7 @@
 
 (defoid |ipAddressTable| (|ip| 34)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |IpAddressEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -2394,7 +2394,7 @@
 
 (defoid |ipNetToPhysicalTable| (|ip| 35)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |IpNetToPhysicalEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -2565,7 +2565,7 @@
 
 (defoid |ipv6ScopeZoneIndexTable| (|ip| 36)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |Ipv6ScopeZoneIndexEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -2703,7 +2703,7 @@
 
 (defoid |ipDefaultRouterTable| (|ip| 37)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |IpDefaultRouterEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -2820,7 +2820,7 @@
 
 (defoid |ipv6RouterAdvertTable| (|ip| 39)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |Ipv6RouterAdvertEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -3016,7 +3016,7 @@
 
 (defoid |icmpStatsTable| (|icmp| 29)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |IcmpStatsEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description "The table of generic system-wide ICMP counters."))
@@ -3088,7 +3088,7 @@
 
 (defoid |icmpMsgStatsTable| (|icmp| 30)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |IcmpMsgStatsEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -3683,7 +3683,7 @@
 
 (defoid |ipAddrTable| (|ip| 20)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |IpAddrEntry|))
   (:max-access '|not-accessible|)
   (:status '|deprecated|)
   (:description
@@ -3768,7 +3768,7 @@
 
 (defoid |ipNetToMediaTable| (|ip| 22)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax '(vector |IpNetToMediaEntry|))
   (:max-access '|not-accessible|)
   (:status '|deprecated|)
   (:description
