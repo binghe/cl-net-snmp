@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'snmp-usm-aes-mib *mib-modules*)
   (setf *current-module* 'snmp-usm-aes-mib))
 
 (defpackage :asn.1/snmp-usm-aes-mib
@@ -35,5 +34,7 @@
   (:status '|current|)
   (:description "The CFB128-AES-128 Privacy Protocol."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'snmp-usm-aes-mib *mib-modules*)
+  (setf *current-module* nil))
 

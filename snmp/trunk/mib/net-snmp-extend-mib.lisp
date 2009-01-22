@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'net-snmp-extend-mib *mib-modules*)
   (setf *current-module* 'net-snmp-extend-mib))
 
 (defpackage :asn.1/net-snmp-extend-mib
@@ -30,7 +29,7 @@
 
 (defoid |nsExtendNumEntries| (|nsExtendObjects| 1)
   (:type 'object-type)
-  (:syntax ':integer)
+  (:syntax 'integer)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The number of rows in the nsExtendConfigTable"))
@@ -50,7 +49,17 @@
   (:status '|current|)
   (:description "A conceptual row within the extension table."))
 
-(deftype |NsExtendConfigEntry| () 't)
+(defclass |NsExtendConfigEntry|
+          (asn.1-type)
+          ((|nsExtendToken| :type |DisplayString|)
+           (|nsExtendCommand| :type |DisplayString|)
+           (|nsExtendArgs| :type |DisplayString|)
+           (|nsExtendInput| :type |DisplayString|)
+           (|nsExtendCacheTime| :type integer)
+           (|nsExtendExecType| :type integer)
+           (|nsExtendRunType| :type integer)
+           (|nsExtendStorage| :type |StorageType|)
+           (|nsExtendStatus| :type |RowStatus|)))
 
 (defoid |nsExtendToken| (|nsExtendConfigEntry| 1)
   (:type 'object-type)
@@ -83,7 +92,7 @@
 
 (defoid |nsExtendCacheTime| (|nsExtendConfigEntry| 5)
   (:type 'object-type)
-  (:syntax ':integer)
+  (:syntax 'integer)
   (:max-access '|read-create|)
   (:status '|current|)
   (:description
@@ -154,7 +163,12 @@
   (:status '|current|)
   (:description "A conceptual row within the extension table."))
 
-(deftype |NsExtendOutput1Entry| () 't)
+(defclass |NsExtendOutput1Entry|
+          (asn.1-type)
+          ((|nsExtendOutput1Line| :type |DisplayString|)
+           (|nsExtendOutputFull| :type |DisplayString|)
+           (|nsExtendOutNumLines| :type integer)
+           (|nsExtendResult| :type integer)))
 
 (defoid |nsExtendOutput1Line| (|nsExtendOutput1Entry| 1)
   (:type 'object-type)
@@ -202,7 +216,10 @@
   (:status '|current|)
   (:description "A conceptual row within the line-based output table."))
 
-(deftype |NsExtendOutput2Entry| () 't)
+(defclass |NsExtendOutput2Entry|
+          (asn.1-type)
+          ((|nsExtendLineIndex| :type integer)
+           (|nsExtendOutLine| :type |DisplayString|)))
 
 (defoid |nsExtendLineIndex| (|nsExtendOutput2Entry| 1)
   (:type 'object-type)
@@ -233,5 +250,7 @@
   (:description
    "Objects relating to the output of extension commands."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'net-snmp-extend-mib *mib-modules*)
+  (setf *current-module* nil))
 

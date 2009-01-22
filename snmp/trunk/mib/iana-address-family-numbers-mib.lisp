@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'iana-address-family-numbers-mib *mib-modules*)
   (setf *current-module* 'iana-address-family-numbers-mib))
 
 (defpackage :asn.1/iana-address-family-numbers-mib
@@ -23,5 +22,7 @@
 
 (deftype |AddressFamilyNumbers| () 't)
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'iana-address-family-numbers-mib *mib-modules*)
+  (setf *current-module* nil))
 

@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'lisp-cmucl-mib *mib-modules*)
   (setf *current-module* 'lisp-cmucl-mib))
 
 (defpackage :asn.1/lisp-cmucl-mib
@@ -20,5 +19,7 @@
   (:type 'module-identity)
   (:description "The MIB module for CMUCL"))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'lisp-cmucl-mib *mib-modules*)
+  (setf *current-module* nil))
 

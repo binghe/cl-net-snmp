@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'net-snmp-vacm-mib *mib-modules*)
   (setf *current-module* 'net-snmp-vacm-mib))
 
 (defpackage :asn.1/net-snmp-vacm-mib
@@ -41,7 +40,13 @@
   (:status '|current|)
   (:description "Net-SNMP extensions to vacmAccessTable."))
 
-(deftype |NsVacmAccessEntry| () 't)
+(defclass |NsVacmAccessEntry|
+          (asn.1-type)
+          ((|nsVacmAuthType| :type |SnmpAdminString|)
+           (|nsVacmContextMatch| :type integer)
+           (|nsVacmViewName| :type |SnmpAdminString|)
+           (|nsVacmStorageType| :type |StorageType|)
+           (|nsVacmStatus| :type |RowStatus|)))
 
 (defoid |nsVacmAuthType| (|nsVacmAccessEntry| 1)
   (:type 'object-type)
@@ -121,5 +126,7 @@
                  row of the vacmAccessTable.
                 "))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'net-snmp-vacm-mib *mib-modules*)
+  (setf *current-module* nil))
 

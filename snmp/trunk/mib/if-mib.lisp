@@ -3,9 +3,7 @@
 
 (in-package :asn.1)
 
-(eval-when (:load-toplevel :execute)
-  (pushnew 'if-mib *mib-modules*)
-  (setf *current-module* 'if-mib))
+(eval-when (:load-toplevel :execute) (setf *current-module* 'if-mib))
 
 (defpackage :asn.1/if-mib
   (:nicknames :if-mib)
@@ -80,7 +78,30 @@
    "An entry containing management information applicable to a
             particular interface."))
 
-(deftype |IfEntry| () 't)
+(defclass |IfEntry|
+          (asn.1-type)
+          ((|ifIndex| :type |InterfaceIndex|)
+           (|ifDescr| :type |DisplayString|)
+           (|ifType| :type |IANAifType|)
+           (|ifMtu| :type |Integer32|)
+           (|ifSpeed| :type |Gauge32|)
+           (|ifPhysAddress| :type |PhysAddress|)
+           (|ifAdminStatus| :type integer)
+           (|ifOperStatus| :type integer)
+           (|ifLastChange| :type |TimeTicks|)
+           (|ifInOctets| :type |Counter32|)
+           (|ifInUcastPkts| :type |Counter32|)
+           (|ifInNUcastPkts| :type |Counter32|)
+           (|ifInDiscards| :type |Counter32|)
+           (|ifInErrors| :type |Counter32|)
+           (|ifInUnknownProtos| :type |Counter32|)
+           (|ifOutOctets| :type |Counter32|)
+           (|ifOutUcastPkts| :type |Counter32|)
+           (|ifOutNUcastPkts| :type |Counter32|)
+           (|ifOutDiscards| :type |Counter32|)
+           (|ifOutErrors| :type |Counter32|)
+           (|ifOutQLen| :type |Gauge32|)
+           (|ifSpecific| :type object-id)))
 
 (defoid |ifIndex| (|ifEntry| 1)
   (:type 'object-type)
@@ -436,7 +457,27 @@
    "An entry containing additional management information
             applicable to a particular interface."))
 
-(deftype |IfXEntry| () 't)
+(defclass |IfXEntry|
+          (asn.1-type)
+          ((|ifName| :type |DisplayString|)
+           (|ifInMulticastPkts| :type |Counter32|)
+           (|ifInBroadcastPkts| :type |Counter32|)
+           (|ifOutMulticastPkts| :type |Counter32|)
+           (|ifOutBroadcastPkts| :type |Counter32|)
+           (|ifHCInOctets| :type |Counter64|)
+           (|ifHCInUcastPkts| :type |Counter64|)
+           (|ifHCInMulticastPkts| :type |Counter64|)
+           (|ifHCInBroadcastPkts| :type |Counter64|)
+           (|ifHCOutOctets| :type |Counter64|)
+           (|ifHCOutUcastPkts| :type |Counter64|)
+           (|ifHCOutMulticastPkts| :type |Counter64|)
+           (|ifHCOutBroadcastPkts| :type |Counter64|)
+           (|ifLinkUpDownTrapEnable| :type integer)
+           (|ifHighSpeed| :type |Gauge32|)
+           (|ifPromiscuousMode| :type |TruthValue|)
+           (|ifConnectorPresent| :type |TruthValue|)
+           (|ifAlias| :type |DisplayString|)
+           (|ifCounterDiscontinuityTime| :type |TimeStamp|)))
 
 (defoid |ifName| (|ifXEntry| 1)
   (:type 'object-type)
@@ -803,7 +844,11 @@
             other sub-layer.  Each sub-layer corresponds to a conceptual
             row in the ifTable."))
 
-(deftype |IfStackEntry| () 't)
+(defclass |IfStackEntry|
+          (asn.1-type)
+          ((|ifStackHigherLayer| :type |InterfaceIndexOrZero|)
+           (|ifStackLowerLayer| :type |InterfaceIndexOrZero|)
+           (|ifStackStatus| :type |RowStatus|)))
 
 (defoid |ifStackHigherLayer| (|ifStackEntry| 1)
   (:type 'object-type)
@@ -891,7 +936,11 @@
             system will accept packets/frames on the particular
             interface identified by the index value ifIndex."))
 
-(deftype |IfRcvAddressEntry| () 't)
+(defclass |IfRcvAddressEntry|
+          (asn.1-type)
+          ((|ifRcvAddressAddress| :type |PhysAddress|)
+           (|ifRcvAddressStatus| :type |RowStatus|)
+           (|ifRcvAddressType| :type integer)))
 
 (defoid |ifRcvAddressAddress| (|ifRcvAddressEntry| 1)
   (:type 'object-type)
@@ -1178,7 +1227,14 @@
    "An entry containing objects for invoking tests on an
             interface."))
 
-(deftype |IfTestEntry| () 't)
+(defclass |IfTestEntry|
+          (asn.1-type)
+          ((|ifTestId| :type |TestAndIncr|)
+           (|ifTestStatus| :type integer)
+           (|ifTestType| :type |AutonomousType|)
+           (|ifTestResult| :type integer)
+           (|ifTestCode| :type object-id)
+           (|ifTestOwner| :type |OwnerString|)))
 
 (defoid |ifTestId| (|ifTestEntry| 1)
   (:type 'object-type)
@@ -1314,5 +1370,7 @@
             this MIB module, for SNMP entities which have network
             interfaces."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'if-mib *mib-modules*)
+  (setf *current-module* nil))
 

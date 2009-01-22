@@ -3,9 +3,7 @@
 
 (in-package :asn.1)
 
-(eval-when (:load-toplevel :execute)
-  (pushnew 'ipv6-tc *mib-modules*)
-  (setf *current-module* 'ipv6-tc))
+(eval-when (:load-toplevel :execute) (setf *current-module* 'ipv6-tc))
 
 (defpackage :asn.1/ipv6-tc
   (:nicknames :ipv6-tc)
@@ -25,5 +23,7 @@
 
 (deftype |Ipv6IfIndexOrZero| () 't)
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'ipv6-tc *mib-modules*)
+  (setf *current-module* nil))
 

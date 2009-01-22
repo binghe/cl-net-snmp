@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'disman-ping-mib *mib-modules*)
   (setf *current-module* 'disman-ping-mib))
 
 (defpackage :asn.1/disman-ping-mib
@@ -118,7 +117,31 @@
         SnmpAdminString), enables the same management
         application to have multiple outstanding requests."))
 
-(deftype |PingCtlEntry| () 't)
+(defclass |PingCtlEntry|
+          (asn.1-type)
+          ((|pingCtlOwnerIndex| :type |SnmpAdminString|)
+           (|pingCtlTestName| :type |SnmpAdminString|)
+           (|pingCtlTargetAddressType| :type |InetAddressType|)
+           (|pingCtlTargetAddress| :type |InetAddress|)
+           (|pingCtlDataSize| :type |Unsigned32|)
+           (|pingCtlTimeOut| :type |Unsigned32|)
+           (|pingCtlProbeCount| :type |Unsigned32|)
+           (|pingCtlAdminStatus| :type integer)
+           (|pingCtlDataFill| :type t)
+           (|pingCtlFrequency| :type |Unsigned32|)
+           (|pingCtlMaxRows| :type |Unsigned32|)
+           (|pingCtlStorageType| :type |StorageType|)
+           (|pingCtlTrapGeneration| :type bits)
+           (|pingCtlTrapProbeFailureFilter| :type |Unsigned32|)
+           (|pingCtlTrapTestFailureFilter| :type |Unsigned32|)
+           (|pingCtlType| :type object-id)
+           (|pingCtlDescr| :type |SnmpAdminString|)
+           (|pingCtlSourceAddressType| :type |InetAddressType|)
+           (|pingCtlSourceAddress| :type |InetAddress|)
+           (|pingCtlIfIndex| :type |InterfaceIndexOrZero|)
+           (|pingCtlByPassRouteTable| :type |TruthValue|)
+           (|pingCtlDSField| :type |Unsigned32|)
+           (|pingCtlRowStatus| :type |RowStatus|)))
 
 (defoid |pingCtlOwnerIndex| (|pingCtlEntry| 1)
   (:type 'object-type)
@@ -552,7 +575,18 @@
         corresponds to the pingCtlEntry that caused it to
         be created."))
 
-(deftype |PingResultsEntry| () 't)
+(defclass |PingResultsEntry|
+          (asn.1-type)
+          ((|pingResultsOperStatus| :type integer)
+           (|pingResultsIpTargetAddressType| :type |InetAddressType|)
+           (|pingResultsIpTargetAddress| :type |InetAddress|)
+           (|pingResultsMinRtt| :type |Unsigned32|)
+           (|pingResultsMaxRtt| :type |Unsigned32|)
+           (|pingResultsAverageRtt| :type |Unsigned32|)
+           (|pingResultsProbeResponses| :type |Gauge32|)
+           (|pingResultsSentProbes| :type |Gauge32|)
+           (|pingResultsRttSumOfSquares| :type |Unsigned32|)
+           (|pingResultsLastGoodProbe| :type |DateAndTime|)))
 
 (defoid |pingResultsOperStatus| (|pingResultsEntry| 1)
   (:type 'object-type)
@@ -699,7 +733,13 @@
         to.  The third index element selects a single
         probe result."))
 
-(deftype |PingProbeHistoryEntry| () 't)
+(defclass |PingProbeHistoryEntry|
+          (asn.1-type)
+          ((|pingProbeHistoryIndex| :type |Unsigned32|)
+           (|pingProbeHistoryResponse| :type |Unsigned32|)
+           (|pingProbeHistoryStatus| :type |OperationResponseStatus|)
+           (|pingProbeHistoryLastRC| :type |Integer32|)
+           (|pingProbeHistoryTime| :type |DateAndTime|)))
 
 (defoid |pingProbeHistoryIndex| (|pingProbeHistoryEntry| 1)
   (:type 'object-type)
@@ -861,5 +901,7 @@
   (:status '|deprecated|)
   (:description "The group of DateAndTime objects."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'disman-ping-mib *mib-modules*)
+  (setf *current-module* nil))
 

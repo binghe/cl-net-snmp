@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'snmp-target-mib *mib-modules*)
   (setf *current-module* 'snmp-target-mib))
 
 (defpackage :asn.1/snmp-target-mib
@@ -90,7 +89,17 @@
          Entries in the snmpTargetAddrTable are created and
          deleted using the snmpTargetAddrRowStatus object."))
 
-(deftype |SnmpTargetAddrEntry| () 't)
+(defclass |SnmpTargetAddrEntry|
+          (asn.1-type)
+          ((|snmpTargetAddrName| :type |SnmpAdminString|)
+           (|snmpTargetAddrTDomain| :type |TDomain|)
+           (|snmpTargetAddrTAddress| :type |TAddress|)
+           (|snmpTargetAddrTimeout| :type |TimeInterval|)
+           (|snmpTargetAddrRetryCount| :type |Integer32|)
+           (|snmpTargetAddrTagList| :type |SnmpTagList|)
+           (|snmpTargetAddrParams| :type |SnmpAdminString|)
+           (|snmpTargetAddrStorageType| :type |StorageType|)
+           (|snmpTargetAddrRowStatus| :type |RowStatus|)))
 
 (defoid |snmpTargetAddrName| (|snmpTargetAddrEntry| 1)
   (:type 'object-type)
@@ -240,7 +249,17 @@
          Entries in the snmpTargetParamsTable are created and
          deleted using the snmpTargetParamsRowStatus object."))
 
-(deftype |SnmpTargetParamsEntry| () 't)
+(defclass |SnmpTargetParamsEntry|
+          (asn.1-type)
+          ((|snmpTargetParamsName| :type |SnmpAdminString|)
+           (|snmpTargetParamsMPModel|
+            :type
+            |SnmpMessageProcessingModel|)
+           (|snmpTargetParamsSecurityModel| :type |SnmpSecurityModel|)
+           (|snmpTargetParamsSecurityName| :type |SnmpAdminString|)
+           (|snmpTargetParamsSecurityLevel| :type |SnmpSecurityLevel|)
+           (|snmpTargetParamsStorageType| :type |StorageType|)
+           (|snmpTargetParamsRowStatus| :type |RowStatus|)))
 
 (defoid |snmpTargetParamsName| (|snmpTargetParamsEntry| 1)
   (:type 'object-type)
@@ -393,5 +412,7 @@
    "A collection of objects required for command responder
          applications, used for counting error conditions."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'snmp-target-mib *mib-modules*)
+  (setf *current-module* nil))
 

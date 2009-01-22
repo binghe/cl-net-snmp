@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'lisp-clozure-mib *mib-modules*)
   (setf *current-module* 'lisp-clozure-mib))
 
 (defpackage :asn.1/lisp-clozure-mib
@@ -20,5 +19,7 @@
   (:type 'module-identity)
   (:description "The MIB module for Clozure CL"))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'lisp-clozure-mib *mib-modules*)
+  (setf *current-module* nil))
 

@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'snmp-user-based-sm-mib *mib-modules*)
   (setf *current-module* 'snmp-user-based-sm-mib))
 
 (defpackage :asn.1/snmp-user-based-sm-mib
@@ -226,7 +225,21 @@
                  Security Model.
                 "))
 
-(deftype |UsmUserEntry| () 't)
+(defclass |UsmUserEntry|
+          (asn.1-type)
+          ((|usmUserEngineID| :type |SnmpEngineID|)
+           (|usmUserName| :type |SnmpAdminString|)
+           (|usmUserSecurityName| :type |SnmpAdminString|)
+           (|usmUserCloneFrom| :type |RowPointer|)
+           (|usmUserAuthProtocol| :type |AutonomousType|)
+           (|usmUserAuthKeyChange| :type |KeyChange|)
+           (|usmUserOwnAuthKeyChange| :type |KeyChange|)
+           (|usmUserPrivProtocol| :type |AutonomousType|)
+           (|usmUserPrivKeyChange| :type |KeyChange|)
+           (|usmUserOwnPrivKeyChange| :type |KeyChange|)
+           (|usmUserPublic| :type t)
+           (|usmUserStorageType| :type |StorageType|)
+           (|usmUserStatus| :type |RowStatus|)))
 
 (defoid |usmUserEngineID| (|usmUserEntry| 1)
   (:type 'object-type)
@@ -660,5 +673,7 @@
                  User-based Security Model.
                 "))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'snmp-user-based-sm-mib *mib-modules*)
+  (setf *current-module* nil))
 

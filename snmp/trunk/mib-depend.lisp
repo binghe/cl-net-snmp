@@ -12,7 +12,7 @@
             (LISP-CMUCL-MIB |SNMPv2-SMI| LISP-MIB)
             (LISP-ALLEGRO-MIB |SNMPv2-SMI| LISP-MIB)
             (LISP-LISPWORKS-MIB |SNMPv2-SMI| LISP-MIB)
-            (LISP-MIB |SNMPv2-SMI|)
+            (LISP-MIB |SNMPv2-SMI| |SNMPv2-TC|)
             (UDP-MIB |SNMPv2-SMI| |SNMPv2-CONF| INET-ADDRESS-MIB)
             (UCD-IPFILTER-MIB |SNMPv2-SMI| UCD-SNMP-MIB)
             (UCD-SNMP-MIB |SNMPv2-SMI| |SNMPv2-TC|)
@@ -30,7 +30,6 @@
              |IANAifType-MIB|)
             (TRANSPORT-ADDRESS-MIB |SNMPv2-SMI| |SNMPv2-TC|)
             (TCP-MIB |SNMPv2-SMI| |SNMPv2-CONF| INET-ADDRESS-MIB)
-            (SMUX-MIB |SNMPv2-SMI|)
             (RMON-MIB |SNMPv2-SMI| |SNMPv2-TC| |SNMPv2-CONF|)
             (|RIPv2-MIB|
              |SNMPv2-SMI|

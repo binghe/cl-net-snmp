@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew '|SNMPv2-TC| *mib-modules*)
   (setf *current-module* '|SNMPv2-TC|))
 
 (defpackage :|ASN.1/SNMPv2-TC|
@@ -48,5 +47,7 @@
 
 (deftype |TAddress| () 't)
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew '|SNMPv2-TC| *mib-modules*)
+  (setf *current-module* nil))
 

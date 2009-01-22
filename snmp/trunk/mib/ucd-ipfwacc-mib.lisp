@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'ucd-ipfwacc-mib *mib-modules*)
   (setf *current-module* 'ucd-ipfwacc-mib))
 
 (defpackage :asn.1/ucd-ipfwacc-mib
@@ -45,7 +44,34 @@
   (:status '|current|)
   (:description "An accounting rule of the IP firewall"))
 
-(deftype |IpFwAccEntry| () 't)
+(defclass |IpFwAccEntry|
+          (asn.1-type)
+          ((|ipFwAccIndex| :type |Integer32|)
+           (|ipFwAccSrcAddr| :type |IpAddress|)
+           (|ipFwAccSrcNetMask| :type |IpAddress|)
+           (|ipFwAccDstAddr| :type |IpAddress|)
+           (|ipFwAccDstNetMask| :type |IpAddress|)
+           (|ipFwAccViaName| :type |DisplayString|)
+           (|ipFwAccViaAddr| :type |IpAddress|)
+           (|ipFwAccProto| :type integer)
+           (|ipFwAccBidir| :type integer)
+           (|ipFwAccDir| :type integer)
+           (|ipFwAccBytes| :type |Counter32|)
+           (|ipFwAccPackets| :type |Counter32|)
+           (|ipFwAccNrSrcPorts| :type |Integer32|)
+           (|ipFwAccNrDstPorts| :type |Integer32|)
+           (|ipFwAccSrcIsRange| :type integer)
+           (|ipFwAccDstIsRange| :type integer)
+           (|ipFwAccPort1| :type |Integer32|)
+           (|ipFwAccPort2| :type |Integer32|)
+           (|ipFwAccPort3| :type |Integer32|)
+           (|ipFwAccPort4| :type |Integer32|)
+           (|ipFwAccPort5| :type |Integer32|)
+           (|ipFwAccPort6| :type |Integer32|)
+           (|ipFwAccPort7| :type |Integer32|)
+           (|ipFwAccPort8| :type |Integer32|)
+           (|ipFwAccPort9| :type |Integer32|)
+           (|ipFwAccPort10| :type |Integer32|)))
 
 (defoid |ipFwAccIndex| (|ipFwAccEntry| 1)
   (:type 'object-type)
@@ -252,5 +278,7 @@
   (:status '|current|)
   (:description "Port number 10."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'ucd-ipfwacc-mib *mib-modules*)
+  (setf *current-module* nil))
 

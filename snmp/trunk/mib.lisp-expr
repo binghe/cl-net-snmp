@@ -263,7 +263,6 @@
   "rmon-mib"
   :DEPENDS-ON
   ("snmpv2-smi" "snmpv2-tc" "snmpv2-conf"))
- (:FILE "smux-mib" :DEPENDS-ON ("snmpv2-smi"))
  (:FILE
   "tcp-mib"
   :DEPENDS-ON
@@ -298,7 +297,7 @@
   "udp-mib"
   :DEPENDS-ON
   ("snmpv2-smi" "snmpv2-conf" "inet-address-mib"))
- (:FILE "lisp-mib" :DEPENDS-ON ("snmpv2-smi"))
+ (:FILE "lisp-mib" :DEPENDS-ON ("snmpv2-smi" "snmpv2-tc"))
  (:FILE "lisp-lispworks-mib" :DEPENDS-ON ("snmpv2-smi" "lisp-mib"))
  (:FILE "lisp-allegro-mib" :DEPENDS-ON ("snmpv2-smi" "lisp-mib"))
  (:FILE "lisp-cmucl-mib" :DEPENDS-ON ("snmpv2-smi" "lisp-mib"))

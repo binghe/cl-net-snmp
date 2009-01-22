@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'net-snmp-mib *mib-modules*)
   (setf *current-module* 'net-snmp-mib))
 
 (defpackage :asn.1/net-snmp-mib
@@ -54,5 +53,7 @@
 (defoid |netSnmpGroups| (|netSnmpConformance| 2)
   (:type 'object-identity))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'net-snmp-mib *mib-modules*)
+  (setf *current-module* nil))
 

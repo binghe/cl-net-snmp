@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'ucd-snmp-mib *mib-modules*)
   (setf *current-module* 'ucd-snmp-mib))
 
 (defpackage :asn.1/ucd-snmp-mib
@@ -87,7 +86,17 @@
   (:status '|current|)
   (:description "An entry containing a process and its statistics."))
 
-(deftype |PrEntry| () 't)
+(defclass |PrEntry|
+          (asn.1-type)
+          ((|prIndex| :type |Integer32|)
+           (|prNames| :type |DisplayString|)
+           (|prMin| :type |Integer32|)
+           (|prMax| :type |Integer32|)
+           (|prCount| :type |Integer32|)
+           (|prErrorFlag| :type |UCDErrorFlag|)
+           (|prErrMessage| :type |DisplayString|)
+           (|prErrFix| :type |UCDErrorFix|)
+           (|prErrFixCmd| :type |DisplayString|)))
 
 (defoid |prIndex| (|prEntry| 1)
   (:type 'object-type)
@@ -187,7 +196,15 @@
   (:description
    "An entry containing an extensible script/program and its output."))
 
-(deftype |ExtEntry| () 't)
+(defclass |ExtEntry|
+          (asn.1-type)
+          ((|extIndex| :type |Integer32|)
+           (|extNames| :type |DisplayString|)
+           (|extCommand| :type |DisplayString|)
+           (|extResult| :type |Integer32|)
+           (|extOutput| :type |DisplayString|)
+           (|extErrFix| :type |UCDErrorFix|)
+           (|extErrFixCmd| :type |DisplayString|)))
 
 (defoid |extIndex| (|extEntry| 1)
   (:type 'object-type)
@@ -487,7 +504,20 @@
   (:status '|current|)
   (:description "An entry containing a disk and its statistics."))
 
-(deftype |DskEntry| () 't)
+(defclass |DskEntry|
+          (asn.1-type)
+          ((|dskIndex| :type |Integer32|)
+           (|dskPath| :type |DisplayString|)
+           (|dskDevice| :type |DisplayString|)
+           (|dskMinimum| :type |Integer32|)
+           (|dskMinPercent| :type |Integer32|)
+           (|dskTotal| :type |Integer32|)
+           (|dskAvail| :type |Integer32|)
+           (|dskUsed| :type |Integer32|)
+           (|dskPercent| :type |Integer32|)
+           (|dskPercentNode| :type |Integer32|)
+           (|dskErrorFlag| :type |UCDErrorFlag|)
+           (|dskErrorMsg| :type |DisplayString|)))
 
 (defoid |dskIndex| (|dskEntry| 1)
   (:type 'object-type)
@@ -598,7 +628,16 @@
   (:status '|current|)
   (:description "An entry containing a load average and its values."))
 
-(deftype |LaEntry| () 't)
+(defclass |LaEntry|
+          (asn.1-type)
+          ((|laIndex| :type |Integer32|)
+           (|laNames| :type |DisplayString|)
+           (|laLoad| :type |DisplayString|)
+           (|laConfig| :type |DisplayString|)
+           (|laLoadInt| :type |Integer32|)
+           (|laLoadFloat| :type |Float|)
+           (|laErrorFlag| :type |UCDErrorFlag|)
+           (|laErrMessage| :type |DisplayString|)))
 
 (defoid |laIndex| (|laEntry| 1)
   (:type 'object-type)
@@ -804,7 +843,10 @@
   (:status '|current|)
   (:description "An entry containing a registered mib oid."))
 
-(deftype |MrEntry| () 't)
+(defclass |MrEntry|
+          (asn.1-type)
+          ((|mrIndex| :type object-id)
+           (|mrModuleName| :type |DisplayString|)))
 
 (defoid |mrIndex| (|mrEntry| 1)
   (:type 'object-type)
@@ -1147,7 +1189,14 @@
   (:status '|current|)
   (:description "Entry of file"))
 
-(deftype |FileEntry| () 't)
+(defclass |FileEntry|
+          (asn.1-type)
+          ((|fileIndex| :type |Integer32|)
+           (|fileName| :type |DisplayString|)
+           (|fileSize| :type |Integer32|)
+           (|fileMax| :type |Integer32|)
+           (|fileErrorFlag| :type |UCDErrorFlag|)
+           (|fileErrorMsg| :type |DisplayString|)))
 
 (defoid |fileIndex| (|fileEntry| 1)
   (:type 'object-type)
@@ -1216,7 +1265,21 @@
   (:status '|current|)
   (:description "Entry of file"))
 
-(deftype |LogMatchEntry| () 't)
+(defclass |LogMatchEntry|
+          (asn.1-type)
+          ((|logMatchIndex| :type |Integer32|)
+           (|logMatchName| :type |DisplayString|)
+           (|logMatchFilename| :type |DisplayString|)
+           (|logMatchRegEx| :type |DisplayString|)
+           (|logMatchGlobalCounter| :type |Counter32|)
+           (|logMatchGlobalCount| :type |Integer32|)
+           (|logMatchCurrentCounter| :type |Counter32|)
+           (|logMatchCurrentCount| :type |Integer32|)
+           (|logMatchCounter| :type |Counter32|)
+           (|logMatchCount| :type |Integer32|)
+           (|logMatchCycle| :type |Integer32|)
+           (|logMatchErrorFlag| :type |UCDErrorFlag|)
+           (|logMatchRegExCompilation| :type |DisplayString|)))
 
 (defoid |logMatchIndex| (|logMatchEntry| 1)
   (:type 'object-type)
@@ -1313,5 +1376,7 @@
   (:status '|current|)
   (:description "message of regex precompilation"))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'ucd-snmp-mib *mib-modules*)
+  (setf *current-module* nil))
 

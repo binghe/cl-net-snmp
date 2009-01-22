@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew '|IANAifType-MIB| *mib-modules*)
   (setf *current-module* '|IANAifType-MIB|))
 
 (defpackage :|ASN.1/IANAifType-MIB|
@@ -26,5 +25,7 @@
 
 (deftype |IANAtunnelType| () 't)
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew '|IANAifType-MIB| *mib-modules*)
+  (setf *current-module* nil))
 

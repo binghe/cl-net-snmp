@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'ipv6-tcp-mib *mib-modules*)
   (setf *current-module* 'ipv6-tcp-mib))
 
 (defpackage :asn.1/ipv6-tcp-mib
@@ -49,7 +48,14 @@
          index object compared to tcpConnTable, since IPv6 addresses
          are not guaranteed to be unique on the managed node."))
 
-(deftype |Ipv6TcpConnEntry| () 't)
+(defclass |Ipv6TcpConnEntry|
+          (asn.1-type)
+          ((|ipv6TcpConnLocalAddress| :type |Ipv6Address|)
+           (|ipv6TcpConnLocalPort| :type t)
+           (|ipv6TcpConnRemAddress| :type |Ipv6Address|)
+           (|ipv6TcpConnRemPort| :type t)
+           (|ipv6TcpConnIfIndex| :type |Ipv6IfIndexOrZero|)
+           (|ipv6TcpConnState| :type integer)))
 
 (defoid |ipv6TcpConnLocalAddress| (|ipv6TcpConnEntry| 1)
   (:type 'object-type)
@@ -159,5 +165,7 @@
    "The group of objects providing management of
          TCP over IPv6."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'ipv6-tcp-mib *mib-modules*)
+  (setf *current-module* nil))
 

@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'net-snmp-agent-mib *mib-modules*)
   (setf *current-module* 'net-snmp-agent-mib))
 
 (defpackage :asn.1/net-snmp-agent-mib
@@ -46,7 +45,7 @@
 
 (defoid |nsCacheDefaultTimeout| (|nsCache| 1)
   (:type 'object-type)
-  (:syntax ':integer)
+  (:syntax 'integer)
   (:max-access '|read-write|)
   (:status '|current|)
   (:description
@@ -74,7 +73,11 @@
   (:status '|current|)
   (:description "A conceptual row within the cache table."))
 
-(deftype |NsCacheEntry| () 't)
+(defclass |NsCacheEntry|
+          (asn.1-type)
+          ((|nsCachedOID| :type object-id)
+           (|nsCacheTimeout| :type integer)
+           (|nsCacheStatus| :type |NetsnmpCacheStatus|)))
 
 (defoid |nsCachedOID| (|nsCacheEntry| 1)
   (:type 'object-type)
@@ -85,7 +88,7 @@
 
 (defoid |nsCacheTimeout| (|nsCacheEntry| 2)
   (:type 'object-type)
-  (:syntax ':integer)
+  (:syntax 'integer)
   (:max-access '|read-write|)
   (:status '|current|)
   (:description
@@ -154,7 +157,10 @@
   (:status '|current|)
   (:description "A conceptual row within the debug token table."))
 
-(deftype |NsDebugTokenEntry| () 't)
+(defclass |NsDebugTokenEntry|
+          (asn.1-type)
+          ((|nsDebugTokenPrefix| :type |DisplayString|)
+           (|nsDebugTokenStatus| :type |RowStatus|)))
 
 (defoid |nsDebugTokenPrefix| (|nsDebugTokenEntry| 2)
   (:type 'object-type)
@@ -198,7 +204,13 @@
   (:status '|current|)
   (:description "A conceptual row within the logging table."))
 
-(deftype |NsLoggingEntry| () 't)
+(defclass |NsLoggingEntry|
+          (asn.1-type)
+          ((|nsLogLevel| :type integer)
+           (|nsLogToken| :type |DisplayString|)
+           (|nsLogType| :type integer)
+           (|nsLogMaxLevel| :type integer)
+           (|nsLogStatus| :type |RowStatus|)))
 
 (defoid |nsLogLevel| (|nsLoggingEntry| 1)
   (:type 'object-type)
@@ -263,7 +275,10 @@
   (:status '|current|)
   (:description "A row describing a given transaction."))
 
-(deftype |NsTransactionEntry| () 't)
+(defclass |NsTransactionEntry|
+          (asn.1-type)
+          ((|nsTransactionID| :type |Unsigned32|)
+           (|nsTransactionMode| :type |Integer32|)))
 
 (defoid |nsTransactionID| (|nsTransactionEntry| 1)
   (:type 'object-type)
@@ -297,7 +312,14 @@
   (:status '|current|)
   (:description "An entry containing a registered mib oid."))
 
-(deftype |NsModuleEntry| () 't)
+(defclass |NsModuleEntry|
+          (asn.1-type)
+          ((|nsmContextName| :type |SnmpAdminString|)
+           (|nsmRegistrationPoint| :type object-id)
+           (|nsmRegistrationPriority| :type integer)
+           (|nsModuleName| :type |DisplayString|)
+           (|nsModuleModes| :type bits)
+           (|nsModuleTimeout| :type |Integer32|)))
 
 (defoid |nsmContextName| (|nsModuleEntry| 1)
   (:type 'object-type)
@@ -404,5 +426,7 @@
   (:description
    "The notifications relating to the basic operation of the Net-SNMP agent."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'net-snmp-agent-mib *mib-modules*)
+  (setf *current-module* nil))
 

@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'disman-script-mib *mib-modules*)
   (setf *current-module* 'disman-script-mib))
 
 (defpackage :asn.1/disman-script-mib
@@ -46,7 +45,14 @@
   (:status '|current|)
   (:description "An entry describing a particular language."))
 
-(deftype |SmLangEntry| () 't)
+(defclass |SmLangEntry|
+          (asn.1-type)
+          ((|smLangIndex| :type |Integer32|)
+           (|smLangLanguage| :type object-id)
+           (|smLangVersion| :type |SnmpAdminString|)
+           (|smLangVendor| :type object-id)
+           (|smLangRevision| :type |SnmpAdminString|)
+           (|smLangDescr| :type |SnmpAdminString|)))
 
 (defoid |smLangIndex| (|smLangEntry| 1)
   (:type 'object-type)
@@ -133,7 +139,14 @@
   (:status '|current|)
   (:description "An entry describing a particular language extension."))
 
-(deftype |SmExtsnEntry| () 't)
+(defclass |SmExtsnEntry|
+          (asn.1-type)
+          ((|smExtsnIndex| :type |Integer32|)
+           (|smExtsnExtension| :type object-id)
+           (|smExtsnVersion| :type |SnmpAdminString|)
+           (|smExtsnVendor| :type object-id)
+           (|smExtsnRevision| :type |SnmpAdminString|)
+           (|smExtsnDescr| :type |SnmpAdminString|)))
 
 (defoid |smExtsnIndex| (|smExtsnEntry| 1)
   (:type 'object-type)
@@ -222,7 +235,19 @@
          is stored in non-volatile memory is required to appear in
          this script table."))
 
-(deftype |SmScriptEntry| () 't)
+(defclass |SmScriptEntry|
+          (asn.1-type)
+          ((|smScriptOwner| :type |SnmpAdminString|)
+           (|smScriptName| :type |SnmpAdminString|)
+           (|smScriptDescr| :type |SnmpAdminString|)
+           (|smScriptLanguage| :type |Integer32|)
+           (|smScriptSource| :type |DisplayString|)
+           (|smScriptAdminStatus| :type integer)
+           (|smScriptOperStatus| :type integer)
+           (|smScriptStorageType| :type |StorageType|)
+           (|smScriptRowStatus| :type |RowStatus|)
+           (|smScriptError| :type |SnmpAdminString|)
+           (|smScriptLastChange| :type |DateAndTime|)))
 
 (defoid |smScriptOwner| (|smScriptEntry| 1)
   (:type 'object-type)
@@ -509,7 +534,11 @@
   (:description
    "An entry describing a particular fragment of a script."))
 
-(deftype |SmCodeEntry| () 't)
+(defclass |SmCodeEntry|
+          (asn.1-type)
+          ((|smCodeIndex| :type |Unsigned32|)
+           (|smCodeText| :type t)
+           (|smCodeRowStatus| :type |RowStatus|)))
 
 (defoid |smCodeIndex| (|smCodeEntry| 1)
   (:type 'object-type)
@@ -558,7 +587,27 @@
   (:status '|current|)
   (:description "An entry describing a particular executable script."))
 
-(deftype |SmLaunchEntry| () 't)
+(defclass |SmLaunchEntry|
+          (asn.1-type)
+          ((|smLaunchOwner| :type |SnmpAdminString|)
+           (|smLaunchName| :type |SnmpAdminString|)
+           (|smLaunchScriptOwner| :type |SnmpAdminString|)
+           (|smLaunchScriptName| :type |SnmpAdminString|)
+           (|smLaunchArgument| :type t)
+           (|smLaunchMaxRunning| :type |Unsigned32|)
+           (|smLaunchMaxCompleted| :type |Unsigned32|)
+           (|smLaunchLifeTime| :type |TimeInterval|)
+           (|smLaunchExpireTime| :type |TimeInterval|)
+           (|smLaunchStart| :type |Integer32|)
+           (|smLaunchControl| :type integer)
+           (|smLaunchAdminStatus| :type integer)
+           (|smLaunchOperStatus| :type integer)
+           (|smLaunchRunIndexNext| :type |Integer32|)
+           (|smLaunchStorageType| :type |StorageType|)
+           (|smLaunchRowStatus| :type |RowStatus|)
+           (|smLaunchError| :type |SnmpAdminString|)
+           (|smLaunchLastChange| :type |DateAndTime|)
+           (|smLaunchRowExpireTime| :type |TimeInterval|)))
 
 (defoid |smLaunchOwner| (|smLaunchEntry| 1)
   (:type 'object-type)
@@ -974,7 +1023,21 @@
    "An entry describing a particular running or finished
          script."))
 
-(deftype |SmRunEntry| () 't)
+(defclass |SmRunEntry|
+          (asn.1-type)
+          ((|smRunIndex| :type |Integer32|)
+           (|smRunArgument| :type t)
+           (|smRunStartTime| :type |DateAndTime|)
+           (|smRunEndTime| :type |DateAndTime|)
+           (|smRunLifeTime| :type |TimeInterval|)
+           (|smRunExpireTime| :type |TimeInterval|)
+           (|smRunExitCode| :type integer)
+           (|smRunResult| :type t)
+           (|smRunControl| :type integer)
+           (|smRunState| :type integer)
+           (|smRunError| :type |SnmpAdminString|)
+           (|smRunResultTime| :type |DateAndTime|)
+           (|smRunErrorTime| :type |DateAndTime|)))
 
 (defoid |smRunIndex| (|smRunEntry| 1)
   (:type 'object-type)
@@ -1343,5 +1406,7 @@
   (:status '|deprecated|)
   (:description "The notifications emitted by the Script MIB."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'disman-script-mib *mib-modules*)
+  (setf *current-module* nil))
 

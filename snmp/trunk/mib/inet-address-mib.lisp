@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'inet-address-mib *mib-modules*)
   (setf *current-module* 'inet-address-mib))
 
 (defpackage :asn.1/inet-address-mib
@@ -57,5 +56,7 @@
 
 (deftype |InetVersion| () 't)
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'inet-address-mib *mib-modules*)
+  (setf *current-module* nil))
 

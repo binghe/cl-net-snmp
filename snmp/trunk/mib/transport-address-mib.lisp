@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'transport-address-mib *mib-modules*)
   (setf *current-module* 'transport-address-mib))
 
 (defpackage :asn.1/transport-address-mib
@@ -185,5 +184,7 @@
 
 (deftype |TransportAddressDns| () 't)
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'transport-address-mib *mib-modules*)
+  (setf *current-module* nil))
 

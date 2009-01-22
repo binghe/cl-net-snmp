@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'ucd-ipfilter-mib *mib-modules*)
   (setf *current-module* 'ucd-ipfilter-mib))
 
 (defpackage :asn.1/ucd-ipfilter-mib
@@ -45,7 +44,11 @@
   (:status '|current|)
   (:description "IP Filter incoming rules table entry."))
 
-(deftype |IpfInEntry| () 't)
+(defclass |IpfInEntry|
+          (asn.1-type)
+          ((|ipfInIndex| :type |Integer32|)
+           (|ipfInRule| :type t)
+           (|ipfInHits| :type |Counter32|)))
 
 (defoid |ipfInIndex| (|ipfInEntry| 1)
   (:type 'object-type)
@@ -83,7 +86,11 @@
   (:status '|current|)
   (:description "IP Filter outgoing rules table entry."))
 
-(deftype |IpfOutEntry| () 't)
+(defclass |IpfOutEntry|
+          (asn.1-type)
+          ((|ipfOutIndex| :type |Integer32|)
+           (|ipfOutRule| :type t)
+           (|ipfOutHits| :type |Counter32|)))
 
 (defoid |ipfOutIndex| (|ipfOutEntry| 1)
   (:type 'object-type)
@@ -123,7 +130,12 @@
   (:status '|current|)
   (:description "IP FIlter incoming accounting rules table entry."))
 
-(deftype |IpfAccInEntry| () 't)
+(defclass |IpfAccInEntry|
+          (asn.1-type)
+          ((|ipfAccInIndex| :type |Integer32|)
+           (|ipfAccInRule| :type t)
+           (|ipfAccInHits| :type |Counter32|)
+           (|ipfAccInBytes| :type |Counter32|)))
 
 (defoid |ipfAccInIndex| (|ipfAccInEntry| 1)
   (:type 'object-type)
@@ -175,7 +187,12 @@
   (:status '|current|)
   (:description "IP Filter outgoing accounting rules table entry."))
 
-(deftype |IpfAccOutEntry| () 't)
+(defclass |IpfAccOutEntry|
+          (asn.1-type)
+          ((|ipfAccOutIndex| :type |Integer32|)
+           (|ipfAccOutRule| :type t)
+           (|ipfAccOutHits| :type |Counter32|)
+           (|ipfAccOutBytes| :type |Counter32|)))
 
 (defoid |ipfAccOutIndex| (|ipfAccOutEntry| 1)
   (:type 'object-type)
@@ -211,5 +228,7 @@
    "Bytes passed thru the outgoing accounting
 	 IP Filter rule."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'ucd-ipfilter-mib *mib-modules*)
+  (setf *current-module* nil))
 

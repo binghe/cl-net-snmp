@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'tunnel-mib *mib-modules*)
   (setf *current-module* 'tunnel-mib))
 
 (defpackage :asn.1/tunnel-mib
@@ -55,7 +54,19 @@
    "An entry (conceptual row) containing the information
             on a particular configured tunnel."))
 
-(deftype |TunnelIfEntry| () 't)
+(defclass |TunnelIfEntry|
+          (asn.1-type)
+          ((|tunnelIfLocalAddress| :type |IpAddress|)
+           (|tunnelIfRemoteAddress| :type |IpAddress|)
+           (|tunnelIfEncapsMethod| :type |IANAtunnelType|)
+           (|tunnelIfHopLimit| :type |Integer32|)
+           (|tunnelIfSecurity| :type integer)
+           (|tunnelIfTOS| :type |Integer32|)
+           (|tunnelIfFlowLabel| :type |IPv6FlowLabelOrAny|)
+           (|tunnelIfAddressType| :type |InetAddressType|)
+           (|tunnelIfLocalInetAddress| :type |InetAddress|)
+           (|tunnelIfRemoteInetAddress| :type |InetAddress|)
+           (|tunnelIfEncapsLimit| :type |Integer32|)))
 
 (defoid |tunnelIfLocalAddress| (|tunnelIfEntry| 1)
   (:type 'object-type)
@@ -238,7 +249,14 @@
             Since this entry does not support IPv6, it is
             deprecated in favor of tunnelInetConfigEntry."))
 
-(deftype |TunnelConfigEntry| () 't)
+(defclass |TunnelConfigEntry|
+          (asn.1-type)
+          ((|tunnelConfigLocalAddress| :type |IpAddress|)
+           (|tunnelConfigRemoteAddress| :type |IpAddress|)
+           (|tunnelConfigEncapsMethod| :type |IANAtunnelType|)
+           (|tunnelConfigID| :type |Integer32|)
+           (|tunnelConfigIfIndex| :type |InterfaceIndexOrZero|)
+           (|tunnelConfigStatus| :type |RowStatus|)))
 
 (defoid |tunnelConfigLocalAddress| (|tunnelConfigEntry| 1)
   (:type 'object-type)
@@ -391,7 +409,16 @@
             that the sum of the lengths do not cause the limit to
             be exceeded."))
 
-(deftype |TunnelInetConfigEntry| () 't)
+(defclass |TunnelInetConfigEntry|
+          (asn.1-type)
+          ((|tunnelInetConfigAddressType| :type |InetAddressType|)
+           (|tunnelInetConfigLocalAddress| :type |InetAddress|)
+           (|tunnelInetConfigRemoteAddress| :type |InetAddress|)
+           (|tunnelInetConfigEncapsMethod| :type |IANAtunnelType|)
+           (|tunnelInetConfigID| :type |Integer32|)
+           (|tunnelInetConfigIfIndex| :type |InterfaceIndexOrZero|)
+           (|tunnelInetConfigStatus| :type |RowStatus|)
+           (|tunnelInetConfigStorageType| :type |StorageType|)))
 
 (defoid |tunnelInetConfigAddressType| (|tunnelInetConfigEntry| 1)
   (:type 'object-type)
@@ -563,5 +590,7 @@
    "A collection of objects to support basic management
             of IPv4 and IPv6 Tunnels."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'tunnel-mib *mib-modules*)
+  (setf *current-module* nil))
 

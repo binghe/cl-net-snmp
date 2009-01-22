@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'host-resources-types *mib-modules*)
   (setf *current-module* 'host-resources-types))
 
 (defpackage :asn.1/host-resources-types
@@ -362,5 +361,7 @@
    "The file system type identifier used for the
         Linux EXT2 File System."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'host-resources-types *mib-modules*)
+  (setf *current-module* nil))
 

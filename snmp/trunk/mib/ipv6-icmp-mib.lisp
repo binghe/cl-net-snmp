@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'ipv6-icmp-mib *mib-modules*)
   (setf *current-module* 'ipv6-icmp-mib))
 
 (defpackage :asn.1/ipv6-icmp-mib
@@ -54,7 +53,42 @@
       ICMP message which is usually but not
       necessarily the output interface for the message."))
 
-(deftype |Ipv6IfIcmpEntry| () 't)
+(defclass |Ipv6IfIcmpEntry|
+          (asn.1-type)
+          ((|ipv6IfIcmpInMsgs| :type |Counter32|)
+           (|ipv6IfIcmpInErrors| :type |Counter32|)
+           (|ipv6IfIcmpInDestUnreachs| :type |Counter32|)
+           (|ipv6IfIcmpInAdminProhibs| :type |Counter32|)
+           (|ipv6IfIcmpInTimeExcds| :type |Counter32|)
+           (|ipv6IfIcmpInParmProblems| :type |Counter32|)
+           (|ipv6IfIcmpInPktTooBigs| :type |Counter32|)
+           (|ipv6IfIcmpInEchos| :type |Counter32|)
+           (|ipv6IfIcmpInEchoReplies| :type |Counter32|)
+           (|ipv6IfIcmpInRouterSolicits| :type |Counter32|)
+           (|ipv6IfIcmpInRouterAdvertisements| :type |Counter32|)
+           (|ipv6IfIcmpInNeighborSolicits| :type |Counter32|)
+           (|ipv6IfIcmpInNeighborAdvertisements| :type |Counter32|)
+           (|ipv6IfIcmpInRedirects| :type |Counter32|)
+           (|ipv6IfIcmpInGroupMembQueries| :type |Counter32|)
+           (|ipv6IfIcmpInGroupMembResponses| :type |Counter32|)
+           (|ipv6IfIcmpInGroupMembReductions| :type |Counter32|)
+           (|ipv6IfIcmpOutMsgs| :type |Counter32|)
+           (|ipv6IfIcmpOutErrors| :type |Counter32|)
+           (|ipv6IfIcmpOutDestUnreachs| :type |Counter32|)
+           (|ipv6IfIcmpOutAdminProhibs| :type |Counter32|)
+           (|ipv6IfIcmpOutTimeExcds| :type |Counter32|)
+           (|ipv6IfIcmpOutParmProblems| :type |Counter32|)
+           (|ipv6IfIcmpOutPktTooBigs| :type |Counter32|)
+           (|ipv6IfIcmpOutEchos| :type |Counter32|)
+           (|ipv6IfIcmpOutEchoReplies| :type |Counter32|)
+           (|ipv6IfIcmpOutRouterSolicits| :type |Counter32|)
+           (|ipv6IfIcmpOutRouterAdvertisements| :type |Counter32|)
+           (|ipv6IfIcmpOutNeighborSolicits| :type |Counter32|)
+           (|ipv6IfIcmpOutNeighborAdvertisements| :type |Counter32|)
+           (|ipv6IfIcmpOutRedirects| :type |Counter32|)
+           (|ipv6IfIcmpOutGroupMembQueries| :type |Counter32|)
+           (|ipv6IfIcmpOutGroupMembResponses| :type |Counter32|)
+           (|ipv6IfIcmpOutGroupMembReductions| :type |Counter32|)))
 
 (defoid |ipv6IfIcmpInMsgs| (|ipv6IfIcmpEntry| 1)
   (:type 'object-type)
@@ -400,5 +434,7 @@
    "The ICMPv6 group of objects providing information
           specific to ICMPv6."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'ipv6-icmp-mib *mib-modules*)
+  (setf *current-module* nil))
 

@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'snmp-view-based-acm-mib *mib-modules*)
   (setf *current-module* 'snmp-view-based-acm-mib))
 
 (defpackage :asn.1/snmp-view-based-acm-mib
@@ -80,7 +79,9 @@
   (:status '|current|)
   (:description "Information about a particular context."))
 
-(deftype |VacmContextEntry| () 't)
+(defclass |VacmContextEntry|
+          (asn.1-type)
+          ((|vacmContextName| :type |SnmpAdminString|)))
 
 (defoid |vacmContextName| (|vacmContextEntry| 1)
   (:type 'object-type)
@@ -116,7 +117,13 @@
                  securityModel and securityName into a groupName.
                 "))
 
-(deftype |VacmSecurityToGroupEntry| () 't)
+(defclass |VacmSecurityToGroupEntry|
+          (asn.1-type)
+          ((|vacmSecurityModel| :type |SnmpSecurityModel|)
+           (|vacmSecurityName| :type |SnmpAdminString|)
+           (|vacmGroupName| :type |SnmpAdminString|)
+           (|vacmSecurityToGroupStorageType| :type |StorageType|)
+           (|vacmSecurityToGroupStatus| :type |RowStatus|)))
 
 (defoid |vacmSecurityModel| (|vacmSecurityToGroupEntry| 1)
   (:type 'object-type)
@@ -262,7 +269,17 @@
                  value for object vacmGroupName.
                 "))
 
-(deftype |VacmAccessEntry| () 't)
+(defclass |VacmAccessEntry|
+          (asn.1-type)
+          ((|vacmAccessContextPrefix| :type |SnmpAdminString|)
+           (|vacmAccessSecurityModel| :type |SnmpSecurityModel|)
+           (|vacmAccessSecurityLevel| :type |SnmpSecurityLevel|)
+           (|vacmAccessContextMatch| :type integer)
+           (|vacmAccessReadViewName| :type |SnmpAdminString|)
+           (|vacmAccessWriteViewName| :type |SnmpAdminString|)
+           (|vacmAccessNotifyViewName| :type |SnmpAdminString|)
+           (|vacmAccessStorageType| :type |StorageType|)
+           (|vacmAccessStatus| :type |RowStatus|)))
 
 (defoid |vacmAccessContextPrefix| (|vacmAccessEntry| 1)
   (:type 'object-type)
@@ -527,7 +544,14 @@
                  consisting of the empty set of view subtrees.
                 "))
 
-(deftype |VacmViewTreeFamilyEntry| () 't)
+(defclass |VacmViewTreeFamilyEntry|
+          (asn.1-type)
+          ((|vacmViewTreeFamilyViewName| :type |SnmpAdminString|)
+           (|vacmViewTreeFamilySubtree| :type object-id)
+           (|vacmViewTreeFamilyMask| :type t)
+           (|vacmViewTreeFamilyType| :type integer)
+           (|vacmViewTreeFamilyStorageType| :type |StorageType|)
+           (|vacmViewTreeFamilyStatus| :type |RowStatus|)))
 
 (defoid |vacmViewTreeFamilyViewName| (|vacmViewTreeFamilyEntry| 1)
   (:type 'object-type)
@@ -670,5 +694,7 @@
                  the SNMP View-based Access Control Model.
                 "))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'snmp-view-based-acm-mib *mib-modules*)
+  (setf *current-module* nil))
 

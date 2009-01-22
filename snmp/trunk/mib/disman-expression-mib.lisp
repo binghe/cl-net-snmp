@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'disman-expression-mib *mib-modules*)
   (setf *current-module* 'disman-expression-mib))
 
 (defpackage :asn.1/disman-expression-mib
@@ -177,7 +176,17 @@
 
      at any time."))
 
-(deftype |ExpExpressionEntry| () 't)
+(defclass |ExpExpressionEntry|
+          (asn.1-type)
+          ((|expExpressionOwner| :type |SnmpAdminString|)
+           (|expExpressionName| :type |SnmpAdminString|)
+           (|expExpression| :type t)
+           (|expExpressionValueType| :type integer)
+           (|expExpressionComment| :type |SnmpAdminString|)
+           (|expExpressionDeltaInterval| :type |Integer32|)
+           (|expExpressionPrefix| :type object-id)
+           (|expExpressionErrors| :type |Counter32|)
+           (|expExpressionEntryStatus| :type |RowStatus|)))
 
 (defoid |expExpressionOwner| (|expExpressionEntry| 1)
   (:type 'object-type)
@@ -542,7 +551,12 @@
      error for that expression as reflected by the error codes
      defined for expErrorCode."))
 
-(deftype |ExpErrorEntry| () 't)
+(defclass |ExpErrorEntry|
+          (asn.1-type)
+          ((|expErrorTime| :type |TimeStamp|)
+           (|expErrorIndex| :type |Integer32|)
+           (|expErrorCode| :type integer)
+           (|expErrorInstance| :type object-id)))
 
 (defoid |expErrorTime| (|expErrorEntry| 1)
   (:type 'object-type)
@@ -659,7 +673,18 @@
      Values of read-create objects in this table may be
      changed at any time."))
 
-(deftype |ExpObjectEntry| () 't)
+(defclass |ExpObjectEntry|
+          (asn.1-type)
+          ((|expObjectIndex| :type |Unsigned32|)
+           (|expObjectID| :type object-id)
+           (|expObjectIDWildcard| :type |TruthValue|)
+           (|expObjectSampleType| :type integer)
+           (|expObjectDeltaDiscontinuityID| :type object-id)
+           (|expObjectDiscontinuityIDWildcard| :type |TruthValue|)
+           (|expObjectDiscontinuityIDType| :type integer)
+           (|expObjectConditional| :type object-id)
+           (|expObjectConditionalWildcard| :type |TruthValue|)
+           (|expObjectEntryStatus| :type |RowStatus|)))
 
 (defoid |expObjectIndex| (|expObjectEntry| 1)
   (:type 'object-type)
@@ -891,7 +916,17 @@
      Management Frameworks.  These are the security credentials of the
      creator of the corresponding expExpressionEntry."))
 
-(deftype |ExpValueEntry| () 't)
+(defclass |ExpValueEntry|
+          (asn.1-type)
+          ((|expValueInstance| :type object-id)
+           (|expValueCounter32Val| :type |Counter32|)
+           (|expValueUnsigned32Val| :type |Unsigned32|)
+           (|expValueTimeTicksVal| :type |TimeTicks|)
+           (|expValueInteger32Val| :type |Integer32|)
+           (|expValueIpAddressVal| :type |IpAddress|)
+           (|expValueOctetStringVal| :type t)
+           (|expValueOidVal| :type object-id)
+           (|expValueCounter64Val| :type |Counter64|)))
 
 (defoid |expValueInstance| (|expValueEntry| 1)
   (:type 'object-type)
@@ -1012,5 +1047,7 @@
   (:status '|current|)
   (:description "Expression value."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'disman-expression-mib *mib-modules*)
+  (setf *current-module* nil))
 

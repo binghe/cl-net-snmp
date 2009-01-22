@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew '|SNMPv2-TM| *mib-modules*)
   (setf *current-module* '|SNMPv2-TM|))
 
 (defpackage :|ASN.1/SNMPv2-TM|
@@ -82,5 +81,7 @@
             The corresponding transport address is of type
             SnmpUDPAddress."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew '|SNMPv2-TM| *mib-modules*)
+  (setf *current-module* nil))
 

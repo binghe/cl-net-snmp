@@ -4,7 +4,6 @@
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew 'ospf-trap-mib *mib-modules*)
   (setf *current-module* 'ospf-trap-mib))
 
 (defpackage :asn.1/ospf-trap-mib
@@ -266,5 +265,7 @@
    "These objects are required  to  control  traps
            from OSPF systems."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'ospf-trap-mib *mib-modules*)
+  (setf *current-module* nil))
 

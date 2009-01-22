@@ -3,9 +3,7 @@
 
 (in-package :asn.1)
 
-(eval-when (:load-toplevel :execute)
-  (pushnew 'udp-mib *mib-modules*)
-  (setf *current-module* 'udp-mib))
+(eval-when (:load-toplevel :execute) (setf *current-module* 'udp-mib))
 
 (defpackage :asn.1/udp-mib
   (:nicknames :udp-mib)
@@ -184,7 +182,16 @@
             will have more than 128 sub-identifiers and cannot be
             accessed using SNMPv1, SNMPv2c, or SNMPv3."))
 
-(deftype |UdpEndpointEntry| () 't)
+(defclass |UdpEndpointEntry|
+          (asn.1-type)
+          ((|udpEndpointLocalAddressType| :type |InetAddressType|)
+           (|udpEndpointLocalAddress| :type |InetAddress|)
+           (|udpEndpointLocalPort| :type |InetPortNumber|)
+           (|udpEndpointRemoteAddressType| :type |InetAddressType|)
+           (|udpEndpointRemoteAddress| :type |InetAddress|)
+           (|udpEndpointRemotePort| :type |InetPortNumber|)
+           (|udpEndpointInstance| :type |Unsigned32|)
+           (|udpEndpointProcess| :type |Unsigned32|)))
 
 (defoid |udpEndpointLocalAddressType| (|udpEndpointEntry| 1)
   (:type 'object-type)
@@ -337,7 +344,10 @@
   (:status '|deprecated|)
   (:description "Information about a particular current UDP listener."))
 
-(deftype |UdpEntry| () 't)
+(defclass |UdpEntry|
+          (asn.1-type)
+          ((|udpLocalAddress| :type |IpAddress|)
+           (|udpLocalPort| :type |Integer32|)))
 
 (defoid |udpLocalAddress| (|udpEntry| 1)
   (:type 'object-type)
@@ -443,5 +453,7 @@
    "The group of objects providing for the IP version
             independent management of UDP 'endpoints'."))
 
-(eval-when (:load-toplevel :execute) (setf *current-module* nil))
+(eval-when (:load-toplevel :execute)
+  (pushnew 'udp-mib *mib-modules*)
+  (setf *current-module* nil))
 
