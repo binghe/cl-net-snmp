@@ -52,9 +52,9 @@
 (defvar *smi-symbol->value-table* (make-hash-table))
 
 (defvar *smi-map*
-  `((,+smi-no-such-object+   . :no-such-object)
-    (,+smi-no-such-instance+ . :no-such-instance)
-    (,+smi-end-of-mibview+   . :end-of-mibview)))
+  `((,+smi-no-such-object+   . :no-such-object)   ; no value in a normal node
+    (,+smi-no-such-instance+ . :no-such-instance) ; no value in a table
+    (,+smi-end-of-mibview+   . :end-of-mibview))) ; end of mib view
 
 (eval-when (:load-toplevel :execute)
   (mapcar #'(lambda (x)
