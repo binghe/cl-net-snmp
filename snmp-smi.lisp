@@ -15,6 +15,9 @@
 
 (defclass smi (number-type) ())
 
+(defun smi-p (object)
+  (typep object 'smi))
+
 (defmethod plain-value ((object smi) &key default)
   (gethash (value-of object) *smi-value->symbol-table* default))
 
