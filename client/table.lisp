@@ -56,7 +56,8 @@
 (defun simple-select (session table &optional key value)
   (let ((class (mib-table-class table))
         (slots (mib-table-slots table))
-        (lines (detect-mib-table-lines session table :key key :value value))
+        (lines (detect-mib-table-lines session table
+                                       :key key :value value))
         (results nil))
     (dolist (i lines (nreverse results))
       (let ((current-slots (mapcar #'(lambda (x) (oid (cons x i))) slots))
