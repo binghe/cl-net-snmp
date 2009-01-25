@@ -8,7 +8,7 @@
 
 ;;; SNMP-SELECT, A high-level SNMP query language.
 
-#|
+#| Sample Usage
 
 > (snmp-select "tcpConnTable" :from session)
 (#<TcpConnEntry 1>
@@ -16,37 +16,57 @@
  #<TcpConnEntry 3>
  ...)
 
-> (snmp-select '("IfInOctets" "IfOutOctets") :from session :where '(= "ifDescr" "eth0"))
-(xxx xxx)
+;;; Search Table
+> (snmp-select "ifTable" :from session :where `(= ,(oid "ifDescr") "eth0"))
+(#<IfEntry "eth0">)
+
+;;; Automatic create new combined class
+> (snmp-select '("ifTable" "ifXTable") :from session
+               :where `(= (oid "ifDescr") (oid "ifName")))
+(#<IfEntry + IfXEntry 1>
+ #<IfEntry + IfXEntry 2>)
+
+> (snmp-select '("IfInOctets" "IfOutOctets") :from session
+               :where `(= (oid "ifDescr") "eth0"))
+(#<Counter32 0> #<Counter32 0>)
 
 |#
 
-(defun snmp-select (identifiers &key from where &allow-other-keys)
+(defun snmp-select (identifiers &rest keys &key from &allow-other-keys)
   ;; handle string-like session first
   (if (stringp from)
-      (with-open-session (s from)
-        (funcall #'snmp-select identifiers :from s :where where))
-    (snmp-select-internal identifiers :from from :where where)))
+      (with-open-session (session from)
+        (apply #'snmp-select (list* identifiers :from session keys)))
+    (apply #'snmp-select-internal (list* identifiers keys))))
 
 (defun snmp-select-internal (identifiers &key from where)
   ;; get the mib table
   (let ((table (process-identifier identifiers))
-        (key (process-identifier where))
         (session from))
-    (let ((class (mib-table-class table))
-          (slots (mib-table-slots table))
-          (lines (detect-mib-table-lines session table :using key))
-          (results nil))
-      (loop for i from 1 upto lines
-            do (let ((current-slots (mapcar #'(lambda (x) (oid (list x i))) slots))
-                     (object (make-instance class)))
-                 (let ((response (snmp-get session current-slots)))
-                   (mapcar #'(lambda (s v)
-                               (when (not (smi-p v)) ; only set valid value
-                                 (setf (slot-value object (oid-name s)) v)))
-                           slots response)
-                   (push object results))))
-      (nreverse results))))
+    (if (atom table)
+        (apply #'simple-select (list* session table (if where (process-where where))))
+      (error "unsupported query"))))
+
+(defun process-where (clause)
+  (destructuring-bind (predicate key-part value-part) clause
+    (unless (eq predicate '=)
+      (error "unsupported predicate"))
+    (list (oid key-part) value-part)))
+
+(defun simple-select (session table &optional key value)
+  (let ((class (mib-table-class table))
+        (slots (mib-table-slots table))
+        (lines (detect-mib-table-lines session table :key key :value value))
+        (results nil))
+    (dolist (i lines (nreverse results))
+      (let ((current-slots (mapcar #'(lambda (x) (oid (cons x i))) slots))
+            (object (make-instance class)))
+        (let ((response (snmp-get session current-slots)))
+          (mapcar #'(lambda (s v)
+                      (when (not (smi-p v)) ; only set valid value
+                        (setf (slot-value object (oid-name s)) v)))
+                  slots response)
+          (push object results))))))
 
 (defgeneric process-identifier (identifier)
   (:documentation "process identifiers of snmp-select form"))
@@ -82,8 +102,20 @@
   (let ((entry (mib-table-entry oid)))
     (list-children entry)))
 
-(defun detect-mib-table-lines (session oid &key using)
+(defun detect-mib-table-lines (session oid &key key value)
+  "Return a list of line number which match the given key/value or all of them"
   (declare (type session session)
            (type object-id oid))
-  (list-length (snmp-walk session (or using
-                                      (car (mib-table-slots oid))))))
+  (let ((real-key (or key (car (mib-table-slots oid)))))
+    (flet ((get-ids (item)
+             (multiple-value-bind (parent ids) (oid-find-leaf (car item))
+               (declare (ignore parent))
+               ids)))
+      (if value
+          (loop for i = (snmp-get-next session real-key) then (snmp-get-next session (first i))
+                and last = oid then i
+                until (or (oid->= (first i) oid)      ; child test
+                          (ber-equal (first i) last)) ; duplicate test
+                do (if (ber-equal (second i) value)   ; match test
+                       (return (mapcar #'get-ids (list i)))))
+        (mapcar #'get-ids (snmp-walk session real-key))))))
