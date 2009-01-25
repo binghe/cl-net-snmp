@@ -34,6 +34,4 @@
                (:file "report"      :depends-on ("network" "message"))
                (:file "request"     :depends-on ("report" "pdu"))
                (:file "snmp-get"    :depends-on ("request"))
-               (:file "snmp-walk"   :depends-on ("request" "snmp-smi"))
-               (:file "worker"      :depends-on ("session"))))
-
+               (:file "snmp-walk"   :depends-on ("request" "snmp-smi"))))
