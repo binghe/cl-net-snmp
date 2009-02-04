@@ -104,7 +104,8 @@
                     interface to an ethernet-like medium.  The
                     interface identified by a particular value of
                     this index is the same interface as identified
-                    by the same value of ifIndex."))
+                    by the same value of ifIndex.")
+  (:reference "RFC 2863, ifIndex"))
 
 (defoid |dot3StatsAlignmentErrors| (|dot3StatsEntry| 2)
   (:type 'object-type)
@@ -142,7 +143,10 @@
                     Discontinuities in the value of this counter can
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
-                    value of ifCounterDiscontinuityTime."))
+                    value of ifCounterDiscontinuityTime.")
+  (:reference
+   "[IEEE 802.3 Std.], 30.3.1.1.7,
+                    aAlignmentErrors"))
 
 (defoid |dot3StatsFCSErrors| (|dot3StatsEntry| 3)
   (:type 'object-type)
@@ -183,7 +187,10 @@
                     Discontinuities in the value of this counter can
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
-                    value of ifCounterDiscontinuityTime."))
+                    value of ifCounterDiscontinuityTime.")
+  (:reference
+   "[IEEE 802.3 Std.], 30.3.1.1.6,
+                    aFrameCheckSequenceErrors."))
 
 (defoid |dot3StatsSingleCollisionFrames| (|dot3StatsEntry| 4)
   (:type 'object-type)
@@ -209,7 +216,10 @@
                     Discontinuities in the value of this counter can
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
-                    value of ifCounterDiscontinuityTime."))
+                    value of ifCounterDiscontinuityTime.")
+  (:reference
+   "[IEEE 802.3 Std.], 30.3.1.1.3,
+                    aSingleCollisionFrames."))
 
 (defoid |dot3StatsMultipleCollisionFrames| (|dot3StatsEntry| 5)
   (:type 'object-type)
@@ -236,7 +246,10 @@
                     Discontinuities in the value of this counter can
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
-                    value of ifCounterDiscontinuityTime."))
+                    value of ifCounterDiscontinuityTime.")
+  (:reference
+   "[IEEE 802.3 Std.], 30.3.1.1.4,
+                    aMultipleCollisionFrames."))
 
 (defoid |dot3StatsSQETestErrors| (|dot3StatsEntry| 6)
   (:type 'object-type)
@@ -259,7 +272,10 @@
                     Discontinuities in the value of this counter can
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
-                    value of ifCounterDiscontinuityTime."))
+                    value of ifCounterDiscontinuityTime.")
+  (:reference
+   "[IEEE 802.3 Std.], 7.2.4.6, also 30.3.2.1.4,
+                    aSQETestErrors."))
 
 (defoid |dot3StatsDeferredTransmissions| (|dot3StatsEntry| 7)
   (:type 'object-type)
@@ -281,7 +297,10 @@
                     Discontinuities in the value of this counter can
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
-                    value of ifCounterDiscontinuityTime."))
+                    value of ifCounterDiscontinuityTime.")
+  (:reference
+   "[IEEE 802.3 Std.], 30.3.1.1.9,
+                    aFramesWithDeferredXmissions."))
 
 (defoid |dot3StatsLateCollisions| (|dot3StatsEntry| 8)
   (:type 'object-type)
@@ -305,7 +324,10 @@
                     Discontinuities in the value of this counter can
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
-                    value of ifCounterDiscontinuityTime."))
+                    value of ifCounterDiscontinuityTime.")
+  (:reference
+   "[IEEE 802.3 Std.], 30.3.1.1.10,
+                    aLateCollisions."))
 
 (defoid |dot3StatsExcessiveCollisions| (|dot3StatsEntry| 9)
   (:type 'object-type)
@@ -323,7 +345,10 @@
                     Discontinuities in the value of this counter can
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
-                    value of ifCounterDiscontinuityTime."))
+                    value of ifCounterDiscontinuityTime.")
+  (:reference
+   "[IEEE 802.3 Std.], 30.3.1.1.11,
+                    aFramesAbortedDueToXSColls."))
 
 (defoid |dot3StatsInternalMacTransmitErrors| (|dot3StatsEntry| 10)
   (:type 'object-type)
@@ -361,7 +386,10 @@
 
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
-                    value of ifCounterDiscontinuityTime."))
+                    value of ifCounterDiscontinuityTime.")
+  (:reference
+   "[IEEE 802.3 Std.], 30.3.1.1.12,
+                    aFramesLostDueToIntMACXmitError."))
 
 (defoid |dot3StatsCarrierSenseErrors| (|dot3StatsEntry| 11)
   (:type 'object-type)
@@ -386,7 +414,10 @@
                     Discontinuities in the value of this counter can
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
-                    value of ifCounterDiscontinuityTime."))
+                    value of ifCounterDiscontinuityTime.")
+  (:reference
+   "[IEEE 802.3 Std.], 30.3.1.1.13,
+                    aCarrierSenseErrors."))
 
 (defoid |dot3StatsFrameTooLongs| (|dot3StatsEntry| 13)
   (:type 'object-type)
@@ -420,7 +451,10 @@
                     Discontinuities in the value of this counter can
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
-                    value of ifCounterDiscontinuityTime."))
+                    value of ifCounterDiscontinuityTime.")
+  (:reference
+   "[IEEE 802.3 Std.], 30.3.1.1.25,
+                    aFrameTooLongErrors."))
 
 (defoid |dot3StatsInternalMacReceiveErrors| (|dot3StatsEntry| 16)
   (:type 'object-type)
@@ -458,7 +492,10 @@
                     Discontinuities in the value of this counter can
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
-                    value of ifCounterDiscontinuityTime."))
+                    value of ifCounterDiscontinuityTime.")
+  (:reference
+   "[IEEE 802.3 Std.], 30.3.1.1.15,
+                    aFramesLostDueToIntMACRcvError."))
 
 (defoid |dot3StatsEtherChipSet| (|dot3StatsEntry| 17)
   (:type 'object-type)
@@ -553,7 +590,10 @@
                     Discontinuities in the value of this counter can
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
-                    value of ifCounterDiscontinuityTime."))
+                    value of ifCounterDiscontinuityTime.")
+  (:reference
+   "[IEEE 802.3 Std.], 30.3.2.1.5,
+                    aSymbolErrorDuringCarrier."))
 
 (defoid |dot3StatsDuplexStatus| (|dot3StatsEntry| 19)
   (:type 'object-type)
@@ -583,7 +623,10 @@
                     determine the duplex status of an interface
                     without having to know every possible value of
                     ifMauType.  This was felt to be sufficiently
-                    valuable to justify the redundancy."))
+                    valuable to justify the redundancy.")
+  (:reference
+   "[IEEE 802.3 Std.], 30.3.1.1.32,
+                    aDuplexStatus."))
 
 (defoid |dot3StatsRateControlAbility| (|dot3StatsEntry| 20)
   (:type 'object-type)
@@ -595,7 +638,10 @@
                     1000 Mb/s that support Rate Control through
                     lowering the average data rate of the MAC
                     sublayer, with frame granularity, and 'false'
-                    otherwise."))
+                    otherwise.")
+  (:reference
+   "[IEEE 802.3 Std.], 30.3.1.1.33,
+                    aRateControlAbility."))
 
 (defoid |dot3StatsRateControlStatus| (|dot3StatsEntry| 21)
   (:type 'object-type)
@@ -604,7 +650,10 @@
   (:status '|current|)
   (:description
    "The current Rate Control mode of operation of
-                    the MAC sublayer of this interface."))
+                    the MAC sublayer of this interface.")
+  (:reference
+   "[IEEE 802.3 Std.], 30.3.1.1.34,
+                    aRateControlStatus."))
 
 (defoid |dot3CollTable| (|dot3| 5)
   (:type 'object-type)
@@ -613,7 +662,10 @@
   (:status '|current|)
   (:description
    "A collection of collision histograms for a
-                    particular set of interfaces."))
+                    particular set of interfaces.")
+  (:reference
+   "[IEEE 802.3 Std.], 30.3.1.1.30,
+                    aCollisionFrames."))
 
 (defoid |dot3CollEntry| (|dot3CollTable| 1)
   (:type 'object-type)
@@ -713,7 +765,10 @@
   (:status '|current|)
   (:description
    "A list of the possible MAC Control functions
-                    implemented for this interface."))
+                    implemented for this interface.")
+  (:reference
+   "[IEEE 802.3 Std.], 30.3.3.2,
+                    aMACControlFunctionsSupported."))
 
 (defoid |dot3ControlInUnknownOpcodes| (|dot3ControlEntry| 2)
   (:type 'object-type)
@@ -738,7 +793,10 @@
                     Discontinuities in the value of this counter can
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
-                    value of ifCounterDiscontinuityTime."))
+                    value of ifCounterDiscontinuityTime.")
+  (:reference
+   "[IEEE 802.3 Std.], 30.3.3.5,
+                    aUnsupportedOpcodesReceived"))
 
 (defoid |dot3HCControlInUnknownOpcodes| (|dot3ControlEntry| 3)
   (:type 'object-type)
@@ -757,7 +815,10 @@
                     Discontinuities in the value of this counter can
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
-                    value of ifCounterDiscontinuityTime."))
+                    value of ifCounterDiscontinuityTime.")
+  (:reference
+   "[IEEE 802.3 Std.], 30.3.3.5,
+                    aUnsupportedOpcodesReceived"))
 
 (defoid |dot3PauseTable| (|dot3| 10)
   (:type 'object-type)
@@ -887,7 +948,10 @@
                     Discontinuities in the value of this counter can
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
-                    value of ifCounterDiscontinuityTime."))
+                    value of ifCounterDiscontinuityTime.")
+  (:reference
+   "[IEEE 802.3 Std.], 30.3.4.3,
+                    aPAUSEMACCtrlFramesReceived."))
 
 (defoid |dot3OutPauseFrames| (|dot3PauseEntry| 4)
   (:type 'object-type)
@@ -915,7 +979,10 @@
                     Discontinuities in the value of this counter can
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
-                    value of ifCounterDiscontinuityTime."))
+                    value of ifCounterDiscontinuityTime.")
+  (:reference
+   "[IEEE 802.3 Std.], 30.3.4.2,
+                    aPAUSEMACCtrlFramesTransmitted."))
 
 (defoid |dot3HCInPauseFrames| (|dot3PauseEntry| 5)
   (:type 'object-type)
@@ -937,7 +1004,10 @@
                     Discontinuities in the value of this counter can
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
-                    value of ifCounterDiscontinuityTime."))
+                    value of ifCounterDiscontinuityTime.")
+  (:reference
+   "[IEEE 802.3 Std.], 30.3.4.3,
+                    aPAUSEMACCtrlFramesReceived."))
 
 (defoid |dot3HCOutPauseFrames| (|dot3PauseEntry| 6)
   (:type 'object-type)
@@ -959,7 +1029,10 @@
                     Discontinuities in the value of this counter can
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
-                    value of ifCounterDiscontinuityTime."))
+                    value of ifCounterDiscontinuityTime.")
+  (:reference
+   "[IEEE 802.3 Std.], 30.3.4.2,
+                    aPAUSEMACCtrlFramesTransmitted."))
 
 (defoid |dot3HCStatsTable| (|dot3| 11)
   (:type 'object-type)
@@ -1038,7 +1111,10 @@
                     occur at re-initialization of the management
 
                     system, and at other times as indicated by the
-                    value of ifCounterDiscontinuityTime."))
+                    value of ifCounterDiscontinuityTime.")
+  (:reference
+   "[IEEE 802.3 Std.], 30.3.1.1.7,
+                    aAlignmentErrors"))
 
 (defoid |dot3HCStatsFCSErrors| (|dot3HCStatsEntry| 2)
   (:type 'object-type)
@@ -1072,7 +1148,10 @@
                     Discontinuities in the value of this counter can
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
-                    value of ifCounterDiscontinuityTime."))
+                    value of ifCounterDiscontinuityTime.")
+  (:reference
+   "[IEEE 802.3 Std.], 30.3.1.1.6,
+                    aFrameCheckSequenceErrors."))
 
 (defoid |dot3HCStatsInternalMacTransmitErrors| (|dot3HCStatsEntry| 3)
   (:type 'object-type)
@@ -1105,7 +1184,10 @@
                     Discontinuities in the value of this counter can
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
-                    value of ifCounterDiscontinuityTime."))
+                    value of ifCounterDiscontinuityTime.")
+  (:reference
+   "[IEEE 802.3 Std.], 30.3.1.1.12,
+                    aFramesLostDueToIntMACXmitError."))
 
 (defoid |dot3HCStatsFrameTooLongs| (|dot3HCStatsEntry| 4)
   (:type 'object-type)
@@ -1134,7 +1216,10 @@
 
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
-                    value of ifCounterDiscontinuityTime."))
+                    value of ifCounterDiscontinuityTime.")
+  (:reference
+   "[IEEE 802.3 Std.], 30.3.1.1.25,
+                    aFrameTooLongErrors."))
 
 (defoid |dot3HCStatsInternalMacReceiveErrors| (|dot3HCStatsEntry| 5)
   (:type 'object-type)
@@ -1166,7 +1251,10 @@
                     Discontinuities in the value of this counter can
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
-                    value of ifCounterDiscontinuityTime."))
+                    value of ifCounterDiscontinuityTime.")
+  (:reference
+   "[IEEE 802.3 Std.], 30.3.1.1.15,
+                    aFramesLostDueToIntMACRcvError."))
 
 (defoid |dot3HCStatsSymbolErrors| (|dot3HCStatsEntry| 6)
   (:type 'object-type)
@@ -1216,7 +1304,10 @@
                     Discontinuities in the value of this counter can
                     occur at re-initialization of the management
                     system, and at other times as indicated by the
-                    value of ifCounterDiscontinuityTime."))
+                    value of ifCounterDiscontinuityTime.")
+  (:reference
+   "[IEEE 802.3 Std.], 30.3.2.1.5,
+                    aSymbolErrorDuringCarrier."))
 
 (defoid |dot3Tests| (|dot3| 6) (:type 'object-identity))
 

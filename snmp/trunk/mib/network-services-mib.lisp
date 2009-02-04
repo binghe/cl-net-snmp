@@ -22,9 +22,23 @@
   (:description
    "The MIB module describing network service applications"))
 
-(deftype |DistinguishedName| () 't)
+(define-textual-convention |DistinguishedName|
+                           octet-string
+                           (:display-hint "255a")
+                           (:status '|current|)
+                           (:description
+                            "A Distinguished Name represented in accordance with
+         RFC 2253, presented in the UTF-8 charset defined in
+         RFC 2279."))
 
-(deftype |URLString| () 't)
+(define-textual-convention |URLString|
+                           octet-string
+                           (:display-hint "255a")
+                           (:status '|current|)
+                           (:description
+                            "A Uniform Resource Locator represented in accordance
+         with RFCs 1738 and 2368, presented in the NVT ASCII
+         charset defined in RFC 854."))
 
 (defoid |applTable| (|application| 1)
   (:type 'object-type)

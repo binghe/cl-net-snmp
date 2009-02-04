@@ -32,7 +32,18 @@
 (defoid |usmAesCfb128Protocol| (|snmpPrivProtocols| 4)
   (:type 'object-identity)
   (:status '|current|)
-  (:description "The CFB128-AES-128 Privacy Protocol."))
+  (:description "The CFB128-AES-128 Privacy Protocol.")
+  (:reference
+   "- Specification for the ADVANCED ENCRYPTION
+                    STANDARD. Federal Information Processing
+                    Standard (FIPS) Publication 197.
+                    (November 2001).
+
+                  - Dworkin, M., NIST Recommendation for Block
+                    Cipher Modes of Operation, Methods and
+                    Techniques. NIST Special Publication 800-38A
+                    (December 2001).
+                 "))
 
 (in-package :asn.1)
 

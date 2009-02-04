@@ -216,7 +216,8 @@
    "The maximum number of additional encapsulations
             permitted for packets undergoing encapsulation at this
             node.  A value of -1 indicates that no limit is
-            present (except as a result of the packet size)."))
+            present (except as a result of the packet size).")
+  (:reference "RFC 2473, section 4.1.1"))
 
 (defoid |tunnelConfigTable| (|tunnel| 2)
   (:type 'object-type)

@@ -23,27 +23,94 @@
    "The MIB module to describe the OSPF Version 2
        Protocol"))
 
-(deftype |AreaID| () 't)
+(define-textual-convention |AreaID|
+                           |IpAddress|
+                           (:status '|current|)
+                           (:description "An OSPF Area Identifier."))
 
-(deftype |RouterID| () 't)
+(define-textual-convention |RouterID|
+                           |IpAddress|
+                           (:status '|current|)
+                           (:description "A OSPF Router Identifier."))
 
-(deftype |Metric| () 't)
+(define-textual-convention |Metric|
+                           t
+                           (:status '|current|)
+                           (:description "The OSPF Internal Metric."))
 
-(deftype |BigMetric| () 't)
+(define-textual-convention |BigMetric|
+                           t
+                           (:status '|current|)
+                           (:description "The OSPF External Metric."))
 
-(deftype |Status| () 't)
+(define-textual-convention |Status|
+                           t
+                           (:status '|current|)
+                           (:description
+                            "The status of an interface: 'enabled' indicates that
+       it is willing to communicate with other OSPF Routers,
+       while 'disabled' indicates that it is not."))
 
-(deftype |PositiveInteger| () 't)
+(define-textual-convention |PositiveInteger|
+                           t
+                           (:status '|current|)
+                           (:description
+                            "A positive integer. Values in excess are precluded as
+       unnecessary and prone to interoperability issues."))
 
-(deftype |HelloRange| () 't)
+(define-textual-convention |HelloRange|
+                           t
+                           (:status '|current|)
+                           (:description
+                            "The range of intervals on which hello messages are
+       exchanged."))
 
-(deftype |UpToMaxAge| () 't)
+(define-textual-convention |UpToMaxAge|
+                           t
+                           (:status '|current|)
+                           (:description
+                            "The values that one might find or configure for
+       variables bounded by the maximum age of an LSA."))
 
-(deftype |InterfaceIndex| () 't)
+(define-textual-convention |InterfaceIndex|
+                           |Integer32|
+                           (:status '|current|)
+                           (:description "The range of ifIndex."))
 
-(deftype |DesignatedRouterPriority| () 't)
+(define-textual-convention |DesignatedRouterPriority|
+                           t
+                           (:status '|current|)
+                           (:description
+                            "The values defined for the priority of a system for
+       becoming the designated router."))
 
-(deftype |TOSType| () 't)
+(define-textual-convention |TOSType|
+                           t
+                           (:status '|current|)
+                           (:description
+                            "Type of Service is defined as a mapping to the IP Type of
+       Service Flags as defined in the IP Forwarding Table MIB
+
+       +-----+-----+-----+-----+-----+-----+-----+-----+
+       |                 |                       |     |
+       |   PRECEDENCE    |    TYPE OF SERVICE    |  0  |
+       |                 |                       |     |
+       +-----+-----+-----+-----+-----+-----+-----+-----+
+
+                IP TOS                IP TOS
+           Field     Policy      Field     Policy
+
+           Contents    Code      Contents    Code
+           0 0 0 0  ==>   0      0 0 0 1  ==>   2
+           0 0 1 0  ==>   4      0 0 1 1  ==>   6
+           0 1 0 0  ==>   8      0 1 0 1  ==>  10
+           0 1 1 0  ==>  12      0 1 1 1  ==>  14
+           1 0 0 0  ==>  16      1 0 0 1  ==>  18
+           1 0 1 0  ==>  20      1 0 1 1  ==>  22
+           1 1 0 0  ==>  24      1 1 0 1  ==>  26
+           1 1 1 0  ==>  28      1 1 1 1  ==>  30
+
+       The remaining values are left for future definition."))
 
 (defoid |ospfGeneralGroup| (|ospf| 1) (:type 'object-identity))
 
@@ -58,7 +125,8 @@
 
            By  convention,  to  ensure  uniqueness,   this
            should  default  to  the  value  of  one of the
-           router's IP interface addresses."))
+           router's IP interface addresses.")
+  (:reference "OSPF Version 2, C.1 Global parameters"))
 
 (defoid |ospfAdminStat| (|ospfGeneralGroup| 2)
   (:type 'object-type)
@@ -79,7 +147,8 @@
   (:status '|current|)
   (:description
    "The current version number of the OSPF  proto-
-           col is 2."))
+           col is 2.")
+  (:reference "OSPF Version 2, Title"))
 
 (defoid |ospfAreaBdrRtrStatus| (|ospfGeneralGroup| 4)
   (:type 'object-type)
@@ -88,7 +157,10 @@
   (:status '|current|)
   (:description
    "A flag to note whether this router is an  area
-           border router."))
+           border router.")
+  (:reference
+   "OSPF Version 2, Section 3 Splitting the AS into
+          Areas"))
 
 (defoid |ospfASBdrRtrStatus| (|ospfGeneralGroup| 5)
   (:type 'object-type)
@@ -97,7 +169,10 @@
   (:status '|current|)
   (:description
    "A flag to note whether this router is  config-
-           ured as an Autonomous System border router."))
+           ured as an Autonomous System border router.")
+  (:reference
+   "OSPF Version 2, Section 3.3  Classification  of
+          routers"))
 
 (defoid |ospfExternLsaCount| (|ospfGeneralGroup| 6)
   (:type 'object-type)
@@ -106,7 +181,10 @@
   (:status '|current|)
   (:description
    "The number of external (LS type 5)  link-state
-           advertisements in the link-state database."))
+           advertisements in the link-state database.")
+  (:reference
+   "OSPF Version 2, Appendix A.4.5 AS external link
+          advertisements"))
 
 (defoid |ospfExternLsaCksumSum| (|ospfGeneralGroup| 7)
   (:type 'object-type)
@@ -129,7 +207,10 @@
   (:status '|current|)
   (:description
    "The router's support for type-of-service rout-
-           ing."))
+           ing.")
+  (:reference
+   "OSPF Version 2,  Appendix  F.1.2  Optional  TOS
+          support"))
 
 (defoid |ospfOriginateNewLsas| (|ospfGeneralGroup| 9)
   (:type 'object-type)
@@ -226,7 +307,8 @@
   (:syntax '|TruthValue|)
   (:max-access '|read-write|)
   (:status '|current|)
-  (:description "The router's support for demand routing."))
+  (:description "The router's support for demand routing.")
+  (:reference "OSPF Version 2, Appendix on Demand Routing"))
 
 (defoid |ospfAreaTable| (|ospf| 2)
   (:type 'object-type)
@@ -236,7 +318,10 @@
   (:description
    "Information describing the configured  parame-
            ters  and cumulative statistics of the router's
-           attached areas."))
+           attached areas.")
+  (:reference
+   "OSPF Version 2, Section 6  The Area Data Struc-
+          ture"))
 
 (defoid |ospfAreaEntry| (|ospfAreaTable| 1)
   (:type 'object-type)
@@ -267,7 +352,8 @@
   (:status '|current|)
   (:description
    "A 32-bit integer uniquely identifying an area.
-           Area ID 0.0.0.0 is used for the OSPF backbone."))
+           Area ID 0.0.0.0 is used for the OSPF backbone.")
+  (:reference "OSPF Version 2, Appendix C.2 Area parameters"))
 
 (defoid |ospfAuthType| (|ospfAreaEntry| 2)
   (:type 'object-type)
@@ -277,7 +363,8 @@
   (:description
    "The authentication type specified for an area.
            Additional authentication types may be assigned
-           locally on a per Area basis."))
+           locally on a per Area basis.")
+  (:reference "OSPF Version 2, Appendix E Authentication"))
 
 (defoid |ospfImportAsExtern| (|ospfAreaEntry| 3)
   (:type 'object-type)
@@ -286,7 +373,8 @@
   (:status '|current|)
   (:description
    "The area's support for importing  AS  external
-           link- state advertisements."))
+           link- state advertisements.")
+  (:reference "OSPF Version 2, Appendix C.2 Area parameters"))
 
 (defoid |ospfSpfRuns| (|ospfAreaEntry| 4)
   (:type 'object-type)
@@ -381,7 +469,8 @@
   (:status '|current|)
   (:description
    "The set of metrics that will be advertised  by
-           a default Area Border Router into a stub area."))
+           a default Area Border Router into a stub area.")
+  (:reference "OSPF Version 2, Appendix C.2, Area Parameters"))
 
 (defoid |ospfStubAreaEntry| (|ospfStubAreaTable| 1)
   (:type 'object-type)
@@ -391,7 +480,8 @@
   (:description
    "The metric for a given Type  of  Service  that
            will  be  advertised  by  a default Area Border
-           Router into a stub area."))
+           Router into a stub area.")
+  (:reference "OSPF Version 2, Appendix C.2, Area Parameters"))
 
 (defclass |OspfStubAreaEntry| (sequence-type)
   ((|ospfStubAreaId| :type |AreaID|)
@@ -456,7 +546,10 @@
   (:syntax '(vector |OspfLsdbEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
-  (:description "The OSPF Process's Link State Database."))
+  (:description "The OSPF Process's Link State Database.")
+  (:reference
+   "OSPF Version 2, Section 12  Link  State  Adver-
+          tisements"))
 
 (defoid |ospfLsdbEntry| (|ospfLsdbTable| 1)
   (:type 'object-type)
@@ -473,7 +566,7 @@
    (|ospfLsdbSequence| :type |Integer32|)
    (|ospfLsdbAge| :type |Integer32|)
    (|ospfLsdbChecksum| :type |Integer32|)
-   (|ospfLsdbAdvertisement| :type t)))
+   (|ospfLsdbAdvertisement| :type octet-string)))
 
 (defoid |ospfLsdbAreaId| (|ospfLsdbEntry| 1)
   (:type 'object-type)
@@ -482,7 +575,8 @@
   (:status '|current|)
   (:description
    "The 32 bit identifier of the Area  from  which
-           the LSA was received."))
+           the LSA was received.")
+  (:reference "OSPF Version 2, Appendix C.2 Area parameters"))
 
 (defoid |ospfLsdbType| (|ospfLsdbEntry| 2)
   (:type 'object-type)
@@ -492,7 +586,10 @@
   (:description
    "The type  of  the  link  state  advertisement.
            Each  link state type has a separate advertise-
-           ment format."))
+           ment format.")
+  (:reference
+   "OSPF Version 2, Appendix A.4.1 The  Link  State
+          Advertisement header"))
 
 (defoid |ospfLsdbLsid| (|ospfLsdbEntry| 3)
   (:type 'object-type)
@@ -503,7 +600,8 @@
    "The Link State ID is an LS Type Specific field
            containing either a Router ID or an IP Address;
            it identifies the piece of the  routing  domain
-           that is being described by the advertisement."))
+           that is being described by the advertisement.")
+  (:reference "OSPF Version 2, Section 12.1.4 Link State ID"))
 
 (defoid |ospfLsdbRouterId| (|ospfLsdbEntry| 4)
   (:type 'object-type)
@@ -512,7 +610,8 @@
   (:status '|current|)
   (:description
    "The 32 bit number that uniquely identifies the
-           originating router in the Autonomous System."))
+           originating router in the Autonomous System.")
+  (:reference "OSPF Version 2, Appendix C.1 Global parameters"))
 
 (defoid |ospfLsdbSequence| (|ospfLsdbEntry| 5)
   (:type 'object-type)
@@ -525,7 +624,10 @@
            cate link state advertisements.  The  space  of
            sequence  numbers  is  linearly  ordered.   The
            larger the sequence number the more recent  the
-           advertisement."))
+           advertisement.")
+  (:reference
+   "OSPF Version  2,  Section  12.1.6  LS  sequence
+          number"))
 
 (defoid |ospfLsdbAge| (|ospfLsdbEntry| 6)
   (:type 'object-type)
@@ -534,7 +636,8 @@
   (:status '|current|)
   (:description
    "This field is the age of the link state adver-
-           tisement in seconds."))
+           tisement in seconds.")
+  (:reference "OSPF Version 2, Section 12.1.1 LS age"))
 
 (defoid |ospfLsdbChecksum| (|ospfLsdbEntry| 7)
   (:type 'object-type)
@@ -549,16 +652,20 @@
            without updating the  checksum.   The  checksum
            used  is  the same that is used for ISO connec-
            tionless datagrams; it is commonly referred  to
-           as the Fletcher checksum."))
+           as the Fletcher checksum.")
+  (:reference "OSPF Version 2, Section 12.1.7 LS checksum"))
 
 (defoid |ospfLsdbAdvertisement| (|ospfLsdbEntry| 8)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description
    "The entire Link State Advertisement, including
-           its header."))
+           its header.")
+  (:reference
+   "OSPF Version 2, Section 12  Link  State  Adver-
+          tisements"))
 
 (defoid |ospfAreaRangeTable| (|ospf| 5)
   (:type 'object-type)
@@ -570,7 +677,8 @@
            address/IP  network  mask  pair.   For example,
            class B address range of X.X.X.X with a network
            mask  of  255.255.0.0 includes all IP addresses
-           from X.X.0.0 to X.X.255.255"))
+           from X.X.0.0 to X.X.255.255")
+  (:reference "OSPF Version 2, Appendix C.2  Area parameters"))
 
 (defoid |ospfAreaRangeEntry| (|ospfAreaRangeTable| 1)
   (:type 'object-type)
@@ -582,7 +690,8 @@
            address/IP  network  mask  pair.   For example,
            class B address range of X.X.X.X with a network
            mask  of  255.255.0.0 includes all IP addresses
-           from X.X.0.0 to X.X.255.255"))
+           from X.X.0.0 to X.X.255.255")
+  (:reference "OSPF Version 2, Appendix C.2  Area parameters"))
 
 (defclass |OspfAreaRangeEntry| (sequence-type)
   ((|ospfAreaRangeAreaId| :type |AreaID|)
@@ -598,7 +707,8 @@
   (:status '|obsolete|)
   (:description
    "The Area the Address  Range  is  to  be  found
-           within."))
+           within.")
+  (:reference "OSPF Version 2, Appendix C.2 Area parameters"))
 
 (defoid |ospfAreaRangeNet| (|ospfAreaRangeEntry| 2)
   (:type 'object-type)
@@ -607,7 +717,8 @@
   (:status '|obsolete|)
   (:description
    "The IP Address of the Net or Subnet  indicated
-           by the range."))
+           by the range.")
+  (:reference "OSPF Version 2, Appendix C.2 Area parameters"))
 
 (defoid |ospfAreaRangeMask| (|ospfAreaRangeEntry| 3)
   (:type 'object-type)
@@ -616,7 +727,8 @@
   (:status '|obsolete|)
   (:description
    "The Subnet Mask that pertains to  the  Net  or
-           Subnet."))
+           Subnet.")
+  (:reference "OSPF Version 2, Appendix C.2 Area parameters"))
 
 (defoid |ospfAreaRangeStatus| (|ospfAreaRangeEntry| 4)
   (:type 'object-type)
@@ -647,7 +759,10 @@
   (:status '|current|)
   (:description
    "The list of Hosts, and their metrics, that the
-           router will advertise as host routes."))
+           router will advertise as host routes.")
+  (:reference
+   "OSPF Version 2, Appendix C.6  Host route param-
+          eters"))
 
 (defoid |ospfHostEntry| (|ospfHostTable| 1)
   (:type 'object-type)
@@ -670,7 +785,10 @@
   (:syntax '|IpAddress|)
   (:max-access '|read-only|)
   (:status '|current|)
-  (:description "The IP Address of the Host."))
+  (:description "The IP Address of the Host.")
+  (:reference
+   "OSPF Version 2, Appendix C.6 Host route parame-
+          ters"))
 
 (defoid |ospfHostTOS| (|ospfHostEntry| 2)
   (:type 'object-type)
@@ -679,14 +797,20 @@
   (:status '|current|)
   (:description
    "The Type of Service of the route being config-
-           ured."))
+           ured.")
+  (:reference
+   "OSPF Version 2, Appendix C.6 Host route parame-
+          ters"))
 
 (defoid |ospfHostMetric| (|ospfHostEntry| 3)
   (:type 'object-type)
   (:syntax '|Metric|)
   (:max-access '|read-create|)
   (:status '|current|)
-  (:description "The Metric to be advertised."))
+  (:description "The Metric to be advertised.")
+  (:reference
+   "OSPF Version 2, Appendix C.6 Host route parame-
+          ters"))
 
 (defoid |ospfHostStatus| (|ospfHostEntry| 4)
   (:type 'object-type)
@@ -707,7 +831,8 @@
   (:description
    "The Area the Host Entry is to be found within.
            By  default, the area that a subsuming OSPF in-
-           terface is in, or 0.0.0.0"))
+           terface is in, or 0.0.0.0")
+  (:reference "OSPF Version 2, Appendix C.2 Area parameters"))
 
 (defoid |ospfIfTable| (|ospf| 7)
   (:type 'object-type)
@@ -716,7 +841,10 @@
   (:status '|current|)
   (:description
    "The OSPF Interface Table describes the  inter-
-           faces from the viewpoint of OSPF."))
+           faces from the viewpoint of OSPF.")
+  (:reference
+   "OSPF Version 2, Appendix C.3  Router  interface
+          parameters"))
 
 (defoid |ospfIfEntry| (|ospfIfTable| 1)
   (:type 'object-type)
@@ -744,7 +872,7 @@
    (|ospfIfBackupDesignatedRouter| :type |IpAddress|)
    (|ospfIfEvents| :type |Counter32|)
    (|ospfIfAuthType| :type integer)
-   (|ospfIfAuthKey| :type t)
+   (|ospfIfAuthKey| :type octet-string)
    (|ospfIfStatus| :type |RowStatus|)
    (|ospfIfMulticastForwarding| :type integer)
    (|ospfIfDemand| :type |TruthValue|)))
@@ -911,7 +1039,7 @@
 
 (defoid |ospfIfAuthKey| (|ospfIfEntry| 16)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-create|)
   (:status '|current|)
   (:description
@@ -928,7 +1056,10 @@
            ment.
 
            When read, ospfIfAuthKey always returns an  Oc-
-           tet String of length zero."))
+           tet String of length zero.")
+  (:reference
+   "OSPF Version 2, Section 9  The  Interface  Data
+          Structure"))
 
 (defoid |ospfIfStatus| (|ospfIfEntry| 17)
   (:type 'object-type)
@@ -974,7 +1105,8 @@
   (:description
    "The authentication type specified for  an  in-
            terface.   Additional  authentication types may
-           be assigned locally."))
+           be assigned locally.")
+  (:reference "OSPF Version 2, Appendix E Authentication"))
 
 (defoid |ospfIfMetricTable| (|ospf| 8)
   (:type 'object-type)
@@ -983,7 +1115,10 @@
   (:status '|current|)
   (:description
    "The TOS metrics for  a  non-virtual  interface
-           identified by the interface index."))
+           identified by the interface index.")
+  (:reference
+   "OSPF Version 2, Appendix C.3  Router  interface
+          parameters"))
 
 (defoid |ospfIfMetricEntry| (|ospfIfMetricTable| 1)
   (:type 'object-type)
@@ -992,7 +1127,10 @@
   (:status '|current|)
   (:description
    "A particular TOS metric for a non-virtual  in-
-           terface identified by the interface index."))
+           terface identified by the interface index.")
+  (:reference
+   "OSPF Version 2, Appendix C.3  Router  interface
+          parameters"))
 
 (defclass |OspfIfMetricEntry| (sequence-type)
   ((|ospfIfMetricIpAddress| :type |IpAddress|)
@@ -1062,7 +1200,10 @@
   (:status '|current|)
   (:description
    "Information about this router's virtual inter-
-           faces."))
+           faces.")
+  (:reference
+   "OSPF Version  2,  Appendix  C.4   Virtual  link
+          parameters"))
 
 (defoid |ospfVirtIfEntry| (|ospfVirtIfTable| 1)
   (:type 'object-type)
@@ -1081,7 +1222,7 @@
    (|ospfVirtIfState| :type integer)
    (|ospfVirtIfEvents| :type |Counter32|)
    (|ospfVirtIfAuthType| :type integer)
-   (|ospfVirtIfAuthKey| :type t)
+   (|ospfVirtIfAuthKey| :type octet-string)
    (|ospfVirtIfStatus| :type |RowStatus|)))
 
 (defoid |ospfVirtIfAreaId| (|ospfVirtIfEntry| 1)
@@ -1166,7 +1307,7 @@
 
 (defoid |ospfVirtIfAuthKey| (|ospfVirtIfEntry| 9)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-create|)
   (:status '|current|)
   (:description
@@ -1182,7 +1323,10 @@
            ment.
 
            When  read,  ospfVifAuthKey  always  returns  a
-           string of length zero."))
+           string of length zero.")
+  (:reference
+   "OSPF Version 2, Section 9  The  Interface  Data
+          Structure"))
 
 (defoid |ospfVirtIfStatus| (|ospfVirtIfEntry| 10)
   (:type 'object-type)
@@ -1203,21 +1347,28 @@
   (:description
    "The authentication type specified for a virtu-
            al  interface.  Additional authentication types
-           may be assigned locally."))
+           may be assigned locally.")
+  (:reference "OSPF Version 2, Appendix E Authentication"))
 
 (defoid |ospfNbrTable| (|ospf| 10)
   (:type 'object-type)
   (:syntax '(vector |OspfNbrEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
-  (:description "A table of non-virtual neighbor information."))
+  (:description "A table of non-virtual neighbor information.")
+  (:reference
+   "OSPF Version 2, Section 10  The  Neighbor  Data
+          Structure"))
 
 (defoid |ospfNbrEntry| (|ospfNbrTable| 1)
   (:type 'object-type)
   (:syntax '|OspfNbrEntry|)
   (:max-access '|not-accessible|)
   (:status '|current|)
-  (:description "The information regarding a single neighbor."))
+  (:description "The information regarding a single neighbor.")
+  (:reference
+   "OSPF Version 2, Section 10  The  Neighbor  Data
+          Structure"))
 
 (defclass |OspfNbrEntry| (sequence-type)
   ((|ospfNbrIpAddr| :type |IpAddress|)
@@ -1292,7 +1443,8 @@
            area  is  an  NSSA.  These areas are capable of
            carrying type 7 external advertisements,  which
            are  translated into type 5 external advertise-
-           ments at NSSA borders."))
+           ments at NSSA borders.")
+  (:reference "OSPF Version 2, Section 12.1.2 Options"))
 
 (defoid |ospfNbrPriority| (|ospfNbrEntry| 5)
   (:type 'object-type)
@@ -1313,7 +1465,8 @@
   (:status '|current|)
   (:description
    "The State of the relationship with this Neigh-
-           bor."))
+           bor.")
+  (:reference "OSPF Version 2, Section 10.1 Neighbor States"))
 
 (defoid |ospfNbrEvents| (|ospfNbrEntry| 7)
   (:type 'object-type)
@@ -1368,7 +1521,8 @@
   (:syntax '(vector |OspfVirtNbrEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
-  (:description "A table of virtual neighbor information."))
+  (:description "A table of virtual neighbor information.")
+  (:reference "OSPF Version 2, Section 15  Virtual Links"))
 
 (defoid |ospfVirtNbrEntry| (|ospfVirtNbrTable| 1)
   (:type 'object-type)
@@ -1471,7 +1625,10 @@
   (:syntax '(vector |OspfExtLsdbEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
-  (:description "The OSPF Process's Links State Database."))
+  (:description "The OSPF Process's Links State Database.")
+  (:reference
+   "OSPF Version 2, Section 12  Link  State  Adver-
+          tisements"))
 
 (defoid |ospfExtLsdbEntry| (|ospfExtLsdbTable| 1)
   (:type 'object-type)
@@ -1487,7 +1644,7 @@
    (|ospfExtLsdbSequence| :type |Integer32|)
    (|ospfExtLsdbAge| :type |Integer32|)
    (|ospfExtLsdbChecksum| :type |Integer32|)
-   (|ospfExtLsdbAdvertisement| :type t)))
+   (|ospfExtLsdbAdvertisement| :type octet-string)))
 
 (defoid |ospfExtLsdbType| (|ospfExtLsdbEntry| 1)
   (:type 'object-type)
@@ -1497,7 +1654,10 @@
   (:description
    "The type  of  the  link  state  advertisement.
            Each  link state type has a separate advertise-
-           ment format."))
+           ment format.")
+  (:reference
+   "OSPF Version 2, Appendix A.4.1 The  Link  State
+          Advertisement header"))
 
 (defoid |ospfExtLsdbLsid| (|ospfExtLsdbEntry| 2)
   (:type 'object-type)
@@ -1508,7 +1668,8 @@
    "The Link State ID is an LS Type Specific field
            containing either a Router ID or an IP Address;
            it identifies the piece of the  routing  domain
-           that is being described by the advertisement."))
+           that is being described by the advertisement.")
+  (:reference "OSPF Version 2, Section 12.1.4 Link State ID"))
 
 (defoid |ospfExtLsdbRouterId| (|ospfExtLsdbEntry| 3)
   (:type 'object-type)
@@ -1517,7 +1678,8 @@
   (:status '|current|)
   (:description
    "The 32 bit number that uniquely identifies the
-           originating router in the Autonomous System."))
+           originating router in the Autonomous System.")
+  (:reference "OSPF Version 2, Appendix C.1 Global parameters"))
 
 (defoid |ospfExtLsdbSequence| (|ospfExtLsdbEntry| 4)
   (:type 'object-type)
@@ -1530,7 +1692,10 @@
            cate link state advertisements.  The  space  of
            sequence  numbers  is  linearly  ordered.   The
            larger the sequence number the more recent  the
-           advertisement."))
+           advertisement.")
+  (:reference
+   "OSPF Version  2,  Section  12.1.6  LS  sequence
+          number"))
 
 (defoid |ospfExtLsdbAge| (|ospfExtLsdbEntry| 5)
   (:type 'object-type)
@@ -1539,7 +1704,8 @@
   (:status '|current|)
   (:description
    "This field is the age of the link state adver-
-           tisement in seconds."))
+           tisement in seconds.")
+  (:reference "OSPF Version 2, Section 12.1.1 LS age"))
 
 (defoid |ospfExtLsdbChecksum| (|ospfExtLsdbEntry| 6)
   (:type 'object-type)
@@ -1554,16 +1720,20 @@
            without updating the  checksum.   The  checksum
            used  is  the same that is used for ISO connec-
            tionless datagrams; it is commonly referred  to
-           as the Fletcher checksum."))
+           as the Fletcher checksum.")
+  (:reference "OSPF Version 2, Section 12.1.7 LS checksum"))
 
 (defoid |ospfExtLsdbAdvertisement| (|ospfExtLsdbEntry| 7)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description
    "The entire Link State Advertisement, including
-           its header."))
+           its header.")
+  (:reference
+   "OSPF Version 2, Section 12  Link  State  Adver-
+          tisements"))
 
 (defoid |ospfRouteGroup| (|ospf| 13) (:type 'object-identity))
 
@@ -1591,7 +1761,8 @@
            ranges  are configured such that one range sub-
            sumes  another  range  (e.g.,   10.0.0.0   mask
            255.0.0.0  and  10.1.0.0 mask 255.255.0.0), the
-           most specific match is the preferred one."))
+           most specific match is the preferred one.")
+  (:reference "OSPF Version 2, Appendix C.2  Area parameters"))
 
 (defoid |ospfAreaAggregateEntry| (|ospfAreaAggregateTable| 1)
   (:type 'object-type)
@@ -1607,7 +1778,8 @@
            ranges are range configured such that one range
            subsumes another  range  (e.g.,  10.0.0.0  mask
            255.0.0.0  and  10.1.0.0 mask 255.255.0.0), the
-           most specific match is the preferred one."))
+           most specific match is the preferred one.")
+  (:reference "OSPF Version 2, Appendix C.2  Area parameters"))
 
 (defclass |OspfAreaAggregateEntry| (sequence-type)
   ((|ospfAreaAggregateAreaID| :type |AreaID|)
@@ -1624,7 +1796,8 @@
   (:status '|current|)
   (:description
    "The Area the Address Aggregate is to be  found
-           within."))
+           within.")
+  (:reference "OSPF Version 2, Appendix C.2 Area parameters"))
 
 (defoid |ospfAreaAggregateLsdbType| (|ospfAreaAggregateEntry| 2)
   (:type 'object-type)
@@ -1634,7 +1807,10 @@
   (:description
    "The type of the Address Aggregate.  This field
            specifies  the  Lsdb type that this Address Ag-
-           gregate applies to."))
+           gregate applies to.")
+  (:reference
+   "OSPF Version 2, Appendix A.4.1 The  Link  State
+          Advertisement header"))
 
 (defoid |ospfAreaAggregateNet| (|ospfAreaAggregateEntry| 3)
   (:type 'object-type)
@@ -1643,7 +1819,8 @@
   (:status '|current|)
   (:description
    "The IP Address of the Net or Subnet  indicated
-           by the range."))
+           by the range.")
+  (:reference "OSPF Version 2, Appendix C.2 Area parameters"))
 
 (defoid |ospfAreaAggregateMask| (|ospfAreaAggregateEntry| 4)
   (:type 'object-type)
@@ -1652,7 +1829,8 @@
   (:status '|current|)
   (:description
    "The Subnet Mask that pertains to  the  Net  or
-           Subnet."))
+           Subnet.")
+  (:reference "OSPF Version 2, Appendix C.2 Area parameters"))
 
 (defoid |ospfAreaAggregateStatus| (|ospfAreaAggregateEntry| 5)
   (:type 'object-type)

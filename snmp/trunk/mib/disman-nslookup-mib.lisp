@@ -258,7 +258,10 @@
 
         The operational state of a remote lookup operation
         can be determined by examination of its
-        lookupCtlOperStatus object."))
+        lookupCtlOperStatus object.")
+  (:reference
+   "See definition of RowStatus in RFC 2579,
+        'Textual Conventions for SMIv2.'"))
 
 (defoid |lookupResultsTable| (|lookupObjects| 4)
   (:type 'object-type)

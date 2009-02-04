@@ -246,7 +246,7 @@
 
 (defclass |SnmpNotifyFilterEntry| (sequence-type)
   ((|snmpNotifyFilterSubtree| :type object-id)
-   (|snmpNotifyFilterMask| :type t)
+   (|snmpNotifyFilterMask| :type octet-string)
    (|snmpNotifyFilterType| :type integer)
    (|snmpNotifyFilterStorageType| :type |StorageType|)
    (|snmpNotifyFilterRowStatus| :type |RowStatus|)))
@@ -264,7 +264,7 @@
 
 (defoid |snmpNotifyFilterMask| (|snmpNotifyFilterEntry| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-create|)
   (:status '|current|)
   (:description
