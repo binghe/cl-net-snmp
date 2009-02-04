@@ -3,6 +3,17 @@
 
 (in-package :snmp)
 
+(defvar *smi-value->symbol-table* (make-hash-table))
+(defvar *smi-symbol->value-table* (make-hash-table))
+
+(eval-when (:load-toplevel :execute)
+  (mapcar #'(lambda (x)
+	      (setf (gethash (car x) *smi-value->symbol-table*)
+                    (cdr x)
+                    (gethash (cdr x) *smi-symbol->value-table*)
+                    (car x)))
+          *smi-map*))
+
 (defgeneric smi (object))
 
 (defmethod smi ((value integer))

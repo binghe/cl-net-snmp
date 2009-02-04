@@ -13,7 +13,7 @@
 (defsystem snmp-base
   :description "SNMP Base System"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
-  :version "6.0"
+  :version "6.0-dev"
   :licence "MIT"
   :depends-on (:asn.1
 	       :ironclad
