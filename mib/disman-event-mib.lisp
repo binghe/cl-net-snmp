@@ -42,7 +42,38 @@
 
 (defoid |mteEvent| (|dismanEventMIBObjects| 4) (:type 'object-identity))
 
-(deftype |FailureReason| () 't)
+(define-textual-convention |FailureReason|
+                           t
+                           (:status '|current|)
+                           (:description
+                            "Reasons for failures in an attempt to perform a management
+        request.
+
+        The first group of errors, numbered less than 0, are related
+        to problems in sending the request.  The existence of a
+        particular error code here does not imply that all
+        implementations are capable of sensing that error and
+
+
+        returning that code.
+
+        The second group, numbered greater than 0, are copied
+        directly from SNMP protocol operations and are intended to
+        carry exactly the meanings defined for the protocol as returned
+        in an SNMP response.
+
+        localResourceLack       some local resource such as memory
+                                lacking or
+                                mteResourceSampleInstanceMaximum
+                                exceeded
+        badDestination          unrecognized domain name or otherwise
+                                invalid destination address
+        destinationUnreachable  can't get to destination address
+        noResponse              no response to SNMP request
+        badType                 the data syntax of a retrieved object
+                                as not as expected
+        sampleOverrun           another sample attempt occurred before
+                                the previous one completed"))
 
 (defoid |mteResourceSampleMinimum| (|mteResource| 1)
   (:type 'object-type)

@@ -41,7 +41,11 @@
 
 (defoid |nsTransactions| (|netSnmpObjects| 8) (:type 'object-identity))
 
-(deftype |NetsnmpCacheStatus| () 't)
+(define-textual-convention |NetsnmpCacheStatus|
+                           t
+                           (:status '|current|)
+                           (:description
+                            "an indication of the status of data caching entries"))
 
 (defoid |nsCacheDefaultTimeout| (|nsCache| 1)
   (:type 'object-type)

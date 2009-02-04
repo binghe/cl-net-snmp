@@ -39,7 +39,7 @@
 
 (defoid |ucdDemoPublicString| (|ucdDemoPublic| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-write|)
   (:status '|current|)
   (:description
@@ -49,7 +49,7 @@
 
 (defoid |ucdDemoUserList| (|ucdDemoPublic| 3)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description
@@ -57,7 +57,7 @@
 
 (defoid |ucdDemoPassphrase| (|ucdDemoPublic| 4)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description

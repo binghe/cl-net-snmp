@@ -289,7 +289,12 @@
         not supported.  DS Field usage is often not supported
         by IP implementations, and not all values are supported.
         Refer to RFC 2474 and RFC 3260 for guidance on usage of
-        this field."))
+        this field.")
+  (:reference
+   "Refer to RFC 1812 for the definition of the IPv4 TOS
+        octet and to RFC 2460 for the definition of the IPv6
+        Traffic Class octet.  Refer to RFC 2474 and RFC 3260
+        for the definition of the Differentiated Services Field."))
 
 (defoid |traceRouteCtlSourceAddressType| (|traceRouteCtlEntry| 12)
   (:type 'object-type)
@@ -536,7 +541,10 @@
 
         The operational state of an traceroute operation
         can be determined by examination of the corresponding
-        traceRouteResultsOperStatus object."))
+        traceRouteResultsOperStatus object.")
+  (:reference
+   "See definition of RowStatus in RFC 2579, 'Textual
+        Conventions for SMIv2.'"))
 
 (defoid |traceRouteResultsTable| (|traceRouteObjects| 3)
   (:type 'object-type)

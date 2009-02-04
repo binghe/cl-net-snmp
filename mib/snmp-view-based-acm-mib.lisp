@@ -544,7 +544,7 @@
 (defclass |VacmViewTreeFamilyEntry| (sequence-type)
   ((|vacmViewTreeFamilyViewName| :type |SnmpAdminString|)
    (|vacmViewTreeFamilySubtree| :type object-id)
-   (|vacmViewTreeFamilyMask| :type t)
+   (|vacmViewTreeFamilyMask| :type octet-string)
    (|vacmViewTreeFamilyType| :type integer)
    (|vacmViewTreeFamilyStorageType| :type |StorageType|)
    (|vacmViewTreeFamilyStatus| :type |RowStatus|)))
@@ -571,7 +571,7 @@
 
 (defoid |vacmViewTreeFamilyMask| (|vacmViewTreeFamilyEntry| 3)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-create|)
   (:status '|current|)
   (:description

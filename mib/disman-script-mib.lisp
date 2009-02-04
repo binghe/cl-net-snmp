@@ -533,7 +533,7 @@
 
 (defclass |SmCodeEntry| (sequence-type)
   ((|smCodeIndex| :type |Unsigned32|)
-   (|smCodeText| :type t)
+   (|smCodeText| :type octet-string)
    (|smCodeRowStatus| :type |RowStatus|)))
 
 (defoid |smCodeIndex| (|smCodeEntry| 1)
@@ -545,7 +545,7 @@
 
 (defoid |smCodeText| (|smCodeEntry| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-create|)
   (:status '|current|)
   (:description
@@ -588,7 +588,7 @@
    (|smLaunchName| :type |SnmpAdminString|)
    (|smLaunchScriptOwner| :type |SnmpAdminString|)
    (|smLaunchScriptName| :type |SnmpAdminString|)
-   (|smLaunchArgument| :type t)
+   (|smLaunchArgument| :type octet-string)
    (|smLaunchMaxRunning| :type |Unsigned32|)
    (|smLaunchMaxCompleted| :type |Unsigned32|)
    (|smLaunchLifeTime| :type |TimeInterval|)
@@ -662,7 +662,7 @@
 
 (defoid |smLaunchArgument| (|smLaunchEntry| 5)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-create|)
   (:status '|current|)
   (:description
@@ -1020,13 +1020,13 @@
 
 (defclass |SmRunEntry| (sequence-type)
   ((|smRunIndex| :type |Integer32|)
-   (|smRunArgument| :type t)
+   (|smRunArgument| :type octet-string)
    (|smRunStartTime| :type |DateAndTime|)
    (|smRunEndTime| :type |DateAndTime|)
    (|smRunLifeTime| :type |TimeInterval|)
    (|smRunExpireTime| :type |TimeInterval|)
    (|smRunExitCode| :type integer)
-   (|smRunResult| :type t)
+   (|smRunResult| :type octet-string)
    (|smRunControl| :type integer)
    (|smRunState| :type integer)
    (|smRunError| :type |SnmpAdminString|)
@@ -1050,7 +1050,7 @@
 
 (defoid |smRunArgument| (|smRunEntry| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The argument supplied to the script when it started."))
@@ -1174,7 +1174,7 @@
 
 (defoid |smRunResult| (|smRunEntry| 8)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description

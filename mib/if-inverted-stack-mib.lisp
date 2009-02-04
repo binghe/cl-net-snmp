@@ -60,7 +60,8 @@
             ifInvStackStatus.0.z=active
 
           This table contains exactly the same number of rows as the
-          ifStackTable, but the rows appear in a different order."))
+          ifStackTable, but the rows appear in a different order.")
+  (:reference "ifStackTable of RFC 2863"))
 
 (defoid |ifInvStackEntry| (|ifInvStackTable| 1)
   (:type 'object-type)

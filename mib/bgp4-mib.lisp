@@ -22,7 +22,7 @@
 
 (defoid |bgpVersion| (|bgp| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description
@@ -79,7 +79,7 @@
    (|bgpPeerOutUpdates| :type |Counter32|)
    (|bgpPeerInTotalMessages| :type |Counter32|)
    (|bgpPeerOutTotalMessages| :type |Counter32|)
-   (|bgpPeerLastError| :type t)
+   (|bgpPeerLastError| :type octet-string)
    (|bgpPeerFsmEstablishedTransitions| :type |Counter32|)
    (|bgpPeerFsmEstablishedTime| :type |Gauge32|)
    (|bgpPeerConnectRetryInterval| :type integer)
@@ -223,7 +223,7 @@
 
 (defoid |bgpPeerLastError| (|bgpPeerEntry| 14)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description
@@ -398,7 +398,7 @@
   ((|bgpPathAttrPeer| :type |IpAddress|)
    (|bgpPathAttrDestNetwork| :type |IpAddress|)
    (|bgpPathAttrOrigin| :type integer)
-   (|bgpPathAttrASPath| :type t)
+   (|bgpPathAttrASPath| :type octet-string)
    (|bgpPathAttrNextHop| :type |IpAddress|)
    (|bgpPathAttrInterASMetric| :type |Integer32|)))
 
@@ -427,7 +427,7 @@
 
 (defoid |bgpPathAttrASPath| (|bgpPathAttrEntry| 4)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-only|)
   (:status '|obsolete|)
   (:description
@@ -482,7 +482,7 @@
    (|bgp4PathAttrIpAddrPrefixLen| :type integer)
    (|bgp4PathAttrIpAddrPrefix| :type |IpAddress|)
    (|bgp4PathAttrOrigin| :type integer)
-   (|bgp4PathAttrASPathSegment| :type t)
+   (|bgp4PathAttrASPathSegment| :type octet-string)
    (|bgp4PathAttrNextHop| :type |IpAddress|)
    (|bgp4PathAttrMultiExitDisc| :type integer)
    (|bgp4PathAttrLocalPref| :type integer)
@@ -491,7 +491,7 @@
    (|bgp4PathAttrAggregatorAddr| :type |IpAddress|)
    (|bgp4PathAttrCalcLocalPref| :type integer)
    (|bgp4PathAttrBest| :type integer)
-   (|bgp4PathAttrUnknown| :type t)))
+   (|bgp4PathAttrUnknown| :type octet-string)))
 
 (defoid |bgp4PathAttrPeer| (|bgp4PathAttrEntry| 1)
   (:type 'object-type)
@@ -533,7 +533,7 @@
 
 (defoid |bgp4PathAttrASPathSegment| (|bgp4PathAttrEntry| 5)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description
@@ -643,7 +643,7 @@
 
 (defoid |bgp4PathAttrUnknown| (|bgp4PathAttrEntry| 14)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description

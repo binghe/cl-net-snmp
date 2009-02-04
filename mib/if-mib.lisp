@@ -33,11 +33,48 @@
 
 (defoid |interfaces| (|mib-2| 2) (:type 'object-identity))
 
-(deftype |OwnerString| () 't)
+(define-textual-convention |OwnerString|
+                           octet-string
+                           (:display-hint "255a")
+                           (:status '|deprecated|)
+                           (:description
+                            "This data type is used to model an administratively
+            assigned name of the owner of a resource.  This information
+            is taken from the NVT ASCII character set.  It is suggested
+            that this name contain one or more of the following: ASCII
+            form of the manager station's transport address, management
+            station name (e.g., domain name), network management
+            personnel's name, location, or phone number.  In some cases
+            the agent itself will be the owner of an entry.  In these
+            cases, this string shall be set to a string starting with
+            'agent'."))
 
-(deftype |InterfaceIndex| () 't)
+(define-textual-convention |InterfaceIndex|
+                           t
+                           (:display-hint "d")
+                           (:status '|current|)
+                           (:description
+                            "A unique value, greater than zero, for each interface or
+            interface sub-layer in the managed system.  It is
+            recommended that values are assigned contiguously starting
+            from 1.  The value for each interface sub-layer must remain
+            constant at least from one re-initialization of the entity's
+            network management system to the next re-initialization."))
 
-(deftype |InterfaceIndexOrZero| () 't)
+(define-textual-convention |InterfaceIndexOrZero|
+                           t
+                           (:display-hint "d")
+                           (:status '|current|)
+                           (:description
+                            "This textual convention is an extension of the
+            InterfaceIndex convention.  The latter defines a greater
+            than zero value used to identify an interface or interface
+            sub-layer in the managed system.  This extension permits the
+            additional value of zero.  the value zero is object-specific
+            and must therefore be defined as part of the description of
+            any object which uses this syntax.  Examples of the usage of
+            zero might include situations where interface was unknown,
+            or when none or all interfaces need to be referenced."))
 
 (defoid |ifNumber| (|interfaces| 1)
   (:type 'object-type)

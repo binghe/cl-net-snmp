@@ -57,7 +57,8 @@
   (:syntax '(vector |InetCidrRouteEntry|))
   (:max-access '|not-accessible|)
   (:status '|current|)
-  (:description "This entity's IP Routing table."))
+  (:description "This entity's IP Routing table.")
+  (:reference "RFC 1213 Section 6.6, The IP Group"))
 
 (defoid |inetCidrRouteEntry| (|inetCidrRouteTable| 1)
   (:type 'object-type)
@@ -108,7 +109,8 @@
             in the InetAddress MIB.
 
             Only those address types that may appear in an actual
-            routing table are allowed as values of this object."))
+            routing table are allowed as values of this object.")
+  (:reference "RFC 4001"))
 
 (defoid |inetCidrRouteDest| (|inetCidrRouteEntry| 2)
   (:type 'object-type)
@@ -180,7 +182,8 @@
             routes.
 
             Only those address types that may appear in an actual
-            routing table are allowed as values of this object."))
+            routing table are allowed as values of this object.")
+  (:reference "RFC 4001"))
 
 (defoid |inetCidrRouteNextHop| (|inetCidrRouteEntry| 6)
   (:type 'object-type)
@@ -424,7 +427,8 @@
   (:description
    "This entity's IP Routing table.  This table has been
             deprecated in favor of the IP version neutral
-            inetCidrRouteTable."))
+            inetCidrRouteTable.")
+  (:reference "RFC 1213 Section 6.6, The IP Group"))
 
 (defoid |ipCidrRouteEntry| (|ipCidrRouteTable| 1)
   (:type 'object-type)
@@ -720,7 +724,8 @@
   (:syntax '(vector |IpForwardEntry|))
   (:max-access '|not-accessible|)
   (:status '|obsolete|)
-  (:description "This entity's IP Routing table."))
+  (:description "This entity's IP Routing table.")
+  (:reference "RFC 1213 Section 6.6, The IP Group"))
 
 (defoid |ipForwardEntry| (|ipForwardTable| 1)
   (:type 'object-type)

@@ -34,7 +34,35 @@
         this MIB module is part of RFC 4560; see the RFC itself for
         full legal notices."))
 
-(deftype |OperationResponseStatus| () 't)
+(define-textual-convention |OperationResponseStatus|
+                           t
+                           (:status '|current|)
+                           (:description
+                            "Used to report the result of an operation:
+
+         responseReceived(1) - Operation is completed successfully.
+         unknown(2) - Operation failed due to unknown error.
+         internalError(3) - An implementation detected an error
+              in its own processing that caused an operation
+              to fail.
+         requestTimedOut(4) - Operation failed to receive a
+              valid reply within the time limit imposed on it.
+         unknownDestinationAddress(5) - Invalid destination
+              address.
+         noRouteToTarget(6) - Could not find a route to target.
+         interfaceInactiveToTarget(7) - The interface to be
+              used in sending a probe is inactive, and an
+              alternate route does not exist.
+         arpFailure(8) - Unable to resolve a target address to a
+              media-specific address.
+         maxConcurrentLimitReached(9) - The maximum number of
+              concurrent active operations would have been exceeded
+              if the corresponding operation was allowed.
+         unableToResolveDnsName(10) - The DNS name specified was
+              unable to be mapped to an IP address.
+         invalidHostAddress(11) - The IP address for a host
+              has been determined to be invalid.  Examples of this
+              are broadcast or multicast addresses."))
 
 (defoid |pingNotifications| (|pingMIB| 0) (:type 'object-identity))
 
@@ -57,7 +85,8 @@
   (:status '|current|)
   (:description
    "Indicates that an implementation is using the UDP echo
-        port (7)."))
+        port (7).")
+  (:reference "RFC 862, 'Echo Protocol'."))
 
 (defoid |pingSnmpQuery| (|pingImplementationTypeDomains| 3)
   (:type 'object-identity)
@@ -126,7 +155,7 @@
    (|pingCtlTimeOut| :type |Unsigned32|)
    (|pingCtlProbeCount| :type |Unsigned32|)
    (|pingCtlAdminStatus| :type integer)
-   (|pingCtlDataFill| :type t)
+   (|pingCtlDataFill| :type octet-string)
    (|pingCtlFrequency| :type |Unsigned32|)
    (|pingCtlMaxRows| :type |Unsigned32|)
    (|pingCtlStorageType| :type |StorageType|)
@@ -268,7 +297,7 @@
 
 (defoid |pingCtlDataFill| (|pingCtlEntry| 9)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-create|)
   (:status '|current|)
   (:description
@@ -500,7 +529,12 @@
         not supported.  DS Field usage is often not supported
         by IP implementations, and not all values are supported.
         Refer to RFC 2474 and RFC 3260 for guidance on usage of
-        this field."))
+        this field.")
+  (:reference
+   "Refer to RFC 1812 for the definition of the IPv4 TOS
+        octet and to RFC 2460 for the definition of the IPv6
+        Traffic Class octet.  Refer to RFC 2474 and RFC 3260
+        for the definition of the Differentiated Services Field."))
 
 (defoid |pingCtlRowStatus| (|pingCtlEntry| 23)
   (:type 'object-type)
@@ -534,7 +568,10 @@
 
         The operational state of a ping operation
         can be determined by examination of its
-        pingResultsOperStatus object."))
+        pingResultsOperStatus object.")
+  (:reference
+   "See definition of RowStatus in RFC 2579, 'Textual
+        Conventions for SMIv2.'"))
 
 (defoid |pingResultsTable| (|pingObjects| 3)
   (:type 'object-type)

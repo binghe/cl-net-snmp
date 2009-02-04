@@ -39,9 +39,152 @@
 (defoid |snmpTargetConformance| (|snmpTargetMIB| 3)
   (:type 'object-identity))
 
-(deftype |SnmpTagValue| () 't)
+(define-textual-convention |SnmpTagValue|
+                           octet-string
+                           (:display-hint "255t")
+                           (:status '|current|)
+                           (:description
+                            "An octet string containing a tag value.
+         Tag values are preferably in human-readable form.
 
-(deftype |SnmpTagList| () 't)
+         To facilitate internationalization, this information
+         is represented using the ISO/IEC IS 10646-1 character
+         set, encoded as an octet string using the UTF-8
+         character encoding scheme described in RFC 2279.
+
+         Since additional code points are added by amendments
+         to the 10646 standard from time to time,
+         implementations must be prepared to encounter any code
+         point from 0x00000000 to 0x7fffffff.
+
+         The use of control codes should be avoided, and certain
+
+         control codes are not allowed as described below.
+
+         For code points not directly supported by user
+         interface hardware or software, an alternative means
+         of entry and display, such as hexadecimal, may be
+         provided.
+
+         For information encoded in 7-bit US-ASCII, the UTF-8
+         representation is identical to the US-ASCII encoding.
+
+         Note that when this TC is used for an object that
+         is used or envisioned to be used as an index, then a
+         SIZE restriction must be specified so that the number
+         of sub-identifiers for any object instance does not
+         exceed the limit of 128, as defined by [RFC1905].
+
+         An object of this type contains a single tag value
+         which is used to select a set of entries in a table.
+
+         A tag value is an arbitrary string of octets, but
+         may not contain a delimiter character.  Delimiter
+         characters are defined to be one of the following:
+
+             -  An ASCII space character (0x20).
+
+             -  An ASCII TAB character (0x09).
+
+             -  An ASCII carriage return (CR) character (0x0D).
+
+             -  An ASCII line feed (LF) character (0x0A).
+
+         Delimiter characters are used to separate tag values
+         in a tag list.  An object of this type may only
+         contain a single tag value, and so delimiter
+         characters are not allowed in a value of this type.
+
+         Note that a tag value of 0 length means that no tag is
+         defined.  In other words, a tag value of 0 length would
+         never match anything in a tag list, and would never
+         select any table entries.
+
+         Some examples of valid tag values are:
+
+             - 'acme'
+
+             - 'router'
+
+             - 'host'
+
+         The use of a tag value to select table entries is
+         application and MIB specific."))
+
+(define-textual-convention |SnmpTagList|
+                           octet-string
+                           (:display-hint "255t")
+                           (:status '|current|)
+                           (:description
+                            "An octet string containing a list of tag values.
+         Tag values are preferably in human-readable form.
+
+         To facilitate internationalization, this information
+         is represented using the ISO/IEC IS 10646-1 character
+         set, encoded as an octet string using the UTF-8
+         character encoding scheme described in RFC 2279.
+
+         Since additional code points are added by amendments
+         to the 10646 standard from time to time,
+         implementations must be prepared to encounter any code
+         point from 0x00000000 to 0x7fffffff.
+
+         The use of control codes should be avoided, except as
+         described below.
+
+         For code points not directly supported by user
+         interface hardware or software, an alternative means
+         of entry and display, such as hexadecimal, may be
+         provided.
+
+         For information encoded in 7-bit US-ASCII, the UTF-8
+         representation is identical to the US-ASCII encoding.
+
+         An object of this type contains a list of tag values
+         which are used to select a set of entries in a table.
+
+         A tag value is an arbitrary string of octets, but
+         may not contain a delimiter character.  Delimiter
+         characters are defined to be one of the following:
+
+             -  An ASCII space character (0x20).
+
+             -  An ASCII TAB character (0x09).
+
+             -  An ASCII carriage return (CR) character (0x0D).
+
+             -  An ASCII line feed (LF) character (0x0A).
+
+         Delimiter characters are used to separate tag values
+
+         in a tag list.  Only a single delimiter character may
+         occur between two tag values.  A tag value may not
+         have a zero length.  These constraints imply certain
+         restrictions on the contents of this object:
+
+             - There cannot be a leading or trailing delimiter
+               character.
+
+             - There cannot be multiple adjacent delimiter
+               characters.
+
+         Some examples of valid tag lists are:
+
+             - ''                        -- an empty list
+
+             - 'acme'                    -- list of one tag
+
+             - 'host router bridge'      -- list of several tags
+
+         Note that although a tag value may not have a length of
+         zero, an empty string is still valid.  This indicates
+         an empty list (i.e. there are no tag values in the list).
+
+         The use of the tag list to select table entries is
+         application and MIB specific.  Typically, an application
+         will provide one or more tag values, and any entry
+         which contains some combination of these tag values
+         will be selected."))
 
 (defoid |snmpTargetSpinLock| (|snmpTargetObjects| 1)
   (:type 'object-type)
