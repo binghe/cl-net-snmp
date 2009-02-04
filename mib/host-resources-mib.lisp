@@ -48,11 +48,54 @@
        common to all internet hosts including, for example, both
        personal computers and systems that run variants of Unix."))
 
-(deftype |KBytes| () 't)
+(define-textual-convention |KBytes|
+                           t
+                           (:status '|current|)
+                           (:description
+                            "Storage size, expressed in units of 1024 bytes."))
 
-(deftype |ProductID| () 't)
+(define-textual-convention |ProductID|
+                           object-id
+                           (:status '|current|)
+                           (:description
+                            "This textual convention is intended to identify the
 
-(deftype |InternationalDisplayString| () 't)
+        manufacturer, model, and version of a specific
+        hardware or software product.  It is suggested that
+        these OBJECT IDENTIFIERs are allocated such that all
+        products from a particular manufacturer are registered
+        under a subtree distinct to that manufacturer.  In
+        addition, all versions of a product should be
+        registered under a subtree distinct to that product.
+        With this strategy, a management station may uniquely
+        determine the manufacturer and/or model of a product
+        whose productID is unknown to the management station.
+        Objects of this type may be useful for inventory
+        purposes or for automatically detecting
+        incompatibilities or version mismatches between
+        various hardware and software components on a system.
+
+        For example, the product ID for the ACME 4860 66MHz
+        clock doubled processor might be:
+        enterprises.acme.acmeProcessors.a4860DX2.MHz66
+
+        A software product might be registered as:
+        enterprises.acme.acmeOperatingSystems.acmeDOS.six(6).one(1)
+        "))
+
+(define-textual-convention |InternationalDisplayString|
+                           octet-string
+                           (:status '|current|)
+                           (:description
+                            "This data type is used to model textual information
+        in some character set.  A network management station
+        should use a local algorithm to determine which
+        character set is in use and how it should be
+        displayed.  Note that this character set may be
+        encoded with more than one octet per symbol, but will
+        most often be NVT ASCII. When a size clause is
+        specified for an object of this type, the size refers
+        to the length in octets, not the number of symbols."))
 
 (defoid |hrSystemUptime| (|hrSystem| 1)
   (:type 'object-type)
@@ -525,7 +568,7 @@
 
 (defclass |HrPrinterEntry| (sequence-type)
   ((|hrPrinterStatus| :type integer)
-   (|hrPrinterDetectedErrorState| :type t)))
+   (|hrPrinterDetectedErrorState| :type octet-string)))
 
 (defoid |hrPrinterStatus| (|hrPrinterEntry| 1)
   (:type 'object-type)
@@ -536,7 +579,7 @@
 
 (defoid |hrPrinterDetectedErrorState| (|hrPrinterEntry| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description
@@ -680,7 +723,7 @@
 (defclass |HrPartitionEntry| (sequence-type)
   ((|hrPartitionIndex| :type |Integer32|)
    (|hrPartitionLabel| :type |InternationalDisplayString|)
-   (|hrPartitionID| :type t)
+   (|hrPartitionID| :type octet-string)
    (|hrPartitionSize| :type |KBytes|)
    (|hrPartitionFSIndex| :type |Integer32|)))
 
@@ -705,7 +748,7 @@
 
 (defoid |hrPartitionID| (|hrPartitionEntry| 3)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description

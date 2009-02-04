@@ -26,7 +26,14 @@
      the master agent.
     "))
 
-(deftype |AgentxTAddress| () 't)
+(define-textual-convention |AgentxTAddress|
+                           octet-string
+                           (:status '|current|)
+                           (:description
+                            "Denotes a transport service address.  This is identical to
+      the TAddress textual convention (SNMPv2-SMI) except that
+      zero-length values are permitted.
+     "))
 
 (defoid |agentxObjects| (|agentxMIB| 1) (:type 'object-identity))
 
@@ -323,7 +330,7 @@
 
 (defclass |AgentxRegistrationEntry| (sequence-type)
   ((|agentxRegIndex| :type |Unsigned32|)
-   (|agentxRegContext| :type t)
+   (|agentxRegContext| :type octet-string)
    (|agentxRegStart| :type object-id)
    (|agentxRegRangeSubId| :type |Unsigned32|)
    (|agentxRegUpperBound| :type |Unsigned32|)
@@ -343,7 +350,7 @@
 
 (defoid |agentxRegContext| (|agentxRegistrationEntry| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description

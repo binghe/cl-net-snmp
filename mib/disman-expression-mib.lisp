@@ -179,7 +179,7 @@
 (defclass |ExpExpressionEntry| (sequence-type)
   ((|expExpressionOwner| :type |SnmpAdminString|)
    (|expExpressionName| :type |SnmpAdminString|)
-   (|expExpression| :type t)
+   (|expExpression| :type octet-string)
    (|expExpressionValueType| :type integer)
    (|expExpressionComment| :type |SnmpAdminString|)
    (|expExpressionDeltaInterval| :type |Integer32|)
@@ -208,7 +208,7 @@
 
 (defoid |expExpression| (|expExpressionEntry| 3)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-create|)
   (:status '|current|)
   (:description
@@ -920,7 +920,7 @@
    (|expValueTimeTicksVal| :type |TimeTicks|)
    (|expValueInteger32Val| :type |Integer32|)
    (|expValueIpAddressVal| :type |IpAddress|)
-   (|expValueOctetStringVal| :type t)
+   (|expValueOctetStringVal| :type octet-string)
    (|expValueOidVal| :type object-id)
    (|expValueCounter64Val| :type |Counter64|)))
 
@@ -987,7 +987,7 @@
 
 (defoid |expValueOctetStringVal| (|expValueEntry| 7)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description

@@ -33,7 +33,14 @@
 
 (defoid |schedConformance| (|schedMIB| 3) (:type 'object-identity))
 
-(deftype |SnmpPduErrorStatus| () 't)
+(define-textual-convention |SnmpPduErrorStatus|
+                           t
+                           (:status '|current|)
+                           (:description
+                            "This TC enumerates the SNMPv1 and SNMPv2 PDU error status
+         codes as defined in RFC 1157 and RFC 1905.  It also adds a
+         pseudo error status code `noResponse' which indicates a
+         timeout condition."))
 
 (defoid |schedLocalTime| (|schedObjects| 1)
   (:type 'object-type)

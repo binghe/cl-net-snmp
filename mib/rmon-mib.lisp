@@ -19,9 +19,111 @@
 
 (defoid |rmon| (|mib-2| 16) (:type 'object-identity))
 
-(deftype |OwnerString| () 't)
+(define-textual-convention |OwnerString|
+                           octet-string
+                           (:status '|current|)
+                           (:description
+                            "This data type is used to model an administratively
+        assigned name of the owner of a resource. Implementations
+        must accept values composed of well-formed NVT ASCII
+        sequences. In addition, implementations should accept
+        values composed of well-formed UTF-8 sequences.
 
-(deftype |EntryStatus| () 't)
+        It is suggested that this name contain one or more of
+        the following: IP address, management station name,
+        network manager's name, location, or phone number.
+        In some cases the agent itself will be the owner of
+        an entry.  In these cases, this string shall be set
+        to a string starting with 'monitor'.
+
+        SNMP access control is articulated entirely in terms
+        of the contents of MIB views; access to a particular
+        SNMP object instance depends only upon its presence
+        or absence in a particular MIB view and never upon
+        its value or the value of related object instances.
+        Thus, objects of this type afford resolution of
+        resource contention only among cooperating
+        managers; they realize no access control function
+        with respect to uncooperative parties."))
+
+(define-textual-convention |EntryStatus|
+                           t
+                           (:status '|current|)
+                           (:description
+                            "The status of a table entry.
+
+        Setting this object to the value invalid(4) has the
+        effect of invalidating the corresponding entry.
+        That is, it effectively disassociates the mapping
+        identified with said entry.
+        It is an implementation-specific matter as to whether
+        the agent removes an invalidated entry from the table.
+        Accordingly, management stations must be prepared to
+        receive tabular information from agents that corresponds
+        to entries currently not in use.  Proper
+        interpretation of such entries requires examination
+        of the relevant EntryStatus object.
+
+        An existing instance of this object cannot be set to
+        createRequest(2).  This object may only be set to
+        createRequest(2) when this instance is created.  When
+        this object is created, the agent may wish to create
+        supplemental object instances with default values
+        to complete a conceptual row in this table.  Because the
+
+        creation of these default objects is entirely at the option
+        of the agent, the manager must not assume that any will be
+        created, but may make use of any that are created.
+        Immediately after completing the create operation, the agent
+        must set this object to underCreation(3).
+
+        When in the underCreation(3) state, an entry is allowed to
+        exist in a possibly incomplete, possibly inconsistent state,
+        usually to allow it to be modified in multiple PDUs.  When in
+        this state, an entry is not fully active.
+        Entries shall exist in the underCreation(3) state until
+        the management station is finished configuring the entry
+        and sets this object to valid(1) or aborts, setting this
+        object to invalid(4).  If the agent determines that an
+        entry has been in the underCreation(3) state for an
+        abnormally long time, it may decide that the management
+        station has crashed.  If the agent makes this decision,
+        it may set this object to invalid(4) to reclaim the
+        entry.  A prudent agent will understand that the
+        management station may need to wait for human input
+        and will allow for that possibility in its
+        determination of this abnormally long period.
+
+        An entry in the valid(1) state is fully configured and
+        consistent and fully represents the configuration or
+        operation such a row is intended to represent.  For
+        example, it could be a statistical function that is
+        configured and active, or a filter that is available
+        in the list of filters processed by the packet capture
+        process.
+
+        A manager is restricted to changing the state of an entry in
+        the following ways:
+
+             To:       valid  createRequest  underCreation  invalid
+        From:
+        valid             OK             NO             OK       OK
+        createRequest    N/A            N/A            N/A      N/A
+        underCreation     OK             NO             OK       OK
+        invalid           NO             NO             NO       OK
+        nonExistent       NO             OK             NO       OK
+
+        In the table above, it is not applicable to move the state
+        from the createRequest state to any other state because the
+        manager will never find the variable in that state.  The
+        nonExistent state is not a value of the enumeration, rather
+        it means that the entryStatus variable does not exist at all.
+
+        An agent may allow an entryStatus variable to change state in
+        additional ways, so long as the semantics of the states are
+        followed.  This allowance is made to ease the implementation of
+        the agent and is made despite the fact that managers should
+        never exercise these additional state transitions."))
 
 (defoid |statistics| (|rmon| 1) (:type 'object-identity))
 
@@ -1216,7 +1318,7 @@
         named hostOutBroadcastPkts.1.6.8.0.32.27.3.176"))
 
 (defclass |HostEntry| (sequence-type)
-  ((|hostAddress| :type t)
+  ((|hostAddress| :type octet-string)
    (|hostCreationOrder| :type |Integer32|)
    (|hostIndex| :type |Integer32|)
    (|hostInPkts| :type |Counter32|)
@@ -1229,7 +1331,7 @@
 
 (defoid |hostAddress| (|hostEntry| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The physical address of this host."))
@@ -1365,7 +1467,7 @@
         hostTimeOutBroadcastPkts.1.687"))
 
 (defclass |HostTimeEntry| (sequence-type)
-  ((|hostTimeAddress| :type t)
+  ((|hostTimeAddress| :type octet-string)
    (|hostTimeCreationOrder| :type |Integer32|)
    (|hostTimeIndex| :type |Integer32|)
    (|hostTimeInPkts| :type |Counter32|)
@@ -1378,7 +1480,7 @@
 
 (defoid |hostTimeAddress| (|hostTimeEntry| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The physical address of this host."))
@@ -1698,7 +1800,7 @@
 (defclass |HostTopNEntry| (sequence-type)
   ((|hostTopNReport| :type |Integer32|)
    (|hostTopNIndex| :type |Integer32|)
-   (|hostTopNAddress| :type t)
+   (|hostTopNAddress| :type octet-string)
    (|hostTopNRate| :type |Integer32|)))
 
 (defoid |hostTopNReport| (|hostTopNEntry| 1)
@@ -1730,7 +1832,7 @@
 
 (defoid |hostTopNAddress| (|hostTopNEntry| 3)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The physical address of this host."))
@@ -1884,8 +1986,8 @@
         matrixSDPkts.1.6.8.0.32.27.3.176.6.8.0.32.10.8.113"))
 
 (defclass |MatrixSDEntry| (sequence-type)
-  ((|matrixSDSourceAddress| :type t)
-   (|matrixSDDestAddress| :type t)
+  ((|matrixSDSourceAddress| :type octet-string)
+   (|matrixSDDestAddress| :type octet-string)
    (|matrixSDIndex| :type |Integer32|)
    (|matrixSDPkts| :type |Counter32|)
    (|matrixSDOctets| :type |Counter32|)
@@ -1893,14 +1995,14 @@
 
 (defoid |matrixSDSourceAddress| (|matrixSDEntry| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The source physical address."))
 
 (defoid |matrixSDDestAddress| (|matrixSDEntry| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The destination physical address."))
@@ -1968,8 +2070,8 @@
         matrixSDPkts.1.6.8.0.32.10.8.113.6.8.0.32.27.3.176"))
 
 (defclass |MatrixDSEntry| (sequence-type)
-  ((|matrixDSSourceAddress| :type t)
-   (|matrixDSDestAddress| :type t)
+  ((|matrixDSSourceAddress| :type octet-string)
+   (|matrixDSDestAddress| :type octet-string)
    (|matrixDSIndex| :type |Integer32|)
    (|matrixDSPkts| :type |Counter32|)
    (|matrixDSOctets| :type |Counter32|)
@@ -1977,14 +2079,14 @@
 
 (defoid |matrixDSSourceAddress| (|matrixDSEntry| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The source physical address."))
 
 (defoid |matrixDSDestAddress| (|matrixDSEntry| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The destination physical address."))
@@ -2052,9 +2154,9 @@
   ((|filterIndex| :type |Integer32|)
    (|filterChannelIndex| :type |Integer32|)
    (|filterPktDataOffset| :type |Integer32|)
-   (|filterPktData| :type t)
-   (|filterPktDataMask| :type t)
-   (|filterPktDataNotMask| :type t)
+   (|filterPktData| :type octet-string)
+   (|filterPktDataMask| :type octet-string)
+   (|filterPktDataNotMask| :type octet-string)
    (|filterPktStatus| :type |Integer32|)
    (|filterPktStatusMask| :type |Integer32|)
    (|filterPktStatusNotMask| :type |Integer32|)
@@ -2101,7 +2203,7 @@
 
 (defoid |filterPktData| (|filterEntry| 4)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-create|)
   (:status '|current|)
   (:description
@@ -2138,7 +2240,7 @@
 
 (defoid |filterPktDataMask| (|filterEntry| 5)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-create|)
   (:status '|current|)
   (:description
@@ -2159,7 +2261,7 @@
 
 (defoid |filterPktDataNotMask| (|filterEntry| 6)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-create|)
   (:status '|current|)
   (:description
@@ -2807,7 +2909,7 @@
   ((|captureBufferControlIndex| :type |Integer32|)
    (|captureBufferIndex| :type |Integer32|)
    (|captureBufferPacketID| :type |Integer32|)
-   (|captureBufferPacketData| :type t)
+   (|captureBufferPacketData| :type octet-string)
    (|captureBufferPacketLength| :type |Integer32|)
    (|captureBufferPacketTime| :type |Integer32|)
    (|captureBufferPacketStatus| :type |Integer32|)))
@@ -2855,7 +2957,7 @@
 
 (defoid |captureBufferPacketData| (|captureBufferEntry| 4)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description
@@ -2946,7 +3048,7 @@
   ((|eventIndex| :type |Integer32|)
    (|eventDescription| :type |DisplayString|)
    (|eventType| :type integer)
-   (|eventCommunity| :type t)
+   (|eventCommunity| :type octet-string)
    (|eventLastTimeSent| :type |TimeTicks|)
    (|eventOwner| :type |OwnerString|)
    (|eventStatus| :type |EntryStatus|)))
@@ -2983,7 +3085,7 @@
 
 (defoid |eventCommunity| (|eventEntry| 4)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-create|)
   (:status '|current|)
   (:description

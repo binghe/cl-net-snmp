@@ -46,7 +46,7 @@
 
 (defclass |IpfInEntry| (sequence-type)
   ((|ipfInIndex| :type |Integer32|)
-   (|ipfInRule| :type t)
+   (|ipfInRule| :type octet-string)
    (|ipfInHits| :type |Counter32|)))
 
 (defoid |ipfInIndex| (|ipfInEntry| 1)
@@ -58,7 +58,7 @@
 
 (defoid |ipfInRule| (|ipfInEntry| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description
@@ -87,7 +87,7 @@
 
 (defclass |IpfOutEntry| (sequence-type)
   ((|ipfOutIndex| :type |Integer32|)
-   (|ipfOutRule| :type t)
+   (|ipfOutRule| :type octet-string)
    (|ipfOutHits| :type |Counter32|)))
 
 (defoid |ipfOutIndex| (|ipfOutEntry| 1)
@@ -99,7 +99,7 @@
 
 (defoid |ipfOutRule| (|ipfOutEntry| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description
@@ -130,7 +130,7 @@
 
 (defclass |IpfAccInEntry| (sequence-type)
   ((|ipfAccInIndex| :type |Integer32|)
-   (|ipfAccInRule| :type t)
+   (|ipfAccInRule| :type octet-string)
    (|ipfAccInHits| :type |Counter32|)
    (|ipfAccInBytes| :type |Counter32|)))
 
@@ -145,7 +145,7 @@
 
 (defoid |ipfAccInRule| (|ipfAccInEntry| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description
@@ -186,7 +186,7 @@
 
 (defclass |IpfAccOutEntry| (sequence-type)
   ((|ipfAccOutIndex| :type |Integer32|)
-   (|ipfAccOutRule| :type t)
+   (|ipfAccOutRule| :type octet-string)
    (|ipfAccOutHits| :type |Counter32|)
    (|ipfAccOutBytes| :type |Counter32|)))
 
@@ -201,7 +201,7 @@
 
 (defoid |ipfAccOutRule| (|ipfAccOutEntry| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description

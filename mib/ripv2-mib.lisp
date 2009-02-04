@@ -22,7 +22,12 @@
   (:description
    "The MIB module to describe the RIP2 Version 2 Protocol"))
 
-(deftype |RouteTag| () 't)
+(define-textual-convention |RouteTag|
+                           octet-string
+                           (:status '|current|)
+                           (:description
+                            "the RouteTag type represents the contents of the Route Domain
+        field in the packet header or route entry"))
 
 (defoid |rip2Globals| (|rip2| 1) (:type 'object-identity))
 
@@ -140,7 +145,7 @@
   ((|rip2IfConfAddress| :type |IpAddress|)
    (|rip2IfConfDomain| :type |RouteTag|)
    (|rip2IfConfAuthType| :type integer)
-   (|rip2IfConfAuthKey| :type t)
+   (|rip2IfConfAuthKey| :type octet-string)
    (|rip2IfConfSend| :type integer)
    (|rip2IfConfReceive| :type integer)
    (|rip2IfConfDefaultMetric| :type integer)
@@ -178,7 +183,7 @@
 
 (defoid |rip2IfConfAuthKey| (|rip2IfConfEntry| 4)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-create|)
   (:status '|current|)
   (:description

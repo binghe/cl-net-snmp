@@ -32,13 +32,110 @@
             this MIB module is part of RFC 4293; see the RFC itself for
             full legal notices."))
 
-(deftype |IpAddressOriginTC| () 't)
+(define-textual-convention |IpAddressOriginTC|
+                           t
+                           (:status '|current|)
+                           (:description
+                            "The origin of the address.
 
-(deftype |IpAddressStatusTC| () 't)
+            manual(2) indicates that the address was manually configured
+            to a specified address, e.g., by user configuration.
 
-(deftype |IpAddressPrefixOriginTC| () 't)
+            dhcp(4) indicates an address that was assigned to this
+            system by a DHCP server.
 
-(deftype |Ipv6AddressIfIdentifierTC| () 't)
+            linklayer(5) indicates an address created by IPv6 stateless
+
+
+
+            auto-configuration.
+
+            random(6) indicates an address chosen by the system at
+            random, e.g., an IPv4 address within 169.254/16, or an RFC
+            3041 privacy address."))
+
+(define-textual-convention |IpAddressStatusTC|
+                           t
+                           (:status '|current|)
+                           (:description
+                            "The status of an address.  Most of the states correspond to
+            states from the IPv6 Stateless Address Autoconfiguration
+            protocol.
+
+            The preferred(1) state indicates that this is a valid
+            address that can appear as the destination or source address
+            of a packet.
+
+            The deprecated(2) state indicates that this is a valid but
+            deprecated address that should no longer be used as a source
+            address in new communications, but packets addressed to such
+            an address are processed as expected.
+
+            The invalid(3) state indicates that this isn't a valid
+            address and it shouldn't appear as the destination or source
+            address of a packet.
+
+            The inaccessible(4) state indicates that the address is not
+            accessible because the interface to which this address is
+            assigned is not operational.
+
+            The unknown(5) state indicates that the status cannot be
+            determined for some reason.
+
+            The tentative(6) state indicates that the uniqueness of the
+            address on the link is being verified.  Addresses in this
+            state should not be used for general communication and
+            should only be used to determine the uniqueness of the
+            address.
+
+            The duplicate(7) state indicates the address has been
+            determined to be non-unique on the link and so must not be
+
+
+
+            used.
+
+            The optimistic(8) state indicates the address is available
+            for use, subject to restrictions, while its uniqueness on
+            a link is being verified.
+
+            In the absence of other information, an IPv4 address is
+            always preferred(1).")
+                           (:reference "RFC 2462"))
+
+(define-textual-convention |IpAddressPrefixOriginTC|
+                           t
+                           (:status '|current|)
+                           (:description
+                            "The origin of this prefix.
+
+            manual(2) indicates a prefix that was manually configured.
+
+            wellknown(3) indicates a well-known prefix, e.g., 169.254/16
+            for IPv4 auto-configuration or fe80::/10 for IPv6 link-local
+            addresses.  Well known prefixes may be assigned by IANA,
+            the address registries, or by specification in a standards
+            track RFC.
+
+            dhcp(4) indicates a prefix that was assigned by a DHCP
+            server.
+
+            routeradv(5) indicates a prefix learned from a router
+            advertisement.
+
+            Note: while IpAddressOriginTC and IpAddressPrefixOriginTC
+            are similar, they are not identical.  The first defines how
+            an address was created, while the second defines how a
+            prefix was found."))
+
+(define-textual-convention |Ipv6AddressIfIdentifierTC|
+                           octet-string
+                           (:display-hint "2x:")
+                           (:status '|current|)
+                           (:description
+                            "This data type is used to model IPv6 address
+       interface identifiers.  This is a binary string
+       of up to 8 octets in network byte-order."))
 
 (defoid |ip| (|mib-2| 4) (:type 'object-identity))
 
@@ -118,7 +215,8 @@
 
             When this object is written, the entity SHOULD save the
             change to non-volatile storage and restore the object from
-            non-volatile storage upon re-initialization of the system."))
+            non-volatile storage upon re-initialization of the system.")
+  (:reference "RFC 2461 Section 6.3.2"))
 
 (defoid |ipv4InterfaceTableLastChange| (|ip| 27)
   (:type 'object-type)
@@ -201,7 +299,8 @@
   (:description
    "The time between retransmissions of ARP requests to a
             neighbor when resolving the address or when probing the
-            reachability of a neighbor."))
+            reachability of a neighbor.")
+  (:reference "RFC 1122"))
 
 (defoid |ipv6InterfaceTableLastChange| (|ip| 29)
   (:type 'object-type)
@@ -312,7 +411,8 @@
   (:status '|current|)
   (:description
    "The time a neighbor is considered reachable after receiving
-            a reachability confirmation."))
+            a reachability confirmation.")
+  (:reference "RFC 2461, Section 6.3.2"))
 
 (defoid |ipv6InterfaceRetransmitTime| (|ipv6InterfaceEntry| 7)
   (:type 'object-type)
@@ -322,7 +422,8 @@
   (:description
    "The time between retransmissions of Neighbor Solicitation
             messages to a neighbor when resolving the address or when
-            probing the reachability of a neighbor."))
+            probing the reachability of a neighbor.")
+  (:reference "RFC 2461, Section 6.3.2"))
 
 (defoid |ipv6InterfaceForwarding| (|ipv6InterfaceEntry| 8)
   (:type 'object-type)
@@ -2141,7 +2242,10 @@
             used for on-link determination; otherwise, the value is
             'false(2)'.
 
-            The default for IPv4 prefixes is 'true(1)'."))
+            The default for IPv4 prefixes is 'true(1)'.")
+  (:reference
+   "For IPv6 RFC 2461, especially sections 2 and 4.6.2 and
+               RFC 2462"))
 
 (defoid |ipAddressPrefixAutonomousFlag| (|ipAddressPrefixEntry| 7)
   (:type 'object-type)
@@ -2155,7 +2259,10 @@
             interface address).  If false(2), it is not used to auto-
             configure a local interface address.
 
-            The default for IPv4 prefixes is 'false(2)'."))
+            The default for IPv4 prefixes is 'false(2)'.")
+  (:reference
+   "For IPv6 RFC 2461, especially sections 2 and 4.6.2 and
+               RFC 2462"))
 
 (defoid |ipAddressPrefixAdvPreferredLifetime|
         (|ipAddressPrefixEntry| 8)
@@ -2174,7 +2281,10 @@
             but packets received on such an interface are processed as
             expected.
 
-            The default for IPv4 prefixes is 4,294,967,295 (infinity)."))
+            The default for IPv4 prefixes is 4,294,967,295 (infinity).")
+  (:reference
+   "For IPv6 RFC 2461, especially sections 2 and 4.6.2 and
+               RFC 2462"))
 
 (defoid |ipAddressPrefixAdvValidLifetime| (|ipAddressPrefixEntry| 9)
   (:type 'object-type)
@@ -2192,7 +2302,10 @@
 
 
 
-            The default for IPv4 prefixes is 4,294,967,295 (infinity)."))
+            The default for IPv4 prefixes is 4,294,967,295 (infinity).")
+  (:reference
+   "For IPv6 RFC 2461, especially sections 2 and 4.6.2 and
+               RFC 2462"))
 
 (defoid |ipAddressSpinLock| (|ip| 33)
   (:type 'object-type)
@@ -2410,7 +2523,8 @@
 
             While many protocols may be used to populate this table, ARP
             and Neighbor Discovery are the most likely
-            options."))
+            options.")
+  (:reference "RFC 826 and RFC 2461"))
 
 (defoid |ipNetToPhysicalEntry| (|ipNetToPhysicalTable| 1)
   (:type 'object-type)
@@ -2540,7 +2654,8 @@
    "The Neighbor Unreachability Detection state for the
             interface when the address mapping in this entry is used.
             If Neighbor Unreachability Detection is not in use (e.g. for
-            IPv4), this object is always unknown(6)."))
+            IPv4), this object is always unknown(6).")
+  (:reference "RFC 2461"))
 
 (defoid |ipNetToPhysicalRowStatus| (|ipNetToPhysicalEntry| 8)
   (:type 'object-type)
@@ -2574,7 +2689,8 @@
 
             For those objects that have names rather than numbers, the
             names were chosen to coincide with the names used in the
-            IPv6 address architecture document. "))
+            IPv6 address architecture document. ")
+  (:reference "Section 2.7 of RFC 4291"))
 
 (defoid |ipv6ScopeZoneIndexEntry| (|ipv6ScopeZoneIndexTable| 1)
   (:type 'object-type)
@@ -2777,7 +2893,8 @@
             list.
 
             For IPv6, this value should be extracted from the router
-            advertisement messages."))
+            advertisement messages.")
+  (:reference "For IPv6 RFC 2462 sections 4.2 and 6.3.4"))
 
 (defoid |ipDefaultRouterPreference| (|ipDefaultRouterEntry| 5)
   (:type 'object-type)
@@ -2793,7 +2910,8 @@
 
             For IPv4 routers or IPv6 routers that are not using the
             updated router advertisement format, this object is set to
-            medium (0)."))
+            medium (0).")
+  (:reference "RFC 4291, section 2.1"))
 
 (defoid |ipv6RouterAdvertSpinLock| (|ip| 38)
   (:type 'object-type)
@@ -2874,7 +2992,8 @@
   (:description
    "A flag indicating whether the router sends periodic
             router advertisements and responds to router solicitations
-            on this interface."))
+            on this interface.")
+  (:reference "RFC 2461 Section 6.2.1"))
 
 (defoid |ipv6RouterAdvertMaxInterval| (|ipv6RouterAdvertEntry| 3)
   (:type 'object-type)
@@ -2886,7 +3005,8 @@
 
 
 
-            advertisements from this interface."))
+            advertisements from this interface.")
+  (:reference "RFC 2461 Section 6.2.1"))
 
 (defoid |ipv6RouterAdvertMinInterval| (|ipv6RouterAdvertEntry| 4)
   (:type 'object-type)
@@ -2899,7 +3019,8 @@
 
             The default is 0.33 * ipv6RouterAdvertMaxInterval, however,
             in the case of a low value for ipv6RouterAdvertMaxInterval,
-            the minimum value for this object is restricted to 3."))
+            the minimum value for this object is restricted to 3.")
+  (:reference "RFC 2461 Section 6.2.1"))
 
 (defoid |ipv6RouterAdvertManagedFlag| (|ipv6RouterAdvertEntry| 5)
   (:type 'object-type)
@@ -2909,7 +3030,8 @@
   (:description
    "The true/false value to be placed into the 'managed address
             configuration' flag field in router advertisements sent from
-            this interface."))
+            this interface.")
+  (:reference "RFC 2461 Section 6.2.1"))
 
 (defoid |ipv6RouterAdvertOtherConfigFlag| (|ipv6RouterAdvertEntry| 6)
   (:type 'object-type)
@@ -2919,7 +3041,8 @@
   (:description
    "The true/false value to be placed into the 'other stateful
             configuration' flag field in router advertisements sent from
-            this interface."))
+            this interface.")
+  (:reference "RFC 2461 Section 6.2.1"))
 
 (defoid |ipv6RouterAdvertLinkMTU| (|ipv6RouterAdvertEntry| 7)
   (:type 'object-type)
@@ -2930,7 +3053,8 @@
    "The value to be placed in MTU options sent by the router on
             this interface.
 
-            A value of zero indicates that no MTU options are sent."))
+            A value of zero indicates that no MTU options are sent.")
+  (:reference "RFC 2461 Section 6.2.1"))
 
 (defoid |ipv6RouterAdvertReachableTime| (|ipv6RouterAdvertEntry| 8)
   (:type 'object-type)
@@ -2943,7 +3067,8 @@
 
             A value of zero in the router advertisement indicates that
             the advertisement isn't specifying a value for reachable
-            time."))
+            time.")
+  (:reference "RFC 2461 Section 6.2.1"))
 
 (defoid |ipv6RouterAdvertRetransmitTime| (|ipv6RouterAdvertEntry| 9)
   (:type 'object-type)
@@ -2956,7 +3081,8 @@
 
             A value of zero in the router advertisement indicates that
             the advertisement isn't specifying a value for retrans
-            time."))
+            time.")
+  (:reference "RFC 2461 Section 6.2.1"))
 
 (defoid |ipv6RouterAdvertCurHopLimit| (|ipv6RouterAdvertEntry| 10)
   (:type 'object-type)
@@ -2976,7 +3102,8 @@
             the advertisement isn't specifying a value for curHopLimit.
 
             The default should be set to the value specified in the IANA
-            web pages (www.iana.org) at the time of implementation."))
+            web pages (www.iana.org) at the time of implementation.")
+  (:reference "RFC 2461 Section 6.2.1"))
 
 (defoid |ipv6RouterAdvertDefaultLifetime| (|ipv6RouterAdvertEntry| 11)
   (:type 'object-type)
@@ -2992,7 +3119,8 @@
             A value of zero indicates that the router is not to be used
             as a default router.
 
-            The default is 3 * ipv6RouterAdvertMaxInterval."))
+            The default is 3 * ipv6RouterAdvertMaxInterval.")
+  (:reference "RFC 2461 Section 6.2.1"))
 
 (defoid |ipv6RouterAdvertRowStatus| (|ipv6RouterAdvertEntry| 12)
   (:type 'object-type)
@@ -3136,7 +3264,10 @@
             this row.
 
             Note that ICMP message types are scoped by the address type
-            in use."))
+            in use.")
+  (:reference
+   "http://www.iana.org/assignments/icmp-parameters and
+               http://www.iana.org/assignments/icmpv6-parameters"))
 
 (defoid |icmpMsgStatsInPkts| (|icmpMsgStatsEntry| 3)
   (:type 'object-type)

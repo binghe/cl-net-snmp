@@ -34,7 +34,7 @@
 
 (defoid |ospfSetTrap| (|ospfTrapControl| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-write|)
   (:status '|current|)
   (:description

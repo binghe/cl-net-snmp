@@ -464,7 +464,7 @@
    (|nlmLogVariableUnsigned32Val| :type |Unsigned32|)
    (|nlmLogVariableTimeTicksVal| :type |TimeTicks|)
    (|nlmLogVariableInteger32Val| :type |Integer32|)
-   (|nlmLogVariableOctetStringVal| :type t)
+   (|nlmLogVariableOctetStringVal| :type octet-string)
    (|nlmLogVariableIpAddressVal| :type |IpAddress|)
    (|nlmLogVariableOidVal| :type object-id)
    (|nlmLogVariableCounter64Val| :type |Counter64|)
@@ -526,7 +526,7 @@
 
 (defoid |nlmLogVariableOctetStringVal| (|nlmLogVariableEntry| 8)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-only|)
   (:status '|current|)
   (:description "The value when nlmLogVariableType is 'octetString'."))

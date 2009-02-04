@@ -26,9 +26,30 @@
                    see the RFC itself for full legal notices.
                   "))
 
-(deftype |IPv6FlowLabel| () 't)
+(define-textual-convention |IPv6FlowLabel|
+                           t
+                           (:display-hint "d")
+                           (:status '|current|)
+                           (:description
+                            "The flow identifier or Flow Label in an IPv6
+                   packet header that may be used to discriminate
+                   traffic flows.
+                  ")
+                           (:reference
+                            "Internet Protocol, Version 6 (IPv6) specification,
+                   section 6.  RFC 2460.
+                  "))
 
-(deftype |IPv6FlowLabelOrAny| () 't)
+(define-textual-convention |IPv6FlowLabelOrAny|
+                           t
+                           (:display-hint "d")
+                           (:status '|current|)
+                           (:description
+                            "The flow identifier or Flow Label in an IPv6
+                   packet header that may be used to discriminate
+                   traffic flows.  The value of -1 is used to
+                   indicate a wildcard, i.e. any value.
+                  "))
 
 (in-package :asn.1)
 

@@ -43,12 +43,24 @@
 (defoid |usmHMACMD5AuthProtocol| (|snmpAuthProtocols| 2)
   (:type 'object-identity)
   (:status '|current|)
-  (:description "The HMAC-MD5-96 Digest Authentication Protocol."))
+  (:description "The HMAC-MD5-96 Digest Authentication Protocol.")
+  (:reference
+   "- H. Krawczyk, M. Bellare, R. Canetti HMAC:
+                    Keyed-Hashing for Message Authentication,
+                    RFC2104, Feb 1997.
+                  - Rivest, R., Message Digest Algorithm MD5, RFC1321.
+                 "))
 
 (defoid |usmHMACSHAAuthProtocol| (|snmpAuthProtocols| 3)
   (:type 'object-identity)
   (:status '|current|)
-  (:description "The HMAC-SHA-96 Digest Authentication Protocol."))
+  (:description "The HMAC-SHA-96 Digest Authentication Protocol.")
+  (:reference
+   "- H. Krawczyk, M. Bellare, R. Canetti, HMAC:
+                    Keyed-Hashing for Message Authentication,
+                    RFC2104, Feb 1997.
+                  - Secure Hash Algorithm. NIST FIPS 180-1.
+                 "))
 
 (defoid |usmNoPrivProtocol| (|snmpPrivProtocols| 1)
   (:type 'object-identity)
@@ -58,9 +70,154 @@
 (defoid |usmDESPrivProtocol| (|snmpPrivProtocols| 2)
   (:type 'object-identity)
   (:status '|current|)
-  (:description "The CBC-DES Symmetric Encryption Protocol."))
+  (:description "The CBC-DES Symmetric Encryption Protocol.")
+  (:reference
+   "- Data Encryption Standard, National Institute of
+                    Standards and Technology.  Federal Information
+                    Processing Standard (FIPS) Publication 46-1.
 
-(deftype |KeyChange| () 't)
+                    Supersedes FIPS Publication 46,
+                    (January, 1977; reaffirmed January, 1988).
+
+                  - Data Encryption Algorithm, American National
+                    Standards Institute.  ANSI X3.92-1981,
+                    (December, 1980).
+
+                  - DES Modes of Operation, National Institute of
+                    Standards and Technology.  Federal Information
+                    Processing Standard (FIPS) Publication 81,
+                    (December, 1980).
+
+                  - Data Encryption Algorithm - Modes of Operation,
+                    American National Standards Institute.
+                    ANSI X3.106-1983, (May 1983).
+                 "))
+
+(define-textual-convention |KeyChange|
+                           octet-string
+                           (:status '|current|)
+                           (:description
+                            "Every definition of an object with this syntax must identify
+          a protocol P, a secret key K, and a hash algorithm H
+          that produces output of L octets.
+
+          The object's value is a manager-generated, partially-random
+          value which, when modified, causes the value of the secret
+          key K, to be modified via a one-way function.
+
+          The value of an instance of this object is the concatenation
+          of two components: first a 'random' component and then a
+          'delta' component.
+
+          The lengths of the random and delta components
+          are given by the corresponding value of the protocol P;
+          if P requires K to be a fixed length, the length of both the
+          random and delta components is that fixed length; if P
+          allows the length of K to be variable up to a particular
+          maximum length, the length of the random component is that
+          maximum length and the length of the delta component is any
+          length less than or equal to that maximum length.
+          For example, usmHMACMD5AuthProtocol requires K to be a fixed
+          length of 16 octets and L - of 16 octets.
+          usmHMACSHAAuthProtocol requires K to be a fixed length of
+          20 octets and L - of 20 octets. Other protocols may define
+          other sizes, as deemed appropriate.
+
+          When a requester wants to change the old key K to a new
+          key keyNew on a remote entity, the 'random' component is
+          obtained from either a true random generator, or from a
+          pseudorandom generator, and the 'delta' component is
+          computed as follows:
+
+           - a temporary variable is initialized to the existing value
+             of K;
+           - if the length of the keyNew is greater than L octets,
+             then:
+              - the random component is appended to the value of the
+                temporary variable, and the result is input to the
+                the hash algorithm H to produce a digest value, and
+                the temporary variable is set to this digest value;
+              - the value of the temporary variable is XOR-ed with
+                the first (next) L-octets (16 octets in case of MD5)
+                of the keyNew to produce the first (next) L-octets
+                (16 octets in case of MD5) of the 'delta' component.
+              - the above two steps are repeated until the unused
+                portion of the keyNew component is L octets or less,
+           - the random component is appended to the value of the
+             temporary variable, and the result is input to the
+             hash algorithm H to produce a digest value;
+           - this digest value, truncated if necessary to be the same
+             length as the unused portion of the keyNew, is XOR-ed
+             with the unused portion of the keyNew to produce the
+             (final portion of the) 'delta' component.
+
+           For example, using MD5 as the hash algorithm H:
+
+              iterations = (lenOfDelta - 1)/16; /* integer division */
+              temp = keyOld;
+              for (i = 0; i < iterations; i++) {
+                  temp = MD5 (temp || random);
+                  delta[i*16 .. (i*16)+15] =
+                         temp XOR keyNew[i*16 .. (i*16)+15];
+              }
+              temp = MD5 (temp || random);
+              delta[i*16 .. lenOfDelta-1] =
+                     temp XOR keyNew[i*16 .. lenOfDelta-1];
+
+          The 'random' and 'delta' components are then concatenated as
+          described above, and the resulting octet string is sent to
+          the recipient as the new value of an instance of this object.
+
+          At the receiver side, when an instance of this object is set
+          to a new value, then a new value of K is computed as follows:
+
+           - a temporary variable is initialized to the existing value
+             of K;
+           - if the length of the delta component is greater than L
+             octets, then:
+              - the random component is appended to the value of the
+                temporary variable, and the result is input to the
+                hash algorithm H to produce a digest value, and the
+                temporary variable is set to this digest value;
+              - the value of the temporary variable is XOR-ed with
+                the first (next) L-octets (16 octets in case of MD5)
+                of the delta component to produce the first (next)
+                L-octets (16 octets in case of MD5) of the new value
+                of K.
+              - the above two steps are repeated until the unused
+                portion of the delta component is L octets or less,
+           - the random component is appended to the value of the
+             temporary variable, and the result is input to the
+             hash algorithm H to produce a digest value;
+           - this digest value, truncated if necessary to be the same
+             length as the unused portion of the delta component, is
+             XOR-ed with the unused portion of the delta component to
+             produce the (final portion of the) new value of K.
+
+           For example, using MD5 as the hash algorithm H:
+
+              iterations = (lenOfDelta - 1)/16; /* integer division */
+              temp = keyOld;
+              for (i = 0; i < iterations; i++) {
+                  temp = MD5 (temp || random);
+                  keyNew[i*16 .. (i*16)+15] =
+                         temp XOR delta[i*16 .. (i*16)+15];
+              }
+              temp = MD5 (temp || random);
+              keyNew[i*16 .. lenOfDelta-1] =
+                     temp XOR delta[i*16 .. lenOfDelta-1];
+
+          The value of an object with this syntax, whenever it is
+          retrieved by the management protocol, is always the zero
+          length string.
+
+          Note that the keyOld and keyNew are the localized keys.
+
+          Note that it is probably wise that when an SNMP entity sends
+          a SetRequest to change a key, that it keeps a copy of the old
+          key until it has confirmed that the key change actually
+          succeeded.
+         "))
 
 (defoid |usmStats| (|usmMIBObjects| 1) (:type 'object-identity))
 
@@ -236,7 +393,7 @@
    (|usmUserPrivProtocol| :type |AutonomousType|)
    (|usmUserPrivKeyChange| :type |KeyChange|)
    (|usmUserOwnPrivKeyChange| :type |KeyChange|)
-   (|usmUserPublic| :type t)
+   (|usmUserPublic| :type octet-string)
    (|usmUserStorageType| :type |StorageType|)
    (|usmUserStatus| :type |RowStatus|)))
 
@@ -569,7 +726,7 @@
 
 (defoid |usmUserPublic| (|usmUserEntry| 11)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-create|)
   (:status '|current|)
   (:description

@@ -50,7 +50,7 @@
 
 (defclass |SnmpCommunityEntry| (sequence-type)
   ((|snmpCommunityIndex| :type |SnmpAdminString|)
-   (|snmpCommunityName| :type t)
+   (|snmpCommunityName| :type octet-string)
    (|snmpCommunitySecurityName| :type |SnmpAdminString|)
    (|snmpCommunityContextEngineID| :type |SnmpEngineID|)
    (|snmpCommunityContextName| :type |SnmpAdminString|)
@@ -67,7 +67,7 @@
 
 (defoid |snmpCommunityName| (|snmpCommunityEntry| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-create|)
   (:status '|current|)
   (:description
@@ -187,12 +187,12 @@
   (:description "Information about a particular mask and mms value."))
 
 (defclass |SnmpTargetAddrExtEntry| (sequence-type)
-  ((|snmpTargetAddrTMask| :type t)
+  ((|snmpTargetAddrTMask| :type octet-string)
    (|snmpTargetAddrMMS| :type |Integer32|)))
 
 (defoid |snmpTargetAddrTMask| (|snmpTargetAddrExtEntry| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-create|)
   (:status '|current|)
   (:description
@@ -249,7 +249,7 @@
 
 (defoid |snmpTrapCommunity| (|snmpCommunityMIBObjects| 4)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|accessible-for-notify|)
   (:status '|current|)
   (:description

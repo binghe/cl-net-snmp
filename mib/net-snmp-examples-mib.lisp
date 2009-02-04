@@ -113,13 +113,13 @@
   (:description "A row describing a given working group"))
 
 (defclass |NetSnmpIETFWGEntry| (sequence-type)
-  ((|nsIETFWGName| :type t)
-   (|nsIETFWGChair1| :type t)
-   (|nsIETFWGChair2| :type t)))
+  ((|nsIETFWGName| :type octet-string)
+   (|nsIETFWGChair1| :type octet-string)
+   (|nsIETFWGChair2| :type octet-string)))
 
 (defoid |nsIETFWGName| (|netSnmpIETFWGEntry| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description
@@ -127,7 +127,7 @@
 
 (defoid |nsIETFWGChair1| (|netSnmpIETFWGEntry| 2)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-create|)
   (:status '|current|)
   (:description
@@ -135,7 +135,7 @@
 
 (defoid |nsIETFWGChair2| (|netSnmpIETFWGEntry| 3)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|read-create|)
   (:status '|current|)
   (:description
@@ -159,7 +159,7 @@
   (:description "A host name mapped to an ip address"))
 
 (defclass |NetSnmpHostsEntry| (sequence-type)
-  ((|netSnmpHostName| :type t)
+  ((|netSnmpHostName| :type octet-string)
    (|netSnmpHostAddressType| :type |InetAddressType|)
    (|netSnmpHostAddress| :type |InetAddress|)
    (|netSnmpHostStorage| :type |StorageType|)
@@ -167,7 +167,7 @@
 
 (defoid |netSnmpHostName| (|netSnmpHostsEntry| 1)
   (:type 'object-type)
-  (:syntax 't)
+  (:syntax 'octet-string)
   (:max-access '|not-accessible|)
   (:status '|current|)
   (:description

@@ -29,9 +29,21 @@
             will be selected by the IESG Area Director(s) of the Routing
             Area."))
 
-(deftype |IANAipRouteProtocol| () 't)
+(define-textual-convention |IANAipRouteProtocol|
+                           t
+                           (:status '|current|)
+                           (:description
+                            "A mechanism for learning routes.  Inclusion of values for
+            routing protocols is not intended to imply that those
+            protocols need be supported."))
 
-(deftype |IANAipMRouteProtocol| () 't)
+(define-textual-convention |IANAipMRouteProtocol|
+                           t
+                           (:status '|current|)
+                           (:description
+                            "The multicast routing protocol.  Inclusion of values for
+            multicast routing protocols is not intended to imply that
+            those protocols need be supported."))
 
 (in-package :asn.1)
 
