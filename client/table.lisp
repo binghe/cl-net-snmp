@@ -26,7 +26,7 @@
 (#<IfEntry + IfXEntry 1>
  #<IfEntry + IfXEntry 2>)
 
-> (snmp-select '("IfInOctets" "IfOutOctets") :from session
+> (snmp-select '("ifInOctets" "ifOutOctets") :from session
                :where `(= (oid "ifDescr") "eth0"))
 (#<Counter32 0> #<Counter32 0>)
 
