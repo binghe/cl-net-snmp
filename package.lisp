@@ -38,6 +38,7 @@
            #:snmp-server
            #:snmp-trap
            #:snmp-walk
+	   #:update-mib
            #:with-open-session)
   (:import-from :usocket
            #:rtt-rtocalc
@@ -61,12 +62,12 @@
                               :host (pathname-host defaults)
                               :defaults defaults
 			      :version :newest)))
-    (setf (logical-pathname-translations "SNMP")
-          `(("**;*.*.NEWEST" ,home)
+    (setf (logical-pathname-translations "snmp")
+          `(("**;*.*.newest" ,home)
 	    ("**;*.*" ,home))
-          (logical-pathname-translations "MIB")
-          `(("**;*.*.NEWEST" "SNMP:ASN1;**;*.*")
-            ("**;*.*" "SNMP:ASN1;**;*.*")))))
+          (logical-pathname-translations "mib")
+          `(("**;*.*.newest" "snmp:asn1;**;*.*")
+            ("**;*.*" "snmp:asn1;**;*.*")))))
 
 (defparameter *major-version* 6)
 (defparameter *minor-version* 0)

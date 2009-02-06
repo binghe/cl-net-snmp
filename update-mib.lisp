@@ -15,103 +15,104 @@
 
 (in-package :snmp)
 
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (export 'update-mib))
-
 (defparameter *mib-list*
-  '(#p"MIB:NET-SNMP;SNMP-COMMUNITY-MIB.TXT"
-    #p"MIB:NET-SNMP;SNMP-FRAMEWORK-MIB.TXT"
-    #p"MIB:NET-SNMP;SNMP-MPD-MIB.TXT"
-    #p"MIB:NET-SNMP;SNMP-NOTIFICATION-MIB.TXT"
-    #p"MIB:NET-SNMP;SNMP-PROXY-MIB.TXT"
-    #p"MIB:NET-SNMP;SNMP-TARGET-MIB.TXT"
-    #p"MIB:NET-SNMP;SNMP-USER-BASED-SM-MIB.TXT"
-    #p"MIB:NET-SNMP;SNMP-USM-AES-MIB.TXT"
-    #p"MIB:NET-SNMP;SNMP-USM-DH-OBJECTS-MIB.TXT"
-    #p"MIB:NET-SNMP;SNMP-VIEW-BASED-ACM-MIB.TXT"
-    #p"MIB:NET-SNMP;SNMPv2-CONF.TXT"
-    #p"MIB:NET-SNMP;SNMPv2-MIB.TXT"
-    #p"MIB:NET-SNMP;SNMPv2-SMI.TXT"
-    #p"MIB:NET-SNMP;SNMPv2-TC.TXT"
-    #p"MIB:NET-SNMP;SNMPv2-TM.TXT"
-    #p"MIB:NET-SNMP;AGENTX-MIB.TXT"
-    #p"MIB:NET-SNMP;BGP4-MIB.TXT"
-    #p"MIB:NET-SNMP;DISMAN-EVENT-MIB.TXT"
-    #p"MIB:NET-SNMP;DISMAN-SCHEDULE-MIB.TXT"
-    #p"MIB:NET-SNMP;DISMAN-SCRIPT-MIB.TXT"
-    #p"MIB:NET-SNMP;DISMAN-PING-MIB.TXT"
-    #p"MIB:NET-SNMP;DISMAN-EXPRESSION-MIB.TXT"
-    #p"MIB:NET-SNMP;DISMAN-TRACEROUTE-MIB.TXT"
-    #p"MIB:NET-SNMP;DISMAN-NSLOOKUP-MIB.TXT"
-    #p"MIB:NET-SNMP;EtherLike-MIB.TXT"
-    #p"MIB:NET-SNMP;GNOME-SMI.TXT"
-    #p"MIB:NET-SNMP;HCNUM-TC.TXT"
-    #p"MIB:NET-SNMP;HOST-RESOURCES-MIB.TXT"
-    #p"MIB:NET-SNMP;HOST-RESOURCES-TYPES.TXT"
-    #p"MIB:NET-SNMP;IANA-ADDRESS-FAMILY-NUMBERS-MIB.TXT"
-    #p"MIB:NET-SNMP;IANA-LANGUAGE-MIB.TXT"
-    #p"MIB:NET-SNMP;IANA-RTPROTO-MIB.TXT"
-    #p"MIB:NET-SNMP;IANAifType-MIB.TXT"
-    #p"MIB:NET-SNMP;IF-INVERTED-STACK-MIB.TXT"
-    #p"MIB:NET-SNMP;IF-MIB.TXT"
-    #p"MIB:NET-SNMP;INET-ADDRESS-MIB.TXT"
-    #p"MIB:NET-SNMP;IP-FORWARD-MIB.TXT"
-    #p"MIB:NET-SNMP;IP-MIB.TXT"
-    #p"MIB:NET-SNMP;IPV6-FLOW-LABEL-MIB.TXT"
-    #p"MIB:NET-SNMP;IPV6-ICMP-MIB.TXT"
-    #p"MIB:NET-SNMP;IPV6-MIB.TXT"
-    #p"MIB:NET-SNMP;IPV6-TC.TXT"
-    #p"MIB:NET-SNMP;IPV6-TCP-MIB.TXT"
-    #p"MIB:NET-SNMP;IPV6-UDP-MIB.TXT"
-    #p"MIB:NET-SNMP;LM-SENSORS-MIB.TXT"
-    #p"MIB:NET-SNMP;MTA-MIB.TXT"
-    #p"MIB:NET-SNMP;NET-SNMP-AGENT-MIB.TXT"
-    #p"MIB:NET-SNMP;NET-SNMP-EXAMPLES-MIB.TXT"
-    #p"MIB:NET-SNMP;NET-SNMP-EXTEND-MIB.TXT"
-    #p"MIB:NET-SNMP;NET-SNMP-MIB.TXT"
-    #p"MIB:NET-SNMP;NET-SNMP-TC.TXT"
-    #p"MIB:NET-SNMP;NET-SNMP-VACM-MIB.TXT"
-    #p"MIB:NET-SNMP;NET-SNMP-SYSTEM-MIB.TXT"
-    #p"MIB:NET-SNMP;NET-SNMP-MONITOR-MIB.TXT"
-    #p"MIB:NET-SNMP;NETWORK-SERVICES-MIB.TXT"
-    #p"MIB:NET-SNMP;NOTIFICATION-LOG-MIB.TXT"
-    #p"MIB:NET-SNMP;OSPF-MIB.TXT"
-    #p"MIB:NET-SNMP;OSPF-TRAP-MIB.TXT"
-    #p"MIB:NET-SNMP;RIPv2-MIB.TXT"
-    #p"MIB:NET-SNMP;RMON-MIB.TXT"
-    #p"MIB:NET-SNMP;TCP-MIB.TXT"
-    #p"MIB:NET-SNMP;TRANSPORT-ADDRESS-MIB.TXT"
-    #p"MIB:NET-SNMP;TUNNEL-MIB.TXT"
-    #p"MIB:NET-SNMP;UCD-DEMO-MIB.TXT"
-    #p"MIB:NET-SNMP;UCD-DISKIO-MIB.TXT"
-    #p"MIB:NET-SNMP;UCD-DLMOD-MIB.TXT"
-    #p"MIB:NET-SNMP;UCD-IPFWACC-MIB.TXT"
-    #p"MIB:NET-SNMP;UCD-SNMP-MIB.TXT"
-    #p"MIB:NET-SNMP;UCD-IPFILTER-MIB.TXT"
-    #p"MIB:NET-SNMP;UDP-MIB.TXT"
-    #p"MIB:LISP;LISP-MIB.TXT"
-    #p"MIB:LISP;LISP-LISPWORKS-MIB.TXT"
-    #p"MIB:LISP;LISP-ALLEGRO-MIB.TXT"
-    #p"MIB:LISP;LISP-CMUCL-MIB.TXT"
-    #p"MIB:LISP;LISP-SBCL-MIB.TXT"
-    #p"MIB:LISP;LISP-CLOZURE-MIB.TXT"
-    #p"MIB:LISP;LISP-SCL-MIB.TXT"
-    #p"MIB:LISP;LISP-CL-HTTP-MIB.TXT"))
+  '(#p"mib:net-snmp;snmp-community-mib.txt"
+    #p"mib:net-snmp;snmp-framework-mib.txt"
+    #p"mib:net-snmp;snmp-mpd-mib.txt"
+    #p"mib:net-snmp;snmp-notification-mib.txt"
+    #p"mib:net-snmp;snmp-proxy-mib.txt"
+    #p"mib:net-snmp;snmp-target-mib.txt"
+    #p"mib:net-snmp;snmp-user-based-sm-mib.txt"
+    #p"mib:net-snmp;snmp-usm-aes-mib.txt"
+    #p"mib:net-snmp;snmp-usm-dh-objects-mib.txt"
+    #p"mib:net-snmp;snmp-view-based-acm-mib.txt"
+    #p"mib:net-snmp;snmpv2-conf.txt"
+    #p"mib:net-snmp;snmpv2-mib.txt"
+    #p"mib:net-snmp;snmpv2-smi.txt"
+    #p"mib:net-snmp;snmpv2-tc.txt"
+    #p"mib:net-snmp;snmpv2-tm.txt"
+    #p"mib:net-snmp;agentx-mib.txt"
+    #p"mib:net-snmp;bgp4-mib.txt"
+    #p"mib:net-snmp;disman-event-mib.txt"
+    #p"mib:net-snmp;disman-schedule-mib.txt"
+    #p"mib:net-snmp;disman-script-mib.txt"
+    #p"mib:net-snmp;disman-ping-mib.txt"
+    #p"mib:net-snmp;disman-expression-mib.txt"
+    #p"mib:net-snmp;disman-traceroute-mib.txt"
+    #p"mib:net-snmp;disman-nslookup-mib.txt"
+    #p"mib:net-snmp;etherlike-mib.txt"
+    #p"mib:net-snmp;gnome-smi.txt"
+    #p"mib:net-snmp;hcnum-tc.txt"
+    #p"mib:net-snmp;host-resources-mib.txt"
+    #p"mib:net-snmp;host-resources-types.txt"
+    #p"mib:net-snmp;iana-address-family-numbers-mib.txt"
+    #p"mib:net-snmp;iana-language-mib.txt"
+    #p"mib:net-snmp;iana-rtproto-mib.txt"
+    #p"mib:net-snmp;ianaiftype-mib.txt"
+    #p"mib:net-snmp;if-inverted-stack-mib.txt"
+    #p"mib:net-snmp;if-mib.txt"
+    #p"mib:net-snmp;inet-address-mib.txt"
+    #p"mib:net-snmp;ip-forward-mib.txt"
+    #p"mib:net-snmp;ip-mib.txt"
+    #p"mib:net-snmp;ipv6-flow-label-mib.txt"
+    #p"mib:net-snmp;ipv6-icmp-mib.txt"
+    #p"mib:net-snmp;ipv6-mib.txt"
+    #p"mib:net-snmp;ipv6-tc.txt"
+    #p"mib:net-snmp;ipv6-tcp-mib.txt"
+    #p"mib:net-snmp;ipv6-udp-mib.txt"
+    #p"mib:net-snmp;lm-sensors-mib.txt"
+    #p"mib:net-snmp;mta-mib.txt"
+    #p"mib:net-snmp;net-snmp-agent-mib.txt"
+    #p"mib:net-snmp;net-snmp-examples-mib.txt"
+    #p"mib:net-snmp;net-snmp-extend-mib.txt"
+    #p"mib:net-snmp;net-snmp-mib.txt"
+    #p"mib:net-snmp;net-snmp-tc.txt"
+    #p"mib:net-snmp;net-snmp-vacm-mib.txt"
+    #p"mib:net-snmp;net-snmp-system-mib.txt"
+    #p"mib:net-snmp;net-snmp-monitor-mib.txt"
+    #p"mib:net-snmp;network-services-mib.txt"
+    #p"mib:net-snmp;notification-log-mib.txt"
+    #p"mib:net-snmp;ospf-mib.txt"
+    #p"mib:net-snmp;ospf-trap-mib.txt"
+    #p"mib:net-snmp;ripv2-mib.txt"
+    #p"mib:net-snmp;rmon-mib.txt"
+    #p"mib:net-snmp;tcp-mib.txt"
+    #p"mib:net-snmp;transport-address-mib.txt"
+    #p"mib:net-snmp;tunnel-mib.txt"
+    #p"mib:net-snmp;ucd-demo-mib.txt"
+    #p"mib:net-snmp;ucd-diskio-mib.txt"
+    #p"mib:net-snmp;ucd-dlmod-mib.txt"
+    #p"mib:net-snmp;ucd-ipfwacc-mib.txt"
+    #p"mib:net-snmp;ucd-snmp-mib.txt"
+    #p"mib:net-snmp;ucd-ipfilter-mib.txt"
+    #p"mib:net-snmp;udp-mib.txt"
+    #p"mib:lisp;lisp-mib.txt"
+    #p"mib:lisp;lisp-lispworks-mib.txt"
+    #p"mib:lisp;lisp-allegro-mib.txt"
+    #p"mib:lisp;lisp-cmucl-mib.txt"
+    #p"mib:lisp;lisp-sbcl-mib.txt"
+    #p"mib:lisp;lisp-clozure-mib.txt"
+    #p"mib:lisp;lisp-scl-mib.txt"
+    #p"mib:lisp;lisp-cl-http-mib.txt"))
 
-(defvar *mib-list-file* #p"SNMP:MIB.LISP-EXPR")
-(defvar *mib-dependency-file* #p"SNMP:MIB-DEPEND.LISP")
+(defvar *mib-list-file* #p"snmp:mib.lisp-expr")
+(defvar *mib-dependency-file* #p"snmp:mib-depend.lisp")
+
+(defparameter *pathname-base* (translate-logical-pathname #p"snmp:"))
 
 (defun lisp-file (path)
   (merge-pathnames (make-pathname :name (pathname-name path)
-                                  :type "LISP"
-                                  :directory '(:relative "MIB"))
-                   #p"SNMP:"))
+                                  :type "lisp"
+                                  :directory (append (pathname-directory *pathname-base*)
+                                                     '("mib")))
+                   *pathname-base*))
 
 (defun expr-file (path)
   (merge-pathnames (make-pathname :name (pathname-name path)
-                                  :type "LISP-EXPR"
-                                  :directory '(:relative "MIB"))
-                   #p"SNMP:"))
+                                  :type "lisp-expr"
+                                  :directory (append (pathname-directory *pathname-base*)
+                                                     '("mib")))
+                   *pathname-base*))
 
 (defun update-mib (&optional (mib-list *mib-list*))
   "Update mib.lisp-expr"
@@ -136,14 +137,14 @@
     (with-open-file (s *mib-list-file*
                        :direction :output
                        :if-exists :supersede)
-      (format s ";;;; -*- Mode: Lisp -*-~%;;;; Auto-generated by SNMP:UPDATE-MIB.LISP~%")
+      (format s ";;;; -*- Mode: Lisp -*-~%;;;; Auto-generated by #p\"snmp:update-mib.lisp\"~%")
       (pprint (setf mib.lisp-expr (nreverse mib.lisp-expr)) s)
       (terpri s))
     ;;; Update MIB Dependency, it's for MIB Browser
     (with-open-file (s *mib-dependency-file*
                        :direction :output
                        :if-exists :supersede)
-      (format s ";;;; -*- Mode: Lisp -*-~%;;;; Auto-generated by SNMP:UPDATE-MIB.LISP~%")
+      (format s ";;;; -*- Mode: Lisp -*-~%;;;; Auto-generated by #p\"snmp:update-mib.lisp\"~%")
       (dolist (i `((in-package :asn.1)
                    (eval-when (:load-toplevel :execute)
                      (mapcar #'(lambda (asn.1::x)
@@ -152,5 +153,5 @@
                              ',mib-depend.lisp))))
         (pprint i s))
       (terpri s))
-    (load #p"SNMP:SNMP-MIB.ASD")
+    (load #p"snmp:snmp-mib.asd")
     (pprint mib.lisp-expr)))
