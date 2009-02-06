@@ -1,4 +1,0 @@
-;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;BRIDGE-MIB.TXT
-
-(bridge-mib snmpv2-smi)
