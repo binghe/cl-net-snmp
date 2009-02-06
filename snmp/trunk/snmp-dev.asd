@@ -1,6 +1,8 @@
 ;;;; -*- Mode: Lisp -*-
 ;;;; $Id$
 
+;;;; Note: Thanks to John Fremlin from MSI, snmp-dev runs on all supported CL now.
+
 (unless (find-package ':snmp-system)
   (make-package ':snmp-system
                 :use '(:common-lisp :asdf)))
@@ -10,7 +12,7 @@
 (defsystem snmp-dev
   :description "SNMP Development"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
-  :version "1.0"
+  :version "6.0-dev"
   :licence "MIT"
   :depends-on (:asn.1-dev
                :snmp-base)
