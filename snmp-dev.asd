@@ -7,7 +7,6 @@
 
 (in-package :snmp-system)
 
-#+lispworks
 (defsystem snmp-dev
   :description "SNMP Development"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
