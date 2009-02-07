@@ -101,14 +101,14 @@
 (defparameter *pathname-base* (translate-logical-pathname #p"snmp:"))
 
 (defun lisp-file (path)
-  (merge-pathnames (make-pathname :name (string-downcase (pathname-name path))
+  (merge-pathnames (make-pathname :name (pathname-name (translate-logical-pathname path))
                                   :type "lisp"
                                   :directory (append (pathname-directory *pathname-base*)
                                                      '("mib")))
                    *pathname-base*))
 
 (defun expr-file (path)
-  (merge-pathnames (make-pathname :name (string-downcase (pathname-name path))
+  (merge-pathnames (make-pathname :name (pathname-name (translate-logical-pathname path))
                                   :type "lisp-expr"
                                   :directory (append (pathname-directory *pathname-base*)
                                                      '("mib")))
