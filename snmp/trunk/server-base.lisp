@@ -47,7 +47,7 @@
                (iter walk-list nil)))))))
 
 (defmacro def-scalar-variable (name (agent) &body body)
-  (let ((oid (intern name (find-package :asn.1)))
+  (let ((oid (oid-name (oid name)))
         (ids (gensym)))
     `(progn
        (defun ,oid (,agent &optional ,ids)
@@ -63,7 +63,7 @@
    * single number n: means valid keys are number 1~n;
    * list of numbers (1 2 3 ... n): means valid keys are numbers in the list;
    * list of list of numbers ((1 2) (3 4) (5 6)): means valid keys are sub-ids in the list."
-  (let ((oid (intern name (find-package :asn.1))))
+  (let ((oid (oid-name (oid name))))
     `(progn
        (defun ,oid (,agent &optional ,ids)
          (declare (ignorable ,agent ,ids))

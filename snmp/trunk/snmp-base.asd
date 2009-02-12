@@ -10,6 +10,9 @@
 #+(and lispworks4 win32)
 (pushnew :mswindows *features*)
 
+#+ignore
+(pushnew :snmp-iolib *features*)
+
 (defsystem snmp-base
   :description "SNMP Base System"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
