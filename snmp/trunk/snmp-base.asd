@@ -7,11 +7,25 @@
 
 (in-package :snmp-system)
 
+(defpackage snmp-features
+  (:use :cl :asdf :asn.1-features)
+  (:export #:usocket #:iolib
+           #:portable-threads #:bordeaux-threads))
+
+(defparameter *snmp-features*
+  (with-open-file
+      (s (merge-pathnames (make-pathname :name "features"
+                                         :type "lisp-expr")
+                          *load-truename*)
+         :direction :input)
+    (let ((*package* (find-package :snmp-features)))
+      (read s))))
+
+(dolist (i *snmp-features*)
+  (pushnew i *features*))
+
 #+(and lispworks4 win32)
 (pushnew :mswindows *features*)
-
-#+ignore
-(pushnew :snmp-iolib *features*)
 
 (defsystem snmp-base
   :description "SNMP Base System"
@@ -20,11 +34,17 @@
   :licence "MIT"
   :depends-on (:asn.1
 	       :ironclad
+               #+snmp-features:usocket
                :usocket ; experimental-udp branch
+               #+snmp-features:iolib
+               :iolib
                #-scl :trivial-gray-streams
                #+(and lispworks mswindows)
                :lispworks-udp
-               :portable-threads) ; GBBopen's portable-threads
+               #+snmp-features:portable-threads
+               :portable-threads
+               #+snmp-features:bordeaux-threads
+               :bordeaux-threads)
   :components ((:file "package")
 	       (:file "constants"   :depends-on ("package"))
                (:file "condition"   :depends-on ("constants"))
