@@ -13,7 +13,7 @@
  usocket       ; default on most platforms
 
  #+(and lispworks mswindows)
- lispworks-udp ; default on lispworks/win32
+ lispworks-udp ; version >= 4.0, default on lispworks/win32
 
  #+ignore
  iolib         ; if you don't like usocket or your platform support iolib well

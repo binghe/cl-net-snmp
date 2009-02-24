@@ -59,7 +59,8 @@
 
 (defclass snmp-server (snmp-agent-state-mixin snmp-vacm-mixin)
   ((process        :accessor server-process
-                   :type (satisfies threadp)
+                   :type #+snmp-features:portable-threads (satisfies threadp)
+                         #+snmp-features:bordeaux-threads t
                    :initarg :process
                    :documentation "Server process/thread")
    (address        :accessor server-address
@@ -104,24 +105,26 @@
                                        &rest initargs &key &allow-other-keys)
   (declare (ignore initargs))
   (setf (server-process instance)
-        #+(and lispworks mswindows)
-        (comm:start-udp-server :process-name (format nil "SNMP Server at ~A:~D"
-                                                     (server-address instance)
-                                                     (server-port instance))
-                               :function (server-function instance)
-                               :arguments (list instance)
-                               :address (server-address instance)
-                               :service (server-port instance))
-        #-(and lispworks mswindows)
-        (spawn-thread (format nil "SNMP Server at ~A:~D"
-                              (server-address instance)
-                              (server-port instance))
-                      #'(lambda ()
-                          (socket-server (server-address instance)
-                                         (server-port instance)
-                                         (server-function instance)
-                                         (list instance))
-                          #+scl (thread:thread-exit)))))
+        #+snmp-features:lispworks-udp
+        (comm+:start-udp-server :process-name (format nil "SNMP Server at ~A:~D"
+                                                      (server-address instance)
+                                                      (server-port instance))
+                                :function (server-function instance)
+                                :arguments (list instance)
+                                :address (server-address instance)
+                                :service (server-port instance))
+        #+(and snmp-features:usocket snmp-features:portable-threads)
+        (portable-threads:spawn-thread (format nil "SNMP Server at ~A:~D"
+                                               (server-address instance)
+                                               (server-port instance))
+                                       #'(lambda ()
+                                           (usocket:socket-server (server-address instance)
+                                                                  (server-port instance)
+                                                                  (server-function instance)
+                                                                  (list instance))
+                                           #+scl (thread:thread-exit)))
+        #+(and snmp-features:usocket snmp-features:bordeaux-threads)
+        (error "not implemented")))
 
 (defun enable-snmp-service (&optional (port *default-snmp-server-port*))
   (if (null *default-snmp-server*)
@@ -137,10 +140,10 @@
 (defun disable-snmp-service ()
   "Kill server thread and clear variable"
   (when *default-snmp-server*
-    #+(and lispworks mswindows)
-    (comm:stop-udp-server (server-process *default-snmp-server*) :wait t)
-    #-(and lispworks mswindows)
-    (kill-thread (server-process *default-snmp-server*))
+    #+snmp-features:lispworks-udp
+    (comm+:stop-udp-server (server-process *default-snmp-server*) :wait t)
+    #+snmp-features:usocket
+    (portable-threads:kill-thread (server-process *default-snmp-server*))
     ;; clear variable
     (setf *default-snmp-server* nil)))
 

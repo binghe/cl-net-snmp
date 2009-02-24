@@ -4,10 +4,7 @@
 (in-package :cl-user)
 
 (defpackage snmp
-  (:use :common-lisp
-        :portable-threads
-        :usocket
-        :asn.1)
+  (:use :common-lisp :asn.1)
   (:export #:+snmp-version-1+
            #:+snmp-version-2c+
            #:+snmp-version-3+
