@@ -71,7 +71,11 @@
 (defun generate-msg-id (message)
   (declare (type v3-message message))
   (with-slots (msg-id-counter) message
-    (the (unsigned-byte 32) (logand (atomic-incf msg-id-counter) #xffffffff))))
+    (the (unsigned-byte 32) (logand (#+snmp-features:portable-threads
+                                     portable-threads:atomic-incf
+                                     #-snmp-features:portable-threads
+                                     incf
+                                     msg-id-counter) #xffffffff))))
 
 (defmethod initialize-instance :after ((message v3-message) &rest initargs)
   (declare (ignore initargs))

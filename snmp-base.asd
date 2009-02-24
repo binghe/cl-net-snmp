@@ -8,8 +8,8 @@
 (in-package :snmp-system)
 
 (defpackage snmp-features
-  (:use :cl :asdf)
-  (:export #:usocket #:iolib
+  (:use :common-lisp)
+  (:export #:usocket #:iolib #:lispworks-udp
            #:portable-threads #:bordeaux-threads))
 
 #+(and lispworks4 win32)

@@ -54,7 +54,11 @@
 
 (defmethod generate-request-id ((pdu common-pdu))
   (with-slots (request-id-counter) pdu
-    (atomic-incf request-id-counter)))
+    (#+snmp-features:portable-threads
+     portable-threads:atomic-incf
+     #-snmp-features:portable-threads
+     incf
+     request-id-counter)))
 
 (defmethod initialize-instance :after ((pdu common-pdu)
                                        &rest initargs &key &allow-other-keys)
