@@ -8,9 +8,12 @@
 (in-package :snmp-system)
 
 (defpackage snmp-features
-  (:use :cl :asdf :asn.1-features)
+  (:use :cl :asdf)
   (:export #:usocket #:iolib
            #:portable-threads #:bordeaux-threads))
+
+#+(and lispworks4 win32)
+(pushnew :mswindows *features*)
 
 (defparameter *snmp-features*
   (with-open-file
@@ -23,9 +26,6 @@
 
 (dolist (i *snmp-features*)
   (pushnew i *features*))
-
-#+(and lispworks4 win32)
-(pushnew :mswindows *features*)
 
 (defsystem snmp-base
   :description "SNMP Base System"

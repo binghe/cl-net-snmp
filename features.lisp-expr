@@ -7,15 +7,20 @@
 (
 
  ;;; Network support
- ;;; Note: choose only ONE between 'usocket and 'iolib
+ ;;; Note: choose only ONE between 'usocket, 'lispworks-udp and 'iolib
 
- usocket ; default
+ #-(and lispworks mswindows)
+ usocket       ; default on most platforms
+
+ #+(and lispworks mswindows)
+ lispworks-udp ; default on lispworks/win32
 
  #+ignore
- iolib   ; if you don't like usocket or your platform support iolib well, use this
+ iolib         ; if you don't like usocket or your platform support iolib well
 
 
  ;;; Thread support, used by SNMP-SERVER
+ ;;; Note: choose only ONE between 'portable-threads and 'bordeaux-threads
 
  portable-threads ; default, from GBBopen project
 
