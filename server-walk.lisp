@@ -14,7 +14,7 @@
 ;;;        +-> sysXXX
 ;;;            [H]
 
-;;; binghe: snmp-walk (get-next) on server-side is quite comlicated, I find five types:
+;;; binghe: snmp-walk (get-next) on server-side is quite complicated, I find five types:
 ;;;
 ;;; 1. GetNext an "scalar-variable" (sysDescr.0):
 ;;;    we should walk from A to B, then call the dispatch function on sysDescr
@@ -109,7 +109,7 @@
       (let ((dispatch-function (gethash leaf dispatch-table)))
         (if (null dispatch-function)
           (find-first (find-next leaf))
-          (let* ((entries (funcall dispatch-function *server*)))
+          (let ((entries (funcall dispatch-function *server*)))
             (etypecase entries
               (integer
                (let ((current-entry (car ids)))
@@ -145,3 +145,48 @@
                  e
                  (iter (cdr e))))))
     (iter all)))
+
+;; A simpler version of PROCESS-OBJECT-ID for SIMPLE-OID
+(defmethod process-object-id ((oid simple-oid) (flag (eql :get-next)))
+  ;; First, find the target oid
+  (destructuring-bind (next-oid dispatch-function args)
+      (cond ((oid-scalar-variable-p oid) ; Type 1
+             (find-first (find-sibling (oid-parent oid))))
+            (t (find-next-entry-for-simple-oid oid)))   ; Type 4 or 5
+    (if next-oid
+      (list next-oid (funcall dispatch-function *server* args))
+      (list oid (smi :end-of-mibview)))))
+
+;;; (G -> D) or (E -> H)
+(defun find-next-entry-for-simple-oid (oid)
+  (declare (type simple-oid oid))
+  (let* ((dispatch-table (server-dispatch-table *server*))
+         (leaf (oid-parent oid))
+         (ids (nthcdr (oid-length leaf) (oid-number-list oid))))
+    (let ((dispatch-function (gethash leaf dispatch-table)))
+      (if (null dispatch-function)
+          (find-first (find-next leaf))
+        (let ((entries (funcall dispatch-function *server*)))
+          (etypecase entries
+            (integer
+             (let ((current-entry (car ids)))
+               (if (< current-entry entries)
+                   (let ((next-entry (1+ current-entry)))
+                     (list (oid (list leaf next-entry))
+                           dispatch-function
+                           (list next-entry)))
+                 (find-first (find-sibling leaf)))))
+            (list
+             (let ((current-entry (find-in-list ids entries)))
+               (if current-entry
+                   ;; find in middle or last
+                   (let ((next-entry (mklist (cadr current-entry))))
+                     (if next-entry
+                         ;; find in middle: return next
+                         (list (oid (cons leaf next-entry))
+                               dispatch-function
+                               next-entry)
+                       ;; find in last: byebye
+                       (find-first (find-sibling leaf))))
+                 ;; invalid entry, just go first
+                 (find-first leaf))))))))))
