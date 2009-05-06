@@ -254,4 +254,16 @@
                      (list oid (smi :no-such-object))))
                  (list oid (smi :no-such-object))))))))
 
+;; A simpler version of PROCESS-OBJECT-ID for SIMPLE-OID
+(defmethod process-object-id ((oid simple-oid) (flag (eql :get)))
+  (let ((dispatch-table (server-dispatch-table *server*)))
+    (cond ((oid-parent-p oid)
+           (let* ((p (oid-parent oid))
+                  (handler (gethash p dispatch-table)))
+             (if handler
+               (list oid (funcall handler *server* (nthcdr (oid-length p)
+                                                           (oid-number-list oid))))
+               (list oid (smi :no-such-object)))))
+          (t (list oid (smi :no-such-object))))))
+
 ;;; note: since get-next support is too large, it's moved to server-walk.lisp
