@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/snmp-target-mib
   (:nicknames :snmp-target-mib)
-  (:use :closer-common-lisp :asn.1)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |snmpModules| |Counter32| |Integer32|)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention |TDomain|
@@ -232,16 +232,17 @@
          Entries in the snmpTargetAddrTable are created and
          deleted using the snmpTargetAddrRowStatus object."))
 
-(defclass |SnmpTargetAddrEntry| (sequence-type)
-  ((|snmpTargetAddrName| :type |SnmpAdminString|)
-   (|snmpTargetAddrTDomain| :type |TDomain|)
-   (|snmpTargetAddrTAddress| :type |TAddress|)
-   (|snmpTargetAddrTimeout| :type |TimeInterval|)
-   (|snmpTargetAddrRetryCount| :type |Integer32|)
-   (|snmpTargetAddrTagList| :type |SnmpTagList|)
-   (|snmpTargetAddrParams| :type |SnmpAdminString|)
-   (|snmpTargetAddrStorageType| :type |StorageType|)
-   (|snmpTargetAddrRowStatus| :type |RowStatus|)))
+(defclass |SnmpTargetAddrEntry|
+          (sequence-type)
+          ((|snmpTargetAddrName| :type |SnmpAdminString|)
+           (|snmpTargetAddrTDomain| :type |TDomain|)
+           (|snmpTargetAddrTAddress| :type |TAddress|)
+           (|snmpTargetAddrTimeout| :type |TimeInterval|)
+           (|snmpTargetAddrRetryCount| :type |Integer32|)
+           (|snmpTargetAddrTagList| :type |SnmpTagList|)
+           (|snmpTargetAddrParams| :type |SnmpAdminString|)
+           (|snmpTargetAddrStorageType| :type |StorageType|)
+           (|snmpTargetAddrRowStatus| :type |RowStatus|)))
 
 (defoid |snmpTargetAddrName| (|snmpTargetAddrEntry| 1)
   (:type 'object-type)
@@ -391,14 +392,17 @@
          Entries in the snmpTargetParamsTable are created and
          deleted using the snmpTargetParamsRowStatus object."))
 
-(defclass |SnmpTargetParamsEntry| (sequence-type)
-  ((|snmpTargetParamsName| :type |SnmpAdminString|)
-   (|snmpTargetParamsMPModel| :type |SnmpMessageProcessingModel|)
-   (|snmpTargetParamsSecurityModel| :type |SnmpSecurityModel|)
-   (|snmpTargetParamsSecurityName| :type |SnmpAdminString|)
-   (|snmpTargetParamsSecurityLevel| :type |SnmpSecurityLevel|)
-   (|snmpTargetParamsStorageType| :type |StorageType|)
-   (|snmpTargetParamsRowStatus| :type |RowStatus|)))
+(defclass |SnmpTargetParamsEntry|
+          (sequence-type)
+          ((|snmpTargetParamsName| :type |SnmpAdminString|)
+           (|snmpTargetParamsMPModel|
+            :type
+            |SnmpMessageProcessingModel|)
+           (|snmpTargetParamsSecurityModel| :type |SnmpSecurityModel|)
+           (|snmpTargetParamsSecurityName| :type |SnmpAdminString|)
+           (|snmpTargetParamsSecurityLevel| :type |SnmpSecurityLevel|)
+           (|snmpTargetParamsStorageType| :type |StorageType|)
+           (|snmpTargetParamsRowStatus| :type |RowStatus|)))
 
 (defoid |snmpTargetParamsName| (|snmpTargetParamsEntry| 1)
   (:type 'object-type)

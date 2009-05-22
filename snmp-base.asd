@@ -38,7 +38,8 @@
                :usocket ; experimental-udp branch
                #+snmp-features:iolib
                :iolib
-               #-scl :trivial-gray-streams
+               #-(or scl lispworks)
+               :trivial-gray-streams
                #+(and lispworks mswindows)
                :lispworks-udp
                #+(and snmp-features:portable-threads (not portable-threads))

@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/lisp-lispworks-mib
   (:nicknames :lisp-lispworks-mib)
-  (:use :closer-common-lisp :asn.1)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 object-identity notification-type |enterprises|)
   (:import-from :asn.1/lisp-mib |common-lisp|))

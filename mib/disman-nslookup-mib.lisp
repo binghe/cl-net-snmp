@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/disman-nslookup-mib
   (:nicknames :disman-nslookup-mib)
-  (:use :closer-common-lisp :asn.1)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |Unsigned32| |mib-2| |Integer32|)
   (:import-from :|ASN.1/SNMPv2-TC| |RowStatus|)
@@ -98,15 +98,16 @@
         requests.  The value of lookupCtlTargetAddressType
         determines which lookup function to perform."))
 
-(defclass |LookupCtlEntry| (sequence-type)
-  ((|lookupCtlOwnerIndex| :type |SnmpAdminString|)
-   (|lookupCtlOperationName| :type |SnmpAdminString|)
-   (|lookupCtlTargetAddressType| :type |InetAddressType|)
-   (|lookupCtlTargetAddress| :type |InetAddress|)
-   (|lookupCtlOperStatus| :type integer)
-   (|lookupCtlTime| :type |Unsigned32|)
-   (|lookupCtlRc| :type |Integer32|)
-   (|lookupCtlRowStatus| :type |RowStatus|)))
+(defclass |LookupCtlEntry|
+          (sequence-type)
+          ((|lookupCtlOwnerIndex| :type |SnmpAdminString|)
+           (|lookupCtlOperationName| :type |SnmpAdminString|)
+           (|lookupCtlTargetAddressType| :type |InetAddressType|)
+           (|lookupCtlTargetAddress| :type |InetAddress|)
+           (|lookupCtlOperStatus| :type integer)
+           (|lookupCtlTime| :type |Unsigned32|)
+           (|lookupCtlRc| :type |Integer32|)
+           (|lookupCtlRowStatus| :type |RowStatus|)))
 
 (defoid |lookupCtlOwnerIndex| (|lookupCtlEntry| 1)
   (:type 'object-type)
@@ -322,10 +323,11 @@
         to.  The third index element selects a single
         lookup operation result."))
 
-(defclass |LookupResultsEntry| (sequence-type)
-  ((|lookupResultsIndex| :type |Unsigned32|)
-   (|lookupResultsAddressType| :type |InetAddressType|)
-   (|lookupResultsAddress| :type |InetAddress|)))
+(defclass |LookupResultsEntry|
+          (sequence-type)
+          ((|lookupResultsIndex| :type |Unsigned32|)
+           (|lookupResultsAddressType| :type |InetAddressType|)
+           (|lookupResultsAddress| :type |InetAddress|)))
 
 (defoid |lookupResultsIndex| (|lookupResultsEntry| 1)
   (:type 'object-type)

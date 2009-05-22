@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/net-snmp-mib
   (:nicknames :net-snmp-mib)
-  (:use :closer-common-lisp :asn.1)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity |enterprises|))
 
 (in-package :net-snmp-mib)

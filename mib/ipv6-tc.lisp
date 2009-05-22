@@ -7,7 +7,7 @@
 
 (defpackage :asn.1/ipv6-tc
   (:nicknames :ipv6-tc)
-  (:use :closer-common-lisp :asn.1)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| |Integer32|)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention))
 

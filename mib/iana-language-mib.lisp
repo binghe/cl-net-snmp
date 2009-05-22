@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/iana-language-mib
   (:nicknames :iana-language-mib)
-  (:use :closer-common-lisp :asn.1)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-identity
                 |mib-2|))
 

@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/net-snmp-extend-mib
   (:nicknames :net-snmp-extend-mib)
-  (:use :closer-common-lisp :asn.1)
+  (:use :common-lisp :asn.1)
   (:import-from :asn.1/net-snmp-agent-mib |nsExtensions|)
   (:import-from :|ASN.1/SNMPv2-SMI| object-type notification-type
                 module-identity |Integer32|)
@@ -49,16 +49,17 @@
   (:status '|current|)
   (:description "A conceptual row within the extension table."))
 
-(defclass |NsExtendConfigEntry| (sequence-type)
-  ((|nsExtendToken| :type |DisplayString|)
-   (|nsExtendCommand| :type |DisplayString|)
-   (|nsExtendArgs| :type |DisplayString|)
-   (|nsExtendInput| :type |DisplayString|)
-   (|nsExtendCacheTime| :type integer)
-   (|nsExtendExecType| :type integer)
-   (|nsExtendRunType| :type integer)
-   (|nsExtendStorage| :type |StorageType|)
-   (|nsExtendStatus| :type |RowStatus|)))
+(defclass |NsExtendConfigEntry|
+          (sequence-type)
+          ((|nsExtendToken| :type |DisplayString|)
+           (|nsExtendCommand| :type |DisplayString|)
+           (|nsExtendArgs| :type |DisplayString|)
+           (|nsExtendInput| :type |DisplayString|)
+           (|nsExtendCacheTime| :type integer)
+           (|nsExtendExecType| :type integer)
+           (|nsExtendRunType| :type integer)
+           (|nsExtendStorage| :type |StorageType|)
+           (|nsExtendStatus| :type |RowStatus|)))
 
 (defoid |nsExtendToken| (|nsExtendConfigEntry| 1)
   (:type 'object-type)
@@ -162,11 +163,12 @@
   (:status '|current|)
   (:description "A conceptual row within the extension table."))
 
-(defclass |NsExtendOutput1Entry| (sequence-type)
-  ((|nsExtendOutput1Line| :type |DisplayString|)
-   (|nsExtendOutputFull| :type |DisplayString|)
-   (|nsExtendOutNumLines| :type integer)
-   (|nsExtendResult| :type integer)))
+(defclass |NsExtendOutput1Entry|
+          (sequence-type)
+          ((|nsExtendOutput1Line| :type |DisplayString|)
+           (|nsExtendOutputFull| :type |DisplayString|)
+           (|nsExtendOutNumLines| :type integer)
+           (|nsExtendResult| :type integer)))
 
 (defoid |nsExtendOutput1Line| (|nsExtendOutput1Entry| 1)
   (:type 'object-type)
@@ -214,9 +216,10 @@
   (:status '|current|)
   (:description "A conceptual row within the line-based output table."))
 
-(defclass |NsExtendOutput2Entry| (sequence-type)
-  ((|nsExtendLineIndex| :type integer)
-   (|nsExtendOutLine| :type |DisplayString|)))
+(defclass |NsExtendOutput2Entry|
+          (sequence-type)
+          ((|nsExtendLineIndex| :type integer)
+           (|nsExtendOutLine| :type |DisplayString|)))
 
 (defoid |nsExtendLineIndex| (|nsExtendOutput2Entry| 1)
   (:type 'object-type)

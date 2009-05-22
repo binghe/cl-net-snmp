@@ -8,7 +8,7 @@
 
 (defpackage :|ASN.1/SNMPv2-TM|
   (:nicknames :|SNMPv2-TM|)
-  (:use :closer-common-lisp :asn.1)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-identity
                 |snmpModules| |snmpDomains| |snmpProxys|)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention))

@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/net-snmp-examples-mib
   (:nicknames :net-snmp-examples-mib)
-  (:use :closer-common-lisp :asn.1)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |Integer32| notification-type)
   (:import-from :asn.1/snmp-framework-mib |SnmpAdminString|)
@@ -112,10 +112,11 @@
   (:status '|current|)
   (:description "A row describing a given working group"))
 
-(defclass |NetSnmpIETFWGEntry| (sequence-type)
-  ((|nsIETFWGName| :type octet-string)
-   (|nsIETFWGChair1| :type octet-string)
-   (|nsIETFWGChair2| :type octet-string)))
+(defclass |NetSnmpIETFWGEntry|
+          (sequence-type)
+          ((|nsIETFWGName| :type octet-string)
+           (|nsIETFWGChair1| :type octet-string)
+           (|nsIETFWGChair2| :type octet-string)))
 
 (defoid |nsIETFWGName| (|netSnmpIETFWGEntry| 1)
   (:type 'object-type)
@@ -158,12 +159,13 @@
   (:status '|current|)
   (:description "A host name mapped to an ip address"))
 
-(defclass |NetSnmpHostsEntry| (sequence-type)
-  ((|netSnmpHostName| :type octet-string)
-   (|netSnmpHostAddressType| :type |InetAddressType|)
-   (|netSnmpHostAddress| :type |InetAddress|)
-   (|netSnmpHostStorage| :type |StorageType|)
-   (|netSnmpHostRowStatus| :type |RowStatus|)))
+(defclass |NetSnmpHostsEntry|
+          (sequence-type)
+          ((|netSnmpHostName| :type octet-string)
+           (|netSnmpHostAddressType| :type |InetAddressType|)
+           (|netSnmpHostAddress| :type |InetAddress|)
+           (|netSnmpHostStorage| :type |StorageType|)
+           (|netSnmpHostRowStatus| :type |RowStatus|)))
 
 (defoid |netSnmpHostName| (|netSnmpHostsEntry| 1)
   (:type 'object-type)
