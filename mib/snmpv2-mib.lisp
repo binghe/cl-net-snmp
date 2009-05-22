@@ -8,7 +8,7 @@
 
 (defpackage :|ASN.1/SNMPv2-MIB|
   (:nicknames :|SNMPv2-MIB|)
-  (:use :closer-common-lisp :asn.1)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 notification-type |TimeTicks| |Counter32| |snmpModules|
                 |mib-2|)
@@ -160,11 +160,12 @@
   (:status '|current|)
   (:description "An entry (conceptual row) in the sysORTable."))
 
-(defclass |SysOREntry| (sequence-type)
-  ((|sysORIndex| :type integer)
-   (|sysORID| :type object-id)
-   (|sysORDescr| :type |DisplayString|)
-   (|sysORUpTime| :type |TimeStamp|)))
+(defclass |SysOREntry|
+          (sequence-type)
+          ((|sysORIndex| :type integer)
+           (|sysORID| :type object-id)
+           (|sysORDescr| :type |DisplayString|)
+           (|sysORUpTime| :type |TimeStamp|)))
 
 (defoid |sysORIndex| (|sysOREntry| 1)
   (:type 'object-type)

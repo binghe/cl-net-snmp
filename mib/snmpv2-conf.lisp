@@ -8,7 +8,7 @@
 
 (defpackage :|ASN.1/SNMPv2-CONF|
   (:nicknames :|SNMPv2-CONF|)
-  (:use :closer-common-lisp :asn.1)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| |ObjectName| |NotificationName|
                 |ObjectSyntax|))
 

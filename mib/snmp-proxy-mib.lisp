@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/snmp-proxy-mib
   (:nicknames :snmp-proxy-mib)
-  (:use :closer-common-lisp :asn.1)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |snmpModules|)
   (:import-from :|ASN.1/SNMPv2-TC| |RowStatus| |StorageType|)
@@ -57,16 +57,17 @@
          Entries in the snmpProxyTable are created and deleted
          using the snmpProxyRowStatus object."))
 
-(defclass |SnmpProxyEntry| (sequence-type)
-  ((|snmpProxyName| :type |SnmpAdminString|)
-   (|snmpProxyType| :type integer)
-   (|snmpProxyContextEngineID| :type |SnmpEngineID|)
-   (|snmpProxyContextName| :type |SnmpAdminString|)
-   (|snmpProxyTargetParamsIn| :type |SnmpAdminString|)
-   (|snmpProxySingleTargetOut| :type |SnmpAdminString|)
-   (|snmpProxyMultipleTargetOut| :type |SnmpTagValue|)
-   (|snmpProxyStorageType| :type |StorageType|)
-   (|snmpProxyRowStatus| :type |RowStatus|)))
+(defclass |SnmpProxyEntry|
+          (sequence-type)
+          ((|snmpProxyName| :type |SnmpAdminString|)
+           (|snmpProxyType| :type integer)
+           (|snmpProxyContextEngineID| :type |SnmpEngineID|)
+           (|snmpProxyContextName| :type |SnmpAdminString|)
+           (|snmpProxyTargetParamsIn| :type |SnmpAdminString|)
+           (|snmpProxySingleTargetOut| :type |SnmpAdminString|)
+           (|snmpProxyMultipleTargetOut| :type |SnmpTagValue|)
+           (|snmpProxyStorageType| :type |StorageType|)
+           (|snmpProxyRowStatus| :type |RowStatus|)))
 
 (defoid |snmpProxyName| (|snmpProxyEntry| 1)
   (:type 'object-type)

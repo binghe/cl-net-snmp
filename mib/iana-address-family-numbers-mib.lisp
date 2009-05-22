@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/iana-address-family-numbers-mib
   (:nicknames :iana-address-family-numbers-mib)
-  (:use :closer-common-lisp :asn.1)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity |mib-2|)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention))
 

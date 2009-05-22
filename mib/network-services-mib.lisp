@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/network-services-mib
   (:nicknames :network-services-mib)
-  (:use :closer-common-lisp :asn.1)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| object-type |Counter32| |Gauge32|
                 module-identity |mib-2|)
   (:import-from :|ASN.1/SNMPv2-TC| |TimeStamp| textual-convention)
@@ -60,24 +60,25 @@
    "An entry associated with a single network service
        application."))
 
-(defclass |ApplEntry| (sequence-type)
-  ((|applIndex| :type integer)
-   (|applName| :type |SnmpAdminString|)
-   (|applDirectoryName| :type |DistinguishedName|)
-   (|applVersion| :type |SnmpAdminString|)
-   (|applUptime| :type |TimeStamp|)
-   (|applOperStatus| :type integer)
-   (|applLastChange| :type |TimeStamp|)
-   (|applInboundAssociations| :type |Gauge32|)
-   (|applOutboundAssociations| :type |Gauge32|)
-   (|applAccumulatedInboundAssociations| :type |Counter32|)
-   (|applAccumulatedOutboundAssociations| :type |Counter32|)
-   (|applLastInboundActivity| :type |TimeStamp|)
-   (|applLastOutboundActivity| :type |TimeStamp|)
-   (|applRejectedInboundAssociations| :type |Counter32|)
-   (|applFailedOutboundAssociations| :type |Counter32|)
-   (|applDescription| :type |SnmpAdminString|)
-   (|applURL| :type |URLString|)))
+(defclass |ApplEntry|
+          (sequence-type)
+          ((|applIndex| :type integer)
+           (|applName| :type |SnmpAdminString|)
+           (|applDirectoryName| :type |DistinguishedName|)
+           (|applVersion| :type |SnmpAdminString|)
+           (|applUptime| :type |TimeStamp|)
+           (|applOperStatus| :type integer)
+           (|applLastChange| :type |TimeStamp|)
+           (|applInboundAssociations| :type |Gauge32|)
+           (|applOutboundAssociations| :type |Gauge32|)
+           (|applAccumulatedInboundAssociations| :type |Counter32|)
+           (|applAccumulatedOutboundAssociations| :type |Counter32|)
+           (|applLastInboundActivity| :type |TimeStamp|)
+           (|applLastOutboundActivity| :type |TimeStamp|)
+           (|applRejectedInboundAssociations| :type |Counter32|)
+           (|applFailedOutboundAssociations| :type |Counter32|)
+           (|applDescription| :type |SnmpAdminString|)
+           (|applURL| :type |URLString|)))
 
 (defoid |applIndex| (|applEntry| 1)
   (:type 'object-type)
@@ -292,12 +293,13 @@
    "An entry associated with an association for a network
        service application."))
 
-(defclass |AssocEntry| (sequence-type)
-  ((|assocIndex| :type integer)
-   (|assocRemoteApplication| :type |SnmpAdminString|)
-   (|assocApplicationProtocol| :type object-id)
-   (|assocApplicationType| :type integer)
-   (|assocDuration| :type |TimeStamp|)))
+(defclass |AssocEntry|
+          (sequence-type)
+          ((|assocIndex| :type integer)
+           (|assocRemoteApplication| :type |SnmpAdminString|)
+           (|assocApplicationProtocol| :type object-id)
+           (|assocApplicationType| :type integer)
+           (|assocDuration| :type |TimeStamp|)))
 
 (defoid |assocIndex| (|assocEntry| 1)
   (:type 'object-type)

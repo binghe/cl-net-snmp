@@ -7,7 +7,7 @@
 
 (defpackage :asn.1/tcp-mib
   (:nicknames :tcp-mib)
-  (:use :closer-common-lisp :asn.1)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |Integer32| |Unsigned32| |Gauge32| |Counter32|
                 |Counter64| |IpAddress| |mib-2|)
@@ -249,15 +249,16 @@
             exist when (or soon after) the connection makes the
             transition to the CLOSED state."))
 
-(defclass |TcpConnectionEntry| (sequence-type)
-  ((|tcpConnectionLocalAddressType| :type |InetAddressType|)
-   (|tcpConnectionLocalAddress| :type |InetAddress|)
-   (|tcpConnectionLocalPort| :type |InetPortNumber|)
-   (|tcpConnectionRemAddressType| :type |InetAddressType|)
-   (|tcpConnectionRemAddress| :type |InetAddress|)
-   (|tcpConnectionRemPort| :type |InetPortNumber|)
-   (|tcpConnectionState| :type integer)
-   (|tcpConnectionProcess| :type |Unsigned32|)))
+(defclass |TcpConnectionEntry|
+          (sequence-type)
+          ((|tcpConnectionLocalAddressType| :type |InetAddressType|)
+           (|tcpConnectionLocalAddress| :type |InetAddress|)
+           (|tcpConnectionLocalPort| :type |InetPortNumber|)
+           (|tcpConnectionRemAddressType| :type |InetAddressType|)
+           (|tcpConnectionRemAddress| :type |InetAddress|)
+           (|tcpConnectionRemPort| :type |InetPortNumber|)
+           (|tcpConnectionState| :type integer)
+           (|tcpConnectionProcess| :type |Unsigned32|)))
 
 (defoid |tcpConnectionLocalAddressType| (|tcpConnectionEntry| 1)
   (:type 'object-type)
@@ -403,11 +404,12 @@
    "A conceptual row of the tcpListenerTable containing
             information about a particular TCP listener."))
 
-(defclass |TcpListenerEntry| (sequence-type)
-  ((|tcpListenerLocalAddressType| :type |InetAddressType|)
-   (|tcpListenerLocalAddress| :type |InetAddress|)
-   (|tcpListenerLocalPort| :type |InetPortNumber|)
-   (|tcpListenerProcess| :type |Unsigned32|)))
+(defclass |TcpListenerEntry|
+          (sequence-type)
+          ((|tcpListenerLocalAddressType| :type |InetAddressType|)
+           (|tcpListenerLocalAddress| :type |InetAddress|)
+           (|tcpListenerLocalPort| :type |InetPortNumber|)
+           (|tcpListenerProcess| :type |Unsigned32|)))
 
 (defoid |tcpListenerLocalAddressType| (|tcpListenerEntry| 1)
   (:type 'object-type)
@@ -497,12 +499,13 @@
             (or soon after) the connection makes the transition to the
             CLOSED state."))
 
-(defclass |TcpConnEntry| (sequence-type)
-  ((|tcpConnState| :type integer)
-   (|tcpConnLocalAddress| :type |IpAddress|)
-   (|tcpConnLocalPort| :type |Integer32|)
-   (|tcpConnRemAddress| :type |IpAddress|)
-   (|tcpConnRemPort| :type |Integer32|)))
+(defclass |TcpConnEntry|
+          (sequence-type)
+          ((|tcpConnState| :type integer)
+           (|tcpConnLocalAddress| :type |IpAddress|)
+           (|tcpConnLocalPort| :type |Integer32|)
+           (|tcpConnRemAddress| :type |IpAddress|)
+           (|tcpConnRemPort| :type |Integer32|)))
 
 (defoid |tcpConnState| (|tcpConnEntry| 1)
   (:type 'object-type)

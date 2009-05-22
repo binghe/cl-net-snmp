@@ -8,7 +8,7 @@
 
 (defpackage :|ASN.1/SNMPv2-SMI|
   (:nicknames :|SNMPv2-SMI|)
-  (:use :closer-common-lisp :asn.1))
+  (:use :common-lisp :asn.1))
 
 (in-package :|SNMPv2-SMI|)
 

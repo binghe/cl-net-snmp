@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/notification-log-mib
   (:nicknames :notification-log-mib)
-  (:use :closer-common-lisp :asn.1)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |Integer32| |Unsigned32| |TimeTicks| |Counter32|
                 |Counter64| |IpAddress| |Opaque| |mib-2|)
@@ -102,14 +102,15 @@
      entries may be supplied by the system or created and deleted by
      applications using nlmConfigLogEntryStatus."))
 
-(defclass |NlmConfigLogEntry| (sequence-type)
-  ((|nlmLogName| :type |SnmpAdminString|)
-   (|nlmConfigLogFilterName| :type |SnmpAdminString|)
-   (|nlmConfigLogEntryLimit| :type |Unsigned32|)
-   (|nlmConfigLogAdminStatus| :type integer)
-   (|nlmConfigLogOperStatus| :type integer)
-   (|nlmConfigLogStorageType| :type |StorageType|)
-   (|nlmConfigLogEntryStatus| :type |RowStatus|)))
+(defclass |NlmConfigLogEntry|
+          (sequence-type)
+          ((|nlmLogName| :type |SnmpAdminString|)
+           (|nlmConfigLogFilterName| :type |SnmpAdminString|)
+           (|nlmConfigLogEntryLimit| :type |Unsigned32|)
+           (|nlmConfigLogAdminStatus| :type integer)
+           (|nlmConfigLogOperStatus| :type integer)
+           (|nlmConfigLogStorageType| :type |StorageType|)
+           (|nlmConfigLogEntryStatus| :type |RowStatus|)))
 
 (defoid |nlmLogName| (|nlmConfigLogEntry| 1)
   (:type 'object-type)
@@ -249,9 +250,10 @@
   (:status '|current|)
   (:description "A Notification log statistics entry."))
 
-(defclass |NlmStatsLogEntry| (sequence-type)
-  ((|nlmStatsLogNotificationsLogged| :type |Counter32|)
-   (|nlmStatsLogNotificationsBumped| :type |Counter32|)))
+(defclass |NlmStatsLogEntry|
+          (sequence-type)
+          ((|nlmStatsLogNotificationsLogged| :type |Counter32|)
+           (|nlmStatsLogNotificationsBumped| :type |Counter32|)))
 
 (defoid |nlmStatsLogNotificationsLogged| (|nlmStatsLogEntry| 1)
   (:type 'object-type)
@@ -317,16 +319,17 @@
      has access to the information in the Notification.  If not it
      does not log that Notification in that log."))
 
-(defclass |NlmLogEntry| (sequence-type)
-  ((|nlmLogIndex| :type |Unsigned32|)
-   (|nlmLogTime| :type |TimeStamp|)
-   (|nlmLogDateAndTime| :type |DateAndTime|)
-   (|nlmLogEngineID| :type |SnmpEngineID|)
-   (|nlmLogEngineTAddress| :type |TAddress|)
-   (|nlmLogEngineTDomain| :type |TDomain|)
-   (|nlmLogContextEngineID| :type |SnmpEngineID|)
-   (|nlmLogContextName| :type |SnmpAdminString|)
-   (|nlmLogNotificationID| :type object-id)))
+(defclass |NlmLogEntry|
+          (sequence-type)
+          ((|nlmLogIndex| :type |Unsigned32|)
+           (|nlmLogTime| :type |TimeStamp|)
+           (|nlmLogDateAndTime| :type |DateAndTime|)
+           (|nlmLogEngineID| :type |SnmpEngineID|)
+           (|nlmLogEngineTAddress| :type |TAddress|)
+           (|nlmLogEngineTDomain| :type |TDomain|)
+           (|nlmLogContextEngineID| :type |SnmpEngineID|)
+           (|nlmLogContextName| :type |SnmpAdminString|)
+           (|nlmLogNotificationID| :type object-id)))
 
 (defoid |nlmLogIndex| (|nlmLogEntry| 1)
   (:type 'object-type)
@@ -456,19 +459,20 @@
      Entries appear in this table when there are variables in
      the varbind list of a Notification in nlmLogTable."))
 
-(defclass |NlmLogVariableEntry| (sequence-type)
-  ((|nlmLogVariableIndex| :type |Unsigned32|)
-   (|nlmLogVariableID| :type object-id)
-   (|nlmLogVariableValueType| :type integer)
-   (|nlmLogVariableCounter32Val| :type |Counter32|)
-   (|nlmLogVariableUnsigned32Val| :type |Unsigned32|)
-   (|nlmLogVariableTimeTicksVal| :type |TimeTicks|)
-   (|nlmLogVariableInteger32Val| :type |Integer32|)
-   (|nlmLogVariableOctetStringVal| :type octet-string)
-   (|nlmLogVariableIpAddressVal| :type |IpAddress|)
-   (|nlmLogVariableOidVal| :type object-id)
-   (|nlmLogVariableCounter64Val| :type |Counter64|)
-   (|nlmLogVariableOpaqueVal| :type |Opaque|)))
+(defclass |NlmLogVariableEntry|
+          (sequence-type)
+          ((|nlmLogVariableIndex| :type |Unsigned32|)
+           (|nlmLogVariableID| :type object-id)
+           (|nlmLogVariableValueType| :type integer)
+           (|nlmLogVariableCounter32Val| :type |Counter32|)
+           (|nlmLogVariableUnsigned32Val| :type |Unsigned32|)
+           (|nlmLogVariableTimeTicksVal| :type |TimeTicks|)
+           (|nlmLogVariableInteger32Val| :type |Integer32|)
+           (|nlmLogVariableOctetStringVal| :type octet-string)
+           (|nlmLogVariableIpAddressVal| :type |IpAddress|)
+           (|nlmLogVariableOidVal| :type object-id)
+           (|nlmLogVariableCounter64Val| :type |Counter64|)
+           (|nlmLogVariableOpaqueVal| :type |Opaque|)))
 
 (defoid |nlmLogVariableIndex| (|nlmLogVariableEntry| 1)
   (:type 'object-type)
