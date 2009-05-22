@@ -16,4 +16,5 @@
                :snmp-mib)
   :components ((:file "snmp-trap")
                (:module "client"
-		:components ((:file "table")))))
+		:components ((:file "table")
+                             (:file "discover")))))

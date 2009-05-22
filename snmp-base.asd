@@ -41,14 +41,14 @@
                #-scl :trivial-gray-streams
                #+(and lispworks mswindows)
                :lispworks-udp
-               #+snmp-features:portable-threads
+               #+(and snmp-features:portable-threads (not portable-threads))
                :portable-threads
                #+snmp-features:bordeaux-threads
                :bordeaux-threads)
   :components ((:file "package")
 	       (:file "constants"   :depends-on ("package"))
                (:file "condition"   :depends-on ("constants"))
-	       (:file "pdu"         :depends-on ("package"))
+	       (:file "pdu"         :depends-on ("package" "constants"))
                (:file "keytool"     :depends-on ("package"))
                (:file "snmp-smi"    :depends-on ("constants"))
 	       (:file "session"     :depends-on ("keytool"))
