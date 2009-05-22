@@ -15,7 +15,7 @@
 
 (defclass session ()
   ((socket            :type #+snmp-features:usocket
-                            datagram-usocket
+                            usocket:datagram-usocket
                             #+snmp-features:lispworks-udp
                             comm+:socket-datagram
                       :accessor socket-of

@@ -59,7 +59,7 @@
 
 (defclass snmp-server (snmp-agent-state-mixin snmp-vacm-mixin)
   ((process        :accessor server-process
-                   :type #+snmp-features:portable-threads (satisfies threadp)
+                   :type #+snmp-features:portable-threads (satisfies portable-threads:threadp)
                          #+snmp-features:bordeaux-threads t
                    :initarg :process
                    :documentation "Server process/thread")
