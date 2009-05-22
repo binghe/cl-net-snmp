@@ -7,7 +7,7 @@
 
 (defpackage :asn.1/udp-mib
   (:nicknames :udp-mib)
-  (:use :closer-common-lisp :asn.1)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |Integer32| |Counter32| |Counter64| |Unsigned32|
                 |IpAddress| |mib-2|)
@@ -182,15 +182,16 @@
             will have more than 128 sub-identifiers and cannot be
             accessed using SNMPv1, SNMPv2c, or SNMPv3."))
 
-(defclass |UdpEndpointEntry| (sequence-type)
-  ((|udpEndpointLocalAddressType| :type |InetAddressType|)
-   (|udpEndpointLocalAddress| :type |InetAddress|)
-   (|udpEndpointLocalPort| :type |InetPortNumber|)
-   (|udpEndpointRemoteAddressType| :type |InetAddressType|)
-   (|udpEndpointRemoteAddress| :type |InetAddress|)
-   (|udpEndpointRemotePort| :type |InetPortNumber|)
-   (|udpEndpointInstance| :type |Unsigned32|)
-   (|udpEndpointProcess| :type |Unsigned32|)))
+(defclass |UdpEndpointEntry|
+          (sequence-type)
+          ((|udpEndpointLocalAddressType| :type |InetAddressType|)
+           (|udpEndpointLocalAddress| :type |InetAddress|)
+           (|udpEndpointLocalPort| :type |InetPortNumber|)
+           (|udpEndpointRemoteAddressType| :type |InetAddressType|)
+           (|udpEndpointRemoteAddress| :type |InetAddress|)
+           (|udpEndpointRemotePort| :type |InetPortNumber|)
+           (|udpEndpointInstance| :type |Unsigned32|)
+           (|udpEndpointProcess| :type |Unsigned32|)))
 
 (defoid |udpEndpointLocalAddressType| (|udpEndpointEntry| 1)
   (:type 'object-type)
@@ -343,9 +344,10 @@
   (:status '|deprecated|)
   (:description "Information about a particular current UDP listener."))
 
-(defclass |UdpEntry| (sequence-type)
-  ((|udpLocalAddress| :type |IpAddress|)
-   (|udpLocalPort| :type |Integer32|)))
+(defclass |UdpEntry|
+          (sequence-type)
+          ((|udpLocalAddress| :type |IpAddress|)
+           (|udpLocalPort| :type |Integer32|)))
 
 (defoid |udpLocalAddress| (|udpEntry| 1)
   (:type 'object-type)

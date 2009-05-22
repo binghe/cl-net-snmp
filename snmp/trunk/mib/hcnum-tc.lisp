@@ -7,7 +7,7 @@
 
 (defpackage :asn.1/hcnum-tc
   (:nicknames :hcnum-tc)
-  (:use :closer-common-lisp :asn.1)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity |mib-2|
                 |Counter64|)
   (:import-from :|ASN.1/SNMPv2-TC| textual-convention))

@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/snmp-notification-mib
   (:nicknames :snmp-notification-mib)
-  (:use :closer-common-lisp :asn.1)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |snmpModules|)
   (:import-from :|ASN.1/SNMPv2-TC| |RowStatus| |StorageType|)
@@ -63,12 +63,13 @@
          Entries in the snmpNotifyTable are created and
          deleted using the snmpNotifyRowStatus object."))
 
-(defclass |SnmpNotifyEntry| (sequence-type)
-  ((|snmpNotifyName| :type |SnmpAdminString|)
-   (|snmpNotifyTag| :type |SnmpTagValue|)
-   (|snmpNotifyType| :type integer)
-   (|snmpNotifyStorageType| :type |StorageType|)
-   (|snmpNotifyRowStatus| :type |RowStatus|)))
+(defclass |SnmpNotifyEntry|
+          (sequence-type)
+          ((|snmpNotifyName| :type |SnmpAdminString|)
+           (|snmpNotifyTag| :type |SnmpTagValue|)
+           (|snmpNotifyType| :type integer)
+           (|snmpNotifyStorageType| :type |StorageType|)
+           (|snmpNotifyRowStatus| :type |RowStatus|)))
 
 (defoid |snmpNotifyName| (|snmpNotifyEntry| 1)
   (:type 'object-type)
@@ -165,10 +166,11 @@
          and deleted using the snmpNotifyFilterProfileRowStatus
          object."))
 
-(defclass |SnmpNotifyFilterProfileEntry| (sequence-type)
-  ((|snmpNotifyFilterProfileName| :type |SnmpAdminString|)
-   (|snmpNotifyFilterProfileStorType| :type |StorageType|)
-   (|snmpNotifyFilterProfileRowStatus| :type |RowStatus|)))
+(defclass |SnmpNotifyFilterProfileEntry|
+          (sequence-type)
+          ((|snmpNotifyFilterProfileName| :type |SnmpAdminString|)
+           (|snmpNotifyFilterProfileStorType| :type |StorageType|)
+           (|snmpNotifyFilterProfileRowStatus| :type |RowStatus|)))
 
 (defoid |snmpNotifyFilterProfileName|
         (|snmpNotifyFilterProfileEntry| 1)
@@ -244,12 +246,13 @@
          Entries in the snmpNotifyFilterTable are created and
          deleted using the snmpNotifyFilterRowStatus object."))
 
-(defclass |SnmpNotifyFilterEntry| (sequence-type)
-  ((|snmpNotifyFilterSubtree| :type object-id)
-   (|snmpNotifyFilterMask| :type octet-string)
-   (|snmpNotifyFilterType| :type integer)
-   (|snmpNotifyFilterStorageType| :type |StorageType|)
-   (|snmpNotifyFilterRowStatus| :type |RowStatus|)))
+(defclass |SnmpNotifyFilterEntry|
+          (sequence-type)
+          ((|snmpNotifyFilterSubtree| :type object-id)
+           (|snmpNotifyFilterMask| :type octet-string)
+           (|snmpNotifyFilterType| :type integer)
+           (|snmpNotifyFilterStorageType| :type |StorageType|)
+           (|snmpNotifyFilterRowStatus| :type |RowStatus|)))
 
 (defoid |snmpNotifyFilterSubtree| (|snmpNotifyFilterEntry| 1)
   (:type 'object-type)

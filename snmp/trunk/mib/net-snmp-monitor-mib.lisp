@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/net-snmp-monitor-mib
   (:nicknames :net-snmp-monitor-mib)
-  (:use :closer-common-lisp :asn.1)
+  (:use :common-lisp :asn.1)
   (:import-from :asn.1/net-snmp-mib |netSnmpObjects|
                 |netSnmpModuleIDs|)
   (:import-from :|ASN.1/SNMPv2-SMI| object-type notification-type

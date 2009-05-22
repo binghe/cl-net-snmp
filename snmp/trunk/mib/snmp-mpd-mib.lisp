@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/snmp-mpd-mib
   (:nicknames :snmp-mpd-mib)
-  (:use :closer-common-lisp :asn.1)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 |snmpModules| |Counter32|))

@@ -8,7 +8,7 @@
 
 (defpackage :asn.1/ospf-trap-mib
   (:nicknames :ospf-trap-mib)
-  (:use :closer-common-lisp :asn.1)
+  (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 notification-type |IpAddress|)
   (:import-from :|ASN.1/SNMPv2-CONF| module-compliance object-group)
