@@ -5,27 +5,10 @@
   (make-package ':snmp-system
                 :use '(:common-lisp :asdf)))
 
+(unless (find-package ':snmp-features)
+  (load (merge-pathnames #p"features.lisp" *load-truename*)))
+
 (in-package :snmp-system)
-
-(defpackage snmp-features
-  (:use :common-lisp)
-  (:export #:usocket #:iolib #:lispworks-udp
-           #:portable-threads #:bordeaux-threads))
-
-#+(and lispworks4 win32)
-(pushnew :mswindows *features*)
-
-(defparameter *snmp-features*
-  (with-open-file
-      (s (merge-pathnames (make-pathname :name "features"
-                                         :type "lisp-expr")
-                          *load-truename*)
-         :direction :input)
-    (let ((*package* (find-package :snmp-features)))
-      (read s))))
-
-(dolist (i *snmp-features*)
-  (pushnew i *features*))
 
 (defsystem snmp-base
   :description "SNMP Base System"
@@ -42,7 +25,8 @@
                :trivial-gray-streams
                #+(and lispworks mswindows)
                :lispworks-udp
-               #+(and snmp-features:portable-threads (not portable-threads))
+               #+(and snmp-features:portable-threads
+		      (not portable-threads)) ; non-ASDF portables-threads
                :portable-threads
                #+snmp-features:bordeaux-threads
                :bordeaux-threads)
