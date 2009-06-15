@@ -36,16 +36,7 @@
            #:snmp-trap
            #:snmp-walk
 	   #:update-mib
-           #:with-open-session)
-  (:import-from :usocket
-           #:rtt-rtocalc
-           #:rtt-minmax
-           #:rtt-init
-           #:rtt-ts
-           #:rtt-start
-           #:rtt-stop
-           #:rtt-timeout
-           #:rtt-newpack))
+           #:with-open-session))
 
 (in-package :snmp)
 
