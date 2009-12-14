@@ -9,10 +9,10 @@
  ;;; Network support
  ;;; Note: choose only ONE between 'usocket, 'lispworks-udp and 'iolib
 
- #-(and lispworks mswindows)
+ #+ignore ;; #-(and lispworks mswindows)
  usocket       ; default on most platforms
 
- #+(and lispworks mswindows)
+ ;; #+(and lispworks mswindows)
  lispworks-udp ; version >= 4.0, default on lispworks/win32
 
  #+ignore

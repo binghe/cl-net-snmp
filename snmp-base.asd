@@ -1,6 +1,8 @@
 ;;;; -*- Mode: Lisp -*-
 ;;;; $Id$
 
+(in-package :cl-user)
+
 (unless (find-package ':snmp-system)
   (make-package ':snmp-system
                 :use '(:common-lisp :asdf)))
@@ -15,22 +17,22 @@
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
   :version "6.0-dev"
   :licence "MIT"
-  :depends-on (:asn.1
-	       :ironclad
-               #+snmp-features:usocket
-               :usocket ; experimental-udp branch
-               #+snmp-features:iolib
-               :iolib
+  :depends-on (:asn.1 :ironclad
                #-(or scl lispworks)
                :trivial-gray-streams
-               #+(and lispworks mswindows)
+               #+snmp-features:usocket
+               :usocket
+               #+snmp-features:iolib
+               :iolib
+               #+snmp-features:lispworks-udp
                :lispworks-udp
                #+(and snmp-features:portable-threads
 		      (not portable-threads)) ; non-ASDF portables-threads
                :portable-threads
                #+snmp-features:bordeaux-threads
                :bordeaux-threads)
-  :components ((:file "package")
+  :components ((:static-file "features.lisp-expr")
+	       (:file "package"     :depends-on ("features.lisp-expr"))
 	       (:file "constants"   :depends-on ("package"))
                (:file "condition"   :depends-on ("constants"))
 	       (:file "pdu"         :depends-on ("package" "constants"))
