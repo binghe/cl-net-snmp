@@ -24,8 +24,8 @@
          #+snmp-features:lispworks-udp
          (comm+:sync-message (socket-of session)
                              message
-                             (host-of session)
-                             (port-of session)
+                             :host (host-of session)
+                             :service (port-of session)
                              :encode-function #'(lambda (x)
                                                   (values (coerce (ber-encode x) 'octets)
                                                           (request-id-of (pdu-of x))))
@@ -44,7 +44,7 @@
              (comm+:send-message (socket-of session) data
                                  :length data-length
                                  :host (host-of session)
-                                 :port (port-of session))))))
+                                 :service (port-of session))))))
 
 (defmethod send-snmp-message ((session v3-session) (message v3-message) &key (receive t))
   "this new send-snmp-message is just a interface,
@@ -67,8 +67,8 @@
                     #+snmp-features:lispworks-udp
                     (comm+:sync-message (socket-of session)
                                         message
-                                        (host-of session)
-                                        (port-of session)
+                                        :host (host-of session)
+                                        :service (port-of session)
                                         :encode-function #'encode-function
                                         :decode-function #'decode-function
                                         :max-receive-length +max-snmp-packet-size+)))
@@ -91,23 +91,3 @@
                                  :length data-length
                                  :host (host-of session)
                                  :service (port-of session))))))
-
-;;; Send/receive multiple SNMP message once
-
-(defun send-snmp-messages (engine requests)
-  (declare (type list requests)
-           (ignore engine))
-  (let ((work-list (cons (list-length requests)
-                         (mapcar #'(lambda (x)
-                                     (destructuring-bind (session message) x
-                                       (make-instance 'snmp-operation
-                                                      :session session
-                                                      :message message)))
-                                 requests))))
-    ;; connect the list together
-    (nconc work-list work-list)
-    (sm-0 work-list)))
-
-(defun sm-0 (work-list)
-  (declare (type list work-list))
-  work-list)
