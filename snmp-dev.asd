@@ -3,6 +3,8 @@
 
 ;;;; Note: Thanks to John Fremlin from MSI, snmp-dev runs on all supported CL now.
 
+(in-package :cl-user)
+
 (unless (find-package ':snmp-system)
   (make-package ':snmp-system
                 :use '(:common-lisp :asdf)))
