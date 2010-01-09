@@ -8,8 +8,17 @@
 
 (defpackage snmp-features
   (:use :common-lisp)
-  (:export #:usocket #:iolib #:lispworks-udp
-           #:portable-threads #:bordeaux-threads))
+  (:export
+   ;; networking package
+   #:usocket
+   #:iolib
+   #:lispworks-udp
+   ;; multi-threading
+   #:portable-threads
+   #:bordeaux-threads
+   ;; rule engine
+   #:knowledgeworks
+   #:lisa))
 
 (defparameter *snmp-features*
   (with-open-file
@@ -18,5 +27,6 @@
     (let ((*package* (find-package :snmp-features)))
       (read s))))
 
-(dolist (i *snmp-features*)
-  (pushnew i *features*))
+(eval-when (:load-toplevel :execute)
+  (dolist (i *snmp-features*)
+    (pushnew i *features*)))
