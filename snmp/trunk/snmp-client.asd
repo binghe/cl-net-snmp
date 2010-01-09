@@ -7,6 +7,9 @@
   (make-package ':snmp-system
                 :use '(:common-lisp :asdf)))
 
+(unless (find-package ':snmp-features)
+  (load (merge-pathnames #p"features.lisp" *load-truename*)))
+
 (in-package :snmp-system)
 
 (defsystem snmp-client
@@ -15,7 +18,9 @@
   :version "1.0"
   :licence "MIT"
   :depends-on (:snmp-base
-               :snmp-mib)
+               :snmp-mib
+               #+snmp-features:lisa
+               :lisa)
   :components ((:file "snmp-trap")
                (:module "client"
 		:components ((:file "table")
