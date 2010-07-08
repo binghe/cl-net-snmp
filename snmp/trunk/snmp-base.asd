@@ -24,15 +24,13 @@
                :usocket
                #+snmp-features:iolib
                :iolib
-               #+snmp-features:lispworks-udp
-               :lispworks-udp
-               #+(and snmp-features:portable-threads
-		      (not portable-threads)) ; non-ASDF portables-threads
-               :portable-threads
                #+snmp-features:bordeaux-threads
                :bordeaux-threads)
-  :components ((:static-file "features.lisp-expr")
-	       (:file "package"     :depends-on ("features.lisp-expr"))
+  :components ((:module "vendor"
+                :components (#+(and snmp-features:portable-threads
+                                    (not portable-threads))
+                             (:file "portable-threads")))
+	       (:file "package"     :depends-on ("vendor"))
 	       (:file "constants"   :depends-on ("package"))
                (:file "condition"   :depends-on ("constants"))
 	       (:file "pdu"         :depends-on ("package" "constants"))
