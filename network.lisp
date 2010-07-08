@@ -52,7 +52,6 @@
         ;; trap message: only send once
         (t (let* ((data (coerce (ber-encode message) 'octets))
                   (data-length (length data)))
-             #+snmp-features:usocket
              (usocket:socket-send (socket-of session)
                                   data
                                   data-length
@@ -85,13 +84,13 @@
                  (multiple-value-bind (sockets real-time)
                      (usocket:wait-for-input socket :timeout *socket-sync-timeout*)
                    (declare (ignore sockets))
-                 real-time))
+                   real-time))
                (receive ()
                  (multiple-value-setq (recv-message recv-seq)
                      (funcall decode-function
                               (usocket:socket-receive socket nil max-receive-length)))
                  (= send-seq recv-seq)))
-        (tagbody
+        (prog ()
          send
            (unless (send) (go end))
          wait
@@ -99,4 +98,4 @@
          receive
            (unless (receive) (go wait))
          end
-           recv-message)))))
+           (return recv-message))))))
