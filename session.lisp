@@ -14,10 +14,7 @@
 (defvar *default-priv-protocol* :des)
 
 (defclass session ()
-  ((socket            :type #+snmp-features:usocket
-                            usocket:datagram-usocket
-                            #+snmp-features:lispworks-udp
-                            comm+:socket-datagram
+  ((socket            :type usocket:datagram-usocket
                       :accessor socket-of
                       :initarg :socket)
    (host              :type (or string integer)
@@ -127,11 +124,7 @@
             (,+snmp-version-3+  . ,+snmp-version-3+))))
 
 (defun snmp-connect (host port)
-  (declare (ignore host port))
-  #+snmp-features:usocket
-  (usocket:socket-connect nil nil :protocol :datagram)
-  #+snmp-features:lispworks-udp
-  (comm+:open-udp-socket :errorp t))
+  (usocket:socket-connect host port :protocol :datagram))
 
 (defun open-session (host &key (port *default-snmp-port*)
                                (version *default-snmp-version*)
@@ -180,10 +173,7 @@
 (defun close-session (session)
   (declare (type session session))
   (when (slot-boundp session 'socket)
-    #+snmp-features:usocket
-    (usocket:socket-close (socket-of session))
-    #+snmp-features:lispworks-udp
-    (comm+:close-datagram (socket-of session))))
+    (usocket:socket-close (socket-of session))))
 
 (defmacro with-open-session ((session &rest args) &body body)
   `(let ((,session (open-session ,@args)))
