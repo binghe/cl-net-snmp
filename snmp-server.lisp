@@ -105,15 +105,6 @@
                                        &rest initargs &key &allow-other-keys)
   (declare (ignore initargs))
   (setf (server-process instance)
-        #+snmp-features:lispworks-udp
-        (comm+:start-udp-server :process-name (format nil "SNMP Server at ~A:~D"
-                                                      (server-address instance)
-                                                      (server-port instance))
-                                :function (server-function instance)
-                                :arguments (list instance)
-                                :address (server-address instance)
-                                :service (server-port instance))
-        #+(and snmp-features:usocket snmp-features:portable-threads)
         (portable-threads:spawn-thread (format nil "SNMP Server at ~A:~D"
                                                (server-address instance)
                                                (server-port instance))
@@ -122,9 +113,7 @@
                                                                   (server-port instance)
                                                                   (server-function instance)
                                                                   (list instance))
-                                           #+scl (thread:thread-exit)))
-        #+(and snmp-features:usocket snmp-features:bordeaux-threads)
-        (error "not implemented")))
+                                           #+scl (thread:thread-exit)))))
 
 (defun enable-snmp-service (&optional (port *default-snmp-server-port*))
   (if (null *default-snmp-server*)
@@ -140,9 +129,6 @@
 (defun disable-snmp-service ()
   "Kill server thread and clear variable"
   (when *default-snmp-server*
-    #+snmp-features:lispworks-udp
-    (comm+:stop-udp-server (server-process *default-snmp-server*) :wait t)
-    #+snmp-features:usocket
     (portable-threads:kill-thread (server-process *default-snmp-server*))
     ;; clear variable
     (setf *default-snmp-server* nil)))
