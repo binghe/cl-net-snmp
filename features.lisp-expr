@@ -9,22 +9,14 @@
  ;;; Network support
  ;;; Note: choose only ONE between 'usocket, 'lispworks-udp and 'iolib
 
- #+ignore ;; #-(and lispworks mswindows)
  usocket       ; default on most platforms
-
- ;; #+(and lispworks mswindows)
- lispworks-udp ; version >= 4.0, default on lispworks/win32
 
  #+ignore
  iolib         ; if you don't like usocket or your platform support iolib well
-
 
  ;;; Thread support, used by SNMP-SERVER
  ;;; Note: choose only ONE between 'portable-threads and 'bordeaux-threads
 
  portable-threads ; default, from GBBopen project
-
- #+ignore
- bordeaux-threads
 
 )
