@@ -71,11 +71,7 @@
 (defun generate-msg-id (message)
   (declare (type v3-message message))
   (with-slots (msg-id-counter) message
-    (the (unsigned-byte 32) (logand (#+snmp-features:portable-threads
-                                     portable-threads:atomic-incf
-                                     #-snmp-features:portable-threads
-                                     incf
-                                     msg-id-counter) #xffffffff))))
+    (the (unsigned-byte 32) (logand (incf msg-id-counter) #xffffffff))))
 
 (defmethod initialize-instance :after ((message v3-message) &rest initargs)
   (declare (ignore initargs))
@@ -244,7 +240,7 @@
         (ironclad:encrypt-in-place cipher result-data)
         (map 'string #'code-char result-data)))))
 
-(defvar *session->message* (make-hash-table))
+(defvar *session->message* (make-hash-table :test 'eq :size 3))
 
 (eval-when (:load-toplevel :execute)
   (setf (gethash 'v1-session *session->message*) 'v1-message

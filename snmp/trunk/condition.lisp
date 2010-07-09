@@ -106,7 +106,7 @@
 (define-condition snmp-generic-error (snmp-response-specific-variable-error) ())
 
 (defmethod report-variable-error ((c snmp-generic-error) s v)
-  (format s "Generic error~@[ for variable ~S~]" v v))
+  (format s "Generic error~@[ for variable ~S~]" v))
 
 (define-condition snmp-response-match-error (snmp-response-error)
   ()

@@ -101,18 +101,18 @@
           security-level (logior (if auth-protocol #b01 #b00)
                                  (if priv-protocol #b10 #b00)))))
 
-(defvar *snmp-class-table* (make-hash-table))
+(defvar *snmp-class-map* (make-hash-table :test 'eq :size 3))
 
 (eval-when (:load-toplevel :execute)
-  (setf (gethash +snmp-version-1+ *snmp-class-table*) 'v1-session
-        (gethash +snmp-version-2c+ *snmp-class-table*) 'v2c-session
-        (gethash +snmp-version-3+ *snmp-class-table*) 'v3-session))
+  (setf (gethash +snmp-version-1+ *snmp-class-map*) 'v1-session
+        (gethash +snmp-version-2c+ *snmp-class-map*) 'v2c-session
+        (gethash +snmp-version-3+ *snmp-class-map*) 'v3-session))
 
-(defvar *snmp-version-table* (make-hash-table))
+(defvar *snmp-version-map* (make-hash-table :test 'eq :size 9))
 
 (eval-when (:load-toplevel :execute)
   (mapcar #'(lambda (x)
-	      (setf (gethash (car x) *snmp-version-table*) (cdr x)))
+	      (setf (gethash (car x) *snmp-version-map*) (cdr x)))
 	  `((:v1                . ,+snmp-version-1+)
 	    (:v2c               . ,+snmp-version-2c+)
 	    (:v3                . ,+snmp-version-3+)
@@ -132,9 +132,9 @@
                                (create-socket t)
                                user auth priv)
   ;; first, what version we are talking about if version not been set?
-  (let* ((real-version (or (gethash version *snmp-version-table*)
+  (let* ((real-version (or (gethash version *snmp-version-map*)
                            (if user +snmp-version-3+ *default-snmp-version*)))
-         (args (list (gethash real-version *snmp-class-table*)
+         (args (list (gethash real-version *snmp-class-map*)
                      :host host :port port)))
     (when create-socket
       (nconc args (list :socket (snmp-connect host port))))
