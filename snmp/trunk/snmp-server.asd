@@ -14,12 +14,9 @@
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
   :version "4.0-dev"
   :licence "MIT"
-  :depends-on (:snmp-base
-               :snmp-mib)
-  :components ((:module "vendor"
-                :components (#-portable-threads (:file "portable-threads")))
-               (:file "server-condition")
-               (:file "snmp-server" :depends-on ("vendor" "server-condition"))
+  :depends-on (:snmp-base :snmp-mib :snmp-vendor)
+  :components ((:file "server-condition")
+               (:file "snmp-server" :depends-on ("server-condition"))
                (:file "server-vacm" :depends-on ("snmp-server"))
                (:file "server-walk" :depends-on ("snmp-server"))
                (:file "server-base" :depends-on ("server-walk"))
