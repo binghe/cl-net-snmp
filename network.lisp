@@ -59,11 +59,9 @@
                     (encode-function #'default-rtt-function)
                     (decode-function #'default-rtt-function)
                     &aux
-                    send-data send-data-length
-                    recv-data recv-message
+                    send-seq send-data send-data-length
                     (send-retries *socket-sync-retries*)
-                    (recv-retries *socket-sync-retries*)
-                    send-seq (recv-seq -1)
+                    recv-message recv-seq
                     (sockets (list socket)))
   "sync messages on single socket"
   (declare (type usocket:datagram-usocket socket))
@@ -80,9 +78,9 @@
                  (error 'snmp-error))
                nbytes))
            (wait ()
-             (multiple-value-bind (sockets real-time)
+             (multiple-value-bind (return-sockets real-time)
                  (usocket:wait-for-input sockets :timeout *socket-sync-timeout*)
-               (declare (ignore sockets))
+               (declare (ignore return-sockets))
                real-time))
            (recv ()
              (let ((recv-data (usocket:socket-receive socket nil max-receive-length)))
@@ -98,15 +96,12 @@
         (if (plusp (decf send-retries))
             (unless (send) (go :exit))
           (go :exit))
-
       :wait
         ;; (princ "W")
         (unless (wait) (go :send))
-
       :recv
         ;; (princ "R")
         (unless (recv) (go :wait))
-
       :exit
         ;; (princ "E")
         (return recv-message))))
