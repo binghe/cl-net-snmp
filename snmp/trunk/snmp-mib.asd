@@ -7,6 +7,9 @@
   (make-package ':snmp-system
                 :use '(:common-lisp :asdf)))
 
+(unless (find-package ':snmp-features)
+  (load (merge-pathnames #p"features.lisp" *load-truename*)))
+
 (in-package :snmp-system)
 
 (defparameter *mib.lisp-expr*
