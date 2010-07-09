@@ -29,10 +29,10 @@
   (cond (receive ; normal message
          (labels ((encode-function (x)
                     (values (coerce (ber-encode x) 'octets)
-                            (msg-id-of x)))
+                            (message-id-of x)))
                   (decode-function (x)
                     (let ((m (decode-message session x)))
-                      (values m (msg-id-of m))))
+                      (values m (message-id-of m))))
                   (send ()
                     (socket-sync (socket-of session) message
                                  :encode-function #'encode-function
