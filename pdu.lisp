@@ -44,17 +44,18 @@
   (:documentation "SNMP v1 Trap PDU"))
 
 (defclass common-pdu (base-pdu)
-  ((request-id-counter :type integer
+  ((request-id-counter :type (unsigned-byte 32)
                        :initform 0
                        :allocation :class)
-   (request-id         :type integer
+   (request-id         :type (unsigned-byte 32)
                        :accessor request-id-of
                        :initarg :request-id))
   (:documentation "Common PDU which have a request ID part"))
 
 (defmethod generate-request-id ((pdu common-pdu))
   (with-slots (request-id-counter) pdu
-    (incf request-id-counter)))
+    (the (unsigned-byte 32)
+         (logand (incf request-id-counter) #xffffffff))))
 
 (defmethod initialize-instance :after ((pdu common-pdu)
                                        &rest initargs &key &allow-other-keys)

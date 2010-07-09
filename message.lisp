@@ -55,28 +55,27 @@
 
 (defclass v3-message (message)
   ;; start msgID must be big, or net-snmp cannot decode our message
-  ((msg-id-counter :type (unsigned-byte 32)
-                   :initform 0
-                   :allocation :class)
-   (msg-id         :type (unsigned-byte 32)
-                   :initarg :id
-                   :accessor msg-id-of)
+  ((message-id-counter :type (unsigned-byte 32)
+                       :initform 0
+                       :allocation :class)
+   (message-id         :type (unsigned-byte 32)
+                       :initarg :id
+                       :accessor message-id-of)
    ;; Report flag, for SNMP report use.
-   (report-flag    :type boolean
-                   :initform nil
-                   :initarg :report
-                   :accessor report-flag-of))
+   (report-flag        :type boolean
+                       :initform nil
+                       :initarg :report
+                       :accessor report-flag-of))
   (:documentation "User-based SNMP v3 Message"))
 
-(defun generate-msg-id (message)
-  (declare (type v3-message message))
-  (with-slots (msg-id-counter) message
-    (the (unsigned-byte 32) (logand (incf msg-id-counter) #xffffffff))))
+(defmethod generate-message-id ((message v3-message))
+  (with-slots (message-id-counter) message
+    (the (unsigned-byte 32) (logand (incf message-id-counter) #xffffffff))))
 
 (defmethod initialize-instance :after ((message v3-message) &rest initargs)
   (declare (ignore initargs))
-  (unless (slot-boundp message 'msg-id)
-    (setf (msg-id-of message) (generate-msg-id message))))
+  (unless (slot-boundp message 'message-id)
+    (setf (message-id-of message) (generate-message-id message))))
 
 (defun generate-global-data (id level)
   (list id
@@ -92,13 +91,13 @@
 ;;; SNMPv3 Message Encode
 (defmethod ber-encode ((message v3-message))
   (let* ((session (session-of message))
-         (global-data (generate-global-data (msg-id-of message)
+         (global-data (generate-global-data (message-id-of message)
                                             (if (report-flag-of message) 0
                                               (security-level-of session))))
-         (msg-data (list (engine-id-of session) ; contextEngineID
-                         (or (context-of message)
-                             *default-context*) ; contextName
-                         (pdu-of message)))     ; PDU
+         (message-data (list (engine-id-of session) ; contextEngineID
+                             (or (context-of message)
+                                 *default-context*) ; contextName
+                             (pdu-of message)))     ; PDU
          (need-auth-p (and (not (report-flag-of message))
                            (auth-protocol-of session)))
          (need-priv-p (and (not (report-flag-of message))
@@ -107,17 +106,17 @@
          ;; 1) The msgAuthenticationParameters field is set to the
          ;;    serialization, according to the rules in [RFC1906], of an OCTET
          ;;    STRING containing 12 zero octets.
-         (msg-authentication-parameters (if need-auth-p
-                                          (make-string 12 :initial-element (code-char 0))
-                                          ""))
+         (message-authentication-parameters (if need-auth-p
+                                                (make-string 12 :initial-element (code-char 0))
+                                              ""))
          ;; RFC 2574 (USM for SNMPv3), 8.1.1.1. DES key and Initialization Vector
          ;; Now it's a list, not string, as we do this later.
-         (msg-privacy-parameters (if need-priv-p
+         (message-privacy-parameters (if need-priv-p
                                    (generate-privacy-parameters message)
                                    nil)))
-    ;; Privacy support (we encrypt and replace msg-data here)
+    ;; Privacy support (we encrypt and replace message-data here)
     (when need-priv-p
-      (setf msg-data (encrypt-message message msg-privacy-parameters msg-data)))
+      (setf message-data (encrypt-message message message-privacy-parameters message-data)))
     ;; Authentication support
     (labels ((encode-v3-message (auth)
                (ber-encode (list (version-of session)
@@ -130,9 +129,9 @@
                                                              (security-name-of session))
                                                            auth
                                                            (map 'string #'code-char
-                                                                msg-privacy-parameters)))
-                                 msg-data))))
-      (let ((unauth-data (encode-v3-message msg-authentication-parameters)))
+                                                                message-privacy-parameters)))
+                                 message-data))))
+      (let ((unauth-data (encode-v3-message message-authentication-parameters)))
         (if (not need-auth-p) unauth-data
           ;; authencate the encode-data and re-encode it
           (encode-v3-message (authenticate-message
@@ -179,7 +178,7 @@
 (defmethod decode-message ((s v3-session) (message-list list))
   (destructuring-bind (version global-data security-string data) message-list
     (declare (ignore version))
-    (let ((msg-id (elt global-data 0))
+    (let ((message-id (elt global-data 0))
           (encrypt-flag (plusp (logand #b10
                                        (char-code (elt (elt global-data 2) 0))))))
       (when encrypt-flag
@@ -204,7 +203,7 @@
           (update-session-from-report s security-string))
         (make-instance 'v3-message
                        :session s
-                       :id msg-id
+                       :id message-id
                        :report report-flag
                        :context context
                        :pdu pdu)))))
@@ -214,7 +213,7 @@
   (declare (type v3-message message))
   "generate a 8-bytes privacy-parameters string for use by message encrypt"
   (let ((left  (engine-boots-of (session-of message))) ; octets 0~3
-        (right (msg-id-of message)))                   ; octets 4~7 (we just reuse msgID)
+        (right (message-id-of message)))                   ; octets 4~7 (we just reuse msgID)
     (let ((salt (logior (ash left 32) right))
           (result nil))
       (dotimes (i 8 result)
@@ -222,13 +221,13 @@
         (setf salt (ash salt -8))))))
 
 ;;; Encrypt msgData
-(defun encrypt-message (message msg-privacy-parameters msg-data)
+(defun encrypt-message (message message-privacy-parameters message-data)
   (declare (type v3-message message)
-           (type list msg-privacy-parameters msg-data))
-  (let ((salt (coerce msg-privacy-parameters 'octets))
+           (type list message-privacy-parameters message-data))
+  (let ((salt (coerce message-privacy-parameters 'octets))
         (pre-iv (subseq (priv-local-key-of (session-of message)) 8 16))
         (des-key (subseq (priv-local-key-of (session-of message)) 0 8))
-        (data (coerce (ber-encode msg-data) 'octets)))
+        (data (coerce (ber-encode message-data) 'octets)))
     (let ((iv (map 'octets #'logxor pre-iv salt))
           (result-length (* (1+ (floor (length data) 8)) 8))) ;; extend length to (mod 8)
       (let ((cipher (ironclad:make-cipher :des ; (priv-protocol-of (session-of message))
