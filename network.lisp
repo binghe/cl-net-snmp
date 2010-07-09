@@ -11,8 +11,6 @@
   (cond (receive ; normal message
          (socket-sync (socket-of session)
                       message
-                      :host (host-of session)
-                      :port (port-of session)
                       :encode-function #'(lambda (x)
                                            (values (coerce (ber-encode x) 'octets)
                                                            (request-id-of (pdu-of x))))
@@ -23,10 +21,7 @@
         ;; trap message: only send once
         (t (let* ((data (coerce (ber-encode message) 'octets))
                   (data-length (length data)))
-             #+snmp-features:usocket
-             (usocket:socket-send (socket-of session) data data-length
-                                  :host (host-of session)
-                                  :port (port-of session))))))
+             (usocket:socket-send (socket-of session) data data-length)))))
 
 (defmethod send-snmp-message ((session v3-session) (message v3-message) &key (receive t))
   "this new send-snmp-message is just a interface,
@@ -40,8 +35,6 @@
                       (values m (msg-id-of m))))
                   (send ()
                     (socket-sync (socket-of session) message
-                                 :host (host-of session)
-                                 :port (port-of session)
                                  :encode-function #'encode-function
                                  :decode-function #'decode-function
                                  :max-receive-length +max-snmp-packet-size+)))
@@ -52,11 +45,7 @@
         ;; trap message: only send once
         (t (let* ((data (coerce (ber-encode message) 'octets))
                   (data-length (length data)))
-             (usocket:socket-send (socket-of session)
-                                  data
-                                  data-length
-                                  :host (host-of session)
-                                  :port (port-of session))))))
+             (usocket:socket-send (socket-of session) data data-length)))))
 
 ;;; SOCKET-SYNC (from old USOCKET-UDP)
 
@@ -65,7 +54,7 @@
 
 (defun default-rtt-function (message) (values message 0))
 
-(defun socket-sync (socket message &key host port
+(defun socket-sync (socket message &key
                     (max-receive-length +max-snmp-packet-size+)
                     (encode-function #'default-rtt-function)
                     (decode-function #'default-rtt-function))
@@ -78,7 +67,9 @@
           (recv-seq -1))
       (labels ((send ()
                  (when (plusp retries)
-                   (usocket:socket-send socket data data-length :host host :port port)
+                   (let ((nbytes (usocket:socket-send socket data data-length)))
+                     (unless (plusp nbytes)
+                       (error 'snmp-error)))
                    (decf retries)))
                (wait ()
                  (multiple-value-bind (sockets real-time)

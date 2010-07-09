@@ -16,8 +16,10 @@
   :licence "MIT"
   :depends-on (:snmp-base
                :snmp-mib)
-  :components ((:file "server-condition")
-               (:file "snmp-server" :depends-on ("server-condition"))
+  :components ((:module "vendor"
+                :components (#-portable-threads (:file "portable-threads")))
+               (:file "server-condition")
+               (:file "snmp-server" :depends-on ("vendor" "server-condition"))
                (:file "server-vacm" :depends-on ("snmp-server"))
                (:file "server-walk" :depends-on ("snmp-server"))
                (:file "server-base" :depends-on ("server-walk"))

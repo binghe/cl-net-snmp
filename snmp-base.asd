@@ -20,17 +20,8 @@
   :depends-on (:asn.1 :ironclad
                #-(or scl lispworks)
                :trivial-gray-streams
-               #+snmp-features:usocket
-               :usocket
-               #+snmp-features:iolib
-               :iolib
-               #+snmp-features:bordeaux-threads
-               :bordeaux-threads)
-  :components ((:module "vendor"
-                :components (#+(and snmp-features:portable-threads
-                                    (not portable-threads))
-                             (:file "portable-threads")))
-	       (:file "package"     :depends-on ("vendor"))
+               :usocket)
+  :components ((:file "package")
 	       (:file "constants"   :depends-on ("package"))
                (:file "condition"   :depends-on ("constants"))
 	       (:file "pdu"         :depends-on ("package" "constants"))
