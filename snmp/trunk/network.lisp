@@ -94,19 +94,19 @@
     ;; Work cycles
     (prog ()
       :send
-        (princ "S")
+        ;; (princ "S")
         (if (plusp (decf send-retries))
             (unless (send) (go :exit))
           (go :exit))
 
       :wait
-        (princ "W")
+        ;; (princ "W")
         (unless (wait) (go :send))
 
       :recv
-        (princ "R")
+        ;; (princ "R")
         (unless (recv) (go :wait))
 
       :exit
-        (princ "E")
+        ;; (princ "E")
         (return recv-message))))
