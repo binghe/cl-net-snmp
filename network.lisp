@@ -57,36 +57,56 @@
 (defun socket-sync (socket message &key
                     (max-receive-length +max-snmp-packet-size+)
                     (encode-function #'default-rtt-function)
-                    (decode-function #'default-rtt-function))
+                    (decode-function #'default-rtt-function)
+                    &aux
+                    send-data send-data-length
+                    recv-data recv-message
+                    (send-retries *socket-sync-retries*)
+                    (recv-retries *socket-sync-retries*)
+                    send-seq (recv-seq -1)
+                    (sockets (list socket)))
+  "sync messages on single socket"
   (declare (type usocket:datagram-usocket socket))
-  (multiple-value-bind (data send-seq)
-      (funcall encode-function message)
-    (let ((data-length (length data))
-          (retries *socket-sync-retries*)
-          (recv-message nil)
-          (recv-seq -1))
-      (labels ((send ()
-                 (when (plusp retries)
-                   (let ((nbytes (usocket:socket-send socket data data-length)))
-                     (unless (plusp nbytes)
-                       (error 'snmp-error)))
-                   (decf retries)))
-               (wait ()
-                 (multiple-value-bind (sockets real-time)
-                     (usocket:wait-for-input socket :timeout *socket-sync-timeout*)
-                   (declare (ignore sockets))
-                   real-time))
-               (receive ()
+
+  ;; Encode data for send
+  (multiple-value-setq (send-data send-seq)
+    (funcall encode-function message))
+  (setq send-data-length (length send-data))
+
+  ;; Define basic network operations
+  (labels ((send ()
+             (let ((nbytes (usocket:socket-send socket send-data send-data-length)))
+               (unless (plusp nbytes)
+                 (error 'snmp-error))
+               nbytes))
+           (wait ()
+             (multiple-value-bind (sockets real-time)
+                 (usocket:wait-for-input sockets :timeout *socket-sync-timeout*)
+               (declare (ignore sockets))
+               real-time))
+           (recv ()
+             (let ((recv-data (usocket:socket-receive socket nil max-receive-length)))
+               (when recv-data
                  (multiple-value-setq (recv-message recv-seq)
-                     (funcall decode-function
-                              (usocket:socket-receive socket nil max-receive-length)))
-                 (= send-seq recv-seq)))
-        (prog ()
-         send
-           (unless (send) (go end))
-         wait
-           (unless (wait) (go send))
-         receive
-           (unless (receive) (go wait))
-         end
-           (return recv-message))))))
+                   (funcall decode-function recv-data))
+                 (= send-seq recv-seq)))))
+
+    ;; Work cycles
+    (prog ()
+      :send
+        (princ "S")
+        (if (plusp (decf send-retries))
+            (unless (send) (go :exit))
+          (go :exit))
+
+      :wait
+        (princ "W")
+        (unless (wait) (go :send))
+
+      :recv
+        (princ "R")
+        (unless (recv) (go :wait))
+
+      :exit
+        (princ "E")
+        (return recv-message))))
