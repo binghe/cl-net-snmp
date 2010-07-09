@@ -21,7 +21,11 @@
                :snmp-mib
                #+snmp-features:lisa
                :lisa)
-  :components ((:file "snmp-trap")
+  :components ((:module "vendor"
+                :components (#-portable-threads (:file "portable-threads")))
+               (:file "snmp-trap")
                (:module "client"
-		:components ((:file "table")
+                :depends-on ("vendor")
+		:components ((:file "common")
+                             (:file "table")
                              (:file "discover")))))
