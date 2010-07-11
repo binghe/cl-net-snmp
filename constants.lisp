@@ -51,3 +51,14 @@
   `((,+smi-no-such-object+   . :no-such-object)   ; no value in a normal node
     (,+smi-no-such-instance+ . :no-such-instance) ; no value in a table
     (,+smi-end-of-mibview+   . :end-of-mibview))) ; end of mib view
+
+;;; SNMP PDU Type
+(defconstant +get-request-pdu+      0)
+(defconstant +get-next-request-pdu+ 1)
+(defconstant +response-pdu+         2)
+(defconstant +set-request-pdu+      3)
+(defconstant +trap-pdu+             4)
+(defconstant +bulk-pdu+             5)
+(defconstant +inform-request-pdu+   6)
+(defconstant +snmpv2-trap-pdu+      7)
+(defconstant +report-pdu+           8)
