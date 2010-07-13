@@ -111,7 +111,9 @@
                                            (usocket:socket-server (server-address instance)
                                                                   (server-port instance)
                                                                   (server-function instance)
-                                                                  (list instance))
+                                                                  (list instance)
+                                                                  :protocol :datagram
+                                                                  :in-new-thread nil)
                                            #+scl (thread:thread-exit)))))
 
 (defun enable-snmp-service (&optional (port *default-snmp-server-port*))
