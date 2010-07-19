@@ -61,7 +61,7 @@
                     &aux
                     send-seq send-data send-data-length
                     (send-retries *socket-sync-retries*)
-                    recv-message recv-seq
+                    recv-message recv-seq recv-data
                     (sockets (list socket)))
   "sync messages on single socket"
   (declare (type usocket:datagram-usocket socket))
@@ -70,7 +70,9 @@
   (multiple-value-setq (send-data send-seq)
     (funcall encode-function message))
   (setq send-data-length (length send-data))
-
+  (setq recv-data (make-array max-receive-length
+                              :element-type '(unsigned-byte 8)
+                              :initial-element 0))
   ;; Define basic network operations
   (labels ((send ()
              (let ((nbytes (usocket:socket-send socket send-data send-data-length)))
@@ -83,8 +85,9 @@
                (declare (ignore return-sockets))
                real-time))
            (recv ()
-             (let ((recv-data (usocket:socket-receive socket nil max-receive-length)))
-               (when recv-data
+             (multiple-value-bind (return-recv-data recv-data-length)
+                 (usocket:socket-receive socket recv-data max-receive-length)
+               (when (plusp recv-data-length)
                  (multiple-value-setq (recv-message recv-seq)
                    (funcall decode-function recv-data))
                  (= send-seq recv-seq)))))
