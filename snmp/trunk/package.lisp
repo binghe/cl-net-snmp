@@ -50,15 +50,12 @@
                               :host (pathname-host defaults)
                               :defaults defaults
 			      :version :newest)))
-    (setf (logical-pathname-translations "snmp")
-          `(("**;*.*.newest" ,home)
-	    ("**;*.*" ,home))
-          (logical-pathname-translations "mib")
-          `(("**;*.*.newest" "snmp:asn1;**;*.*")
-            ("**;*.*" "snmp:asn1;**;*.*")))))
+    (setf (logical-pathname-translations "SNMP")
+          `(("**;*.*" ,home))
+          (logical-pathname-translations "MIB")
+          `(("**;*.*" ,(make-pathname :directory (append (pathname-directory defaults)
+                                                         '("asn.1" :wild-inferiors))
+                                      :defaults home))))))
 
 (defparameter *major-version* 6)
 (defparameter *minor-version* 0)
-
-(defparameter *server-major-version* 4)
-(defparameter *server-minor-version* 0)
