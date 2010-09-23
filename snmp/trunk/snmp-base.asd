@@ -17,10 +17,7 @@
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
   :version "6.0-dev"
   :licence "MIT"
-  :depends-on (:asn.1 :ironclad
-               #-(or scl lispworks)
-               :trivial-gray-streams
-               :usocket)
+  :depends-on (:asn.1 :ironclad :usocket)
   :components ((:file "package")
 	       (:file "constants"   :depends-on ("package"))
                (:file "condition"   :depends-on ("constants"))
