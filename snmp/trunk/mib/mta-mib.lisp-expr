@@ -1,9 +1,0 @@
-;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;MTA-MIB.TXT by ASN.1 5.0
-
-(mta-mib
- |SNMPv2-SMI|
- |SNMPv2-TC|
- |SNMPv2-CONF|
- snmp-framework-mib
- network-services-mib)
