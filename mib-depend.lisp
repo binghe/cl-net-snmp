@@ -13,186 +13,51 @@
             (LISP-ALLEGRO-MIB |SNMPv2-SMI| LISP-MIB)
             (LISP-LISPWORKS-MIB |SNMPv2-SMI| LISP-MIB)
             (LISP-MIB |SNMPv2-SMI| |SNMPv2-TC|)
+            (VMWARE-VMINFO-MIB
+             |SNMPv2-SMI|
+             |SNMPv2-TC|
+             |SNMPv2-CONF|
+             VMWARE-TC-MIB
+             VMWARE-ENV-MIB
+             VMWARE-ROOT-MIB)
+            (VMWARE-VC-EVENT-MIB
+             |SNMPv2-SMI|
+             SNMP-FRAMEWORK-MIB
+             |SNMPv2-CONF|
+             VMWARE-PRODUCTS-MIB
+             VMWARE-TC-MIB)
+            (VMWARE-TC-MIB |SNMPv2-SMI| |SNMPv2-TC| VMWARE-ROOT-MIB)
+            (VMWARE-SYSTEM-MIB
+             |SNMPv2-SMI|
+             |SNMPv2-TC|
+             |SNMPv2-CONF|
+             VMWARE-ROOT-MIB)
+            (VMWARE-ROOT-MIB |SNMPv2-SMI|)
+            (VMWARE-RESOURCES-MIB
+             |SNMPv2-SMI|
+             |SNMPv2-TC|
+             |SNMPv2-CONF|
+             VMWARE-TC-MIB
+             VMWARE-ROOT-MIB)
+            (VMWARE-PRODUCTS-MIB |SNMPv2-SMI| VMWARE-ROOT-MIB)
+            (VMWARE-ENV-MIB
+             |SNMPv2-SMI|
+             |SNMPv2-TC|
+             |SNMPv2-CONF|
+             VMWARE-ROOT-MIB
+             VMWARE-PRODUCTS-MIB
+             VMWARE-TC-MIB)
+            (VMWARE-AGENTCAP-MIB
+             |SNMPv2-SMI|
+             VMWARE-ROOT-MIB
+             |SNMPv2-CONF|)
             (UDP-MIB |SNMPv2-SMI| |SNMPv2-CONF| INET-ADDRESS-MIB)
-            (UCD-IPFILTER-MIB |SNMPv2-SMI| UCD-SNMP-MIB)
             (UCD-SNMP-MIB |SNMPv2-SMI| |SNMPv2-TC|)
             (UCD-IPFWACC-MIB |SNMPv2-SMI| |SNMPv2-TC| UCD-SNMP-MIB)
             (UCD-DLMOD-MIB |SNMPv2-SMI| |SNMPv2-TC| UCD-SNMP-MIB)
             (UCD-DISKIO-MIB |SNMPv2-SMI| |SNMPv2-TC| UCD-SNMP-MIB)
-            (UCD-DEMO-MIB |SNMPv2-SMI| UCD-SNMP-MIB)
-            (TUNNEL-MIB
-             |SNMPv2-SMI|
-             |SNMPv2-TC|
-             |SNMPv2-CONF|
-             INET-ADDRESS-MIB
-             IPV6-FLOW-LABEL-MIB
-             IF-MIB
-             |IANAifType-MIB|)
             (TRANSPORT-ADDRESS-MIB |SNMPv2-SMI| |SNMPv2-TC|)
             (TCP-MIB |SNMPv2-SMI| |SNMPv2-CONF| INET-ADDRESS-MIB)
-            (RMON-MIB |SNMPv2-SMI| |SNMPv2-TC| |SNMPv2-CONF|)
-            (|RIPv2-MIB|
-             |SNMPv2-SMI|
-             |SNMPv2-TC|
-             |SNMPv2-CONF|
-             |SNMPv2-SMI|)
-            (OSPF-TRAP-MIB |SNMPv2-SMI| |SNMPv2-CONF| OSPF-MIB)
-            (OSPF-MIB
-             |SNMPv2-SMI|
-             |SNMPv2-TC|
-             |SNMPv2-CONF|
-             |SNMPv2-SMI|)
-            (NOTIFICATION-LOG-MIB
-             |SNMPv2-SMI|
-             |SNMPv2-TC|
-             SNMP-FRAMEWORK-MIB
-             |SNMPv2-CONF|)
-            (NETWORK-SERVICES-MIB
-             |SNMPv2-SMI|
-             |SNMPv2-TC|
-             |SNMPv2-CONF|
-             SNMP-FRAMEWORK-MIB)
-            (NET-SNMP-MONITOR-MIB
-             NET-SNMP-MIB
-             |SNMPv2-SMI|
-             |SNMPv2-TC|)
-            (NET-SNMP-SYSTEM-MIB
-             NET-SNMP-MIB
-             NET-SNMP-TC
-             |SNMPv2-SMI|
-             |SNMPv2-TC|)
-            (NET-SNMP-VACM-MIB
-             SNMP-FRAMEWORK-MIB
-             NET-SNMP-MIB
-             SNMP-VIEW-BASED-ACM-MIB
-             |SNMPv2-SMI|
-             |SNMPv2-CONF|
-             |SNMPv2-TC|)
-            (NET-SNMP-TC NET-SNMP-MIB |SNMPv2-SMI| |SNMPv2-TC|)
-            (NET-SNMP-MIB |SNMPv2-SMI|)
-            (NET-SNMP-EXTEND-MIB
-             NET-SNMP-AGENT-MIB
-             |SNMPv2-SMI|
-             |SNMPv2-CONF|
-             |SNMPv2-TC|)
-            (NET-SNMP-EXAMPLES-MIB
-             |SNMPv2-SMI|
-             SNMP-FRAMEWORK-MIB
-             NET-SNMP-MIB
-             |SNMPv2-TC|
-             INET-ADDRESS-MIB)
-            (NET-SNMP-AGENT-MIB
-             SNMP-FRAMEWORK-MIB
-             NET-SNMP-MIB
-             |SNMPv2-SMI|
-             |SNMPv2-CONF|
-             |SNMPv2-TC|)
-            (MTA-MIB
-             |SNMPv2-SMI|
-             |SNMPv2-TC|
-             |SNMPv2-CONF|
-             SNMP-FRAMEWORK-MIB
-             NETWORK-SERVICES-MIB)
-            (LM-SENSORS-MIB |SNMPv2-SMI| |SNMPv2-TC| UCD-SNMP-MIB)
-            (IPV6-UDP-MIB |SNMPv2-CONF| |SNMPv2-SMI| IPV6-TC)
-            (IPV6-TCP-MIB |SNMPv2-CONF| |SNMPv2-SMI| IPV6-TC)
-            (IPV6-TC |SNMPv2-SMI| |SNMPv2-TC|)
-            (IPV6-MIB |SNMPv2-SMI| |SNMPv2-TC| |SNMPv2-CONF| IPV6-TC)
-            (IPV6-ICMP-MIB |SNMPv2-SMI| |SNMPv2-CONF| IPV6-MIB)
-            (IPV6-FLOW-LABEL-MIB |SNMPv2-SMI| |SNMPv2-TC|)
-            (IP-MIB
-             |SNMPv2-SMI|
-             |SNMPv2-TC|
-             |SNMPv2-CONF|
-             INET-ADDRESS-MIB
-             IF-MIB)
-            (IP-FORWARD-MIB
-             |SNMPv2-SMI|
-             |SNMPv2-TC|
-             |SNMPv2-CONF|
-             IF-MIB
-             IP-MIB
-             IANA-RTPROTO-MIB
-             INET-ADDRESS-MIB)
-            (INET-ADDRESS-MIB |SNMPv2-SMI| |SNMPv2-TC|)
-            (IF-MIB
-             |SNMPv2-SMI|
-             |SNMPv2-TC|
-             |SNMPv2-CONF|
-             |SNMPv2-MIB|
-             |IANAifType-MIB|)
-            (IF-INVERTED-STACK-MIB
-             |SNMPv2-SMI|
-             |SNMPv2-TC|
-             |SNMPv2-CONF|
-             IF-MIB)
-            (|IANAifType-MIB| |SNMPv2-SMI| |SNMPv2-TC|)
-            (IANA-RTPROTO-MIB |SNMPv2-SMI| |SNMPv2-TC|)
-            (IANA-LANGUAGE-MIB |SNMPv2-SMI|)
-            (IANA-ADDRESS-FAMILY-NUMBERS-MIB |SNMPv2-SMI| |SNMPv2-TC|)
-            (HOST-RESOURCES-TYPES |SNMPv2-SMI| HOST-RESOURCES-MIB)
-            (HOST-RESOURCES-MIB
-             |SNMPv2-SMI|
-             |SNMPv2-TC|
-             |SNMPv2-CONF|
-             IF-MIB)
-            (HCNUM-TC |SNMPv2-SMI| |SNMPv2-TC|)
-            (GNOME-SMI |SNMPv2-SMI|)
-            (|EtherLike-MIB|
-             |SNMPv2-SMI|
-             |SNMPv2-CONF|
-             |SNMPv2-TC|
-             IF-MIB)
-            (DISMAN-NSLOOKUP-MIB
-             |SNMPv2-SMI|
-             |SNMPv2-TC|
-             |SNMPv2-CONF|
-             SNMP-FRAMEWORK-MIB
-             INET-ADDRESS-MIB)
-            (DISMAN-TRACEROUTE-MIB
-             |SNMPv2-SMI|
-             |SNMPv2-TC|
-             |SNMPv2-CONF|
-             SNMP-FRAMEWORK-MIB
-             IF-MIB
-             INET-ADDRESS-MIB
-             DISMAN-PING-MIB)
-            (DISMAN-EXPRESSION-MIB
-             |SNMPv2-SMI|
-             |SNMPv2-TC|
-             |SNMPv2-MIB|
-             SNMP-FRAMEWORK-MIB
-             |SNMPv2-CONF|)
-            (DISMAN-PING-MIB
-             |SNMPv2-SMI|
-             |SNMPv2-TC|
-             |SNMPv2-CONF|
-             IF-MIB
-             SNMP-FRAMEWORK-MIB
-             INET-ADDRESS-MIB)
-            (DISMAN-SCRIPT-MIB
-             |SNMPv2-SMI|
-             |SNMPv2-TC|
-             |SNMPv2-CONF|
-             SNMP-FRAMEWORK-MIB)
-            (DISMAN-SCHEDULE-MIB
-             |SNMPv2-SMI|
-             |SNMPv2-TC|
-             |SNMPv2-CONF|
-             SNMP-FRAMEWORK-MIB)
-            (DISMAN-EVENT-MIB
-             |SNMPv2-SMI|
-             |SNMPv2-TC|
-             |SNMPv2-CONF|
-             |SNMPv2-MIB|
-             SNMP-TARGET-MIB
-             SNMP-FRAMEWORK-MIB)
-            (BGP4-MIB |SNMPv2-SMI| |SNMPv2-CONF|)
-            (AGENTX-MIB
-             |SNMPv2-SMI|
-             SNMP-FRAMEWORK-MIB
-             |SNMPv2-CONF|
-             |SNMPv2-TC|)
             (|SNMPv2-TM| |SNMPv2-SMI| |SNMPv2-TC|)
             (|SNMPv2-TC| |SNMPv2-SMI|)
             (|SNMPv2-MIB| |SNMPv2-SMI| |SNMPv2-TC| |SNMPv2-CONF|)
@@ -238,4 +103,111 @@
              |SNMPv2-TC|
              SNMP-FRAMEWORK-MIB
              SNMP-TARGET-MIB
-             |SNMPv2-CONF|))))
+             |SNMPv2-CONF|)
+            (SCTP-MIB
+             |SNMPv2-SMI|
+             |SNMPv2-TC|
+             |SNMPv2-CONF|
+             INET-ADDRESS-MIB)
+            (RMON-MIB |SNMPv2-SMI| |SNMPv2-TC| |SNMPv2-CONF|)
+            (RFC1213-MIB RFC1155-SMI RFC-1212)
+            (RFC-1212 RFC1155-SMI)
+            (NOTIFICATION-LOG-MIB
+             |SNMPv2-SMI|
+             |SNMPv2-TC|
+             SNMP-FRAMEWORK-MIB
+             |SNMPv2-CONF|)
+            (NET-SNMP-VACM-MIB
+             SNMP-FRAMEWORK-MIB
+             NET-SNMP-MIB
+             SNMP-VIEW-BASED-ACM-MIB
+             |SNMPv2-SMI|
+             |SNMPv2-CONF|
+             |SNMPv2-TC|)
+            (NET-SNMP-TC NET-SNMP-MIB |SNMPv2-SMI| |SNMPv2-TC|)
+            (NET-SNMP-MIB |SNMPv2-SMI|)
+            (NET-SNMP-EXTEND-MIB
+             NET-SNMP-AGENT-MIB
+             |SNMPv2-SMI|
+             |SNMPv2-CONF|
+             |SNMPv2-TC|)
+            (NET-SNMP-AGENT-MIB
+             SNMP-FRAMEWORK-MIB
+             NET-SNMP-MIB
+             |SNMPv2-SMI|
+             |SNMPv2-CONF|
+             |SNMPv2-TC|)
+            (LM-SENSORS-MIB |SNMPv2-SMI| |SNMPv2-TC| UCD-SNMP-MIB)
+            (IPV6-UDP-MIB |SNMPv2-CONF| |SNMPv2-SMI| IPV6-TC)
+            (IPV6-TCP-MIB |SNMPv2-CONF| |SNMPv2-SMI| IPV6-TC)
+            (IPV6-TC |SNMPv2-SMI| |SNMPv2-TC|)
+            (IPV6-MIB |SNMPv2-SMI| |SNMPv2-TC| |SNMPv2-CONF| IPV6-TC)
+            (IPV6-ICMP-MIB |SNMPv2-SMI| |SNMPv2-CONF| IPV6-MIB)
+            (IP-MIB
+             |SNMPv2-SMI|
+             |SNMPv2-TC|
+             |SNMPv2-CONF|
+             INET-ADDRESS-MIB
+             IF-MIB)
+            (IP-FORWARD-MIB
+             |SNMPv2-SMI|
+             |SNMPv2-TC|
+             |SNMPv2-CONF|
+             IF-MIB
+             IP-MIB
+             IANA-RTPROTO-MIB
+             INET-ADDRESS-MIB)
+            (INET-ADDRESS-MIB |SNMPv2-SMI| |SNMPv2-TC|)
+            (IF-MIB
+             |SNMPv2-SMI|
+             |SNMPv2-TC|
+             |SNMPv2-CONF|
+             |SNMPv2-MIB|
+             |IANAifType-MIB|)
+            (IF-INVERTED-STACK-MIB
+             |SNMPv2-SMI|
+             |SNMPv2-TC|
+             |SNMPv2-CONF|
+             IF-MIB)
+            (|IANAifType-MIB| |SNMPv2-SMI| |SNMPv2-TC|)
+            (IANA-RTPROTO-MIB |SNMPv2-SMI| |SNMPv2-TC|)
+            (IANA-LANGUAGE-MIB |SNMPv2-SMI|)
+            (IANA-ADDRESS-FAMILY-NUMBERS-MIB |SNMPv2-SMI| |SNMPv2-TC|)
+            (HOST-RESOURCES-TYPES |SNMPv2-SMI| HOST-RESOURCES-MIB)
+            (HOST-RESOURCES-MIB
+             |SNMPv2-SMI|
+             |SNMPv2-TC|
+             |SNMPv2-CONF|
+             IF-MIB)
+            (HCNUM-TC |SNMPv2-SMI| |SNMPv2-TC|)
+            (|EtherLike-MIB|
+             |SNMPv2-SMI|
+             |SNMPv2-CONF|
+             |SNMPv2-TC|
+             IF-MIB)
+            (DISMAN-SCRIPT-MIB
+             |SNMPv2-SMI|
+             |SNMPv2-TC|
+             |SNMPv2-CONF|
+             SNMP-FRAMEWORK-MIB)
+            (DISMAN-SCHEDULE-MIB
+             |SNMPv2-SMI|
+             |SNMPv2-TC|
+             |SNMPv2-CONF|
+             SNMP-FRAMEWORK-MIB)
+            (DISMAN-EVENT-MIB
+             |SNMPv2-SMI|
+             |SNMPv2-TC|
+             |SNMPv2-CONF|
+             |SNMPv2-MIB|
+             SNMP-TARGET-MIB
+             SNMP-FRAMEWORK-MIB)
+            (AIRPORT-BASESTATION-3-MIB
+             |SNMPv2-SMI|
+             RFC1213-MIB
+             |SNMPv2-TC|)
+            (AGENTX-MIB
+             |SNMPv2-SMI|
+             SNMP-FRAMEWORK-MIB
+             |SNMPv2-CONF|
+             |SNMPv2-TC|))))

@@ -87,6 +87,7 @@
            (recv ()
              (multiple-value-bind (return-recv-data recv-data-length)
                  (usocket:socket-receive socket recv-data max-receive-length)
+               (declare (ignore return-recv-data))
                (when (plusp recv-data-length)
                  (multiple-value-setq (recv-message recv-seq)
                    (funcall decode-function recv-data))
