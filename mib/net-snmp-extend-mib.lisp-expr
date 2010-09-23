@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;NET-SNMP-EXTEND-MIB.TXT by ASN.1 5.0
+;;;; Auto-generated from MIB:BASE;NET-SNMP-EXTEND-MIB.TXT by ASN.1 5.0
 
 (net-snmp-extend-mib
  net-snmp-agent-mib

@@ -1,0 +1,9 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from MIB:VMWARE;VMWARE-VC-EVENT-MIB.MIB by ASN.1 5.0
+
+(vmware-vc-event-mib
+ |SNMPv2-SMI|
+ snmp-framework-mib
+ |SNMPv2-CONF|
+ vmware-products-mib
+ vmware-tc-mib)

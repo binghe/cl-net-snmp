@@ -1,0 +1,4 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from MIB:VMWARE;VMWARE-PRODUCTS-MIB.MIB by ASN.1 5.0
+
+(vmware-products-mib |SNMPv2-SMI| vmware-root-mib)

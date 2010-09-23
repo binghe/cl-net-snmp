@@ -1,4 +1,4 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:NET-SNMP;LM-SENSORS-MIB.TXT by ASN.1 5.0
+;;;; Auto-generated from MIB:BASE;LM-SENSORS-MIB.TXT by ASN.1 5.0
 
 (lm-sensors-mib |SNMPv2-SMI| |SNMPv2-TC| ucd-snmp-mib)
