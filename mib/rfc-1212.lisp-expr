@@ -1,0 +1,4 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from MIB:BASE;RFC-1212.TXT by ASN.1 5.0
+
+(rfc-1212 rfc1155-smi)

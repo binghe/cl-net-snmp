@@ -1,0 +1,10 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Auto-generated from MIB:VMWARE;VMWARE-ENV-MIB.MIB by ASN.1 5.0
+
+(vmware-env-mib
+ |SNMPv2-SMI|
+ |SNMPv2-TC|
+ |SNMPv2-CONF|
+ vmware-root-mib
+ vmware-products-mib
+ vmware-tc-mib)
