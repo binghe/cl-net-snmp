@@ -64,7 +64,7 @@
     (when current-node
       (capi:with-atomic-redisplay ()
         (setf (capi:text-input-pane-text (mibrowser-search interface))
-              (oid-name current-node))
+              (symbol-name (oid-name current-node)))
         (capi:apply-in-pane-process g #'(setf capi:choice-selected-item)
                                     current-node g)
         (display-graph-selection interface current-node)))))
