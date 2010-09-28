@@ -158,8 +158,8 @@
 (defun mibrowser-about ()
   (capi:display-message-on-screen
    (capi:convert-to-screen nil)
-   "MIB Browser by Chun Tian (binghe) <binghe.lisp@gmail.com>
-Copyright 2008."))
+   "MIB Browser from cl-net-snmp 6.0-dev.
+Copyright 2008-2010, Chun Tian (binghe) <binghe.lisp@gmail.com>."))
 
 (defmethod capi:interface-display :before ((self mibrowser))
   (let ((g (mibrowser-mib-graph self))

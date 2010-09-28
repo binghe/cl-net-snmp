@@ -12,15 +12,22 @@
 (load *init-file-name*)
 
 ;;; Load SNMP Package
-(asdf:setup :snmp)
+(asdf:load-system :snmp-ui)
+
+(defvar *mib-packages*
+  (mapcar #'(lambda (x)
+              (find-package (symbol-name x)))
+          asn.1:*mib-modules*))
 
 ;;; Deliver the MIB Browser
-(deliver 'asn.1:mibrowser #p"SNMP:DIST;MIBROWSER.EXE" 5
+(deliver 'snmp-ui:mibrowser #p"SNMP:DIST;MIBROWSER.EXE" 4
          :interface :capi
          :keep-pretty-printer t
          :kill-dspec-table nil
-         :packages-to-keep-symbol-names '(asn.1)
+         :keep-eval t
+         :packages-to-keep-symbol-names (cons (find-package :asn.1)
+                                              *mib-packages*)
          :keep-symbol-names '(capi:graph-pane
                               capi:text-input-pane
                               capi:display-pane
-                              asn.1:mibrowser))
+                              snmp-ui:mibrowser))
