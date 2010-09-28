@@ -20,5 +20,6 @@
   :components ((:module "interface"
                 :serial t
 		:components ((:file "package")
+                             (:file "fli-templates")
                              (:file "mibrowser")
                              (:file "lispworks-capi")))))
