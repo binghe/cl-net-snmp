@@ -12,7 +12,6 @@
    ;; networking package
    #:usocket
    #:iolib
-   #:lispworks-udp
    ;; multi-threading
    #:portable-threads
    #:bordeaux-threads

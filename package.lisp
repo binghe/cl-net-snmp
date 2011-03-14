@@ -1,7 +1,133 @@
 ;;;; -*- Mode: Lisp -*-
 ;;;; $Id$
 
-(in-package :cl-user)
+(in-package :snmp-system)
+
+#+:abcl
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (require :gray-streams))
+
+#+cmu
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (require :gray-streams))
+
+#+ecl
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (gray::redefine-cl-functions))
+
+(defpackage asn.1
+  (:use :common-lisp
+        #+sbcl :sb-gray #+sbcl :sb-pcl
+        #+allegro :excl #+allegro :aclmop
+        #+cmu :ext #+cmu :pcl #+cmu :clos-mop
+        #+clisp :gray
+        #+(or mcl clozure) :ccl
+        #+lispworks :stream #+lispworks :clos
+        #+ecl :gray #+ecl :clos
+        #+scl :ext
+        #+abcl :mop)
+  #+abcl
+  (:import-from :mop #:class-direct-subclasses
+                     #:class-direct-slots)
+  (:export #:*mib-modules*
+           #:*mib-module-dependency*
+           #:*oid-database*
+           #:asn.1-class
+           #:asn.1-type
+	   #:ber-decode
+	   #:ber-decode<-string
+           #:ber-decode-value
+           #:ber-encode
+	   #:ber-encode->string
+           #:ber-encode-length
+	   #:ber-encode-list
+           #:ber-encode-type
+           #:ber-equal
+           #:ber-stream
+           #:bits
+           #:compile-asn.1
+           #:counter
+           #:counter32
+           #:counter64
+           #:define-textual-convention
+           #:defunknown
+           #:defoid
+           #:delete-object
+           #:ensure-oid
+           #:gauge
+	   #:general-type
+           #:get-asn.1-type
+           #:install-asn.1-type
+           #:integer
+           #:ipaddress
+           #:list-all-mib-classes
+           #:list-all-mib-tables
+           #:list-children
+           #:load-asn.1
+           #:number-type
+           #:object-id
+           #:octet-string
+           #:oid
+           #:oid-find-base
+           #:oid-find-leaf
+           #:oid-leaf-p
+           #:oid-length
+           #:oid-name
+           #:oid-name-string
+           #:oid-name-list
+           #:oid-next
+           #:oid-walk
+           #:oid-number-list
+           #:oid-parent
+           #:oid-parent-p
+           #:oid-scalar-variable-p
+           #:oid-syntax
+           #:oid-syntax-p
+           #:oid-trunk-p
+           #:oid-value
+	   #:oid-<
+	   #:oid->=
+           #:opaque
+           #:parse
+           #:plain-value
+           #:raw
+           #:sequence-type
+           #:simple-oid
+           #:slot-value-using-oid
+           #:string
+           #:timeticks
+           #:uninstall-asn.1-type
+	   #:value-of)
+  ;; SNMP-specific exports
+  (:export #:|zero| #:|iso| #:|org| #:|dod|
+           #:*current-module*
+           ;; access
+           #:|not-accessible|
+           #:|accessible-for-notify|
+           #:|read-only|
+           #:|read-write|
+           #:|read-create|
+           ;; status
+           #:|current|
+           #:|deprecated|
+           #:|mandatory|
+           #:|obsolete|
+           ;; type
+           #:module-identity
+           #:module-compliance
+           #:object-identity
+           #:object-type
+           #:object-group
+           #:notification-type
+           #:notification-group
+           #:agent-capabilities
+           ;; textual convention
+           #:display-hint
+           #:status
+           #:description
+           #:reference))
+
+(in-package :snmp-system)
 
 (defpackage snmp
   (:use :common-lisp :asn.1)
@@ -38,6 +164,7 @@
 	   #:update-mib
            #:with-open-session))
 
+
 (in-package :snmp)
 
 ;;; Logical Pathname Translations, learn from CL-HTTP source code
@@ -53,9 +180,7 @@
     (setf (logical-pathname-translations "SNMP")
           `(("**;*.*" ,home))
           (logical-pathname-translations "MIB")
-          `(("**;*.*" ,(make-pathname :directory (append (pathname-directory defaults)
-                                                         '("asn.1" :wild-inferiors))
-                                      :defaults home))))))
+          `(("**;*.*" "SNMP:MIBS;**;*.*")))))
 
 (defparameter *major-version* 6)
 (defparameter *minor-version* 0)
