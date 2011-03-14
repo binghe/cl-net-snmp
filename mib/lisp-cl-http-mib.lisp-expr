@@ -1,4 +1,0 @@
-;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:LISP;LISP-CL-HTTP-MIB.TXT by ASN.1 5.0
-
-(lisp-cl-http-mib |SNMPv2-SMI| lisp-mib)

@@ -14,3 +14,6 @@
      (unwind-protect
          (progn ,@body)
        (disable-snmp-service))))
+
+(defun do-tests ()
+  )

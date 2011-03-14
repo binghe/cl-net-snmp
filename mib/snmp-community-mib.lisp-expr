@@ -1,9 +1,0 @@
-;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:BASE;SNMP-COMMUNITY-MIB.TXT by ASN.1 5.0
-
-(snmp-community-mib
- |SNMPv2-SMI|
- |SNMPv2-TC|
- snmp-framework-mib
- snmp-target-mib
- |SNMPv2-CONF|)
