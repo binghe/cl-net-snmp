@@ -262,7 +262,7 @@
 
 ;;; binghe: following funtions is contributed by John Fremlin from MSI <jf@msi.co.jp>
 
-#+asn.1-features:cl-yacc
+#+snmp-system::cl-yacc
 (defun defparser-production-to-yacc (grammar-symbols forms)
   (cond ((not (and forms (or (not (listp forms)) (some 'identity forms))))
 	 nil)
@@ -284,7 +284,7 @@
                         ,@(when unused-vars  (list `(declare (ignore ,@unused-vars))))
                         ,forms)))))))
 
-#+asn.1-features:cl-yacc
+#+snmp-system::cl-yacc
 (defun defparser-to-yacc (rules)
   (let (grouped-rules)
     (loop for rule in rules do

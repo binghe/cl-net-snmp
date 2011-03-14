@@ -41,10 +41,17 @@
                        :initarg :request-id))
   (:documentation "Common PDU which have a request ID part"))
 
+#-snmp-system::portable-threads
 (defmethod generate-request-id ((pdu common-pdu))
   (with-slots (request-id-counter) pdu
     (the (unsigned-byte 32)
          (logand (incf request-id-counter) #xffffffff))))
+
+#+snmp-system::portable-threads
+(defmethod generate-request-id ((pdu common-pdu))
+  (with-slots (request-id-counter) pdu
+    (the (unsigned-byte 32)
+         (logand (portable-threads:atomic-incf request-id-counter) #xffffffff))))
 
 (defmethod initialize-instance :after ((pdu common-pdu)
                                        &rest initargs &key &allow-other-keys)
