@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; $Id: textual-convention.lisp 748 2009-02-09 09:36:37Z binghe $
+;;;; $Id$
 
 (in-package :asn.1)
 

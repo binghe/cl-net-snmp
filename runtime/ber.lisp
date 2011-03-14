@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; $Id: ber.lisp 803 2010-07-10 00:47:54Z binghe $
+;;;; $Id$
 ;;;; BER (Basic Encoding Rules) support
 
 (in-package :asn.1)

@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; $Id: oid-walk.lisp 768 2009-05-08 08:50:42Z binghe $
+;;;; $Id$
 
 (in-package :asn.1)
 

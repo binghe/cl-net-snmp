@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; $Id: loader.lisp 826 2010-09-25 15:46:40Z binghe $
+;;;; $Id$
 
 (in-package :asn.1)
 

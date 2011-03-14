@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; $Id: reader.lisp 511 2008-09-19 15:02:13Z binghe $
+;;;; $Id$
 ;;;; ASN.1 Readtable
 
 (in-package :asn.1)

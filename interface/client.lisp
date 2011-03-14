@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; $Id: lispworks-capi.lisp 668 2008-12-05 10:27:57Z binghe $
+;;;; $Id$
 
 (in-package :snmp-ui)
 
