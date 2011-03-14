@@ -1,10 +1,26 @@
 ;;;; -*- Mode: Lisp -*-
 ;;;; $Id$
 
-;;;; Low-level SNMP compile-time features
+;;;; Low-level ASN.1 & SNMP compile-time features
 ;;;; Note: You MUST recompile all lisp files after change these features.
 
 (
+
+ ;;; Lalr Parser
+ ;;; Note: choose only ONE between 'parsergen and 'yacc
+
+ #+lispworks
+ parsergen ; default on LispWorks
+
+ #-lispworks
+ cl-yacc   ; (cl-yacc) default on other CL platform
+
+ ;;; Short package name of MIB packages, disable for expert only.
+ short-package-name
+
+ ;;; OID Cache support based on weak hash table, not all CL platform support it
+ #+(or allegro clisp openmcl sbcl lispworks cmu)
+ oid-cache
 
  ;;; Network support
  ;;; Note: choose only ONE between 'usocket, 'lispworks-udp and 'iolib
