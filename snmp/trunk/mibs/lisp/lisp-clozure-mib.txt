@@ -1,0 +1,32 @@
+-- -*- Mode: asn1 -*-
+-- $Id: lisp-clozure-mib.txt 682 2008-12-23 05:45:11Z binghe $
+
+LISP-CLOZURE-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, OBJECT-IDENTITY,
+    NOTIFICATION-TYPE, enterprises
+        FROM SNMPv2-SMI
+
+    common-lisp FROM LISP-MIB;
+
+clozure MODULE-IDENTITY
+    LAST-UPDATED "200807290000Z" -- 29 July 2008
+    ORGANIZATION
+           "The cl-net-snmp Project
+	    http://common-lisp.net/projects/cl-net-snmp"
+    CONTACT-INFO
+           "Chun Tian (binghe)
+
+            Email: <binghe.lisp@gmail.com>
+
+            Send comments to
+              <cl-net-snmp-general@lists.sourceforge.net>"
+    DESCRIPTION
+           "The MIB module for Clozure CL"
+    REVISION "200807290000Z" -- 29 July 2008
+    DESCRIPTION
+           "The initial revision of this MIB module."
+    ::= { common-lisp 8 }
+
+END
