@@ -38,5 +38,5 @@
                 :components (#+snmp-features:cl-yacc
                              (:file "yacc")
                              #+snmp-features:cl-yacc
-                             (:file "patch-yacc" :depends-on ("yacc"))))
+                             (:file "yacc-patch" :depends-on ("yacc"))))
                (:file "update-mib")))
