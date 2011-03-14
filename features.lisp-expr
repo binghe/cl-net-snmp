@@ -16,11 +16,7 @@
  cl-yacc   ; (cl-yacc) default on other CL platform
 
  ;;; Short package name of MIB packages, disable for expert only.
- short-package-name
-
- ;;; OID Cache support based on weak hash table, not all CL platform support it
- #+(or allegro clisp openmcl sbcl lispworks cmu)
- oid-cache
+ short-name
 
  ;;; Network support
  ;;; Note: choose only ONE between 'usocket, 'lispworks-udp and 'iolib
@@ -33,6 +29,7 @@
  ;;; Thread support, used by SNMP-SERVER
  ;;; Note: choose only ONE between 'portable-threads and 'bordeaux-threads
 
+ #-abcl
  portable-threads ; default, from GBBopen project
 
 )

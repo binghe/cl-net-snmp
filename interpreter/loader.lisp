@@ -28,15 +28,15 @@
 (defmethod load-asn.1-internal ((type (eql :module)) (rtl list))
   (destructuring-bind (module-name xxx) rtl
     (let ((long-package-name (module->package module-name))
-          #+asn.1-features:short-package-name
+          #+snmp-system::short-name
           (short-package-name (intern (symbol-name module-name) :keyword)))
       (unless (null xxx)
         (destructuring-bind ((exports imports) body) xxx
           (declare (ignore exports)) ; SNMP don't care exports
           (let ((*current-package* (or (find-package long-package-name)
                                        (make-package long-package-name
-                                                     #+asn.1-features:short-package-name
-                                                     #+asn.1-features:short-package-name
+                                                     #+snmp-system::short-name
+                                                     #+snmp-system::short-name
                                                      :nicknames (list short-package-name)
                                                      :use '(:common-lisp :asn.1))))
                 (*current-module* module-name))

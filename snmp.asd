@@ -7,9 +7,6 @@
   (make-package ':snmp-system
                 :use '(:common-lisp :asdf)))
 
-(unless (find-package ':snmp-features)
-  (load (merge-pathnames #p"features.lisp" *load-truename*)))
-
 (in-package :snmp-system)
 
 (defsystem snmp
@@ -17,8 +14,10 @@
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
   :version "6.0"
   :licence "MIT"
-  :depends-on (:asn.1 :ironclad :usocket)
-  :components ((:file "package")
+  :depends-on (:ironclad :usocket :asn.1)
+  :components ((:module "vendor"
+                :components ((:file "portable-threads")))
+               (:file "package"     :depends-on ("vendor"))
 	       (:file "constants"   :depends-on ("package"))
                (:file "condition"   :depends-on ("constants"))
 	       (:file "pdu"         :depends-on ("package" "constants"))
@@ -34,8 +33,7 @@
                (:file "snmp-trap"   :depends-on ("request"))
                ;; high-level client features
                (:module "client"
-		:components ((:file "common")
-                             (:file "table")
+		:components ((:file "table")
                              (:file "discover")))))
 
 (defmethod perform ((op test-op) (c (eql (find-system :snmp))))
