@@ -37,3 +37,7 @@
 		:components ((:file "common")
                              (:file "table")
                              (:file "discover")))))
+
+(defmethod perform ((op test-op) (c (eql (find-system :snmp))))
+  (oos 'load-op :snmp-test)
+  (oos 'test-op :snmp-test))

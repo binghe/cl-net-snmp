@@ -18,3 +18,6 @@
   :components ((:module "test"
                 :components ((:file "package")
                              (:file "server-test" :depends-on ("package"))))))
+
+(defmethod perform ((op test-op) (c (eql (find-system :snmp-test))))
+  (funcall (intern "DO-TESTS" "SNMP.TEST")))

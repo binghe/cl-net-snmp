@@ -1,4 +1,0 @@
-;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:BASE;SNMP-MPD-MIB.TXT by ASN.1 5.0
-
-(snmp-mpd-mib |SNMPv2-CONF| |SNMPv2-SMI|)

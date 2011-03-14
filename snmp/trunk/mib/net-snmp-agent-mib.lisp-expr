@@ -1,9 +1,0 @@
-;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:BASE;NET-SNMP-AGENT-MIB.TXT by ASN.1 5.0
-
-(net-snmp-agent-mib
- snmp-framework-mib
- net-snmp-mib
- |SNMPv2-SMI|
- |SNMPv2-CONF|
- |SNMPv2-TC|)

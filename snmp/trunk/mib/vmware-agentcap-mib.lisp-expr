@@ -1,4 +1,0 @@
-;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:VMWARE;VMWARE-AGENTCAP-MIB.MIB by ASN.1 5.0
-
-(vmware-agentcap-mib |SNMPv2-SMI| vmware-root-mib |SNMPv2-CONF|)
