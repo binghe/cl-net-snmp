@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; $Id: asn.1.asd 806 2010-07-10 13:44:57Z binghe $
+;;;; $Id$
 
 (in-package :cl-user)
 

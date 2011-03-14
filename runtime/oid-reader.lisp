@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; $Id: oid-reader.lisp 781 2009-06-26 03:45:21Z binghe $
+;;;; $Id$
 
 (in-package :asn.1)
 

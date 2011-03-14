@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; $Id: opaque.lisp 806 2010-07-10 13:44:57Z binghe $
+;;;; $Id$
 
 (in-package :asn.1)
 

@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; $Id: condition.lisp 555 2008-09-28 15:36:14Z binghe $
+;;;; $Id$
 ;;;; Note: parts of this file come from Simon Leinen's cl-snmp project
 
 (in-package :asn.1)

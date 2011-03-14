@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; $Id: compile-type.lisp 727 2009-01-27 10:08:58Z binghe $
+;;;; $Id$
 
 (in-package :asn.1)
 

@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp; External-Format: utf-8; -*-
-;;;; $Id: ipaddress.lisp 768 2009-05-08 08:50:42Z binghe $
+;;;; $Id$
 
 ;;;; Note: In ASN.1-5 we choosed a simpliest solution for representation of IPaddress,
 ;;;; and removed all dependency of USOCKET.

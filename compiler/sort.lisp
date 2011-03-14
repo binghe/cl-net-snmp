@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; $Id: sort.lisp 511 2008-09-19 15:02:13Z binghe $
+;;;; $Id$
 
 (in-package :asn.1)
 

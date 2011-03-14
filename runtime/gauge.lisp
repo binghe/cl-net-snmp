@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; $Id: gauge.lisp 713 2009-01-22 10:10:09Z binghe $
+;;;; $Id$
 
 (in-package :asn.1)
 

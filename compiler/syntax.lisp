@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; $Id: syntax.lisp 813 2010-09-23 07:04:43Z binghe $
+;;;; $Id$
 ;;;; ASN.1 Syntax (BNF -> Lisp)
 
 (in-package :asn.1)
