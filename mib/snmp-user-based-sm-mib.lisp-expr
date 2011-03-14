@@ -1,8 +1,0 @@
-;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:BASE;SNMP-USER-BASED-SM-MIB.TXT by ASN.1 5.0
-
-(snmp-user-based-sm-mib
- |SNMPv2-SMI|
- |SNMPv2-TC|
- |SNMPv2-CONF|
- snmp-framework-mib)

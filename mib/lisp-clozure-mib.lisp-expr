@@ -1,4 +1,0 @@
-;;;; -*- Mode: Lisp -*-
-;;;; Auto-generated from MIB:LISP;LISP-CLOZURE-MIB.TXT by ASN.1 5.0
-
-(lisp-clozure-mib |SNMPv2-SMI| lisp-mib)
