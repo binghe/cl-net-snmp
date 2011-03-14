@@ -7,14 +7,14 @@
   (make-package ':snmp-system
                 :use '(:common-lisp :asdf)))
 
-(unless (find-package ':snmp-features)
-  (load (merge-pathnames #p"features.lisp" *load-truename*)))
+#-:snmp
+(load (merge-pathnames #p"features.lisp" *load-truename*))
 
 (in-package :snmp-system)
 
 (defsystem asn.1
   :description "ASN.1 for Common Lisp"
-  :version "6.0"
+  :version "5.0"
   :licence "MIT"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
   :components ((:file "package")

@@ -53,7 +53,7 @@
   (declare (ignore type))
   (destructuring-bind (module-name xxx) rtl
     (let ((long-package-name (module->package module-name))
-          #+asn.1-features:short-package-name
+          #+snmp-system::short-name
           (short-package-name (intern (symbol-name module-name) :keyword)))
       (if (null xxx)
           `(()
@@ -65,7 +65,7 @@
                     ((eval-when (:load-toplevel :execute)
                        (setf *current-module* ',module-name)))
                     ((defpackage ,long-package-name
-                       #+asn.1-features:short-package-name
+                       #+snmp-system::short-name
                        (:nicknames ,short-package-name)
                        (:use :common-lisp :asn.1)
                        ,@(compile-imports-full imports)))

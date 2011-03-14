@@ -184,3 +184,4 @@
 
 (defparameter *major-version* 6)
 (defparameter *minor-version* 0)
+(defparameter *revision* 0)
