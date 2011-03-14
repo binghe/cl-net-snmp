@@ -1,0 +1,35 @@
+SNMPv2-CONF DEFINITIONS ::= BEGIN
+
+-- definitions for conformance groups
+
+OBJECT-GROUP MACRO ::=
+BEGIN
+    TYPE NOTATION ::=
+                  ObjectsPart
+                  "STATUS" Status
+                  "DESCRIPTION" Text
+                  ReferPart
+
+    VALUE NOTATION ::=
+                  value(VALUE OBJECT IDENTIFIER)
+
+    ObjectsPart ::=
+                  "OBJECTS" "{" Objects "}"
+    Objects ::=
+                  Object
+                | Objects "," Object
+    Object ::=
+                  value(Name ObjectName)
+
+    Status ::=
+                  "current"
+                | "deprecated"
+                | "obsolete"
+
+    ReferPart ::=
+                  "REFERENCE" Text
+                | empty
+
+    -- uses the NVT ASCII character set
+    Text ::= """" string """"
+END
