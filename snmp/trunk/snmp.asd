@@ -13,10 +13,27 @@
 (in-package :snmp-system)
 
 (defsystem snmp
-  :description "SNMP Collection"
+  :description "Simple Network Management Protocol"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
-  :version "6.0-dev"
+  :version "6.0"
   :licence "MIT"
-  :depends-on (:snmp-client
-	       :snmp-server
-	       #+(and lispworks capi) :snmp-ui))
+  :depends-on (:asn.1 :ironclad :usocket)
+  :components ((:file "package")
+	       (:file "constants"   :depends-on ("package"))
+               (:file "condition"   :depends-on ("constants"))
+	       (:file "pdu"         :depends-on ("package" "constants"))
+               (:file "keytool"     :depends-on ("package"))
+               (:file "snmp-smi"    :depends-on ("constants"))
+	       (:file "session"     :depends-on ("keytool"))
+               (:file "message"     :depends-on ("constants" "pdu" "session"))
+               (:file "network"     :depends-on ("message" "session"))
+               (:file "report"      :depends-on ("network" "message"))
+               (:file "request"     :depends-on ("report" "pdu"))
+               (:file "snmp-get"    :depends-on ("request"))
+               (:file "snmp-walk"   :depends-on ("request" "snmp-smi"))
+               (:file "snmp-trap"   :depends-on ("request"))
+               ;; high-level client features
+               (:module "client"
+		:components ((:file "common")
+                             (:file "table")
+                             (:file "discover")))))
