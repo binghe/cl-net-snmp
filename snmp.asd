@@ -7,9 +7,12 @@
   (make-package ':snmp-system
                 :use '(:common-lisp :asdf)))
 
+#-:SNMP
+(load (merge-pathnames #p"features.lisp" *load-truename*))
+
 (in-package :snmp-system)
 
-(defsystem snmp
+(defsystem SNMP
   :description "Simple Network Management Protocol"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
   :version "6.0"
@@ -17,6 +20,7 @@
   :depends-on (:ironclad :usocket :asn.1)
   :components ((:module "vendor"
                 :components ((:file "portable-threads")))
+               ;; base system
                (:file "package"     :depends-on ("vendor"))
 	       (:file "constants"   :depends-on ("package"))
                (:file "condition"   :depends-on ("constants"))
@@ -31,7 +35,7 @@
                (:file "snmp-get"    :depends-on ("request"))
                (:file "snmp-walk"   :depends-on ("request" "snmp-smi"))
                (:file "snmp-trap"   :depends-on ("request"))
-               ;; high-level client features
+               ;; high-level client
                (:module "client"
 		:components ((:file "table")
                              (:file "discover")))))
