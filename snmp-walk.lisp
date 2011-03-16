@@ -35,3 +35,6 @@
 
 (defmethod snmp-walk (object (var object-id) &key context)
   (car (snmp-walk object (list var) :context context)))
+
+(defmethod snmp-walk (object (var simple-oid) &key context)
+  (car (snmp-walk object (list var) :context context)))

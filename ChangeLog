@@ -1,0 +1,12 @@
+6.0:
+
+* General: all ASN.1 related stuff merged in.
+* General: drop unnecessary package dependency, only left: IRONCLAD and USOCKET.
+* Enhancement: MIB compiler for platforms other than LispWorks (thanks to J. Fremlin from MSI).
+* Enhancement: Faster ASN.1 BER encode (thanks to J. Fremlin from MSI)
+* Bugfix: SNMPv3 reporting support for long live V3 sessions (engine time may change)
+
+(TODO)
+
+* Enhancement: MIB interpreter, loading MIB files directly into Lisp.
+* Enhancement: SNMP-SELECT, SQL-like syntax for SNMP query

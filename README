@@ -23,7 +23,6 @@ close-session
 define-object-id
 disable-snmp-service
 enable-snmp-service
-export-object-id
 open-session
 snmp-bulk
 snmp-get
@@ -33,6 +32,4 @@ snmp-set
 snmp-server
 snmp-trap
 snmp-walk
-unexport-object-id
-update-mib
 with-open-session

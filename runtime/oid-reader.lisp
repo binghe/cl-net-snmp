@@ -119,14 +119,14 @@
        (if (zerop head)
            (oid-helper (cdr oid-tokens) |zero|)
          ;; optimize: plain number list directly to simple-oid when possible         
-         (if #+lispworks (every #'numberp (cdr oid-tokens))
-             #-lispworks nil
+         #+lispworks
+         (if (every #'numberp (cdr oid-tokens))
              (let ((o (gethash oid-tokens *simple-oid-cache*)))
                (or o
-                   (prog1 (oid-helper oid-tokens |zero|)
-                     #+ignore
-                     (format t "OID cache fault on ~A ~%" oid-tokens))))
-             (oid-helper oid-tokens |zero|))))
+                   (oid-helper oid-tokens |zero|)))
+             (oid-helper oid-tokens |zero|))
+         #-lispworks
+         (oid-helper oid-tokens |zero|)))
       (symbol (if (endp (cdr oid-tokens))
                   (oid-symbol-value head)
                 (let ((base (oid-symbol-value head)))

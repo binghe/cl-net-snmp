@@ -331,7 +331,19 @@
             (otherwise (if (eq exist var)
                            exist
                          (list var exist)))))
-    (symbol-value var))) ; new come first
+    (symbol-value var))) ; new one comes first
+
+(defun unregister-oid (name var)
+  (let ((exist (gethash name *oid-database*)))
+    (typecase exist
+      (null nil)
+      (list (let ((new (remove var exist)))
+              (if (null new)
+                  (remhash name *oid-database*)
+                (setf (gethash name *oid-database*) new))))
+      (otherwise
+       (when (eq exist var)
+         (remhash name *oid-database*))))))
 
 (defgeneric ensure-oid (oid value))
 
