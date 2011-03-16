@@ -127,7 +127,7 @@
   (usocket:socket-connect host port :protocol :datagram))
 
 (defun open-session (host &key (port *default-snmp-port*)
-                               (version *default-snmp-version*)
+                               version
                                (community *default-snmp-community*)
                                (create-socket t)
                                user auth priv)
