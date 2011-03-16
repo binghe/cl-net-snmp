@@ -3,6 +3,18 @@
 
 (in-package :snmp)
 
+(defun snmp-report (session &key context)
+  (declare (type v3-session session))
+  (let ((message (make-instance 'v3-message
+                                :report t
+                                :session session
+                                :context (or context *default-context*)
+                                :pdu (make-instance 'get-request-pdu
+                                                    :variable-bindings nil))))
+    (let ((reply (send-snmp-message session message)))
+      (map 'list #'(lambda (x) (coerce x 'list))
+           (variable-bindings-of (pdu-of reply))))))
+
 (defgeneric snmp-request (session request bindings &key &allow-other-keys)
   (:documentation "General SNMP request operation"))
 

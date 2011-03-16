@@ -3,8 +3,6 @@
 
 (in-package :snmp)
 
-;;; Note: snmp-get moved to request.lisp
-
 ;;; RFC 3416: 4.2.3. The GetBulkRequest-PDU
 (defun generate-table (vars vbs non-repeaters max-repetitions)
   (declare (type fixnum non-repeaters max-repetitions))

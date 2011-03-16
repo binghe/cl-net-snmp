@@ -30,10 +30,9 @@
 	       (:file "session"     :depends-on ("keytool"))
                (:file "message"     :depends-on ("constants" "pdu" "session"))
                (:file "network"     :depends-on ("message" "session"))
-               (:file "report"      :depends-on ("network" "message"))
-               (:file "request"     :depends-on ("report" "pdu"))
+               (:file "request"     :depends-on ("network" "message" "pdu" "snmp-smi"))
                (:file "snmp-get"    :depends-on ("request"))
-               (:file "snmp-walk"   :depends-on ("request" "snmp-smi"))
+               (:file "snmp-walk"   :depends-on ("request"))
                (:file "snmp-trap"   :depends-on ("request"))
                ;; high-level client
                (:module "client"

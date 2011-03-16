@@ -115,4 +115,3 @@
                   (data-length (length data)))
              #+snmp-system::usocket
              (usocket:socket-send (socket-of session) data data-length)))))
-
