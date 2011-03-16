@@ -1,7 +1,7 @@
 ;;;; -*- Mode:Common-Lisp; Package:PORTABLE-THREADS; Syntax:common-lisp -*-
 ;;;; *-* File: /usr/local/gbbopen/source/tools/portable-threads.lisp *-*
 ;;;; *-* Edited-By: cork *-*
-;;;; *-* Last-Edit: Wed Jun  2 14:01:21 2010 *-*
+;;;; *-* Last-Edit: Thu Jul 29 16:50:15 2010 *-*
 ;;;; *-* Machine: cyclone.cs.umass.edu *-*
 
 ;;;; **************************************************************************
@@ -158,6 +158,8 @@
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (import
+   #+abcl
+   '()
    #+allegro 
    '(sys:with-timeout)
    #+clisp
@@ -303,7 +305,8 @@
 ;;; ===========================================================================
 ;;;  Features & warnings
 
-#+(or (and clisp (not mt))
+#+(or abcl             ;; temporarily without thread support--very temporarily
+      (and clisp (not mt))
       cormanlisp
       (and cmu (not mp)) 
       (and ecl (not threads))
