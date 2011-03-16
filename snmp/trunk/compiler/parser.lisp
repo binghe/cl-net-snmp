@@ -57,6 +57,7 @@
   #+snmp-system::cl-yacc
   (snmp.yacc:parse-with-lexer #'(lambda () (asn.1-lexer source))
                               *asn.1-parser*)
+  #-(or snmp-system::parsergen snmp-system::cl-yacc)
   (error "No parser defined in features.lisp-expr"))
 
 (defmethod parse ((source t))
