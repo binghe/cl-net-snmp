@@ -40,6 +40,9 @@
 (defmethod snmp-request (session request (binding object-id) &key context)
   (snmp-request session request (list (list binding nil)) :context context))
 
+(defmethod snmp-request (session request (binding simple-oid) &key context)
+  (snmp-request session request (list (list binding nil)) :context context))
+
 (defun snmp-get (session bindings &key context)
   (let ((result (mapcar #'second
                         (snmp-request session 'get-request-pdu bindings

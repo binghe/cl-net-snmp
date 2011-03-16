@@ -3,9 +3,6 @@
 
 (in-package :snmp)
 
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (export 'snmp-select))
-
 ;;; SNMP-SELECT, A high-level SNMP query language.
 
 #| Sample Usage
