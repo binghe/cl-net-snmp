@@ -12,10 +12,27 @@
                             |read-write|
                             |read-create|))
 
+(eval-when (:load-toplevel :execute)
+  (macrolet ((define-self-evaluated-symbol (symbol)
+               `(defvar ,symbol ',symbol)))
+    (define-self-evaluated-symbol |not-accessible|)
+    (define-self-evaluated-symbol |accessible-for-notify|)
+    (define-self-evaluated-symbol |read-only|)
+    (define-self-evaluated-symbol |read-write|)
+    (define-self-evaluated-symbol |read-create|)))
+
 (deftype status () '(member |current|
                             |deprecated|
                             |mandatory|
                             |obsolete|))
+
+(eval-when (:load-toplevel :execute)
+  (macrolet ((define-self-evaluated-symbol (symbol)
+               `(defvar ,symbol ',symbol)))
+    (define-self-evaluated-symbol |current|)
+    (define-self-evaluated-symbol |deprecated|)
+    (define-self-evaluated-symbol |mandatory|)
+    (define-self-evaluated-symbol |obsolete|)))
 
 (deftype oid-syntax () '(or symbol list))
 
@@ -353,15 +370,18 @@
 (defmethod ensure-oid ((oid symbol) (value integer))
   (ensure-oid (symbol-value oid) value))
 
+(defmethod ensure-oid ((oid null) (value t))
+  (error "Try to ensure a NIL oid"))
+
 (defmacro defoid (name (parent value) &body options)
   `(progn
      (defvar ,name
        (or (ensure-oid ,parent ,value)
-           ,(append `(make-instance 'object-id
+           ,(nconc `(make-instance 'object-id
                                     :name ',name
                                     :value ,value
                                     :parent ,parent
                                     :module *current-module*)
-                    (apply #'append options))))
+                    (reduce #'append options))))
      (eval-when (:load-toplevel :execute)
        (register-oid (symbol-name ',name) ',name))))

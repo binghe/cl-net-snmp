@@ -3,7 +3,7 @@
 
 (in-package :snmp-ui)
 
-(defvar *default-enabled-modules* '(asn.1::|SNMPv2-SMI|))
+(defparameter *default-enabled-modules* nil)
 (defvar *mibrowser-nodes* nil)
 (defvar *switched-modules* nil)
 (defvar *enabled-modules*)
