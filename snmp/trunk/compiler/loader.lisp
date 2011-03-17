@@ -46,7 +46,8 @@
             ;; interpret assignments
             (when body
               (dolist (i body type)
-                (load-asn.1-internal (car i) (cdr i))))))))))
+                (load-asn.1-internal (car i) (cdr i))))
+            (pushnew *current-module* *mib-modules*)))))))
 
 ;;; finished
 (defmethod load-asn.1-internal ((type (eql :import)) (rtl list))
@@ -54,10 +55,12 @@
     (destructuring-bind (symbols from module) item
       (assert (eq from :from))
       (when module
-        (let ((package (module->package real-module)))
-          (import (mapcar #'(lambda (s) (intern (symbol-name s)
-                                                (find-package (symbol-name package))))
-                            symbols)
+        (let ((package (module->package module)))
+          (import (mapcar #'(lambda (symbol)
+                              (intern (symbol-name symbol)
+                                      (or (find-package (symbol-name package))
+                                          (error "Cannot find depended module ~A" (symbol-name module)))))
+                          symbols)
                   *current-package*))))))
 
 (defmethod load-asn.1-internal ((type (eql :type-assignment)) (rtl list))
@@ -76,6 +79,8 @@
     (symbol  (intern (symbol-name thing) *current-package*))))
 
 (defun load-object-id (name value parent &rest keyword-arguments)
+  #+development
+  (format *debug-io* "Load OID: ~A~%" name)
   (let ((oid-symbol (normalized-name name))
         (parent-oid (oid (normalized-name parent))))
     (setf (symbol-value oid-symbol)
@@ -109,18 +114,11 @@
   (declare (ignore type))
   (intern (symbol-name name) *current-package*))
 
-(defgeneric load-df (type rtl))
+(defgeneric load-df (type rtl)
+  (:documentation "load a general definition"))
 
 (defmethod load-df ((type symbol) (rtl list))
-  (destructuring-bind ((name options) (parent value)) rtl
-    (values type rtl)))
-
-(defmethod load-df ((type (eql 'OBJECT-IDENTITY)) (rtl list))
   (destructuring-bind ((name options) (parent value)) rtl
     (let ((keyword-arguments (reduce #'append (compile-df-options options))))
       (values type
               (apply #'load-object-id name value parent keyword-arguments)))))
-
-(defmethod load-df ((type (eql 'TRAP-TYPE)) (rtl list))
-  "ignored entry, do nothing"
-  (values type rtl))
