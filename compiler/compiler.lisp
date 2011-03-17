@@ -198,11 +198,11 @@
 
 (defmethod compile-dfo-internal ((key (eql 'STATUS)) (value symbol))
   (declare (ignore key))
-  `(:status ',value))
+  `(:status ,value))
 
 (defmethod compile-dfo-internal ((key (eql 'MAX-ACCESS)) (value symbol))
   (declare (ignore key))
-  `(:max-access ',value))
+  `(:max-access ,value))
 
 (defmethod compile-dfo-internal ((key (eql 'DISPLAY-HINT)) (value string))
   (declare (ignore key))
