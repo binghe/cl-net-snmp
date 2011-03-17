@@ -75,16 +75,17 @@
     (list    (normalized-name (car thing)))
     (symbol  (intern (symbol-name thing) *current-package*))))
 
-(defun load-object-id (name value parent &key &allow-other-keys)
+(defun load-object-id (name value parent &rest keyword-arguments)
   (let ((oid-symbol (normalized-name name))
         (parent-oid (oid (normalized-name parent))))
     (setf (symbol-value oid-symbol)
           (or (ensure-oid parent-oid value)
-              (make-instance 'object-id
-                             :name oid-symbol
-                             :value value
-                             :parent parent-oid
-                             :module *current-module*)))
+              (apply #'make-instance 'object-id
+                     :name oid-symbol
+                     :value value
+                     :parent parent-oid
+                     :module *current-module*
+                     keyword-arguments)))
     (register-oid (symbol-name oid-symbol) oid-symbol)
     oid-symbol))
 
@@ -116,8 +117,9 @@
 
 (defmethod load-df ((type (eql 'OBJECT-IDENTITY)) (rtl list))
   (destructuring-bind ((name options) (parent value)) rtl
-    (let ((keyword-arguments (compile-df-options options)))
-      (values type rtl))))
+    (let ((keyword-arguments (reduce #'append (compile-df-options options))))
+      (values type
+              (apply #'load-object-id name value parent keyword-arguments)))))
 
 (defmethod load-df ((type (eql 'TRAP-TYPE)) (rtl list))
   "ignored entry, do nothing"
