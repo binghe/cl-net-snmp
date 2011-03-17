@@ -165,7 +165,6 @@
 	   #:update-mib
            #:with-open-session))
 
-
 (in-package :snmp)
 
 ;;; Logical Pathname Translations, learn from CL-HTTP source code

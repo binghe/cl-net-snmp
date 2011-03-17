@@ -9,8 +9,7 @@
                                 :report t
                                 :session session
                                 :context (or context *default-context*)
-                                :pdu (make-instance 'get-request-pdu
-                                                    :variable-bindings nil))))
+                                :pdu (make-instance 'get-request-pdu))))
     (let ((reply (send-snmp-message session message)))
       (map 'list #'(lambda (x) (coerce x 'list))
            (variable-bindings-of (pdu-of reply))))))
