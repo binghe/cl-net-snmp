@@ -147,11 +147,9 @@
            #:open-session
            #:register-variable
            #:snmp-bulk
-           #:snmp-client
            #:snmp-get
            #:snmp-get-next
            #:snmp-inform
-           #:snmp-select
            #:snmp-set
            #:snmp-server
            #:snmp-trap
