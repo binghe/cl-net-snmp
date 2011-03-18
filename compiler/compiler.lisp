@@ -190,7 +190,7 @@
 (defmethod compile-dfo-internal ((key (eql 'SYNTAX)) (value t))
   "Simple SYNTAX: only one symbol, map it into CL type"
   (declare (ignore key))
-  `(:syntax ',(compile-type value)))
+  `(:syntax ,(compile-type value)))
 
 (defmethod compile-dfo-internal ((key (eql 'DESCRIPTION)) (value string))
   (declare (ignore key))
