@@ -139,7 +139,6 @@
            #:clean-default-dispatch
            #:close-session
            #:compile-mib
-           #:control-center
            #:def-scalar-variable
            #:def-listy-mib-table
            #:disable-snmp-service
@@ -147,7 +146,6 @@
            #:load-mib
            #:open-session
            #:register-variable
-           #:reload-snmp-service
            #:snmp-bulk
            #:snmp-client
            #:snmp-get

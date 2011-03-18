@@ -1,5 +1,5 @@
 -- -*- Mode: asn1 -*-
--- $Id: lisp-cl-http-mib.txt 682 2008-12-23 05:45:11Z binghe $
+-- $Id$
 
 CL-HTTP-MIB DEFINITIONS ::= BEGIN
 

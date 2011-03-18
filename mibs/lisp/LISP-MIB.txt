@@ -1,5 +1,5 @@
 -- -*- Mode: asn1 -*-
--- $Id: lisp-mib.txt 712 2009-01-22 07:54:06Z binghe $
+-- $Id$
 
 LISP-MIB DEFINITIONS ::= BEGIN
 
