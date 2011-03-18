@@ -24,7 +24,6 @@
 
 (defvar *current-package*)
 
-;;; finished
 (defmethod load-asn.1-internal ((type (eql :module)) (rtl list))
   (destructuring-bind (module-name xxx) rtl
     (let ((long-package-name (module->package module-name))
@@ -47,9 +46,11 @@
             (when body
               (dolist (i body type)
                 (load-asn.1-internal (car i) (cdr i))))
-            (pushnew *current-module* *mib-modules*)))))))
+            (prog1
+                (export *current-module* *asn.1-package*)
+              (set *current-module* *current-module*) ; make it self-evaluated
+              (pushnew *current-module* *mib-modules*))))))))
 
-;;; finished
 (defmethod load-asn.1-internal ((type (eql :import)) (rtl list))
   (dolist (item rtl type)
     (destructuring-bind (symbols from module) item
@@ -64,10 +65,10 @@
                   *current-package*))))))
 
 (defmethod load-asn.1-internal ((type (eql :type-assignment)) (rtl list))
-  (values (load-ta (car rtl) (cdr rtl)) type))
+  (values (load-ta (first rtl) (second rtl)) type))
 
 (defmethod load-asn.1-internal ((type (eql :value-assignment)) (rtl list))
-  (values (load-va (car rtl) (cdr rtl)) type))
+  (values (load-va (first rtl) (second rtl)) type))
 
 (defmethod load-asn.1-internal ((type (eql :define)) (rtl list))
   (values (load-df (car rtl) (cdr rtl)) type))
@@ -78,7 +79,7 @@
     (list    (normalized-name (car thing)))
     (symbol  (intern (symbol-name thing) *current-package*))))
 
-(defun load-object-id (name value parent &rest keyword-arguments)
+(defun load-object-id (type name value parent &rest keyword-arguments)
   #+development
   (format *debug-io* "Load OID: ~A~%" name)
   (let ((oid-symbol (normalized-name name))
@@ -86,6 +87,7 @@
     (setf (symbol-value oid-symbol)
           (or (ensure-oid parent-oid value)
               (apply #'make-instance 'object-id
+                     :type type
                      :name oid-symbol
                      :value value
                      :parent parent-oid
@@ -102,17 +104,34 @@
   (values type rtl))
 
 (defmethod load-va ((type (eql :object-identifier)) (rtl list))
-  (destructuring-bind ((name value)) rtl
+  (destructuring-bind (name value) rtl
     (setf value (last value 2))
     (destructuring-bind (parent value) value
-      (values type (load-object-id name value parent)))))
+      (values type (load-object-id type name value parent)))))
 
-(defgeneric load-ta (name type)
-  (:documentation "load a type assignment"))
+(defun load-ta (name specifier)
+  (multiple-value-bind (type simple-type-p)
+      (compile-type specifier)
+    (if simple-type-p
+        (normalized-name name)
+      (load-ta-internal type name specifier))))
 
-(defmethod load-ta ((name symbol) (type list))
-  (declare (ignore type))
-  (intern (symbol-name name) *current-package*))
+(defgeneric load-ta-internal (type name specifier))
+
+(defmethod load-ta-internal ((type symbol) name specifier)
+  (declare (ignore type specifier))
+  (normalized-name name))
+
+(defmethod load-ta-internal ((type (eql :sequence)) name specifier)
+  (labels ((load-sequence (slot)
+             (destructuring-bind (name type) slot
+               (let ((slot-name (normalized-name name)))
+                 (list ':name slot-name ':type (normalized-name (compile-type type)))))))
+    (let ((class-name (normalized-name name))
+          (slots (mapcar #'load-sequence (cdr specifier))))
+      (ensure-class class-name
+                    ':direct-superclasses '(sequence-type)
+                    ':direct-slots slots))))
 
 (defgeneric load-df (type rtl)
   (:documentation "load a general definition"))
@@ -121,4 +140,4 @@
   (destructuring-bind ((name options) (parent value)) rtl
     (let ((keyword-arguments (reduce #'append (compile-df-options options))))
       (values type
-              (apply #'load-object-id name value parent keyword-arguments)))))
+              (apply #'load-object-id type name value parent keyword-arguments)))))
