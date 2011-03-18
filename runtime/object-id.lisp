@@ -12,27 +12,10 @@
                             |read-write|
                             |read-create|))
 
-(eval-when (:load-toplevel :execute)
-  (macrolet ((define-self-evaluated-symbol (symbol)
-               `(defvar ,symbol ',symbol)))
-    (define-self-evaluated-symbol |not-accessible|)
-    (define-self-evaluated-symbol |accessible-for-notify|)
-    (define-self-evaluated-symbol |read-only|)
-    (define-self-evaluated-symbol |read-write|)
-    (define-self-evaluated-symbol |read-create|)))
-
 (deftype status () '(member |current|
                             |deprecated|
                             |mandatory|
                             |obsolete|))
-
-(eval-when (:load-toplevel :execute)
-  (macrolet ((define-self-evaluated-symbol (symbol)
-               `(defvar ,symbol ',symbol)))
-    (define-self-evaluated-symbol |current|)
-    (define-self-evaluated-symbol |deprecated|)
-    (define-self-evaluated-symbol |mandatory|)
-    (define-self-evaluated-symbol |obsolete|)))
 
 (deftype oid-syntax () '(or symbol list))
 
@@ -377,7 +360,7 @@
   `(progn
      (defvar ,name
        (or (ensure-oid ,parent ,value)
-           ,(nconc `(make-instance 'object-id
+           ,(append `(make-instance 'object-id
                                     :name ',name
                                     :value ,value
                                     :parent ,parent

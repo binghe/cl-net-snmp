@@ -3,30 +3,46 @@
 
 (in-package :asn.1)
 
+(defvar *in-compiler* t)
+
 (defun format-header (file stream)
-  (format stream ";;;; -*- Mode: Lisp -*-~%;;;; Auto-generated from ~A by ASN.1 ~D.~D~%"
+  (format stream ";;;; -*- Mode: Lisp -*-~%;;;; Generated from ~A by ASN.1 ~D.~D~%"
           file *major-version* *minor-version*))
 
 (defgeneric compile-asn.1 (object &key &allow-other-keys))
 
-(defmethod compile-asn.1 ((file t) &key to &allow-other-keys)
+(defmethod compile-asn.1 ((file t) &key to temp &allow-other-keys)
   (let ((result (compile-asn.1 (parse file))))
-    (if (pathnamep to)
-      (let ((head (merge-pathnames (make-pathname :type "lisp-expr")
-                                   to))
-            (*package* (find-package :asn.1))
-            (*print-case* :downcase))
-        (with-open-file (h head :direction :output :if-exists :supersede)
-          (format-header file h)
-          (pprint (car result) h)
-          (terpri h))
-        (with-open-file (s to :direction :output :if-exists :supersede)
-          (format-header file s)
-          (dolist (i (sort-definitions (cdr result)))
-            (pprint i s)
-            (terpri s))
-          (terpri s)))
-      result)))
+    (cond ((pathnamep to)
+           (let ((head (merge-pathnames (make-pathname :type "lisp-expr")
+                                        to))
+                 (*package* *asn.1-package*)
+                 (*print-case* :downcase))
+             (with-open-file (h head :direction :output :if-exists :supersede)
+               (format-header file h)
+               (pprint (car result) h)
+               (terpri h))
+             (with-open-file (s to :direction :output :if-exists :supersede)
+               (format-header file s)
+               (dolist (i (sort-definitions (cdr result)))
+                 (pprint i s)
+                 (terpri s))
+               (terpri s))))
+          #+lispworks ; debug purpose only
+          (temp
+           (let ((temp-file (make-pathname :name (pathname-name file)
+                                           :type "lisp"
+                                           :defaults (hcl:get-temp-directory)))
+                 (*package* *asn.1-package*)
+                 (*print-case* :downcase))
+             (with-open-file (s temp-file :direction :output :if-exists :supersede)
+               (format-header file s)
+               (dolist (i (sort-definitions (cdr result)))
+                 (pprint i s)
+                 (terpri s))
+               (terpri s))
+             temp-file))
+          (t result))))
 
 (defmethod compile-asn.1 ((rtl list) &key &allow-other-keys)
   (if (atom rtl)
@@ -190,7 +206,9 @@
 (defmethod compile-dfo-internal ((key (eql 'SYNTAX)) (value t))
   "Simple SYNTAX: only one symbol, map it into CL type"
   (declare (ignore key))
-  `(:syntax ,(compile-type value)))
+  (if *in-compiler*
+      `(:syntax ',(compile-type value))
+      `(:syntax ,(compile-type value))))
 
 (defmethod compile-dfo-internal ((key (eql 'DESCRIPTION)) (value string))
   (declare (ignore key))
@@ -198,16 +216,24 @@
 
 (defmethod compile-dfo-internal ((key (eql 'STATUS)) (value symbol))
   (declare (ignore key))
-  `(:status ,value))
+  (if *in-compiler*
+      `(:status ',value)
+      `(:status ,value)))
 
 (defmethod compile-dfo-internal ((key (eql 'MAX-ACCESS)) (value symbol))
   (declare (ignore key))
-  `(:max-access ,value))
+  (if *in-compiler*
+      `(:max-access ',value)
+      `(:max-access ,value)))
 
 (defmethod compile-dfo-internal ((key (eql 'DISPLAY-HINT)) (value string))
   (declare (ignore key))
-  `(:display-hint ,value))
+  (if *in-compiler*
+      `(:display-hint ',value)
+      `(:display-hint ,value)))
 
 (defmethod compile-dfo-internal ((key (eql 'REFERENCE)) (value string))
   (declare (ignore key))
-  `(:reference ,value))
+  (if *in-compiler*
+      `(:reference ',value)
+      `(:reference ,value)))

@@ -34,6 +34,7 @@
                (:file "snmp-get"    :depends-on ("request"))
                (:file "snmp-walk"   :depends-on ("request"))
                (:file "snmp-trap"   :depends-on ("request"))
+               (:file "update-mib"  :depends-on ("package"))
                ;; high-level client
                (:module "client"
 		:components ((:file "table")
