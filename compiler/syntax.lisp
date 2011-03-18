@@ -261,8 +261,7 @@
     (nreverse list)))
 
 ;;; binghe: following funtions is contributed by John Fremlin from MSI <jf@msi.co.jp>
-
-#+snmp-system::cl-yacc
+#-lispworks
 (defun defparser-production-to-yacc (grammar-symbols forms)
   (cond ((not (and forms (or (not (listp forms)) (some 'identity forms))))
 	 nil)
@@ -284,17 +283,17 @@
                         ,@(when unused-vars  (list `(declare (ignore ,@unused-vars))))
                         ,forms)))))))
 
-#+snmp-system::cl-yacc
+#-lispworks
 (defun defparser-to-yacc (rules)
   (let (grouped-rules)
     (loop for rule in rules do
 	  (destructuring-bind ((non-terminal &rest grammar-symbols) &optional forms)
 	      rule
 	    (assert non-terminal)
-            #+ignore
+            #+lispworks
             (push (append grammar-symbols (defparser-production-to-yacc grammar-symbols forms)) 
 		  (sys:cdr-assoc non-terminal grouped-rules))
-            ;;; binghe: I don't know if this rewrite is correct ...
+	    #-lispworks
             (let* ((%assoc (assoc non-terminal grouped-rules))
                    (%cdr-assoc (cdr %assoc))
                    (item (append grammar-symbols

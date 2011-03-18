@@ -20,7 +20,6 @@
                     recv-message recv-seq recv-data
                     (sockets (list socket)))
   "sync messages on single socket"
-  #+snmp-system::usocket
   (declare (type usocket:datagram-usocket socket))
 
   ;; Encode data for send
@@ -32,20 +31,17 @@
                               :initial-element 0))
   ;; Define basic network operations
   (labels ((send ()
-             (let ((nbytes #+snmp-system::usocket
-                           (usocket:socket-send socket send-data send-data-length)))
+             (let ((nbytes (usocket:socket-send socket send-data send-data-length)))
                (unless (plusp nbytes)
                  (error 'snmp-error))
                nbytes))
            (wait ()
              (multiple-value-bind (return-sockets real-time)
-                 #+snmp-system::usocket
                  (usocket:wait-for-input sockets :timeout *socket-sync-timeout*)
                (declare (ignore return-sockets))
                real-time))
            (recv ()
              (multiple-value-bind (return-recv-data recv-data-length)
-                 #+snmp-system::usocket
                  (usocket:socket-receive socket recv-data max-receive-length)
                (declare (ignore return-recv-data))
                (when (plusp recv-data-length)
@@ -88,7 +84,6 @@
         ;; trap message: only send once
         (t (let* ((data (coerce (ber-encode message) 'octets))
                   (data-length (length data)))
-             #+snmp-system::usocket
              (usocket:socket-send (socket-of session) data data-length)))))
 
 (defmethod send-snmp-message ((session v3-session) (message v3-message) &key (receive t))
@@ -113,5 +108,4 @@
         ;; trap message: only send once
         (t (let* ((data (coerce (ber-encode message) 'octets))
                   (data-length (length data)))
-             #+snmp-system::usocket
              (usocket:socket-send (socket-of session) data data-length)))))

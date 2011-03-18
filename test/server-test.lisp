@@ -26,4 +26,4 @@
                           :port *default-snmp-server-port*
                           :version :2c
                           :community "public") ; actually community could be any string
-      (snmp-walk s "common-lisp"))))
+      (snmp-walk s "commonLisp"))))
