@@ -38,7 +38,8 @@
                                                      #+snmp-system::short-name
                                                      :nicknames (list short-package-name)
                                                      :use '(:common-lisp :asn.1))))
-                (*current-module* module-name))
+                (*current-module* module-name)
+                (*in-compiler* nil))
             ;; import symbols
             (when imports
               (load-asn.1-internal (car imports) (cdr imports)))
