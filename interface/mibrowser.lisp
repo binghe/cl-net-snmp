@@ -8,12 +8,9 @@
 (defvar *switched-modules* nil)
 (defvar *enabled-modules*)
 
-(defvar *root-module* '|ASN.1/SNMPv2-SMI|::|SNMPv2-SMI|)
-
 (defun make-switched-modules ()
   (setf *switched-modules* (copy-list asn.1::*mib-modules*)
         *enabled-modules*  (copy-list *default-enabled-modules*))
-  (delete *root-module* *switched-modules*)
   (sort *switched-modules*
         #'(lambda (a b) (string< (symbol-name a)
                                  (symbol-name b)))))

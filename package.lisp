@@ -3,11 +3,7 @@
 
 (in-package :snmp-system)
 
-#+:abcl
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (require :gray-streams))
-
-#+cmu
+#+(or abcl cmu)
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (require :gray-streams))
 
@@ -127,8 +123,6 @@
            #:description
            #:reference))
 
-(in-package :snmp-system)
-
 (defpackage snmp
   (:use :common-lisp :asn.1)
   (:export #:+snmp-version-1+
@@ -165,6 +159,10 @@
 	   #:update-mib
            #:with-open-session))
 
+(in-package :asn.1)
+
+(defvar *asn.1-package* (find-package :asn.1))
+
 (in-package :snmp)
 
 ;;; Logical Pathname Translations, learn from CL-HTTP source code
@@ -181,6 +179,8 @@
           `(("**;*.*" ,home))
           (logical-pathname-translations "MIB")
           `(("**;*.*" "SNMP:MIBS;**;*.*")))))
+
+(defvar *snmp-package* (find-package :snmp))
 
 (defparameter *major-version* 6)
 (defparameter *minor-version* 0)

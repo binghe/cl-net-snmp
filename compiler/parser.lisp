@@ -25,7 +25,7 @@
 
 (defun asn.1-lexer (stream)
   (let ((*readtable* *asn.1-readtable*)
-        (*package* (find-package :asn.1)))
+        (*package* *asn.1-package*))
     (let ((token (read stream nil nil nil)))
       (when token
         (values (detect-token token) token)))))
