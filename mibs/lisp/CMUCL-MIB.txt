@@ -1,5 +1,5 @@
 -- -*- Mode: asn1 -*-
--- $Id: lisp-cmucl-mib.txt 682 2008-12-23 05:45:11Z binghe $
+-- $Id$
 
 CMUCL-MIB DEFINITIONS ::= BEGIN
 
