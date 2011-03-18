@@ -1,0 +1,163 @@
+2008-9-24: cl-net-snmp 5.5
+
+New cl-net-snmp updates available!
+
+cl-net-snmp project is the pure-lisp implementation of SNMP (Simple
+Network Management Protocol, RFC 2570) in both client and server-side.
+
+New features:
+
+ * [snmp 5.5] LISP-MIB change: add lispFeatureTable and
+   lispPackageTable
+ * [snmp-server 3.0] Full snmp-walk support added
+ * [asn.1 4.5] Add some new OID functions mainly for snmp-server
+ * [usocket-udp 2.2] bugfix
+ * [lispworks-udp 3.2] performance burst and bugfix
+
+MIB for Common Lisp:
+
+ Months ago, I registered an new IANA enterprise number (31609) for
+ Lisp itself. I hope this will be a good start for bring Common Lisp based
+ applications into industry-standard network monitor platform.
+ In the future, some server-side lisp projects such as CL-HTTP and
+ Hunchentoot can be monitored by third-part SNMP-based management
+ software by using MIB definitions from cl-net-snmp. At current, these
+ MIB files are in #p"SNMP:SERVER;MIB;" directory, or you can download
+ the main LISP-MIB.txt here:
+
+ https://cl-net-snmp.svn.sourceforge.net/svnroot/cl-net-snmp/snmp/trunk/server/mib/LISP-MIB.txt
+
+ Participation and suggestions are welcome, I hope someone could work
+ with me together to make it better.
+
+Download:
+
+ You can use ASDF-INSTALL to install cl-net-snmp 5.5, or download from
+ Sourceforge.net:
+
+ http://sourceforge.net/project/showfiles.php?group_id=209101
+
+ You may need following packages with version requiement:
+
+ snmp (>= 5.5),
+ asn.1 (>= 4.5),
+ usocket-udp (>= 2.2),
+ lispworks-udp (>= 3.2, only useful on LispWorks)
+
+ASDF Dependency:
+
+ * ironclad
+ * usocket (0.4.x or trunk, current release 0.3.x cannot use)
+ * trivial-gray-streams
+ * ieee-floats
+
+Current Supported Platforms:
+
+ * LispWorks (include win32)
+ * CMUCL (version after 2008-8 snapshot)
+ * SBCL
+ * Clozure CL (64-bit)
+ * Allegro CL
+
+Sample Usage:
+
+ Start from cl-net-snmp 5.5, you can see all *features* and packages in your
+ lisp image when doing snmp-walk on "lispSystem" MIB: (for example, a
+ snmp server running in Clozure CL)
+
+ Lisp side: (start up a snmp server on 0.0.0.0:6161)
+
+? (asdf:oos 'asdf:load-op :snmp-server)
+? (snmp:enable-snmp-service)
+#<SNMP-SERVER SNMP Server at NIL:8161>
+
+ UNIX side: (do a snmp-walk on the snmp server)
+
+$ snmpwalk -v 2c -c public localhost:8161 lispSystem
+LISP-MIB::lispImplementationType.0 = STRING: "Clozure Common Lisp"
+LISP-MIB::lispImplementationVersion.0 = STRING: "Version 1.2-r10805-trunk  (DarwinX8664)"
+LISP-MIB::lispLongSiteName.0 = STRING: "unspecified"
+LISP-MIB::lispShortSiteName.0 = STRING: "unspecified"
+LISP-MIB::lispMachineInstance.0 = STRING: "binghe-mac.people.163.org"
+LISP-MIB::lispMachineType.0 = STRING: "i386"
+LISP-MIB::lispMachineVersion.0 = STRING: "MacBookPro3,1"
+LISP-MIB::lispSoftwareType.0 = STRING: "Darwin"
+LISP-MIB::lispSoftwareVersion.0 = STRING: "9.5.0"
+LISP-MIB::lispInternalRealTime.0 = INTEGER: 154845250
+LISP-MIB::lispInternalRunTime.0 = INTEGER: 1823243
+LISP-MIB::lispInternalTimeUnitsPerSecond.0 = INTEGER: 1000000
+LISP-MIB::lispUniversalTime.0 = INTEGER: 1000000
+LISP-MIB::lispFeatureName.1 = STRING: "PORTABLE-THREADS-2.3"
+LISP-MIB::lispFeatureName.2 = STRING: "PORTABLE-THREADS"
+LISP-MIB::lispFeatureName.3 = STRING: "SPLIT-SEQUENCE"
+LISP-MIB::lispFeatureName.4 = STRING: "CL-FAD"
+LISP-MIB::lispFeatureName.5 = STRING: "ASDF"
+LISP-MIB::lispFeatureName.6 = STRING: "PRIMARY-CLASSES"
+LISP-MIB::lispFeatureName.7 = STRING: "COMMON-LISP"
+LISP-MIB::lispFeatureName.8 = STRING: "OPENMCL"
+LISP-MIB::lispFeatureName.9 = STRING: "CCL"
+LISP-MIB::lispFeatureName.10 = STRING: "CCL-1.2"
+LISP-MIB::lispFeatureName.11 = STRING: "CLOZURE"
+LISP-MIB::lispFeatureName.12 = STRING: "CLOZURE-COMMON-LISP"
+LISP-MIB::lispFeatureName.13 = STRING: "ANSI-CL"
+LISP-MIB::lispFeatureName.14 = STRING: "UNIX"
+LISP-MIB::lispFeatureName.15 = STRING: "OPENMCL-UNICODE-STRINGS"
+LISP-MIB::lispFeatureName.16 = STRING: "OPENMCL-NATIVE-THREADS"
+LISP-MIB::lispFeatureName.17 = STRING: "OPENMCL-PARTIAL-MOP"
+LISP-MIB::lispFeatureName.18 = STRING: "MCL-COMMON-MOP-SUBSET"
+LISP-MIB::lispFeatureName.19 = STRING: "OPENMCL-MOP-2"
+LISP-MIB::lispFeatureName.20 = STRING: "OPENMCL-PRIVATE-HASH-TABLES"
+LISP-MIB::lispFeatureName.21 = STRING: "X86-64"
+LISP-MIB::lispFeatureName.22 = STRING: "X86_64"
+LISP-MIB::lispFeatureName.23 = STRING: "X86-TARGET"
+LISP-MIB::lispFeatureName.24 = STRING: "X86-HOST"
+LISP-MIB::lispFeatureName.25 = STRING: "X8664-TARGET"
+LISP-MIB::lispFeatureName.26 = STRING: "X8664-HOST"
+LISP-MIB::lispFeatureName.27 = STRING: "DARWIN-HOST"
+LISP-MIB::lispFeatureName.28 = STRING: "DARWIN-TARGET"
+LISP-MIB::lispFeatureName.29 = STRING: "DARWINX86-TARGET"
+LISP-MIB::lispFeatureName.30 = STRING: "DARWINX8664-TARGET"
+LISP-MIB::lispFeatureName.31 = STRING: "DARWINX8664-HOST"
+LISP-MIB::lispFeatureName.32 = STRING: "POWEROPEN-TARGET"
+LISP-MIB::lispFeatureName.33 = STRING: "64-BIT-TARGET"
+LISP-MIB::lispFeatureName.34 = STRING: "64-BIT-HOST"
+LISP-MIB::lispFeatureName.35 = STRING: "LITTLE-ENDIAN-TARGET"
+LISP-MIB::lispFeatureName.36 = STRING: "LITTLE-ENDIAN-HOST"
+LISP-MIB::lispFeatureName.37 = STRING: "DARWIN"
+LISP-MIB::lispPackageName.1 = STRING: "SNMP"
+LISP-MIB::lispPackageName.2 = STRING: "PORTABLE-THREADS"
+LISP-MIB::lispPackageName.3 = STRING: "IRONCLAD"
+LISP-MIB::lispPackageName.4 = STRING: "ASN.1"
+LISP-MIB::lispPackageName.5 = STRING: "USOCKET"
+LISP-MIB::lispPackageName.6 = STRING: "SPLIT-SEQUENCE"
+LISP-MIB::lispPackageName.7 = STRING: "TRIVIAL-GRAY-STREAMS"
+LISP-MIB::lispPackageName.8 = STRING: "IEEE-FLOATS"
+LISP-MIB::lispPackageName.9 = STRING: "TRIVIAL-GRAY-STREAMS-SYSTEM"
+LISP-MIB::lispPackageName.10 = STRING: "IEEE-FLOATS-SYSTEM"
+LISP-MIB::lispPackageName.11 = STRING: "IRONCLAD-TESTS"
+LISP-MIB::lispPackageName.12 = STRING: "IRONCLAD-SYSTEM"
+LISP-MIB::lispPackageName.13 = STRING: "SPLIT-SEQUENCE-SYSTEM"
+LISP-MIB::lispPackageName.14 = STRING: "USOCKET-SYSTEM"
+LISP-MIB::lispPackageName.15 = STRING: "SNMP-SYSTEM"
+LISP-MIB::lispPackageName.16 = STRING: "CL-FAD-TEST"
+LISP-MIB::lispPackageName.17 = STRING: "CL-FAD"
+LISP-MIB::lispPackageName.18 = STRING: "ASDF"
+LISP-MIB::lispPackageName.19 = STRING: "COMMON-LISP-USER"
+LISP-MIB::lispPackageName.20 = STRING: "OPENMCL-MOP"
+LISP-MIB::lispPackageName.21 = STRING: "ANSI-LOOP"
+LISP-MIB::lispPackageName.22 = STRING: "INSPECTOR"
+LISP-MIB::lispPackageName.23 = STRING: "ARCH"
+LISP-MIB::lispPackageName.24 = STRING: "X86"
+LISP-MIB::lispPackageName.25 = STRING: "X8632"
+LISP-MIB::lispPackageName.26 = STRING: "OPENMCL-SOCKET"
+LISP-MIB::lispPackageName.27 = STRING: "GRAY"
+LISP-MIB::lispPackageName.28 = STRING: "SETF"
+LISP-MIB::lispPackageName.29 = STRING: "COMMON-LISP"
+LISP-MIB::lispPackageName.30 = STRING: "CCL"
+LISP-MIB::lispPackageName.31 = STRING: "KEYWORD"
+LISP-MIB::lispPackageName.32 = STRING: "X8664"
+LISP-MIB::lispPackageName.33 = STRING: "X86-DARWIN64"
+
+Regards,
+
+Chun Tian (binghe)
