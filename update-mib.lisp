@@ -9,7 +9,15 @@
     #p"MIB:IETF;SNMPv2-TM"
     #p"MIB:IETF;SNMPv2-CONF"
     #p"MIB:IETF;SNMPv2-MIB"
-    #p"MIB:IANA;IANAifType-MIB"))
+    #p"MIB:IANA;IANAifType-MIB"
+
+    #p"MIB:LISP;LISP-MIB.TXT"
+    #p"MIB:LISP;CLOZURE-MIB.TXT"
+    #p"MIB:LISP;CMUCL-MIB.TXT"
+    #p"MIB:LISP;FRANZ-MIB.TXT"
+    #p"MIB:LISP;LISPWORKS-MIB.TXT"
+    #p"MIB:LISP;SBCL-MIB.TXT"
+    #p"MIB:LISP;SCL-MIB.TXT"))
 
 (defun compile-mib (&rest args)
   (apply #'compile-asn.1 args))
@@ -41,8 +49,7 @@
   "Update mib.lisp-expr"
   (let ((mib.lisp-expr '())
         (mib-depend.lisp '())
-        (*package* (find-package :asn.1))
-        (*print-case* :downcase))
+        (*package* (find-package :asn.1)))
     (dolist (i mib-list)
       (format t "; Compiling ~A~%" i)
       (compile-asn.1 i :to (lisp-file i))
