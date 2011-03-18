@@ -1,0 +1,102 @@
+2008-7-21: cl-net-snmp 3.0 released.
+
+Hi, Lispers
+
+After one and a half year since I started this project (0.01 on May
+2007, 1.2 on Oct 2007), I'm glad to
+release cl-net-snmp 3.0 today, the pure-lisp implementation of Simple
+Network Management Protocol (SNMP, RFC 2271).
+
+From this release, I throw out the ZEBU LALR parser and write a simple
+ASN.1 compiler (based on LispWorks parsergen) to
+generate Lisp code from ASN.1 MIB files, then use ASDF to load them
+directly. Any ASN.1 Object Identifier value are treated as a Lisp
+variable.
+
+This project is part of my big plan: write a new system administration
+platform (like HP OpenView) completely in Common Lisp.
+
+Cliki page: (contains link to other resources)
+
+ http://www.cliki.net/cl-net-snmp
+
+Current Supported Platforms:
+
+ * LispWorks
+ * CMUCL
+ * SBCL
+ * Clozure CL
+ * Allegro CL
+
+Features:
+
+ * Full SNMP protocol support (SNMPv1, SNMPv2c, SNMPv3)
+ * Support MIB and ASN.1 object id names
+ * Fast BER encode/decode based on CLOS
+ * UDP retransmit support
+ * [LispWorks] Simple SNMP Server
+ * [LispWorks] GUI MIB Browser
+
+Download:
+
+You can use ASDF-INSTALL to install cl-net-snmp 3.0, or download
+following release files:
+
+ * The core: SNMP 3.0:
+
+  http://common-lisp.net/project/cl-net-snmp/release/snmp_3.0.tar.gz
+
+ * ASN.1 runtime and compiler, version 2.3:
+
+  http://common-lisp.net/project/cl-net-snmp/release/asn.1_2.3.tar.gz
+
+ * UDP patch for usocket, version 1.2:
+
+  http://common-lisp.net/project/cl-net-snmp/release/usocket-udp_1.2.tar.gz
+
+ * LispWorks UDP support, version 2.1:
+
+  http://common-lisp.net/project/cl-net-snmp/release/lispworks-udp_2.1.tar.gz
+
+Sample Usage:
+
+? (snmp:snmp-walk "debian-amd64.local" '("system"))
+(((#<OBJECT-ID sysDescr.0>
+   "Linux debian-amd64 2.6.25-2-amd64 #1 SMP Fri Jun 27 00:16:12 UTC 2008 x86_64")
+  (#<OBJECT-ID sysObjectID.0> #<OBJECT-ID netSnmpAgentOIDs.10>)
+  (#<OBJECT-ID sysUpTimeInstance (0) [0]> #<TIMETICKS (208848) 0:34:48.48>)
+  (#<OBJECT-ID sysContact.0>
+   "Root <root@localhost> (configure /etc/snmp/snmpd.local.conf)")
+  (#<OBJECT-ID sysName.0> "debian-amd64")
+  (#<OBJECT-ID sysLocation.0> "Unknown (configure /etc/snmp/snmpd.local.conf)")
+  (#<OBJECT-ID sysORLastChange.0> #<TIMETICKS (0) 0:00:00.00>)
+  (#<OBJECT-ID sysORID.1> #<OBJECT-ID snmpFrameworkMIBCompliances.1>)
+  (#<OBJECT-ID sysORID.2> #<OBJECT-ID snmpMPDMIBCompliances.1>)
+  (#<OBJECT-ID sysORID.3> #<OBJECT-ID usmMIBCompliances.1>)
+  (#<OBJECT-ID sysORID.4> #<OBJECT-ID snmpMIB (1) [2]>)
+  (#<OBJECT-ID sysORID.5> #<OBJECT-ID tcpMIB (49) [1]>)
+  (#<OBJECT-ID sysORID.6> #<OBJECT-ID ip (4) [39]>)
+  (#<OBJECT-ID sysORID.7> #<OBJECT-ID udpMIB (50) [1]>)
+  (#<OBJECT-ID sysORID.8> #<OBJECT-ID vacmBasicGroup (1) [0]>)
+  (#<OBJECT-ID sysORDescr.1> "The SNMP Management Architecture MIB.")
+  (#<OBJECT-ID sysORDescr.2> "The MIB for Message Processing and Dispatching.")
+  (#<OBJECT-ID sysORDescr.3>
+   "The management information definitions for the SNMP User-based Security Model.")
+  (#<OBJECT-ID sysORDescr.4> "The MIB module for SNMPv2 entities")
+  (#<OBJECT-ID sysORDescr.5> "The MIB module for managing TCP implementations")
+  (#<OBJECT-ID sysORDescr.6>
+   "The MIB module for managing IP and ICMP implementations")
+  (#<OBJECT-ID sysORDescr.7> "The MIB module for managing UDP implementations")
+  (#<OBJECT-ID sysORDescr.8> "View-based Access Control Model for SNMP.")
+  (#<OBJECT-ID sysORUpTime.1> #<TIMETICKS (0) 0:00:00.00>)
+  (#<OBJECT-ID sysORUpTime.2> #<TIMETICKS (0) 0:00:00.00>)
+  (#<OBJECT-ID sysORUpTime.3> #<TIMETICKS (0) 0:00:00.00>)
+  (#<OBJECT-ID sysORUpTime.4> #<TIMETICKS (0) 0:00:00.00>)
+  (#<OBJECT-ID sysORUpTime.5> #<TIMETICKS (0) 0:00:00.00>)
+  (#<OBJECT-ID sysORUpTime.6> #<TIMETICKS (0) 0:00:00.00>)
+  (#<OBJECT-ID sysORUpTime.7> #<TIMETICKS (0) 0:00:00.00>)
+  (#<OBJECT-ID sysORUpTime.8> #<TIMETICKS (0) 0:00:00.00>)))
+
+Regards,
+
+Chun Tian (binghe)

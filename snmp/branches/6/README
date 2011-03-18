@@ -1,0 +1,38 @@
+Simple Network Management Protocol for Common Lisp
+
+* API in SNMP package
+
++snmp-version-1+			[constant]
++snmp-version-2c+			[constant]
++snmp-version-3+			[constant]
+*default-snmp-community*		[variable]
+*default-snmp-port*			[variable]
+*default-snmp-server-address*		[variable]	(snmp-server)
+*default-snmp-server-port*		[variable]	(snmp-server)
+*default-snmp-server*			[variable]	(snmp-server)
+*default-snmp-version*			[variable]
+*default-context*			[variable]
+clean-default-dispatch			[function]	(snmp-server)
+close-session				[function]
+compile-mib				[function]
+def-scalar-variable			[macro]		(snmp-server)
+def-listy-mib-table			[macro]		(snmp-server)
+disable-snmp-service			[functinn]	(snmp-server)
+enable-snmp-service			[function]	(snmp-server)
+load-mib				[function]
+open-session				[function]
+register-variable			[function]	(snmp-server)
+snmp-bulk				[function]
+snmp-get				[function]
+snmp-get-next				[function]
+snmp-inform				[function]
+snmp-set				[function]
+snmp-trap				[function]
+snmp-walk				[function]
+update-mib				[function]
+with-open-session			[macro]
+
+* API in ASN.1 package
+
+oid					[generic function]
+plain-value				[generic function]

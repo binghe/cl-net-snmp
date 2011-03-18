@@ -1,0 +1,68 @@
+2008-9-8: cl-net-snmp 5.0
+
+Hi, Lispers
+
+After one and a half year since I started this project (0.01 on May
+2007, 1.2 on Oct 2007, 3.0 on July 21), I'm glad to
+release cl-net-snmp 5.0 today, the pure-lisp implementation of Simple
+Network Management Protocol (RFC 2570).
+
+This project is part of my big plan: write a new system administration
+platform (like HP OpenView) completely in Common Lisp.
+
+New feature in 5.0:
+
+ * Portable SNMP Server (snmp-server 2.0).
+ * Auto-learn UDP timeout and retransmit support based on
+   algorithms from TCP (usocket-udp 2.1).
+ * Many bugfix include SNMPv3 support and thread-safe.
+ * Seprate ASDF files: snmp.asd, snmp-server.asd, snmp-test.asd
+
+SourceForge Project Home:
+
+  http://sourceforge.net/projects/cl-net-snmp
+
+Project Dependency:
+
+ * ironclad
+ * usocket (0.4.x or trunk, current release (0.3.x) cannot use)
+ * trivial-gray-streams
+ * ieee-floats
+ * portable-threads (from GBBopen project)
+
+Current Supported Platforms:
+
+ * LispWorks (include win32)
+ * CMUCL
+ * SBCL
+ * Clozure CL (64-bit)
+ * Allegro CL
+
+Features:
+
+ * Full SNMP protocol support (SNMPv1, SNMPv2c, SNMPv3)
+ * Support MIB and ASN.1 object id names
+ * Fast BER encode/decode based on CLOS
+ * UDP retransmit support
+ * Simple SNMP Server
+ * [LispWorks] GUI MIB Browser
+
+Documents:
+
+ Still in progess. At current, you can see sample usage from test directory.
+ If any user still get confused, feel free to ask me through email.
+
+Download:
+
+You can use ASDF-INSTALL to install cl-net-snmp 5.0, or download from
+Sourceforge.net: (newest version in each sub-project except onlisp-cn)
+
+ http://sourceforge.net/project/showfiles.php?group_id=209101
+
+I'm glad to hear at least one corpration use my SNMP package for monitoring
+remote UNIX servers in their lisp product. I hope more lispers use my software
+and report any bug or suggestion back to me.
+
+Regards,
+
+Chun Tian (binghe)
