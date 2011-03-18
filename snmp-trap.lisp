@@ -3,7 +3,10 @@
 
 (in-package :snmp)
 
-(defvar *default-trap-enterprise* (oid "enterprises"))
+(defvar *default-trap-enterprise* nil)
+
+(defun initialize-default-trap ()
+  (setq *default-trap-enterprise* (oid "enterprises")))
 
 (defgeneric snmp-trap (session vars &key &allow-other-keys)
   (:documentation "SNMP Trap"))
@@ -19,6 +22,8 @@
   "SNMPv1 Trap PDU is different from v2c and v3, no request id"
   (declare (type integer generic-trap specific-trap)
            (type string agent-addr))
+  (unless enterprise
+    (initialize-default-trap))
   (let ((vb (if (null vars) #()
               (mapcar #'(lambda (x) (list (oid (car x)) (cdr x))) vars))))
     (let ((message (make-instance 'v1-message :session session

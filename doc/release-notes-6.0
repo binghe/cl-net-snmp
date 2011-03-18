@@ -1,0 +1,45 @@
+========================== CL-NET-SNMP 6.0 =============================
+
+The CL-NET-SNMP project is pleased to announce the release of 6.0.
+This is a major release which contains numerous enhancements and
+bug fixes from the last 5.x release.
+
+CL-NET-SNMP is a free, high-level implementation of the Simple Network
+Management Protocol (SNMP), which is common used for Unix/Linux system
+administration and network management. CL-NET-SNMP provides a fast ASN.1
+BER encode/decode engine; a MIB to Common Lisp compiler; a dynamic MIB
+loader for runtime loading of MIB objects; a SNMP server which could run
+inside any supported Common Lisp platform for montoring your Lisp
+server-side applications; and an group of handful interface function for
+doing every SNMP operations. On LispWorks, CL-NET-SNMP has a GUI based
+"MIB Browser".  CL-NET-SNMP supports SNMPv3 by help of the IRONCLAD
+crypto library, and do UDP networking based on USOCKET 0.5.  CL-NET-SNMP
+is maintained by Chun Tian (binghe), a Chinese Common Lisp programmer.
+
+New in this release:
+
+  * Feature enhancements:
+    - The MIB Compiler now works on all supported platform. On platforms
+      other than LispWorks, it use a customized CL-YACC for LALR parsing
+      of ASN.1-formated MIB definition files.
+    - The long awaited dynamic MIB loader has been added. It can be used
+      to load any MIB file into Lisp image at runtime, without need of
+      COMPILE-FILE, EVAL or other high-level Lisp functions.
+    - The speed of ASN.1 BER encode has been much improved, thanks to
+      J. Fremlin (MSI).
+
+  * Other changes:
+    - All ASN.1 related code has been merged into SNMP package.
+    - Now we only depend on USOCKET 0.5 and IRONCLAD.
+    - MIB files from IANA, IETF, Cisco, VMware, etc. has been updated.
+    - Now 'snmp-mib.asd' only load very few prebuilt MIB files. For rest
+      of them, user can load what they want using the new MIB loader,
+      see function SNMP:LOAD-MIB
+
+This release is not binary compatible with code compiled using CMUCL
+20a; you will need to recompile FASL files. 
+
+See <URL:http://common-lisp.net/projects/cl-net-snmp/> for download
+information, guidelines on reporting bugs, and mailing list details.
+
+I hope you enjoy using this release of CL-NET-SNMP!
