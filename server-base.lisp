@@ -55,7 +55,8 @@
          (if (null ,ids) 0
            ,@body))
        (eval-when (:load-toplevel :execute)
-         (register-variable (oid ,name) #',oid)))))
+         (register-variable (oid ,name) #',oid)
+         ,oid))))
 
 (defmacro def-listy-mib-table (name (agent ids) &body body)
   "The IDs argument is used for passing sub-ids of a MIB table, when called with NIL,
@@ -69,4 +70,5 @@
          (declare (ignorable ,agent ,ids))
          ,@body)
        (eval-when (:load-toplevel :execute)
-         (register-variable (oid ,name) #',oid)))))
+         (register-variable (oid ,name) #',oid)
+         ,oid))))

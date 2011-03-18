@@ -3,8 +3,7 @@
 
 (in-package :snmp)
 
-(defvar *snmp-server-contact* "Chun Tian (binghe) <binghe.lisp@gmail.com>"
-  "Change it to yourself")
+(defvar *snmp-server-contact* "")
 
 ;;; system tree
 (def-scalar-variable "sysDescr" (agent)
@@ -13,7 +12,7 @@
           (lisp-implementation-version)
           (machine-instance)))
 
-(def-scalar-variable "sysUpTimeInstance" (agent)
+(def-scalar-variable "sysUpTime" (agent)
   (timeticks (truncate (* #.(/ 100 internal-time-units-per-second)
                           (- (get-internal-real-time)
                              (slot-value agent 'start-up-time))))))
@@ -33,6 +32,7 @@
 
 ;;; OID Table definitions
 
+#+ignore
 (defvar *sys-or-id-table*
   (coerce (mapcar #'oid '("ifMIB"
                           "snmpMIB"
@@ -44,12 +44,14 @@
                           "snmpMPDCompliance"
                           "usmMIBCompliance")) 'vector))
 
+#+ignore
 (def-listy-mib-table "sysORID" (agent ids)
   (if (null ids)
     9 ; equal as '(1 2 3 4 5 6 7 8 9), see documentation of DEF-LISTY-MIB-TABLE macro
     (when (plusp (car ids))
       (elt *sys-or-id-table* (mod (1- (car ids)) 9)))))
 
+#+ignore
 (defvar *sys-or-descr-table*
   #("The MIB module to describe generic objects for network interface sub-layers"
     "The MIB module for SNMPv2 entities"
@@ -61,12 +63,14 @@
     "The MIB for Message Processing and Dispatching."
     "The management information definitions for the SNMP User-based Security Model."))
 
+#+ignore
 (def-listy-mib-table "sysORDescr" (agent ids)
   (if (null ids)
     '(1 2 3 4 5 6 7 8 9) ; equal to 9, here is for demo
     (when (plusp (car ids))
       (elt *sys-or-descr-table* (mod (1- (car ids)) 9)))))
 
+#+ignore
 (def-listy-mib-table "sysORUpTime" (agent ids)
   (if (null ids)
     '((1) (2) (3) (4) (5) (6) (7) (8) (9)) ; equal to 9, here is for demo
