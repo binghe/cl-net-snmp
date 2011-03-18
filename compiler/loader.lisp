@@ -27,15 +27,12 @@
 (defmethod load-asn.1-internal ((type (eql :module)) (rtl list))
   (destructuring-bind (module-name xxx) rtl
     (let ((long-package-name (module->package module-name))
-          #+snmp-system::short-name
           (short-package-name (intern (symbol-name module-name) :keyword)))
       (unless (null xxx)
         (destructuring-bind ((exports imports) body) xxx
           (declare (ignore exports)) ; SNMP don't care exports
           (let ((*current-package* (or (find-package long-package-name)
                                        (make-package long-package-name
-                                                     #+snmp-system::short-name
-                                                     #+snmp-system::short-name
                                                      :nicknames (list short-package-name)
                                                      :use '(:common-lisp :asn.1))))
                 (*current-module* module-name)
@@ -81,8 +78,6 @@
     (symbol  (intern (symbol-name thing) *current-package*))))
 
 (defun load-object-id (type name value parent &rest keyword-arguments)
-  #+development
-  (format *debug-io* "Load OID: ~A~%" name)
   (let ((oid-symbol (normalized-name name))
         (parent-oid (oid (normalized-name parent))))
     (setf (symbol-value oid-symbol)

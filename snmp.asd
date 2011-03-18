@@ -7,9 +7,6 @@
   (make-package ':snmp-system
                 :use '(:common-lisp :asdf)))
 
-#-:SNMP
-(load (merge-pathnames #p"features.lisp" *load-truename*))
-
 (in-package :snmp-system)
 
 (defsystem SNMP

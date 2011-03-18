@@ -1,14 +1,9 @@
 ;;;; -*- Mode: Lisp -*-
 ;;;; $Id$
 
-(in-package :cl-user)
-
 (unless (find-package ':snmp-system)
   (make-package ':snmp-system
                 :use '(:common-lisp :asdf)))
-
-#-:SNMP
-(load (merge-pathnames #p"features.lisp" *load-truename*))
 
 (in-package :snmp-system)
 
@@ -19,10 +14,8 @@
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
   :components ((:module "vendor"
                 :components ((:file "ieee-floats")
-                            #+snmp-system::cl-yacc
-                             (:file "yacc")
-                             #+snmp-system::cl-yacc
-                             (:file "yacc-patch" :depends-on ("yacc"))))
+			     #-lispworks (:file "yacc")
+                             #-lispworks (:file "yacc-patch" :depends-on ("yacc"))))
                (:file "package")
                (:module "runtime"                :depends-on ("package" "vendor")
 		:components ((:file "constants")
