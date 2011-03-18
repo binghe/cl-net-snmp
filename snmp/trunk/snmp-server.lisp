@@ -133,15 +133,6 @@
     ;; clear variable
     (setf *default-snmp-server* nil)))
 
-(defun reload-snmp-service (&optional (stream t))
-  (format stream "Restarting SNMP Service .")
-  (disable-snmp-service)
-  (format stream ".")
-  (sleep 1)
-  (format stream ".")
-  (enable-snmp-service)
-  (format stream " Done.~%"))
-
 (defvar *server*)
 
 (defun snmp-server-function (input server)
