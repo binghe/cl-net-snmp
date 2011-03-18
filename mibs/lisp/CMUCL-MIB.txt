@@ -1,16 +1,16 @@
 -- -*- Mode: asn1 -*-
--- $Id: LISP-FRANZ-MIB.txt 426 2008-07-29 15:21:03Z binghe $
+-- $Id: lisp-cmucl-mib.txt 682 2008-12-23 05:45:11Z binghe $
 
-LISP-ALLEGRO-MIB DEFINITIONS ::= BEGIN
+CMUCL-MIB DEFINITIONS ::= BEGIN
 
 IMPORTS
     MODULE-IDENTITY, OBJECT-TYPE, OBJECT-IDENTITY,
     NOTIFICATION-TYPE, enterprises
         FROM SNMPv2-SMI
 
-    common-lisp FROM LISP-MIB;
+    commonLisp FROM LISP-MIB;
 
-allegro MODULE-IDENTITY
+cmucl MODULE-IDENTITY
     LAST-UPDATED "200807290000Z" -- 29 July 2008
     ORGANIZATION
            "The cl-net-snmp Project
@@ -23,10 +23,10 @@ allegro MODULE-IDENTITY
             Send comments to
               <cl-net-snmp-general@lists.sourceforge.net>"
     DESCRIPTION
-           "The MIB module for Allegro CL"
+           "The MIB module for CMUCL"
     REVISION "200807290000Z" -- 29 July 2008
     DESCRIPTION
            "The initial revision of this MIB module."
-    ::= { common-lisp 9 }
+    ::= { commonLisp 6 }
 
 END
