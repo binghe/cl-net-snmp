@@ -1,16 +1,16 @@
 -- -*- Mode: asn1 -*-
--- $Id: lisp-cmucl-mib.txt 682 2008-12-23 05:45:11Z binghe $
+-- $Id: lisp-clozure-mib.txt 682 2008-12-23 05:45:11Z binghe $
 
-LISP-CMUCL-MIB DEFINITIONS ::= BEGIN
+CLOZURE-MIB DEFINITIONS ::= BEGIN
 
 IMPORTS
     MODULE-IDENTITY, OBJECT-TYPE, OBJECT-IDENTITY,
     NOTIFICATION-TYPE, enterprises
         FROM SNMPv2-SMI
 
-    common-lisp FROM LISP-MIB;
+    commonLisp FROM LISP-MIB;
 
-cmucl MODULE-IDENTITY
+ccl MODULE-IDENTITY
     LAST-UPDATED "200807290000Z" -- 29 July 2008
     ORGANIZATION
            "The cl-net-snmp Project
@@ -23,10 +23,10 @@ cmucl MODULE-IDENTITY
             Send comments to
               <cl-net-snmp-general@lists.sourceforge.net>"
     DESCRIPTION
-           "The MIB module for CMUCL"
+           "The MIB module for Clozure CL"
     REVISION "200807290000Z" -- 29 July 2008
     DESCRIPTION
            "The initial revision of this MIB module."
-    ::= { common-lisp 6 }
+    ::= { commonLisp 8 }
 
 END

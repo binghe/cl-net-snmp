@@ -1,16 +1,16 @@
 -- -*- Mode: asn1 -*-
--- $Id: lisp-cl-http-mib.txt 682 2008-12-23 05:45:11Z binghe $
+-- $Id: LISP-FRANZ-MIB.txt 426 2008-07-29 15:21:03Z binghe $
 
-LISP-CL-HTTP-MIB DEFINITIONS ::= BEGIN
+FRANZ-MIB DEFINITIONS ::= BEGIN
 
 IMPORTS
     MODULE-IDENTITY, OBJECT-TYPE, OBJECT-IDENTITY,
     NOTIFICATION-TYPE, enterprises
         FROM SNMPv2-SMI
 
-    lispPackages FROM LISP-MIB;
+    commonLisp FROM LISP-MIB;
 
-cl-http MODULE-IDENTITY
+alisp MODULE-IDENTITY
     LAST-UPDATED "200807290000Z" -- 29 July 2008
     ORGANIZATION
            "The cl-net-snmp Project
@@ -23,10 +23,10 @@ cl-http MODULE-IDENTITY
             Send comments to
               <cl-net-snmp-general@lists.sourceforge.net>"
     DESCRIPTION
-           "The MIB module for CL-HTTP"
+           "The MIB module for Allegro CL"
     REVISION "200807290000Z" -- 29 July 2008
     DESCRIPTION
            "The initial revision of this MIB module."
-    ::= { lispPackages 2 }
+    ::= { commonLisp 9 }
 
 END
