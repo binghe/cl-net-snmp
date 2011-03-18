@@ -138,11 +138,13 @@
            #:*snmp-readtable*
            #:clean-default-dispatch
            #:close-session
+           #:compile-mib
            #:control-center
            #:def-scalar-variable
            #:def-listy-mib-table
            #:disable-snmp-service
            #:enable-snmp-service
+           #:load-mib
            #:open-session
            #:register-variable
            #:reload-snmp-service
@@ -162,6 +164,10 @@
 (in-package :asn.1)
 
 (defvar *asn.1-package* (find-package :asn.1))
+
+(defparameter *major-version* 5)
+(defparameter *minor-version* 0)
+(defparameter *revision* 0)
 
 (in-package :snmp)
 
