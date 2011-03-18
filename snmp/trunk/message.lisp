@@ -68,13 +68,13 @@
                        :accessor report-flag-of))
   (:documentation "User-based SNMP v3 Message"))
 
-#-snmp-system::portable-threads
+#-portable-threads
 (defmethod generate-message-id ((message v3-message))
   (with-slots (message-id-counter) message
     (the (unsigned-byte 32)
          (logand (incf message-id-counter) #xffffffff))))
 
-#+snmp-system::portable-threads
+#+portable-threads
 (defmethod generate-message-id ((message v3-message))
   (with-slots (message-id-counter) message
     (the (unsigned-byte 32)

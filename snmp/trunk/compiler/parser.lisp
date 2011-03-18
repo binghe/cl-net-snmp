@@ -3,16 +3,16 @@
 
 (in-package :asn.1)
 
-#+snmp-system::parsergen
+#+lispworks
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (require "parsergen"))
 
-#+snmp-system::parsergen
+#+lispworks
 (macrolet ((define-parser (name syntax)
              `(parsergen:defparser ,name ,@syntax)))
   (define-parser asn.1-parser #.*asn.1-syntax*))
 
-#+snmp-system::cl-yacc
+#-lispworks
 (macrolet ((define-parser (name reserved-words start-symbol syntax)
              `(snmp.yacc:define-parser ,name
                 (:terminals ,reserved-words)
@@ -52,13 +52,11 @@
     (parse s)))
 
 (defmethod parse ((source stream))
-  #+snmp-system::parsergen
+  #+lispworks
   (asn.1-parser #'(lambda () (asn.1-lexer source)))
-  #+snmp-system::cl-yacc
+  #-lispworks
   (snmp.yacc:parse-with-lexer #'(lambda () (asn.1-lexer source))
-                              *asn.1-parser*)
-  #-(or snmp-system::parsergen snmp-system::cl-yacc)
-  (error "No parser defined in features.lisp-expr"))
+                              *asn.1-parser*))
 
 (defmethod parse ((source t))
   (error "Unknown source"))

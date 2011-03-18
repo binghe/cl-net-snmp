@@ -103,21 +103,17 @@
                                        &rest initargs &key &allow-other-keys)
   (declare (ignore initargs))
   (setf (server-process instance)
-        #+snmp-system::portable-threads
         (portable-threads:spawn-thread (format nil "SNMP Server at ~A:~D"
                                                (server-address instance)
                                                (server-port instance))
                                        #'(lambda ()
-                                           #+snmp-system::usocket
                                            (usocket:socket-server (server-address instance)
                                                                   (server-port instance)
                                                                   (server-function instance)
                                                                   (list instance)
                                                                   :protocol :datagram
                                                                   :in-new-thread nil)
-                                           #+scl (thread:thread-exit)))
-        #-snmp-system::portable-threads
-        (error "no thread support")))
+                                           #+scl (thread:thread-exit)))))
 
 (defun enable-snmp-service (&optional (port *default-snmp-server-port*))
   (if (null *default-snmp-server*)
@@ -133,7 +129,6 @@
 (defun disable-snmp-service ()
   "Kill server thread and clear variable"
   (when *default-snmp-server*
-    #+snmp-system::portable-threads
     (portable-threads:kill-thread (server-process *default-snmp-server*))
     ;; clear variable
     (setf *default-snmp-server* nil)))
