@@ -28,6 +28,10 @@ New in this release:
     - The speed of ASN.1 BER encode has been much improved, thanks to
       J. Fremlin (MSI).
 
+  * Bugfixes:
+    - When calling SNMP:OPEN-SESSION with keyword :USER and no :VERSION,
+      a v3-session but v2c-session should be created.
+
   * Other changes:
     - All ASN.1 related code has been merged into SNMP package.
     - Now we only depend on USOCKET 0.5 and IRONCLAD.
@@ -36,10 +40,10 @@ New in this release:
       of them, user can load what they want using the new MIB loader,
       see function SNMP:LOAD-MIB
 
-This release is not binary compatible with code compiled using CMUCL
-20a; you will need to recompile FASL files. 
-
 See <URL:http://common-lisp.net/projects/cl-net-snmp/> for download
 information, guidelines on reporting bugs, and mailing list details.
 
 I hope you enjoy using this release of CL-NET-SNMP!
+
+---
+Chun Tian (binghe) <binghe.lisp@gmail.com>, 2011-3-19
