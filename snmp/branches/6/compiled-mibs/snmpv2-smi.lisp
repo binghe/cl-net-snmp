@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Generated from MIB:IETF;SNMPV2-SMI by ASN.1 5.0
+;;;; Generated from MIB:IETF;SNMPV2-SMI by SNMP 6.1
 
 (in-package :asn.1)
 

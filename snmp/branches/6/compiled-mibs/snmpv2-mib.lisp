@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Generated from MIB:IETF;SNMPV2-MIB by ASN.1 5.0
+;;;; Generated from MIB:IETF;SNMPV2-MIB by SNMP 6.1
 
 (in-package :asn.1)
 
@@ -162,10 +162,10 @@
 
 (defclass |SysOREntry|
           (sequence-type)
-          ((|sysORIndex| :type 'integer)
-           (|sysORID| :type 'object-id)
-           (|sysORDescr| :type '|DisplayString|)
-           (|sysORUpTime| :type '|TimeStamp|)))
+          ((|sysORIndex| :type integer)
+           (|sysORID| :type object-id)
+           (|sysORDescr| :type |DisplayString|)
+           (|sysORUpTime| :type |TimeStamp|)))
 
 (defoid |sysORIndex| (|sysOREntry| 1)
   (:type 'object-type)

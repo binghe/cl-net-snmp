@@ -12,8 +12,10 @@
     #p"MIB:IANA;IANAifType-MIB"
 
     #p"MIB:LISP;LISP-MIB.TXT"
+    #p"MIB:LISP;ABCL-MIB.TXT"
     #p"MIB:LISP;CLOZURE-MIB.TXT"
     #p"MIB:LISP;CMUCL-MIB.TXT"
+    #p"MIB:LISP;ECL-MIB.TXT"
     #p"MIB:LISP;FRANZ-MIB.TXT"
     #p"MIB:LISP;LISPWORKS-MIB.TXT"
     #p"MIB:LISP;SBCL-MIB.TXT"
@@ -49,7 +51,7 @@
   "Update mib.lisp-expr"
   (let ((mib.lisp-expr '())
         (mib-depend.lisp '())
-        (*package* (find-package :asn.1)))
+        (*package* *asn.1-package*))
     (dolist (i mib-list)
       (format t "; Compiling ~A~%" i)
       (compile-asn.1 i :to (lisp-file i))
@@ -88,5 +90,5 @@
             (terpri s)
           (pprint i s)))
       (terpri s))
-    (load #p"SNMP:SNMP-MIB.ASD")
+    (asdf:load-system :snmp-mib)
     (pprint mib.lisp-expr)))

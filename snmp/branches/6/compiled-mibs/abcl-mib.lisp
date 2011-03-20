@@ -1,27 +1,26 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Generated from MIB:LISP;CLOZURE-MIB.TXT by SNMP 6.1
+;;;; Generated from MIB:LISP;ABCL-MIB.TXT by SNMP 6.1
 
 (in-package :asn.1)
 
-(eval-when (:load-toplevel :execute)
-  (setf *current-module* '|Clozure-MIB|))
+(eval-when (:load-toplevel :execute) (setf *current-module* 'abcl-mib))
 
-(defpackage :|ASN.1/Clozure-MIB|
-  (:nicknames :|Clozure-MIB|)
+(defpackage :asn.1/abcl-mib
+  (:nicknames :abcl-mib)
   (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 object-identity notification-type |enterprises|)
   (:import-from :asn.1/lisp-mib |commonLisp|))
 
-(in-package :|Clozure-MIB|)
+(in-package :abcl-mib)
 
-(defoid |ccl| (|commonLisp| 8)
+(defoid |abcl| (|commonLisp| 12)
   (:type 'module-identity)
-  (:description "The MIB module for Clozure CL"))
+  (:description "The MIB module for ABCL"))
 
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew '|Clozure-MIB| *mib-modules*)
+  (pushnew 'abcl-mib *mib-modules*)
   (setf *current-module* nil))
 
