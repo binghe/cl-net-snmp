@@ -802,7 +802,7 @@ If PROPAGATE-ONLY is true, ignore spontaneous generation."
       (shift-action
        (format s "~D" (shift-action-state a))))))
 
-(define-condition yacc-compile-warning (warning)
+(define-condition yacc-compile-warning (style-warning) ; OLD: warning, to make ASDF/SBCL happy
   ())
 
 (define-condition conflict-warning (yacc-compile-warning simple-warning)
