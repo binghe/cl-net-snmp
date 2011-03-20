@@ -81,7 +81,8 @@
 
 ;; Support for threads in Corman Common Lisp is under development and is 
 ;; incomplete, so we consider it threadless, for now:
-#+cormanlisp-is-not-ready
+#+(or abcl
+      cormanlisp-is-not-ready)
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (require 'threads))
 
@@ -159,7 +160,9 @@
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (import
    #+abcl
-   '()
+   '(threads:current-thread
+     threads:thread-alive-p
+     threads:thread-name)
    #+allegro 
    '(sys:with-timeout)
    #+clisp
@@ -305,8 +308,7 @@
 ;;; ===========================================================================
 ;;;  Features & warnings
 
-#+(or abcl             ;; temporarily without thread support--very temporarily
-      (and clisp (not mt))
+#+(or (and clisp (not mt))
       cormanlisp
       (and cmu (not mp)) 
       (and ecl (not threads))
@@ -388,6 +390,7 @@
 ;;; ===========================================================================
 ;;;   Current-Thread (returns :threads-not-available on CLs without threads)
 
+#-abcl
 (defun current-thread ()
   #+allegro
   mp:*current-process*
@@ -410,6 +413,7 @@
   #+threads-not-available
   ':threads-not-available)
 
+#-abcl
 (defcm current-thread ()
   #+allegro
   'mp:*current-process*
@@ -436,6 +440,11 @@
 ;;;   All-Threads (returns nil on CLs without threads)
 
 (defun all-threads ()
+  #+abcl
+  (let ((threads ()))
+    (threads:mapcar-threads (lambda (thread)
+			      (push thread threads)))
+    (reverse threads))
   #+allegro
   mp:*all-processes*
   #+(and clisp mt)
@@ -458,6 +467,11 @@
   nil)
   
 (defcm all-threads ()
+  #+abcl
+  '(let ((threads ()))
+    (threads:mapcar-threads (lambda (thread)
+			      (push thread threads)))
+    (reverse threads))
   #+allegro
   'mp:*all-processes*
   #+(and clisp mt)
@@ -483,6 +497,8 @@
 ;;;   Threadp
 
 (defun threadp (obj)
+  #+abcl
+  (typep obj 'threads:thread)
   #+allegro
   (mp:process-p obj)
   #+(and clisp mt)
@@ -507,6 +523,8 @@
   nil)
 
 (defcm threadp (obj)
+  #+abcl
+  `(typep ,obj 'threads:thread)
   #+allegro
   `(mp:process-p ,obj)
   #+(and clisp mt)
@@ -533,7 +551,8 @@
 ;;; ---------------------------------------------------------------------------
 ;;;   Thread-alive-p (threaded SBCL is native)
 
-#-(and sbcl sb-thread)
+#-(or abcl
+      (and sbcl sb-thread))
 (defun thread-alive-p (obj)
   #+allegro
   (mp:process-alive-p obj)
@@ -557,6 +576,7 @@
   nil)
 
 #-(or threads-not-available 
+      abcl
       (and sbcl sb-thread))
 (defcm thread-alive-p (obj)
   #+allegro
@@ -583,7 +603,8 @@
 ;;; ---------------------------------------------------------------------------
 ;;;   Thread-name (threaded SBCL is native)
 
-#-(and sbcl sb-thread)
+#-(or abcl
+      (and sbcl sb-thread))
 (defun thread-name (thread)
   #+allegro
   (mp:process-name thread)
@@ -604,7 +625,8 @@
   #+threads-not-available
   (not-a-thread thread))
 
-#-(or threads-not-available 
+#-(or threads-not-available
+      abcl
       (and sbcl sb-thread))
 (defcm thread-name (thread)
   #+allegro
@@ -627,7 +649,8 @@
 ;;; ---------------------------------------------------------------------------
 
 #-(or (and sbcl sb-thread)
-      (and clisp mt))
+      (and clisp mt)
+      abcl)
 (defun (setf thread-name) (name thread)
   #+allegro
   (setf (mp:process-name thread) name)
@@ -652,6 +675,8 @@
 ;;;   Thread-whostate (values and capabilities vary among CLs)
 
 (defun thread-whostate (thread)
+  #+abcl
+  (if (threads:thread-alive-p thread) "Alive" "Dead")
   #+allegro
   (mp:process-whostate thread)
   ;; We fake a basic whostate for CLISP/threads:
@@ -677,6 +702,7 @@
   (not-a-thread thread))
 
 #-(or threads-not-available
+      abcl
       (and clisp mt)
       (and ecl threads)
       (and sbcl sb-thread))
@@ -697,6 +723,10 @@
 (defun (setf thread-whostate) (whostate thread)
   ;;; Only Allegro, Clozure CL, and Digitool MCL support user-settable 
   ;;; whostates; this function is a NOOP on other CLs.
+  #+abcl
+  (declare (ignore thread))
+  #+abcl
+  thostate
   #+allegro
   (setf (mp:process-whostate thread) whostate)
   #+(and clisp mt)
@@ -885,6 +915,8 @@
 
 #-(and sbcl sb-thread)
 (defun thread-yield ()
+  #+abcl
+  (sleep 0.01)
   #+allegro
   (mp:process-allow-schedule)
   #+(and clisp mt)
@@ -906,6 +938,8 @@
 
 #-(and sbcl sb-thread)
 (defcm thread-yield ()
+  #+abcl
+  '(sleep 0.01)
   #+allegro  
   '(mp:process-allow-schedule)
   #+(and clisp mt)
@@ -1063,6 +1097,10 @@
       cormanlisp)                       ; CLL 3.0 can't handle this one
 (defun make-lock (&key (name
                         #+(and clisp mt) "Anonymous mutex"))
+  #+abcl
+  (declare (ignore name))
+  #+abcl
+  (threads:make-mutex)
   #+allegro
   (mp:make-process-lock :name name)
   #+(and clisp mt)
@@ -1112,13 +1150,16 @@
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (defmacro with-lock-held ((lock &key (whostate "With Lock Held"))
                             &body body)
-    #+(or (and clisp mt)
+    #+(or abcl
+          (and clisp mt)
           (and ecl threads)
           (and sbcl sb-thread)
           threads-not-available)
     (declare (ignore whostate))
     (let ((lock-sym (gensym)))
       `(let ((,lock-sym (%%get-lock%% ,lock)))
+	 #+abcl
+	 (threads:with-mutex (,lock-sym) ,@body)
          #+allegro
          (progn
            ;; Allegro's mp:with-process-lock doesn't evaluate its :norecursive
@@ -1540,6 +1581,9 @@
 (defun spawn-thread (name function &rest args)
   #-(or (and cmu mp) cormanlisp (and sbcl sb-thread))
   (declare (dynamic-extent args))
+  #+abcl
+  (threads:make-thread #'(lambda () (apply function args))
+		       :name name)
   #+allegro
   (apply #'mp:process-run-function name function args)
   #+(and clisp mt)
@@ -1582,6 +1626,8 @@
 ;;;   Kill-Thread
 
 (defun kill-thread (thread)
+  #+abcl
+  (threads:destroy-thread thread)
   #+allegro
   (mp:process-kill thread)
   #+(and clisp mt)
@@ -1606,6 +1652,8 @@
   (threads-not-available 'kill-thread))
 
 (defcm kill-thread (thread)
+  #+abcl
+  `(threads:destroy-thread ,thread)
   #+allegro
   `(mp:process-kill ,thread)
   #+(and clisp mt)
@@ -1635,6 +1683,8 @@
 (defun run-in-thread (thread function &rest args)
   #-threads-not-available
   (declare (dynamic-extent args))
+  #+abcl
+  (apply #'threads:interrupt-thread thread function args)
   #+allegro
   (apply #'multiprocessing:process-interrupt thread function args)
   #+(and clisp mt)
@@ -1863,6 +1913,12 @@
   
 ;;; ===========================================================================
 ;;;   Condition variables
+
+#+abcl
+(defclass condition-variable ()
+  ((lock :initarg :lock
+	 :initform (threads:make-thread-lock)
+	 :reader condition-variable-lock)))
 
 #+allegro
 (defclass condition-variable ()
