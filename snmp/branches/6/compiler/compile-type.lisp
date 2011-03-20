@@ -69,7 +69,7 @@
 
 (defun compile-sequence (slot)
   (destructuring-bind (name type) slot
-    `(,name :type ',(compile-type type))))
+    `(,name :type ,(compile-type type))))
 
 ;;; TEXTUAL-CONVENTION
 (defmethod compile-ta-internal ((type (eql :textual-convention)) name specifier)
