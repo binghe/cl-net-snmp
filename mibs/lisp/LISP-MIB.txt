@@ -12,7 +12,7 @@ IMPORTS
         FROM SNMPv2-TC;
 
 lisp MODULE-IDENTITY
-    LAST-UPDATED "200811160000Z" -- 16 November 2008
+    LAST-UPDATED "201103200000Z" -- 20 March 2011
     ORGANIZATION
            "The cl-net-snmp Project
 	    http://common-lisp.net/projects/cl-net-snmp"
@@ -25,6 +25,10 @@ lisp MODULE-IDENTITY
               <cl-net-snmp-general@lists.sourceforge.net>"
     DESCRIPTION
            "The MIB module for Lisp."
+
+    REVISION "201103200000Z" -- 20 March 2011
+    DESCRIPTION
+           "Add MIB subtrees for ECL and ABCL"
 
     REVISION "200809260000Z" -- 26 September 2008
     DESCRIPTION
@@ -398,7 +402,7 @@ lispLeastNegativeNormalizedLongFloat OBJECT-TYPE
     STATUS      current
     ::= { lispConstants 24 }
 
-clSnmp             OBJECT IDENTIFIER ::= { lispPackages 1 }
+clSnmp               OBJECT IDENTIFIER ::= { lispPackages 1 }
 clSnmpObjects        OBJECT IDENTIFIER ::= { clSnmp 1 }
 clSnmpEnumerations   OBJECT IDENTIFIER ::= { clSnmp 2 }
 
@@ -410,5 +414,7 @@ clSnmpAgentSBCL      OBJECT IDENTIFIER ::= { clSnmpAgentOIDs 7 }
 clSnmpAgentClozure   OBJECT IDENTIFIER ::= { clSnmpAgentOIDs 8 }
 clSnmpAgentAllegroCL OBJECT IDENTIFIER ::= { clSnmpAgentOIDs 9 }
 clSnmpAgentSCL       OBJECT IDENTIFIER ::= { clSnmpAgentOIDs 10 }
+clSnmpAgentECL       OBJECT IDENTIFIER ::= { clSnmpAgentOIDs 11 }
+clSnmpAgentABCL      OBJECT IDENTIFIER ::= { clSnmpAgentOIDs 12 }
 
 END

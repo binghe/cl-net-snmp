@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Generated from MIB:LISP;CMUCL-MIB.TXT by ASN.1 5.0
+;;;; Generated from MIB:LISP;CMUCL-MIB.TXT by SNMP 6.1
 
 (in-package :asn.1)
 
