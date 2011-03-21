@@ -16,7 +16,7 @@
         #+sbcl :sb-gray #+sbcl :sb-pcl
         #+allegro :excl #+allegro :aclmop
         #+cmu :ext #+cmu :pcl #+cmu :clos-mop
-        #+clisp :gray
+        #+clisp :gray #+clisp :clos
         #+(or mcl clozure) :ccl
         #+lispworks :stream #+lispworks :clos
         #+ecl :gray #+ecl :clos
