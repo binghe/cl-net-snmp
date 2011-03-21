@@ -6,8 +6,7 @@
 (defvar *in-compiler* t)
 
 (defun format-header (file stream)
-  (format stream ";;;; -*- Mode: Lisp -*-~%;;;; Generated from ~A by SNMP ~D.~D~%"
-          file snmp:*major-version* snmp:*minor-version*))
+  (format stream ";;;; -*- Mode: Lisp -*-~%;;;; Generated from ~A by CL-NET-SNMP" file))
 
 (defgeneric compile-asn.1 (object &key &allow-other-keys))
 
