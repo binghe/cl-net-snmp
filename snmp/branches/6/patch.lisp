@@ -9,8 +9,6 @@
                    :defaults system-pathname)))
 
 (defun compute-patch-file-pathname (system major-version minor-version &optional (type "lisp"))
-  (declare (type string system)
-           (type integer version))
   (let ((name (format nil "~A-~D-~D"
                       (string-upcase (asdf:component-name system)) major-version minor-version)))
     (make-pathname :name name
@@ -25,15 +23,14 @@
     (values major-version minor-version)))
 
 (defparameter *patch-format-string*
-  "~&; ~[No~:;~:*~D~] patch~:*~[es~;~:;es~] loaded, new version is ~D.~D~%")
+  "~&;; ~[No~:;~:*~D~] patch~:*~[es~;~:;es~] loaded, new version is ~D.~D~%")
 
 (defun load-all-patches (system)
-  (declare (type asdf:system system)
-           (special *major-version* *minor-version*))
   (multiple-value-bind (major-version minor-version)
       (split-version (asdf:component-version system))
     (let ((*major-version* major-version)
           (*minor-version* minor-version))
+      (declare (special *major-version* *minor-version*))
       (loop for version from (1+ *minor-version*) ; search from next minor version
             as file = (compute-patch-file-pathname system *major-version* version)
             while (probe-file file)
