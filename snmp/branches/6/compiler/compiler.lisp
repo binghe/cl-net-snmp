@@ -11,6 +11,8 @@
 (defgeneric compile-asn.1 (object &key &allow-other-keys))
 
 (defmethod compile-asn.1 ((file t) &key to temp &allow-other-keys)
+  #-lispworks
+  (declare (ignore temp))
   (let ((result (compile-asn.1 (parse file))))
     (cond ((pathnamep to)
            (let ((head (merge-pathnames (make-pathname :type "lisp-expr")
