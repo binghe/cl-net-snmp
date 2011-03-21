@@ -1,0 +1,4 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Generated from MIB:IETF;SNMPV2-CONF by SNMP 6.1
+
+(|SNMPv2-CONF| |SNMPv2-SMI|)

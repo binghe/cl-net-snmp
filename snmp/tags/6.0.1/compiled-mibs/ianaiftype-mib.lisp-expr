@@ -1,0 +1,4 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Generated from MIB:IANA;IANAIFTYPE-MIB by SNMP 6.1
+
+(|IANAifType-MIB| |SNMPv2-SMI| |SNMPv2-TC|)

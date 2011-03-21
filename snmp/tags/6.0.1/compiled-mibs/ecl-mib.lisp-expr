@@ -1,0 +1,4 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Generated from MIB:LISP;ECL-MIB.TXT by SNMP 6.1
+
+(ecl-mib |SNMPv2-SMI| lisp-mib)
