@@ -71,4 +71,4 @@
   (oos 'test-op :snmp-test))
 
 (defmethod perform :after ((op load-op) (c (eql (find-system :snmp))))
-  (funcall (intern "LOAD-ALL-PATCHES" "SNMP")))
+  (funcall (intern "LOAD-ALL-PATCHES" "SNMP") c))

@@ -158,12 +158,7 @@
 	   #:update-mib
            #:with-open-session)
   ;; Patch facility
-  (:export #:*major-version*
-	   #:*minor-version*
-	   #:*revision*
-	   #:*patch-directory*
-	   #:load-all-patches
-           #:patch-error))
+  (:export #:load-all-patches))
 
 (in-package :snmp)
 
@@ -187,7 +182,3 @@
 
 (defvar *asn.1-package* (find-package :asn.1))
 (defvar *snmp-package* (find-package :snmp))
-
-(defparameter *major-version* 6)
-(defparameter *minor-version* 0)
-(defparameter *revision* 1)
