@@ -963,6 +963,43 @@
 ;;; ===========================================================================
 ;;;   Locks
 
+#+abcl
+(progn
+  ;; Reimplemented with java.util.concurrent.locks.ReentrantLock by Mark Evenson 2011.
+
+  (defstruct (lock
+	       (:copier nil)
+	       (:constructor %make-lock))
+    name abcl-lock)
+
+  (defstruct (recursive-lock
+	       (:include lock)
+	       (:copier nil)
+	       (:constructor %make-recursive-lock)))
+
+  (defmethod print-object ((lock lock) stream)
+    (if *print-readably*
+	(call-next-method)
+	(print-unreadable-object (lock stream :type t)
+	  (format stream "~s"
+		  (let ((abcl-lock (lock-abcl-lock lock)))
+		    (if abcl-lock
+			(lock-name lock)
+			"[No abcl-lock]"))))))
+
+  ;; Making methods constants in this manner avoids the runtime expense of
+  ;; introspection involved in JCALL with string arguments.
+  (defconstant +lock+ 
+    (java:jmethod "java.util.concurrent.locks.ReentrantLock" "lock"))
+  (defconstant +try-lock+ 
+    (java:jmethod "java.util.concurrent.locks.ReentrantLock" "tryLock"))
+  (defconstant +is-held-by-current-thread+ 
+    (java:jmethod "java.util.concurrent.locks.ReentrantLock" "isHeldByCurrentThread"))
+  (defconstant +unlock+ 
+    (java:jmethod "java.util.concurrent.locks.ReentrantLock" "unlock"))
+  (defconstant +get-hold-count+ 
+    (java:jmethod "java.util.concurrent.locks.ReentrantLock" "getHoldCount")))
+
 #+allegro
 (defstruct (recursive-lock
             (:include mp:process-lock)
@@ -1096,11 +1133,10 @@
       threads-not-available
       cormanlisp)                       ; CLL 3.0 can't handle this one
 (defun make-lock (&key (name
-                        #+(and clisp mt) "Anonymous mutex"))
+                        #+(or abcl (and clisp mt)) "Anonymous mutex"))
   #+abcl
-  (declare (ignore name))
-  #+abcl
-  (threads:make-mutex)
+  (%make-lock :name name
+	      :abcl-lock (java:jnew "java.util.concurrent.locks.ReentrantLock"))
   #+allegro
   (mp:make-process-lock :name name)
   #+(and clisp mt)
@@ -1127,7 +1163,11 @@
       (and sbcl sb-thread)
       threads-not-available)
 (defun make-recursive-lock (&key (name
-                                  #+(and clisp mt) "Anonymous mutex"))
+                                  #+(or abcl (and clisp mt)) "Anonymous mutex"))
+  #+abcl
+  (%make-recursive-lock
+   :name name
+   :abcl-lock (java:jnew "java.util.concurrent.locks.ReentrantLock"))
   #+(and clisp mt)
   (mt:make-mutex :name name :recursive-p t)
   #+(or clozure
@@ -1159,7 +1199,22 @@
     (let ((lock-sym (gensym)))
       `(let ((,lock-sym (%%get-lock%% ,lock)))
 	 #+abcl
-	 (threads:with-mutex (,lock-sym) ,@body)
+	 (let ((.abcl-lock. (and (lock-p ,lock-sym)
+				 (lock-abcl-lock (the lock ,lock-sym)))))
+	   (unless (recursive-lock-p ,lock-sym)
+	     (when (java:jcall +is-held-by-current-thread+ .abcl-lock.)
+	       (let ((.current-thread. (current-thread)))
+		 (recursive-lock-attempt-error
+		  ,lock-sym .current-thread. .current-thread.))))
+	   (java:jcall +lock+ .abcl-lock.)
+	   (unwind-protect
+		(progn ,@body)
+	     (when (> (java:jcall +get-hold-count+ .abcl-lock.) 1)
+	       (do ()
+		   ((= (java:jcall +get-hold-count+ .abcl-lock.) 1))
+		 (java:jcall +unlock+ .abcl-lock.)))
+	     (java:jcall +unlock+ .abcl-lock.)
+	     (values)))
          #+allegro
          (progn
            ;; Allegro's mp:with-process-lock doesn't evaluate its :norecursive
@@ -1247,6 +1302,8 @@
 
 (defun thread-holds-lock-p (lock)
   (let ((lock (%%get-lock%% lock)))
+    #+abcl
+    (java:jcall +is-held-by-current-thread+ (lock-abcl-lock lock))
     #+allegro
     (eq (mp:process-lock-locker lock) system:*current-process*)
     #+(and clisp mt)
@@ -1277,6 +1334,8 @@
   (defcm thread-holds-lock-p (lock)
     (let ((lock-sym (gensym)))
       `(let ((,lock-sym (%%get-lock%% ,lock)))
+	 #+abcl
+	 (java:jcall +is-held-by-current-thread+ (lock-abcl-lock ,lock-sym))
          #+allegro
          (eq (mp:process-lock-locker ,lock-sym) system:*current-process*)
          #+(and clisp mt)
@@ -1460,6 +1519,18 @@
                 digitool-mcl)
           (saved-whostate (gensym)))
       `(let ((,lock-sym (%%get-lock%% ,lock)))
+	 #+abcl
+	 (let ((.abcl-lock. (and (lock-p ,lock-sym)
+				 (lock-abcl-lock (the lock ,lock-sym))))
+	       ,saved-whostate)
+	   (when (> (java:jcall +get-hold-count+ .abcl-lock.) 1)
+	     (do ()
+		 ((= (java:jcall +get-hold-count+ .abcl-lock.) 1))
+	       (java:jcall +unlock+ .abcl-lock.)))
+	   (java:jcall +unlock+ .abcl-lock.)
+	   (unwind-protect
+		(progn ,@body)
+	     (java:jcall +lock+ .abcl-lock.)))
          #+allegro
          (let ((.current-thread. system:*current-process*)
                ,saved-whostate)
@@ -1917,7 +1988,7 @@
 #+abcl
 (defclass condition-variable ()
   ((lock :initarg :lock
-	 :initform (threads:make-thread-lock)
+	 :initform (make-lock :name "CV Lock")
 	 :reader condition-variable-lock)))
 
 #+allegro
@@ -2047,6 +2118,12 @@
     (unless (thread-holds-lock-p lock)
       (condition-variable-lock-needed-error
        condition-variable 'condition-variable-wait))
+    #+abcl
+    (let ((abcl-lock (lock-abcl-lock lock)))
+      (threads:synchronized-on condition-variable
+        (java:jcall +unlock+ abcl-lock)
+        (threads:object-wait condition-variable))
+      (java:jcall +lock+ abcl-lock))
     #+allegro
     (progn
       (push system:*current-process* 
@@ -2117,6 +2194,12 @@
     (unless (thread-holds-lock-p lock)
       (condition-variable-lock-needed-error
        condition-variable 'condition-variable-wait-with-timeout))
+    #+abcl
+    (let ((abcl-lock (lock-abcl-lock lock)))
+      (threads:synchronized-on condition-variable
+        (java:jcall +unlock+ abcl-lock)
+        (threads:object-wait condition-variable (round (* 1000 seconds)))
+      (java:jcall +lock+ abcl-lock)))
     #+allegro
     (progn
       (push system:*current-process*
@@ -2235,6 +2318,9 @@
   (unless (thread-holds-lock-p (condition-variable-lock condition-variable))
     (condition-variable-lock-needed-error
      condition-variable 'condition-variable-signal))
+  #+abcl
+  (threads:synchronized-on condition-variable
+    (threads:object-notify condition-variable))
   #+(or allegro
         (and cmu mp)
         digitool-mcl
@@ -2264,6 +2350,9 @@
   (unless (thread-holds-lock-p (condition-variable-lock condition-variable))
     (condition-variable-lock-needed-error
      condition-variable 'condition-variable-broadcast))
+  #+abcl
+  (threads:synchronized-on condition-variable
+    (threads:object-notify-all condition-variable))
   #+(or allegro
         (and cmu mp)
         digitool-mcl
