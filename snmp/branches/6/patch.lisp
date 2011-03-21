@@ -42,7 +42,8 @@
        count file into count
        finally
 	 (format t *patch-format-string*
-		 count (asdf:component-name system) major-version (+ minor-version count))
+		 count (string-upcase (asdf:component-name system))
+                 major-version (+ minor-version count))
 	 (unless (zerop count)
 	   (setf (asdf:component-version system)
 		 (format nil "~D.~D" major-version (+ minor-version count)))))))
