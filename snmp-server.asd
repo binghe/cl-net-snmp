@@ -30,3 +30,6 @@
                              #+lispworks (:file "lispworks")
                              #+sbcl      (:file "sbcl")
                              #+cl-http   (:file "cl-http")))))
+
+(defmethod perform :after ((op load-op) (c (eql (find-system :snmp-server))))
+  (funcall (intern "LOAD-ALL-PATCHES" "SNMP") c))
