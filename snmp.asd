@@ -16,7 +16,8 @@
   :licence "MIT"
   :depends-on (:ironclad :usocket)
   :components ((:module "vendor"
-                :components ((:file "portable-threads")
+                :components (#-portable-threads
+			     (:file "portable-threads")
 			     (:file "ieee-floats")
 			     #-lispworks #-lispworks
 			     (:file "yacc")
