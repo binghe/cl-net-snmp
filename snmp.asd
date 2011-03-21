@@ -12,7 +12,7 @@
 (defsystem SNMP
   :description "Simple Network Management Protocol"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
-  :version "6.0"
+  :version "6.0.1"
   :licence "MIT"
   :depends-on (:ironclad :usocket)
   :components ((:module "vendor"
