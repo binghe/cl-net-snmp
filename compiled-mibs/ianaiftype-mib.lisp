@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Generated from MIB:IANA;IANAIFTYPE-MIB by ASN.1 5.0
+;;;; Generated from MIB:IANA;IANAIFTYPE-MIB by SNMP 6.1
 
 (in-package :asn.1)
 

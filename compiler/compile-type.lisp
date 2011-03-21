@@ -61,15 +61,17 @@
 (defgeneric compile-ta-internal (type name specifier))
 
 (defmethod compile-ta-internal ((type symbol) name specifier)
+  (declare (ignore type specifier))
   `((deftype ,name () 't)))
 
 (defmethod compile-ta-internal ((type (eql :sequence)) name specifier)
+  (declare (ignore type))
   (let ((slots (mapcar #'compile-sequence (cdr specifier))))
     `((defclass ,name (sequence-type) ,slots))))
 
 (defun compile-sequence (slot)
   (destructuring-bind (name type) slot
-    `(,name :type ',(compile-type type))))
+    `(,name :type ,(compile-type type))))
 
 ;;; TEXTUAL-CONVENTION
 (defmethod compile-ta-internal ((type (eql :textual-convention)) name specifier)

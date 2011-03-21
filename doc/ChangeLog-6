@@ -1,0 +1,19 @@
+;;;; -*- Mode: Text; -*-
+;;;; $Id$
+
+SNMP-6.0.1
+
+- Change CL-YACC's warnings into style-warnings to make ASDF/SBCL happy.
+
+- Make class OBJECT-ID's definition appears before BASE-OID to make sure
+  undefined type won't signal a WARNING, for the same reason.
+
+- Fixed a MIB compiler bug, wrongly added QUOTE in COMPILE-SEQUENCE case
+  DEFCLASS forms in MIB compilation results not right.
+
+- Make UPDATE-MIB works in SBCL by adding the "**;*.*.NEWEST" pathname
+  translations back.
+
+- Simple patch facility added (LOAD-ALL-PATCHES)
+
+- Fix for CLISP, import symbols from CLOS package (but still lack of networking)

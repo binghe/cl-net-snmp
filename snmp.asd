@@ -12,7 +12,7 @@
 (defsystem SNMP
   :description "Simple Network Management Protocol"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
-  :version "6.0"
+  :version "6.0.1"
   :licence "MIT"
   :depends-on (:ironclad :usocket)
   :components ((:module "vendor"
@@ -63,8 +63,12 @@
                (:file "snmp-get"                 :depends-on ("request"))
                (:file "snmp-walk"                :depends-on ("request"))
                (:file "snmp-trap"                :depends-on ("request"))
-               (:file "update-mib"               :depends-on ("package" "compiler"))))
+               (:file "update-mib"               :depends-on ("package" "compiler"))
+	       (:file "patch"                    :depends-on ("package"))))
 
 (defmethod perform ((op test-op) (c (eql (find-system :snmp))))
   (oos 'load-op :snmp-test)
   (oos 'test-op :snmp-test))
+
+(defmethod perform :after ((op load-op) (c (eql (find-system :snmp))))
+  (funcall (intern "LOAD-ALL-PATCHES" "SNMP") c))

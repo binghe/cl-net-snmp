@@ -16,16 +16,17 @@
         #+sbcl :sb-gray #+sbcl :sb-pcl
         #+allegro :excl #+allegro :aclmop
         #+cmu :ext #+cmu :pcl #+cmu :clos-mop
-        #+clisp :gray
+        #+clisp :gray #+clisp :clos
         #+(or mcl clozure) :ccl
         #+lispworks :stream #+lispworks :clos
         #+ecl :gray #+ecl :clos
         #+scl :ext
-        #+abcl :mop)
+        #+abcl :system #+abcl :mop #+abcl :gray-streams)
   #+abcl
   (:import-from :mop #:class-direct-subclasses
                      #:class-direct-slots)
-  (:export #:*mib-modules*
+  (:export #:*asn.1-package*
+           #:*mib-modules*
            #:*mib-module-dependency*
            #:*oid-database*
            #:asn.1-class
@@ -155,15 +156,9 @@
            #:snmp-trap
            #:snmp-walk
 	   #:update-mib
-           #:with-open-session))
-
-(in-package :asn.1)
-
-(defvar *asn.1-package* (find-package :asn.1))
-
-(defparameter *major-version* 5)
-(defparameter *minor-version* 0)
-(defparameter *revision* 0)
+           #:with-open-session)
+  ;; Patch facility
+  (:export #:load-all-patches))
 
 (in-package :snmp)
 
@@ -178,12 +173,12 @@
                               :defaults defaults
 			      :version :newest)))
     (setf (logical-pathname-translations "SNMP")
-          `(("**;*.*" ,home))
+          `(("**;*.*.NEWEST" ,home)
+	    ("**;*.*" ,home))
           (logical-pathname-translations "MIB")
-          `(("**;*.*" "SNMP:MIBS;**;*.*")))))
+          `(("**;*.*.NEWEST" "SNMP:MIBS;**;*.*")
+	    ("**;*.*" "SNMP:MIBS;**;*.*")))))
 
+
+(defvar *asn.1-package* (find-package :asn.1))
 (defvar *snmp-package* (find-package :snmp))
-
-(defparameter *major-version* 6)
-(defparameter *minor-version* 0)
-(defparameter *revision* 0)

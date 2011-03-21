@@ -1,5 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Generated from MIB:LISP;LISP-MIB.TXT by ASN.1 5.0
+;;;; Generated from MIB:LISP;LISP-MIB.TXT by SNMP 6.1
 
 (in-package :asn.1)
 
@@ -137,8 +137,8 @@
 
 (defclass |LispFeatureEntry|
           (sequence-type)
-          ((|lispFeatureIndex| :type 'integer)
-           (|lispFeatureName| :type '|DisplayString|)))
+          ((|lispFeatureIndex| :type integer)
+           (|lispFeatureName| :type |DisplayString|)))
 
 (defoid |lispFeatureIndex| (|lispFeatureEntry| 1)
   (:type 'object-type)
@@ -172,8 +172,8 @@
 
 (defclass |LispPackageEntry|
           (sequence-type)
-          ((|lispPackageIndex| :type 'integer)
-           (|lispPackageName| :type '|DisplayString|)))
+          ((|lispPackageIndex| :type integer)
+           (|lispPackageName| :type |DisplayString|)))
 
 (defoid |lispPackageIndex| (|lispPackageEntry| 1)
   (:type 'object-type)
@@ -208,8 +208,8 @@
 
 (defclass |LispModuleEntry|
           (sequence-type)
-          ((|lispModuleIndex| :type 'integer)
-           (|lispModuleName| :type '|DisplayString|)))
+          ((|lispModuleIndex| :type integer)
+           (|lispModuleName| :type |DisplayString|)))
 
 (defoid |lispModuleIndex| (|lispModuleEntry| 1)
   (:type 'object-type)
@@ -399,6 +399,12 @@
   (:type 'object-identity))
 
 (defoid |clSnmpAgentSCL| (|clSnmpAgentOIDs| 10)
+  (:type 'object-identity))
+
+(defoid |clSnmpAgentECL| (|clSnmpAgentOIDs| 11)
+  (:type 'object-identity))
+
+(defoid |clSnmpAgentABCL| (|clSnmpAgentOIDs| 12)
   (:type 'object-identity))
 
 (in-package :asn.1)

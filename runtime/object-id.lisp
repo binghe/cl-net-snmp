@@ -32,32 +32,6 @@
 (deftype oid-subidentifier ()
   '(unsigned-byte 32))
 
-(defclass base-oid (asn.1-type)
-  ((parent      :type object-id
-                :reader oid-parent
-                :initarg :parent)))
-
-(defclass simple-oid (base-oid)
-  ((values      :type list
-                :reader oid-number-list
-                :initarg :values)
-   (length      :type fixnum
-                :reader oid-length))
-  (:documentation "A simple OID implementation"))
-
-(defmethod initialize-instance :after ((instance simple-oid)
-                                       &rest initargs &key value &allow-other-keys)
-  (declare (ignore initargs))
-  ;; update values slot
-  (when (and value (slot-boundp instance 'parent))
-    (setf (slot-value instance 'values)
-          (append (oid-number-list (slot-value instance 'parent))
-                  (if (atom value) (list value) value))))
-  ;; update length slot
-  (when (slot-boundp instance 'values)
-    (setf (slot-value instance 'length)
-          (list-length (slot-value instance 'values)))))
-
 (defclass object-id (simple-oid)
   ((name        :type symbol
                 :reader oid-name
@@ -87,6 +61,32 @@
                 :accessor oid-children
                 :initform (make-hash-table)))
   (:documentation "OBJECT IDENTIFIER"))
+
+(defclass base-oid (asn.1-type)
+  ((parent      :type object-id
+                :reader oid-parent
+                :initarg :parent)))
+
+(defclass simple-oid (base-oid)
+  ((values      :type list
+                :reader oid-number-list
+                :initarg :values)
+   (length      :type fixnum
+                :reader oid-length))
+  (:documentation "A simple OID implementation"))
+
+(defmethod initialize-instance :after ((instance simple-oid)
+                                       &rest initargs &key value &allow-other-keys)
+  (declare (ignore initargs))
+  ;; update values slot
+  (when (and value (slot-boundp instance 'parent))
+    (setf (slot-value instance 'values)
+          (append (oid-number-list (slot-value instance 'parent))
+                  (if (atom value) (list value) value))))
+  ;; update length slot
+  (when (slot-boundp instance 'values)
+    (setf (slot-value instance 'length)
+          (list-length (slot-value instance 'values)))))
 
 (defmethod initialize-instance :after ((instance object-id)
                                        &rest initargs &key &allow-other-keys)
