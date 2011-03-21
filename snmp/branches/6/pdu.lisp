@@ -41,17 +41,11 @@
                        :initarg :request-id))
   (:documentation "Common PDU which have a request ID part"))
 
-#-portable-threads
 (defmethod generate-request-id ((pdu common-pdu))
   (with-slots (request-id-counter) pdu
+    (portable-threads:atomic-incf request-id-counter)
     (the (unsigned-byte 32)
-         (logand (incf request-id-counter) #xffffffff))))
-
-#+portable-threads
-(defmethod generate-request-id ((pdu common-pdu))
-  (with-slots (request-id-counter) pdu
-    (the (unsigned-byte 32)
-         (logand (portable-threads:atomic-incf request-id-counter) #xffffffff))))
+      (ldb (byte 32 0) request-id-counter))))
 
 (defmethod initialize-instance :after ((pdu common-pdu)
                                        &rest initargs &key &allow-other-keys)
