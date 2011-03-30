@@ -4,22 +4,22 @@
 (in-package :snmp)
 
 (defparameter *preload-mibs*
-  '(#p"MIB:IETF;SNMPv2-SMI"
-    #p"MIB:IETF;SNMPv2-TC"
-    #p"MIB:IETF;SNMPv2-TM"
-    #p"MIB:IETF;SNMPv2-CONF"
-    #p"MIB:IETF;SNMPv2-MIB"
-    #p"MIB:IANA;IANAifType-MIB"
+  '("MIB:IETF;SNMPv2-SMI"
+    "MIB:IETF;SNMPv2-TC"
+    "MIB:IETF;SNMPv2-TM"
+    "MIB:IETF;SNMPv2-CONF"
+    "MIB:IETF;SNMPv2-MIB"
+    "MIB:IANA;IANAifType-MIB"
 
-    #p"MIB:LISP;LISP-MIB.TXT"
-    #p"MIB:LISP;ABCL-MIB.TXT"
-    #p"MIB:LISP;CLOZURE-MIB.TXT"
-    #p"MIB:LISP;CMUCL-MIB.TXT"
-    #p"MIB:LISP;ECL-MIB.TXT"
-    #p"MIB:LISP;FRANZ-MIB.TXT"
-    #p"MIB:LISP;LISPWORKS-MIB.TXT"
-    #p"MIB:LISP;SBCL-MIB.TXT"
-    #p"MIB:LISP;SCL-MIB.TXT"))
+    "MIB:LISP;LISP-MIB.TXT"
+    "MIB:LISP;ABCL-MIB.TXT"
+    "MIB:LISP;CLOZURE-MIB.TXT"
+    "MIB:LISP;CMUCL-MIB.TXT"
+    "MIB:LISP;ECL-MIB.TXT"
+    "MIB:LISP;FRANZ-MIB.TXT"
+    "MIB:LISP;LISPWORKS-MIB.TXT"
+    "MIB:LISP;SBCL-MIB.TXT"
+    "MIB:LISP;SCL-MIB.TXT"))
 
 (defun compile-mib (&rest args)
   (apply #'compile-asn.1 args))
@@ -27,11 +27,10 @@
 (defun load-mib (&rest args)
   (apply #'load-asn.1 args))
 
-(defvar *mib-expression* #p"SNMP:MIB.LISP-EXPR")
-(defvar *mib-dependency-file* #p"SNMP:MIB-DEPEND.LISP")
+(defvar *mib-expression* "SNMP:MIB.LISP-EXPR")
+(defvar *mib-dependency-file* "SNMP:MIB-DEPEND.LISP")
 
-(defvar *pathname-base*
-  (translate-logical-pathname #p"SNMP:"))
+(defvar *pathname-base*)
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (defmacro make-mib-pathname (type pathname)
@@ -49,6 +48,8 @@
 
 (defun update-mib (&optional (mib-list *preload-mibs*))
   "Update mib.lisp-expr"
+  (setq *pathname-base*
+        (translate-logical-pathname "SNMP:"))
   (let ((mib.lisp-expr '())
         (mib-depend.lisp '())
         (*package* *asn.1-package*))
