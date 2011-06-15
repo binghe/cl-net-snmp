@@ -300,27 +300,13 @@
                  :name '|iso|
                  :value 1
                  :parent |zero|))
-                 
-(defvar |org| ; iso.org
-  (make-instance 'object-id
-                 :name '|org|
-                 :value 3
-                 :parent |iso|))
-
-(defvar |dod| ; iso.org.dod
-  (make-instance 'object-id
-                 :name '|dod|
-                 :value 6
-                 :parent |org|))
 
 ;;; OID Database, key: string, value: oid or list (all oid instances with same name)
 (defvar *oid-database* (make-hash-table :test 'equal))
 
 (eval-when (:load-toplevel :execute)
   (setf (gethash "zero" *oid-database*) '|zero|
-        (gethash "iso"  *oid-database*) '|iso|
-        (gethash "org"  *oid-database*) '|org|
-        (gethash "dod"  *oid-database*) '|dod|))
+        (gethash "iso"  *oid-database*) '|iso|))
 
 (defun register-oid (name var)
   (let ((exist (gethash name *oid-database*)))

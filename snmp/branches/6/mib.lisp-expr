@@ -10,12 +10,15 @@
   :DEPENDS-ON
   ("snmpv2-smi" "snmpv2-tc" "snmpv2-conf"))
  (:FILE "ianaiftype-mib" :DEPENDS-ON ("snmpv2-smi" "snmpv2-tc"))
- (:FILE "lisp-mib" :DEPENDS-ON ("snmpv2-smi" "snmpv2-tc"))
- (:FILE "abcl-mib" :DEPENDS-ON ("snmpv2-smi" "lisp-mib"))
- (:FILE "clozure-mib" :DEPENDS-ON ("snmpv2-smi" "lisp-mib"))
- (:FILE "cmucl-mib" :DEPENDS-ON ("snmpv2-smi" "lisp-mib"))
- (:FILE "ecl-mib" :DEPENDS-ON ("snmpv2-smi" "lisp-mib"))
- (:FILE "franz-mib" :DEPENDS-ON ("snmpv2-smi" "lisp-mib"))
- (:FILE "lispworks-mib" :DEPENDS-ON ("snmpv2-smi" "lisp-mib"))
- (:FILE "sbcl-mib" :DEPENDS-ON ("snmpv2-smi" "lisp-mib"))
- (:FILE "scl-mib" :DEPENDS-ON ("snmpv2-smi" "lisp-mib")))
+ (:FILE
+  "if-mib"
+  :DEPENDS-ON
+  ("snmpv2-smi"
+   "snmpv2-tc"
+   "snmpv2-conf"
+   "snmpv2-mib"
+   "ianaiftype-mib"))
+ (:FILE
+  "host-resources-mib"
+  :DEPENDS-ON
+  ("snmpv2-smi" "snmpv2-tc" "snmpv2-conf" "if-mib")))

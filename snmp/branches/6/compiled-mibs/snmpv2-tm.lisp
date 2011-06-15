@@ -1,6 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Generated from MIB:IETF;SNMPV2-TM by SNMP 6.1
-
+;;;; Generated from MIB:IETF;SNMPV2-TM by CL-NET-SNMP
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
