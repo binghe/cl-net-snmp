@@ -6,15 +6,17 @@
 (EVAL-WHEN (:LOAD-TOPLEVEL :EXECUTE)
   (MAPCAR #'(LAMBDA (X)
               (SETF (GETHASH (CAR X) *MIB-MODULE-DEPENDENCY*) (CDR X)))
-          '((SCL-MIB |SNMPv2-SMI| LISP-MIB)
-            (SBCL-MIB |SNMPv2-SMI| LISP-MIB)
-            (|LispWorks-MIB| |SNMPv2-SMI| LISP-MIB)
-            (|Franz-MIB| |SNMPv2-SMI| LISP-MIB)
-            (ECL-MIB |SNMPv2-SMI| LISP-MIB)
-            (CMUCL-MIB |SNMPv2-SMI| LISP-MIB)
-            (|Clozure-MIB| |SNMPv2-SMI| LISP-MIB)
-            (ABCL-MIB |SNMPv2-SMI| LISP-MIB)
-            (LISP-MIB |SNMPv2-SMI| |SNMPv2-TC|)
+          '((HOST-RESOURCES-MIB
+             |SNMPv2-SMI|
+             |SNMPv2-TC|
+             |SNMPv2-CONF|
+             IF-MIB)
+            (IF-MIB
+             |SNMPv2-SMI|
+             |SNMPv2-TC|
+             |SNMPv2-CONF|
+             |SNMPv2-MIB|
+             |IANAifType-MIB|)
             (|IANAifType-MIB| |SNMPv2-SMI| |SNMPv2-TC|)
             (|SNMPv2-MIB| |SNMPv2-SMI| |SNMPv2-TC| |SNMPv2-CONF|)
             (|SNMPv2-CONF| |SNMPv2-SMI|)

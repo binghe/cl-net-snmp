@@ -1,6 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Generated from MIB:LISP;ABCL-MIB.TXT by SNMP 6.1
-
+;;;; Generated from MIB:LISP;ABCL-MIB.TXT by CL-NET-SNMP
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute) (setf *current-module* 'abcl-mib))

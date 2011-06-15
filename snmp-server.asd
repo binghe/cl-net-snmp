@@ -18,8 +18,19 @@
                (:file "server-vacm" :depends-on ("snmp-server"))
                (:file "server-walk" :depends-on ("snmp-server"))
                (:file "server-base" :depends-on ("server-walk"))
+               (:module "compiled-mibs"
+                :components ((:file "lisp-mib")
+                             #+abcl      (:file "abcl-mib")
+                             #+allegro   (:file "franz-mib")
+                             #+clozure   (:file "clozure-mib")
+                             #+cmu       (:file "cmucl-mib")
+                             #+ecl       (:file "ecl-mib")
+                             #+lispworks (:file "lispworks-mib")
+                             #+sbcl      (:file "sbcl-mib")
+                             #+scl       (:file "scl-mib")))
                (:module "server"
-                :depends-on ("server-base")
+                :depends-on ("server-base"
+                             "compiled-mibs")
                 :components ((:file "core")
                              (:file "lisp-base")
 			     #+abcl      (:file "abcl")
