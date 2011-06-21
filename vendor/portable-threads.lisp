@@ -1,8 +1,8 @@
 ;;;; -*- Mode:Common-Lisp; Package:PORTABLE-THREADS; Syntax:common-lisp -*-
 ;;;; *-* File: /usr/local/gbbopen/source/tools/portable-threads.lisp *-*
 ;;;; *-* Edited-By: cork *-*
-;;;; *-* Last-Edit: Thu Jul 29 16:50:15 2010 *-*
-;;;; *-* Machine: cyclone.cs.umass.edu *-*
+;;;; *-* Last-Edit: Thu Apr 14 00:59:16 2011 *-*
+;;;; *-* Machine: twister.local *-*
 
 ;;;; **************************************************************************
 ;;;; **************************************************************************
@@ -14,7 +14,7 @@
 ;;;
 ;;; Written by: Dan Corkill
 ;;;
-;;; Copyright (C) 2003-2010, Dan Corkill <corkill@GBBopen.org> 
+;;; Copyright (C) 2003-2011, Dan Corkill <corkill@GBBopen.org> 
 ;;;
 ;;; Developed and supported by the GBBopen Project (http://GBBopen.org) and
 ;;; donated to the CL Gardeners portable threads initiative
@@ -63,12 +63,14 @@
 ;;;  11-08-09 Renamed keyword arguments (:key -> :marker, etc.) in
 ;;;           MAKE-SCHEDULED-FUNCTION, SCHEDULE-FUNCTION,
 ;;;           SCHEDULE-FUNCTION-RELATIVE, and UNSCHEDULE-FUNCTION.  (Corkill)
-;;;  11-10-09 Add PAUSE-SCHEDULED-FUNCTION-SCHEDULER, 
+;;;  11-10-09 Added PAUSE-SCHEDULED-FUNCTION-SCHEDULER, 
 ;;;           RESUME-SCHEDULED-FUNCTION-SCHEDULER,  
 ;;;           SCHEDULED-FUNCTION-SCHEDULER-PAUSED-P, and
 ;;;           SCHEDULED-FUNCTION-SCHEDULER-RUNNING-P.  (Corkill)
 ;;;  12-18-09 Moved scheduled & periodic functions to separate 
 ;;;           periodic-scheduled-functions.lisp file.  (Corkill)
+;;;  03-29-11 Added partial ABCL support (provided by Chun Tian (binghe);
+;;;           thanks!)
 ;;;
 ;;; * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
@@ -79,10 +81,12 @@
 
 (in-package :portable-threads)
 
-;; Support for threads in Corman Common Lisp is under development and is 
-;; incomplete, so we consider it threadless, for now:
-#+(or abcl
-      cormanlisp-is-not-ready)
+#+(or 
+    ;; Portable threads support for ABCL is not yet complete...
+    abcl
+    ;; Support for threads in Corman Common Lisp is under development and is
+    ;; incomplete, so we consider it threadless, for now:
+    cormanlisp-is-not-ready)
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (require 'threads))
 
@@ -441,10 +445,12 @@
 
 (defun all-threads ()
   #+abcl
-  (let ((threads ()))
-    (threads:mapcar-threads (lambda (thread)
-			      (push thread threads)))
-    (reverse threads))
+  (let ((threads nil))
+    (flet ((push-thread (tread)
+             (push thread threads)))
+      (declare (dynamic-extent #'push-thread))
+      (threads:mapcar-threads #'push-thread)
+      (nreverse threads)))
   #+allegro
   mp:*all-processes*
   #+(and clisp mt)
@@ -466,16 +472,11 @@
   #+threads-not-available
   nil)
   
+#-(or abcl
+      clisp)
 (defcm all-threads ()
-  #+abcl
-  '(let ((threads ()))
-    (threads:mapcar-threads (lambda (thread)
-			      (push thread threads)))
-    (reverse threads))
   #+allegro
   'mp:*all-processes*
-  #+(and clisp mt)
-  '(delete nil (mt:list-threads) :key #'mt:thread-active-p) ; Delete is OK?
   #+clozure
   '(ccl:all-processes)
   #+(and cmu mp)
@@ -549,7 +550,7 @@
   nil)
 
 ;;; ---------------------------------------------------------------------------
-;;;   Thread-alive-p (threaded SBCL is native)
+;;;   Thread-alive-p (ABCL & threaded SBCL are native)
 
 #-(or abcl
       (and sbcl sb-thread))
@@ -559,7 +560,7 @@
   #+(and clisp mt)
   (mt:thread-active-p obj)
   #+clozure
-  (ccl::process-active-p obj)
+  (not (ccl:process-exhausted-p obj))
   #+(and cmu mp)
   (mp:process-alive-p obj)
   #+digitool-mcl
@@ -584,7 +585,7 @@
   #+(and clisp mt)
   `(mt:thread-active-p ,obj)
   #+clozure
-  `(ccl::process-active-p ,obj)
+  `(not (ccl:process-exhausted-p ,obj))
   #+(and cmu mp)
   `(mp:process-alive-p ,obj)
   #+digitool-mcl
@@ -601,7 +602,7 @@
   nil)
 
 ;;; ---------------------------------------------------------------------------
-;;;   Thread-name (threaded SBCL is native)
+;;;   Thread-name (ABCL & threaded SBCL are native)
 
 #-(or abcl
       (and sbcl sb-thread))
@@ -726,7 +727,7 @@
   #+abcl
   (declare (ignore thread))
   #+abcl
-  thostate
+  whostate                              ; no-op
   #+allegro
   (setf (mp:process-whostate thread) whostate)
   #+(and clisp mt)
