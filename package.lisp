@@ -176,8 +176,8 @@
           `(("**;*.*.NEWEST" ,home)
 	    ("**;*.*" ,home))
           (logical-pathname-translations "MIB")
-          `(("**;*.*.NEWEST" "SNMP:MIBS;**;*.*")
-	    ("**;*.*" "SNMP:MIBS;**;*.*")))))
+          `(("**;*.*.NEWEST" "SNMP:mibs;**;*.*")
+	    ("**;*.*" "SNMP:mibs;**;*.*")))))
 
 
 (defvar *asn.1-package* (find-package :asn.1))
