@@ -32,16 +32,26 @@
     (when system-instance
       (load-all-patches system-instance))))
 
+(defun load-one-patch-file (file)
+  (let ((output-file #+asdf2 (asdf:compile-file-pathname* file)
+                     #-asdf2 (compile-file-pathname file)))
+    (if (and (probe-file output-file)
+             #+asdf2
+             (< (asdf::safe-file-write-date file)
+                (asdf::safe-file-write-date output-file))
+             #-asdf2 t)
+        (load output-file)
+      (progn
+        (ensure-directories-exist output-file)
+        (load (compile-file file :output-file output-file))))))
+
 (defmethod load-all-patches ((system asdf:system))
   (multiple-value-bind (major-version minor-version)
       (split-version (asdf:component-version system))
     (loop for version from (1+ minor-version) ; search from next minor version
        as file = (compute-patch-file-pathname system major-version version)
        while (probe-file file)
-       do (let ((output-file #+asdf2 (asdf:compile-file-pathname* file)
-                             #-asdf2 (compile-file-pathname file)))
-            (ensure-directories-exist output-file)
-            (load (compile-file file :output-file output-file)))
+       do (load-one-patch-file file)
        count file into count
        finally
 	 (format t *patch-format-string*
