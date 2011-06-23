@@ -46,7 +46,7 @@
                 (load-asn.1-internal (car i) (cdr i))))
             (prog1
                 (export *current-module* *asn.1-package*)
-              (set *current-module* *current-module*) ; make it self-evaluated
+              (setf (symbol-value *current-module*) *current-module*) ; make it self-evaluated
               (pushnew *current-module* *mib-modules*))))))))
 
 (defmethod load-asn.1-internal ((type (eql :import)) (rtl list))

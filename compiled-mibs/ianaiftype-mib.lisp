@@ -1,6 +1,5 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Generated from MIB:IANA;IANAIFTYPE-MIB by ASN.1 5.0
-
+;;;; Generated from MIB:IANA;IANAIFTYPE-MIB by CL-NET-SNMP
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
