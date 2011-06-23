@@ -10,7 +10,7 @@
 
 (defun compute-patch-file-pathname (system major-version minor-version &optional (type "lisp"))
   (let ((name (format nil "~A-~D-~D"
-                      (string-upcase (asdf:component-name system)) major-version minor-version)))
+                      (string-downcase (asdf:component-name system)) major-version minor-version)))
     (make-pathname :name name
                    :type type
                    :defaults (compute-patch-directory-pathname system major-version))))
@@ -23,7 +23,7 @@
     (values major-version minor-version)))
 
 (defparameter *patch-format-string*
-  "~&;; ~[No~:;~:*~D~] patch~:*~[~:;es~] loaded, ~:*~[current~:;new~] ~A version is ~D.~D~%")
+  "~&;; ~[No~:;~:*~D~] patch~:*~[~:;~:;es~] loaded, ~:*~[current~:;new~] ~A version is ~D.~D~%")
 
 (defgeneric load-all-patches (system))
 
@@ -38,7 +38,10 @@
     (loop for version from (1+ minor-version) ; search from next minor version
        as file = (compute-patch-file-pathname system major-version version)
        while (probe-file file)
-       do (load (compile-file file))
+       do (let ((output-file #+asdf2 (asdf:compile-file-pathname* file)
+                             #-asdf2 (compile-file-pathname file)))
+            (ensure-directories-exist output-file)
+            (load (compile-file file :output-file output-file)))
        count file into count
        finally
 	 (format t *patch-format-string*
