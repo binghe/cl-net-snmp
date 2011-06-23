@@ -24,8 +24,11 @@
   :licence "MIT"
   :depends-on (:ironclad :usocket)
   :components ((:module "vendor"
+		:serial t
                 :components (#-portable-threads
 			     (:file "portable-threads")
+			     #-scheduled/periodic-functions
+			     (:file "scheduled-periodic-functions")
 			     (:file "ieee-floats")
 			     #-lispworks #-lispworks
 			     (:file "yacc")
