@@ -1,0 +1,3 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Generated from MIB:IETF;HOST-RESOURCES-MIB by CL-NET-SNMP
+(host-resources-mib |SNMPv2-SMI| |SNMPv2-TC| |SNMPv2-CONF| if-mib)

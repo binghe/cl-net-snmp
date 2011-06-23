@@ -1,0 +1,3 @@
+;;;; -*- Mode: Lisp -*-
+;;;; Generated from MIB:IETF;SNMPV2-MIB by CL-NET-SNMP
+(|SNMPv2-MIB| |SNMPv2-SMI| |SNMPv2-TC| |SNMPv2-CONF|)
