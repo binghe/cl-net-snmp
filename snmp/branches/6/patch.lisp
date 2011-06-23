@@ -1,11 +1,16 @@
+;;;; -*- Mode: Lisp -*-
+;;;; $Id$
+
 (in-package :snmp)
+
+(defparameter *patch-directory-name* "patch")
 
 (defun compute-patch-directory-pathname (system major-version)
   (let ((directory-name
-         (format nil "~A-~D" (asdf:component-name system) major-version))
+         (format nil "~A-~D" (string-downcase (asdf:component-name system)) major-version))
         (system-pathname (asdf:component-pathname system)))
     (make-pathname :directory (append (pathname-directory system-pathname)
-                                      (list "patch" directory-name))
+                                      (list *patch-directory-name* directory-name))
                    :defaults system-pathname)))
 
 (defun compute-patch-file-pathname (system major-version minor-version &optional (type "lisp"))
