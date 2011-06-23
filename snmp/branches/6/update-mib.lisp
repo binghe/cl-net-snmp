@@ -14,15 +14,15 @@
     "MIB:ietf;HOST-RESOURCES-MIB"))
 
 (defparameter *lisp-mibs*
-  '("MIB:lisp;LISP-MIB.TXT"
-    "MIB:lisp;ABCL-MIB.TXT"
-    "MIB:lisp;CLOZURE-MIB.TXT"
-    "MIB:lisp;CMUCL-MIB.TXT"
-    "MIB:lisp;ECL-MIB.TXT"
-    "MIB:lisp;FRANZ-MIB.TXT"
-    "MIB:lisp;LISPWORKS-MIB.TXT"
-    "MIB:lisp;SBCL-MIB.TXT"
-    "MIB:lisp;SCL-MIB.TXT"))
+  '("MIB:lisp;LISP-MIB.txt"
+    "MIB:lisp;ABCL-MIB.txt"
+    "MIB:lisp;CLOZURE-MIB.txt"
+    "MIB:lisp;CMUCL-MIB.txt"
+    "MIB:lisp;ECL-MIB.txt"
+    "MIB:lisp;FRANZ-MIB.txt"
+    "MIB:lisp;LISPWORKS-MIB.txt"
+    "MIB:lisp;SBCL-MIB.txt"
+    "MIB:lisp;SCL-MIB.txt"))
 
 (defun compile-mib (&rest args)
   (apply #'compile-asn.1 args))
@@ -37,7 +37,8 @@
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (defmacro make-mib-pathname (type pathname)
-    `(merge-pathnames (make-pathname :name (pathname-name (translate-logical-pathname ,pathname))
+    `(merge-pathnames (make-pathname :name (string-downcase
+					    (pathname-name (translate-logical-pathname ,pathname)))
                                      :type ,type
                                      :directory (append (pathname-directory *pathname-base*)
                                                         '("compiled-mibs")))
@@ -97,11 +98,10 @@
           (if (eq i :break-line)
               (terpri s)
             (pprint i s)))
-        (terpri s)))
-
-    (asdf:clear-system :snmp)
-    (asdf:load-system :snmp)))
+        (terpri s)))))
 
 (defun update-mib ()
   (update-mib-internal *preload-mibs* :global t)
-  (update-mib-internal *lisp-mibs* :global nil))
+  (update-mib-internal *lisp-mibs* :global nil)
+  (asdf:clear-system :snmp)
+  (asdf:load-system :snmp))
