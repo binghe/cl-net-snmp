@@ -1,26 +1,25 @@
 ;;;; -*- Mode: Lisp -*-
-;;;; Generated from MIB:LISP;CLOZURE-MIB.TXT by CL-NET-SNMP
+;;;; Generated from MIB:LISP;ECL-MIB.TXT by CL-NET-SNMP
 (in-package :asn.1)
 
-(eval-when (:load-toplevel :execute)
-  (setf *current-module* '|Clozure-MIB|))
+(eval-when (:load-toplevel :execute) (setf *current-module* 'ecl-mib))
 
-(defpackage :|ASN.1/Clozure-MIB|
-  (:nicknames :|Clozure-MIB|)
+(defpackage :asn.1/ecl-mib
+  (:nicknames :ecl-mib)
   (:use :common-lisp :asn.1)
   (:import-from :|ASN.1/SNMPv2-SMI| module-identity object-type
                 object-identity notification-type |enterprises|)
   (:import-from :asn.1/lisp-mib |commonLisp|))
 
-(in-package :|Clozure-MIB|)
+(in-package :ecl-mib)
 
-(defoid |ccl| (|commonLisp| 8)
+(defoid |ecl| (|commonLisp| 11)
   (:type 'module-identity)
-  (:description "The MIB module for Clozure CL"))
+  (:description "The MIB module for ECL"))
 
 (in-package :asn.1)
 
 (eval-when (:load-toplevel :execute)
-  (pushnew '|Clozure-MIB| *mib-modules*)
+  (pushnew 'ecl-mib *mib-modules*)
   (setf *current-module* nil))
 

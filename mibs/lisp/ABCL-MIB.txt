@@ -1,0 +1,32 @@
+-- -*- Mode: asn1 -*-
+-- $Id: CMUCL-MIB.txt 852 2011-03-18 18:41:24Z binghe $
+
+ABCL-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, OBJECT-IDENTITY,
+    NOTIFICATION-TYPE, enterprises
+        FROM SNMPv2-SMI
+
+    commonLisp FROM LISP-MIB;
+
+abcl MODULE-IDENTITY
+    LAST-UPDATED "201103200000Z" -- 20 March 2011
+    ORGANIZATION
+           "The cl-net-snmp Project
+	    http://common-lisp.net/projects/cl-net-snmp"
+    CONTACT-INFO
+           "Chun Tian (binghe)
+
+            Email: <binghe.lisp@gmail.com>
+
+            Send comments to
+              <cl-net-snmp-general@lists.sourceforge.net>"
+    DESCRIPTION
+           "The MIB module for ABCL"
+    REVISION "201103200000Z" -- 20 March 2011
+    DESCRIPTION
+           "The initial revision of this MIB module."
+    ::= { commonLisp 12 }
+
+END

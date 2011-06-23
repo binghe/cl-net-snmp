@@ -6,12 +6,13 @@
 (defvar *in-compiler* t)
 
 (defun format-header (file stream)
-  (format stream ";;;; -*- Mode: Lisp -*-~%;;;; Generated from ~A by ASN.1 ~D.~D~%"
-          file *major-version* *minor-version*))
+  (format stream ";;;; -*- Mode: Lisp -*-~%;;;; Generated from ~A by CL-NET-SNMP" file))
 
 (defgeneric compile-asn.1 (object &key &allow-other-keys))
 
 (defmethod compile-asn.1 ((file t) &key to temp &allow-other-keys)
+  #-lispworks
+  (declare (ignore temp))
   (let ((result (compile-asn.1 (parse file))))
     (cond ((pathnamep to)
            (let ((head (merge-pathnames (make-pathname :type "lisp-expr")

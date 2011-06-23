@@ -1,8 +1,8 @@
 ;;;; -*- Mode:Common-Lisp; Package:PORTABLE-THREADS; Syntax:common-lisp -*-
 ;;;; *-* File: /usr/local/gbbopen/source/tools/portable-threads.lisp *-*
 ;;;; *-* Edited-By: cork *-*
-;;;; *-* Last-Edit: Thu Jul 29 16:50:15 2010 *-*
-;;;; *-* Machine: cyclone.cs.umass.edu *-*
+;;;; *-* Last-Edit: Thu Apr 14 00:59:16 2011 *-*
+;;;; *-* Machine: twister.local *-*
 
 ;;;; **************************************************************************
 ;;;; **************************************************************************
@@ -14,7 +14,7 @@
 ;;;
 ;;; Written by: Dan Corkill
 ;;;
-;;; Copyright (C) 2003-2010, Dan Corkill <corkill@GBBopen.org> 
+;;; Copyright (C) 2003-2011, Dan Corkill <corkill@GBBopen.org> 
 ;;;
 ;;; Developed and supported by the GBBopen Project (http://GBBopen.org) and
 ;;; donated to the CL Gardeners portable threads initiative
@@ -63,12 +63,14 @@
 ;;;  11-08-09 Renamed keyword arguments (:key -> :marker, etc.) in
 ;;;           MAKE-SCHEDULED-FUNCTION, SCHEDULE-FUNCTION,
 ;;;           SCHEDULE-FUNCTION-RELATIVE, and UNSCHEDULE-FUNCTION.  (Corkill)
-;;;  11-10-09 Add PAUSE-SCHEDULED-FUNCTION-SCHEDULER, 
+;;;  11-10-09 Added PAUSE-SCHEDULED-FUNCTION-SCHEDULER, 
 ;;;           RESUME-SCHEDULED-FUNCTION-SCHEDULER,  
 ;;;           SCHEDULED-FUNCTION-SCHEDULER-PAUSED-P, and
 ;;;           SCHEDULED-FUNCTION-SCHEDULER-RUNNING-P.  (Corkill)
 ;;;  12-18-09 Moved scheduled & periodic functions to separate 
 ;;;           periodic-scheduled-functions.lisp file.  (Corkill)
+;;;  03-29-11 Added partial ABCL support (provided by Chun Tian (binghe);
+;;;           thanks!)
 ;;;
 ;;; * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
@@ -79,9 +81,12 @@
 
 (in-package :portable-threads)
 
-;; Support for threads in Corman Common Lisp is under development and is 
-;; incomplete, so we consider it threadless, for now:
-#+cormanlisp-is-not-ready
+#+(or 
+    ;; Portable threads support for ABCL is not yet complete...
+    abcl
+    ;; Support for threads in Corman Common Lisp is under development and is
+    ;; incomplete, so we consider it threadless, for now:
+    cormanlisp-is-not-ready)
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (require 'threads))
 
@@ -159,7 +164,9 @@
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (import
    #+abcl
-   '()
+   '(threads:current-thread
+     threads:thread-alive-p
+     threads:thread-name)
    #+allegro 
    '(sys:with-timeout)
    #+clisp
@@ -305,8 +312,7 @@
 ;;; ===========================================================================
 ;;;  Features & warnings
 
-#+(or abcl             ;; temporarily without thread support--very temporarily
-      (and clisp (not mt))
+#+(or (and clisp (not mt))
       cormanlisp
       (and cmu (not mp)) 
       (and ecl (not threads))
@@ -388,6 +394,7 @@
 ;;; ===========================================================================
 ;;;   Current-Thread (returns :threads-not-available on CLs without threads)
 
+#-abcl
 (defun current-thread ()
   #+allegro
   mp:*current-process*
@@ -410,6 +417,7 @@
   #+threads-not-available
   ':threads-not-available)
 
+#-abcl
 (defcm current-thread ()
   #+allegro
   'mp:*current-process*
@@ -436,6 +444,13 @@
 ;;;   All-Threads (returns nil on CLs without threads)
 
 (defun all-threads ()
+  #+abcl
+  (let ((threads nil))
+    (flet ((push-thread (tread)
+             (push thread threads)))
+      (declare (dynamic-extent #'push-thread))
+      (threads:mapcar-threads #'push-thread)
+      (nreverse threads)))
   #+allegro
   mp:*all-processes*
   #+(and clisp mt)
@@ -457,11 +472,11 @@
   #+threads-not-available
   nil)
   
+#-(or abcl
+      clisp)
 (defcm all-threads ()
   #+allegro
   'mp:*all-processes*
-  #+(and clisp mt)
-  '(delete nil (mt:list-threads) :key #'mt:thread-active-p) ; Delete is OK?
   #+clozure
   '(ccl:all-processes)
   #+(and cmu mp)
@@ -483,6 +498,8 @@
 ;;;   Threadp
 
 (defun threadp (obj)
+  #+abcl
+  (typep obj 'threads:thread)
   #+allegro
   (mp:process-p obj)
   #+(and clisp mt)
@@ -507,6 +524,8 @@
   nil)
 
 (defcm threadp (obj)
+  #+abcl
+  `(typep ,obj 'threads:thread)
   #+allegro
   `(mp:process-p ,obj)
   #+(and clisp mt)
@@ -531,16 +550,17 @@
   nil)
 
 ;;; ---------------------------------------------------------------------------
-;;;   Thread-alive-p (threaded SBCL is native)
+;;;   Thread-alive-p (ABCL & threaded SBCL are native)
 
-#-(and sbcl sb-thread)
+#-(or abcl
+      (and sbcl sb-thread))
 (defun thread-alive-p (obj)
   #+allegro
   (mp:process-alive-p obj)
   #+(and clisp mt)
   (mt:thread-active-p obj)
   #+clozure
-  (ccl::process-active-p obj)
+  (not (ccl:process-exhausted-p obj))
   #+(and cmu mp)
   (mp:process-alive-p obj)
   #+digitool-mcl
@@ -557,6 +577,7 @@
   nil)
 
 #-(or threads-not-available 
+      abcl
       (and sbcl sb-thread))
 (defcm thread-alive-p (obj)
   #+allegro
@@ -564,7 +585,7 @@
   #+(and clisp mt)
   `(mt:thread-active-p ,obj)
   #+clozure
-  `(ccl::process-active-p ,obj)
+  `(not (ccl:process-exhausted-p ,obj))
   #+(and cmu mp)
   `(mp:process-alive-p ,obj)
   #+digitool-mcl
@@ -581,9 +602,10 @@
   nil)
 
 ;;; ---------------------------------------------------------------------------
-;;;   Thread-name (threaded SBCL is native)
+;;;   Thread-name (ABCL & threaded SBCL are native)
 
-#-(and sbcl sb-thread)
+#-(or abcl
+      (and sbcl sb-thread))
 (defun thread-name (thread)
   #+allegro
   (mp:process-name thread)
@@ -604,7 +626,8 @@
   #+threads-not-available
   (not-a-thread thread))
 
-#-(or threads-not-available 
+#-(or threads-not-available
+      abcl
       (and sbcl sb-thread))
 (defcm thread-name (thread)
   #+allegro
@@ -627,7 +650,8 @@
 ;;; ---------------------------------------------------------------------------
 
 #-(or (and sbcl sb-thread)
-      (and clisp mt))
+      (and clisp mt)
+      abcl)
 (defun (setf thread-name) (name thread)
   #+allegro
   (setf (mp:process-name thread) name)
@@ -652,6 +676,8 @@
 ;;;   Thread-whostate (values and capabilities vary among CLs)
 
 (defun thread-whostate (thread)
+  #+abcl
+  (if (threads:thread-alive-p thread) "Alive" "Dead")
   #+allegro
   (mp:process-whostate thread)
   ;; We fake a basic whostate for CLISP/threads:
@@ -677,6 +703,7 @@
   (not-a-thread thread))
 
 #-(or threads-not-available
+      abcl
       (and clisp mt)
       (and ecl threads)
       (and sbcl sb-thread))
@@ -697,6 +724,10 @@
 (defun (setf thread-whostate) (whostate thread)
   ;;; Only Allegro, Clozure CL, and Digitool MCL support user-settable 
   ;;; whostates; this function is a NOOP on other CLs.
+  #+abcl
+  (declare (ignore thread))
+  #+abcl
+  whostate                              ; no-op
   #+allegro
   (setf (mp:process-whostate thread) whostate)
   #+(and clisp mt)
@@ -885,6 +916,8 @@
 
 #-(and sbcl sb-thread)
 (defun thread-yield ()
+  #+abcl
+  (sleep 0.01)
   #+allegro
   (mp:process-allow-schedule)
   #+(and clisp mt)
@@ -906,6 +939,8 @@
 
 #-(and sbcl sb-thread)
 (defcm thread-yield ()
+  #+abcl
+  '(sleep 0.01)
   #+allegro  
   '(mp:process-allow-schedule)
   #+(and clisp mt)
@@ -928,6 +963,43 @@
 
 ;;; ===========================================================================
 ;;;   Locks
+
+#+abcl
+(progn
+  ;; Reimplemented with java.util.concurrent.locks.ReentrantLock by Mark Evenson 2011.
+
+  (defstruct (lock
+	       (:copier nil)
+	       (:constructor %make-lock))
+    name abcl-lock)
+
+  (defstruct (recursive-lock
+	       (:include lock)
+	       (:copier nil)
+	       (:constructor %make-recursive-lock)))
+
+  (defmethod print-object ((lock lock) stream)
+    (if *print-readably*
+	(call-next-method)
+	(print-unreadable-object (lock stream :type t)
+	  (format stream "~s"
+		  (let ((abcl-lock (lock-abcl-lock lock)))
+		    (if abcl-lock
+			(lock-name lock)
+			"[No abcl-lock]"))))))
+
+  ;; Making methods constants in this manner avoids the runtime expense of
+  ;; introspection involved in JCALL with string arguments.
+  (defconstant +lock+ 
+    (java:jmethod "java.util.concurrent.locks.ReentrantLock" "lock"))
+  (defconstant +try-lock+ 
+    (java:jmethod "java.util.concurrent.locks.ReentrantLock" "tryLock"))
+  (defconstant +is-held-by-current-thread+ 
+    (java:jmethod "java.util.concurrent.locks.ReentrantLock" "isHeldByCurrentThread"))
+  (defconstant +unlock+ 
+    (java:jmethod "java.util.concurrent.locks.ReentrantLock" "unlock"))
+  (defconstant +get-hold-count+ 
+    (java:jmethod "java.util.concurrent.locks.ReentrantLock" "getHoldCount")))
 
 #+allegro
 (defstruct (recursive-lock
@@ -1062,7 +1134,10 @@
       threads-not-available
       cormanlisp)                       ; CLL 3.0 can't handle this one
 (defun make-lock (&key (name
-                        #+(and clisp mt) "Anonymous mutex"))
+                        #+(or abcl (and clisp mt)) "Anonymous mutex"))
+  #+abcl
+  (%make-lock :name name
+	      :abcl-lock (java:jnew "java.util.concurrent.locks.ReentrantLock"))
   #+allegro
   (mp:make-process-lock :name name)
   #+(and clisp mt)
@@ -1089,7 +1164,11 @@
       (and sbcl sb-thread)
       threads-not-available)
 (defun make-recursive-lock (&key (name
-                                  #+(and clisp mt) "Anonymous mutex"))
+                                  #+(or abcl (and clisp mt)) "Anonymous mutex"))
+  #+abcl
+  (%make-recursive-lock
+   :name name
+   :abcl-lock (java:jnew "java.util.concurrent.locks.ReentrantLock"))
   #+(and clisp mt)
   (mt:make-mutex :name name :recursive-p t)
   #+(or clozure
@@ -1112,13 +1191,31 @@
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (defmacro with-lock-held ((lock &key (whostate "With Lock Held"))
                             &body body)
-    #+(or (and clisp mt)
+    #+(or abcl
+          (and clisp mt)
           (and ecl threads)
           (and sbcl sb-thread)
           threads-not-available)
     (declare (ignore whostate))
     (let ((lock-sym (gensym)))
       `(let ((,lock-sym (%%get-lock%% ,lock)))
+	 #+abcl
+	 (let ((.abcl-lock. (and (lock-p ,lock-sym)
+				 (lock-abcl-lock (the lock ,lock-sym)))))
+	   (unless (recursive-lock-p ,lock-sym)
+	     (when (java:jcall +is-held-by-current-thread+ .abcl-lock.)
+	       (let ((.current-thread. (current-thread)))
+		 (recursive-lock-attempt-error
+		  ,lock-sym .current-thread. .current-thread.))))
+	   (java:jcall +lock+ .abcl-lock.)
+	   (unwind-protect
+		(progn ,@body)
+	     (when (> (java:jcall +get-hold-count+ .abcl-lock.) 1)
+	       (do ()
+		   ((= (java:jcall +get-hold-count+ .abcl-lock.) 1))
+		 (java:jcall +unlock+ .abcl-lock.)))
+	     (java:jcall +unlock+ .abcl-lock.)
+	     (values)))
          #+allegro
          (progn
            ;; Allegro's mp:with-process-lock doesn't evaluate its :norecursive
@@ -1206,6 +1303,8 @@
 
 (defun thread-holds-lock-p (lock)
   (let ((lock (%%get-lock%% lock)))
+    #+abcl
+    (java:jcall +is-held-by-current-thread+ (lock-abcl-lock lock))
     #+allegro
     (eq (mp:process-lock-locker lock) system:*current-process*)
     #+(and clisp mt)
@@ -1236,6 +1335,8 @@
   (defcm thread-holds-lock-p (lock)
     (let ((lock-sym (gensym)))
       `(let ((,lock-sym (%%get-lock%% ,lock)))
+	 #+abcl
+	 (java:jcall +is-held-by-current-thread+ (lock-abcl-lock ,lock-sym))
          #+allegro
          (eq (mp:process-lock-locker ,lock-sym) system:*current-process*)
          #+(and clisp mt)
@@ -1419,6 +1520,18 @@
                 digitool-mcl)
           (saved-whostate (gensym)))
       `(let ((,lock-sym (%%get-lock%% ,lock)))
+	 #+abcl
+	 (let ((.abcl-lock. (and (lock-p ,lock-sym)
+				 (lock-abcl-lock (the lock ,lock-sym))))
+	       ,saved-whostate)
+	   (when (> (java:jcall +get-hold-count+ .abcl-lock.) 1)
+	     (do ()
+		 ((= (java:jcall +get-hold-count+ .abcl-lock.) 1))
+	       (java:jcall +unlock+ .abcl-lock.)))
+	   (java:jcall +unlock+ .abcl-lock.)
+	   (unwind-protect
+		(progn ,@body)
+	     (java:jcall +lock+ .abcl-lock.)))
          #+allegro
          (let ((.current-thread. system:*current-process*)
                ,saved-whostate)
@@ -1540,6 +1653,9 @@
 (defun spawn-thread (name function &rest args)
   #-(or (and cmu mp) cormanlisp (and sbcl sb-thread))
   (declare (dynamic-extent args))
+  #+abcl
+  (threads:make-thread #'(lambda () (apply function args))
+		       :name name)
   #+allegro
   (apply #'mp:process-run-function name function args)
   #+(and clisp mt)
@@ -1582,6 +1698,8 @@
 ;;;   Kill-Thread
 
 (defun kill-thread (thread)
+  #+abcl
+  (threads:destroy-thread thread)
   #+allegro
   (mp:process-kill thread)
   #+(and clisp mt)
@@ -1606,6 +1724,8 @@
   (threads-not-available 'kill-thread))
 
 (defcm kill-thread (thread)
+  #+abcl
+  `(threads:destroy-thread ,thread)
   #+allegro
   `(mp:process-kill ,thread)
   #+(and clisp mt)
@@ -1635,6 +1755,8 @@
 (defun run-in-thread (thread function &rest args)
   #-threads-not-available
   (declare (dynamic-extent args))
+  #+abcl
+  (apply #'threads:interrupt-thread thread function args)
   #+allegro
   (apply #'multiprocessing:process-interrupt thread function args)
   #+(and clisp mt)
@@ -1864,6 +1986,12 @@
 ;;; ===========================================================================
 ;;;   Condition variables
 
+#+abcl
+(defclass condition-variable ()
+  ((lock :initarg :lock
+	 :initform (make-lock :name "CV Lock")
+	 :reader condition-variable-lock)))
+
 #+allegro
 (defclass condition-variable ()
   ((lock :initarg :lock
@@ -1991,6 +2119,12 @@
     (unless (thread-holds-lock-p lock)
       (condition-variable-lock-needed-error
        condition-variable 'condition-variable-wait))
+    #+abcl
+    (let ((abcl-lock (lock-abcl-lock lock)))
+      (threads:synchronized-on condition-variable
+        (java:jcall +unlock+ abcl-lock)
+        (threads:object-wait condition-variable))
+      (java:jcall +lock+ abcl-lock))
     #+allegro
     (progn
       (push system:*current-process* 
@@ -2061,6 +2195,12 @@
     (unless (thread-holds-lock-p lock)
       (condition-variable-lock-needed-error
        condition-variable 'condition-variable-wait-with-timeout))
+    #+abcl
+    (let ((abcl-lock (lock-abcl-lock lock)))
+      (threads:synchronized-on condition-variable
+        (java:jcall +unlock+ abcl-lock)
+        (threads:object-wait condition-variable (round (* 1000 seconds)))
+      (java:jcall +lock+ abcl-lock)))
     #+allegro
     (progn
       (push system:*current-process*
@@ -2179,6 +2319,9 @@
   (unless (thread-holds-lock-p (condition-variable-lock condition-variable))
     (condition-variable-lock-needed-error
      condition-variable 'condition-variable-signal))
+  #+abcl
+  (threads:synchronized-on condition-variable
+    (threads:object-notify condition-variable))
   #+(or allegro
         (and cmu mp)
         digitool-mcl
@@ -2208,6 +2351,9 @@
   (unless (thread-holds-lock-p (condition-variable-lock condition-variable))
     (condition-variable-lock-needed-error
      condition-variable 'condition-variable-broadcast))
+  #+abcl
+  (threads:synchronized-on condition-variable
+    (threads:object-notify-all condition-variable))
   #+(or allegro
         (and cmu mp)
         digitool-mcl
