@@ -741,7 +741,7 @@
   #+(and cmu mp)
   whostate                              ; no-op
   #+digitool-mcl
-  (setf (ccl:process-whostate thread) whostate)
+  whostate				; no-op
   ;; We fake a basic whostate for ECL/threads:
   #+(and ecl threads)
   (declare (ignore thread))
@@ -1594,13 +1594,11 @@
                  (non-holder-lock-release-error
                   ,lock-sym .current-thread. .holding-thread.))
                (setf ,saved-whostate (thread-whostate .current-thread.))
-               (setf (thread-whostate .current-thread.) ,whostate)
-               (ccl:release-lock .ccl-lock.)))
+               (ccl:process-unlock .ccl-lock.)))
            (unwind-protect
                (progn ,@body)
              (ccl:without-interrupts
-               (ccl:grab-lock .ccl-lock.)
-               (setf (thread-whostate .current-thread.) ,saved-whostate))))
+               (ccl:process-lock .ccl-lock. :whostate ,saved-whostate))))
          #+(and ecl threads)
          (progn
            (mp:giveup-lock ,lock-sym)   ; performs valid-holder check
