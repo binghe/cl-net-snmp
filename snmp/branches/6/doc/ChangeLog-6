@@ -29,3 +29,10 @@ SNMP 6.0.2
 - Logical pathname fixes for case-sensitive filesystems
 
 - More vendor code from GBBopen
+
+SNMP 6.1
+
+- Add SNMP/TCP suppport (OPEN-SESSION having additional keyword argument :PROTOCOL, which can be set to :TCP or :UDP (default).
+
+- 
+
