@@ -3,25 +3,19 @@
 
 (in-package :snmp-system)
 
-#+(or abcl cmu)
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (require :gray-streams))
-
-#+ecl
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (gray::redefine-cl-functions))
-
 (defpackage asn.1
   (:use :common-lisp
-        #+sbcl :sb-gray #+sbcl :sb-pcl
-        #+allegro :excl #+allegro :aclmop
-        #+cmu :ext #+cmu :pcl #+cmu :clos-mop
-        #+clisp :gray #+clisp :clos
-        #+(or mcl clozure) :ccl
-        #+lispworks :stream #+lispworks :clos
-        #+ecl :gray #+ecl :clos
+        :trivial-gray-streams
+        #+sbcl :sb-pcl
+        #+allegro :aclmop
+        #+cmu :pcl #+cmu :clos-mop
+        #+clisp :clos
+        #+clozure :openmcl-mop
+        #+lispworks :clos
+        #+mcl :mcl-mop
+        #+ecl :clos
         #+scl :ext
-        #+abcl :system #+abcl :mop #+abcl :gray-streams)
+        #+abcl :system #+abcl :mop)
   #+abcl
   (:import-from :mop #:class-direct-subclasses
                      #:class-direct-slots)
