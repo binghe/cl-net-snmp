@@ -32,7 +32,6 @@ SNMP 6.0.2
 
 SNMP 6.1
 
-- Add SNMP/TCP suppport (OPEN-SESSION having additional keyword argument :PROTOCOL, which can be set to :TCP or :UDP (default).
+- Add SNMP/TCP suppport
 
 - 
-

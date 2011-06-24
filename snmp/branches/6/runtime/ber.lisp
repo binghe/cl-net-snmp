@@ -214,8 +214,7 @@
 (defgeneric ber-decode-value (stream type length))
 
 ;;; BER Stream: make stream from sequence
-(defclass ber-stream (#-scl fundamental-binary-input-stream
-		      #+scl binary-input-stream)
+(defclass ber-stream (fundamental-binary-input-stream)
   ((sequence :type sequence :initarg :sequence :reader ber-sequence)
    (length :type fixnum :accessor ber-length)
    (position :type fixnum :initform 0 :accessor ber-position))

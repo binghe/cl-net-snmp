@@ -22,7 +22,7 @@
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
   :version "6.0.2"
   :licence "MIT"
-  :depends-on (:ironclad :usocket)
+  :depends-on (:ironclad :usocket :trivial-gray-streams)
   :components ((:module "vendor"
 		:serial t
                 :components (#-portable-threads
