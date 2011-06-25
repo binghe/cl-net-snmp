@@ -5,21 +5,19 @@
 
 (in-package :snmp)
 
+;; redefine session class, removing all type information.
 (defclass session ()
-  ((socket            :type usocket:usocket ; old: usocket:datagram-usocket
-                      :accessor socket-of
+  ((socket            :accessor socket-of
                       :initarg :socket)
-   (host              :type (or string integer)
-                      :accessor host-of
+   (host              :accessor host-of
                       :initarg :host)
-   (port              :type integer
-                      :accessor port-of
+   (port              :accessor port-of
                       :initarg :port)
-   (version           :type integer
-                      :accessor version-of
+   (version           :accessor version-of
                       :initarg :version))
-  (:documentation "SNMP session base"))
+  (:documentation "SNMP session base class"))
 
+;; new keyword argument :protocol
 (defun snmp-connect (host port &key (protocol :datagram))
   (ecase protocol
     ((:stream :tcp)
@@ -27,6 +25,7 @@
     ((:datagram :udp)
      (usocket:socket-connect host port :protocol :datagram))))
 
+;; new keyword argument :protocol
 (defun open-session (host &key (protocol :datagram) ; 6.1
                                (port *default-snmp-port*)
                                version
@@ -112,7 +111,11 @@
   "this new send-snmp-message is just a interface,
    all UDP retransmit code are moved into usocket-udp project."
   (if (stream-session-p session)
-      (send-stream-message session message receive)
+      (flet ((send () (send-stream-message session message receive)))
+        (let ((reply-message (send)))
+          (if (and receive (report-flag-of reply-message))
+              (send)
+            reply-message)))
     (if receive ; normal message
         (labels ((encode-function (x)
                    (values (coerce (ber-encode x) 'octets)
