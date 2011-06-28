@@ -63,7 +63,7 @@
                              (:file "compiler"   :depends-on ("sort" "parser" "compile-type"))
 			     (:file "pprint")
                              (:file "loader"     :depends-on ("compiler"))))
-	       (:file "constants")
+	       (:file "constants"                :depends-on ("package"))
                (:file "condition"                :depends-on ("constants"))
                (:file "keytool"                  :depends-on ("constants"))
 	       (:file "pdu"                      :depends-on ("runtime" "constants"))
