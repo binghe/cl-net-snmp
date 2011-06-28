@@ -1,8 +1,8 @@
 ;;;; -*- Mode:Common-Lisp; Package:PORTABLE-THREADS; Syntax:common-lisp -*-
 ;;;; *-* File: /usr/local/gbbopen/source/tools/portable-threads.lisp *-*
 ;;;; *-* Edited-By: cork *-*
-;;;; *-* Last-Edit: Thu Apr 14 00:59:16 2011 *-*
-;;;; *-* Machine: twister.local *-*
+;;;; *-* Last-Edit: Fri Jun 24 14:07:48 2011 *-*
+;;;; *-* Machine: phoenix *-*
 
 ;;;; **************************************************************************
 ;;;; **************************************************************************
@@ -71,6 +71,7 @@
 ;;;           periodic-scheduled-functions.lisp file.  (Corkill)
 ;;;  03-29-11 Added partial ABCL support (provided by Chun Tian (binghe);
 ;;;           thanks!)
+;;;  06-24-11 Updates for Digitool MCL & ABCL (from Chun Tian (binghe))
 ;;;
 ;;; * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
@@ -722,7 +723,7 @@
   `(nth-value 1 (mp:process-whostate ,thread)))
 
 (defun (setf thread-whostate) (whostate thread)
-  ;;; Only Allegro, Clozure CL, and Digitool MCL support user-settable 
+  ;;; Only Allegro and Clozure CL support user-settable 
   ;;; whostates; this function is a NOOP on other CLs.
   #+abcl
   (declare (ignore thread))
@@ -741,8 +742,9 @@
   #+(and cmu mp)
   whostate                              ; no-op
   #+digitool-mcl
+  (declare (ignore thread))
+  #+digitool-mcl
   whostate				; no-op
-  ;; We fake a basic whostate for ECL/threads:
   #+(and ecl threads)
   (declare (ignore thread))
   #+(and ecl threads)
@@ -751,7 +753,6 @@
   (declare (ignore thread))
   #+lispworks
   whostate                              ; no-op
-  ;; We fake a basic whostate for SBCL/sb-threads:
   #+(and sbcl sb-thread)
   (declare (ignore thread))
   #+(and sbcl sb-thread)
