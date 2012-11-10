@@ -22,25 +22,25 @@
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
   :version "7.0"
   :licence "MIT"
-  :depends-on (:ironclad :usocket)
+  :depends-on (:ironclad :usocket :trivial-gray-streams)
   :components ((:module "vendor"
-		:serial t
+                :serial t
                 :components (#-portable-threads
-			     (:file "portable-threads")
-			     #-scheduled/periodic-functions
-			     (:file "scheduled-periodic-functions")
-			     (:file "ieee-floats")
-			     #-lispworks #-lispworks
-			     (:file "yacc")
-			     (:file "yacc-patch" :depends-on ("yacc"))))
+                             (:file "portable-threads")
+                             #-scheduled/periodic-functions
+                             (:file "scheduled-periodic-functions")
+                             (:file "ieee-floats")
+                             #-lispworks #-lispworks
+                             (:file "yacc")
+                             (:file "yacc-patch" :depends-on ("yacc"))))
                ;; base system
                (:file "package")
                (:module "runtime"                :depends-on ("package" "vendor")
-		:components ((:file "constants")
-			     (:file "base")
+                :components ((:file "constants")
+                             (:file "base")
                              (:file "condition")
-			     (:file "ber"        :depends-on ("condition" "constants" "base"))
-			     (:file "object-id"  :depends-on ("ber"))
+                             (:file "ber"        :depends-on ("condition" "constants" "base"))
+                             (:file "object-id"  :depends-on ("ber"))
                              (:file "oid-reader" :depends-on ("object-id"))
                              (:file "oid-walk"   :depends-on ("object-id"))
                              (:file "integer"    :depends-on ("ber"))
@@ -55,20 +55,20 @@
                              (:file "bits"       :depends-on ("ber"))
                              (:file "convention" :depends-on ("string" "integer"))))
                (:module "compiler"               :depends-on ("runtime" "vendor")
-		:components ((:file "reader")
-			     (:file "syntax")
-			     (:file "parser"     :depends-on ("reader" "syntax"))
+                :components ((:file "reader")
+                             (:file "syntax")
+                             (:file "parser"     :depends-on ("reader" "syntax"))
                              (:file "compile-type")
                              (:file "sort")
                              (:file "compiler"   :depends-on ("sort" "parser" "compile-type"))
-			     (:file "pprint")
+                             (:file "pprint")
                              (:file "loader"     :depends-on ("compiler"))))
-	       (:file "constants")
+               (:file "constants"                :depends-on ("package"))
                (:file "condition"                :depends-on ("constants"))
                (:file "keytool"                  :depends-on ("constants"))
-	       (:file "pdu"                      :depends-on ("runtime" "constants"))
+               (:file "pdu"                      :depends-on ("runtime" "constants"))
                (:file "snmp-smi"                 :depends-on ("runtime" "constants"))
-	       (:file "session"                  :depends-on ("keytool"))
+               (:file "session"                  :depends-on ("keytool"))
                (:file "message"                  :depends-on ("constants" "pdu" "session"))
                (:file "network"                  :depends-on ("message" "session"))
                (:file "request"                  :depends-on ("network" "message" "pdu" "snmp-smi"))
@@ -76,7 +76,7 @@
                (:file "snmp-walk"                :depends-on ("request"))
                (:file "snmp-trap"                :depends-on ("request"))
                (:file "update-mib"               :depends-on ("package" "compiler"))
-	       (:file "patch"                    :depends-on ("package"))
+               (:file "patch"                    :depends-on ("package"))
                (:file "mib-depend"               :depends-on ("runtime"))
                (:module "compiled-mibs"          :depends-on ("runtime")
                 :components #.*mib.lisp-expr*)))
