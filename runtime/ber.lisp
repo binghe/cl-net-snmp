@@ -1,6 +1,7 @@
 ;;;; -*- Mode: Lisp -*-
 ;;;; $Id$
-;;;; BER (Basic Encoding Rules) support
+;;;;
+;;;; ASN.1 BER (Basic Encoding Rules)
 
 (in-package :asn.1)
 
@@ -125,25 +126,25 @@
 
 
 (eval-when (:load-toplevel :compile-toplevel)
- (defun ber-encode-length-dynamic (length)
-   (declare (type fixnum length) (optimize speed))
-   (let ((result (make-array +ber-encode-max-length+ 
-			     :element-type '(unsigned-byte 8)))
-	 (u (1- +ber-encode-max-length+)))
-     (declare (type (simple-array (unsigned-byte 8)) result)
-	      (type fixnum u))
-     (labels ((w (n)
-		(setf (aref result (the (integer 0 #.(1- +ber-encode-max-length+)) u)) n)
-		(decf u)))
-       (let ((n length))
-	 (declare (type fixnum n))
-	 (loop do
-	       (multiple-value-bind (q r) (floor (the fixnum n) 256)
-		 (w r)
-		 (when (zerop q) (return))
-		 (setf n q)))
-	 (w (logior 128 (- (1- +ber-encode-max-length+) u )))
-	 (subseq result (1+ u)))))))
+  (defun ber-encode-length-dynamic (length)
+    (declare (type fixnum length) (optimize speed))
+    (let ((result (make-array +ber-encode-max-length+ 
+                              :element-type '(unsigned-byte 8)))
+          (u (1- +ber-encode-max-length+)))
+      (declare (type (simple-array (unsigned-byte 8)) result)
+               (type fixnum u))
+      (labels ((w (n)
+                 (setf (aref result (the (integer 0 #.(1- +ber-encode-max-length+)) u)) n)
+                 (decf u)))
+        (let ((n length))
+          (declare (type fixnum n))
+          (loop do
+                (multiple-value-bind (q r) (floor (the fixnum n) 256)
+                  (w r)
+                  (when (zerop q) (return))
+                  (setf n q)))
+          (w (logior 128 (- (1- +ber-encode-max-length+) u )))
+          (subseq result (1+ u)))))))
 
 (defun ber-encode-length (length)
   (declare (optimize speed))
@@ -213,8 +214,7 @@
 (defgeneric ber-decode-value (stream type length))
 
 ;;; BER Stream: make stream from sequence
-(defclass ber-stream (#-scl fundamental-binary-input-stream
-		      #+scl binary-input-stream)
+(defclass ber-stream (fundamental-binary-input-stream)
   ((sequence :type sequence :initarg :sequence :reader ber-sequence)
    (length :type fixnum :accessor ber-length)
    (position :type fixnum :initform 0 :accessor ber-position))

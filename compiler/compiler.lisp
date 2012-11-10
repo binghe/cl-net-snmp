@@ -10,25 +10,26 @@
 
 (defgeneric compile-asn.1 (object &key &allow-other-keys))
 
-(defmethod compile-asn.1 ((file t) &key to temp &allow-other-keys)
+(defmethod compile-asn.1 ((file t) &key output-file temp &allow-other-keys)
   #-lispworks
   (declare (ignore temp))
   (let ((result (compile-asn.1 (parse file))))
-    (cond ((pathnamep to)
-           (let ((head (merge-pathnames (make-pathname :type "lisp-expr")
-                                        to))
+    (cond (output-file
+           (let ((header-file (merge-pathnames (make-pathname :type "lisp-expr") output-file))
                  (*package* *asn.1-package*)
                  (*print-case* :downcase))
-             (with-open-file (h head :direction :output :if-exists :supersede)
+             (with-open-file (h header-file :direction :output :if-exists :supersede)
                (format-header file h)
                (pprint (car result) h)
                (terpri h))
-             (with-open-file (s to :direction :output :if-exists :supersede)
+             (with-open-file (s output-file :direction :output :if-exists :supersede)
                (format-header file s)
                (dolist (i (sort-definitions (cdr result)))
                  (pprint i s)
                  (terpri s))
-               (terpri s))))
+               (terpri s))
+             (values (pathname output-file)
+                     (pathname header-file))))
           #+lispworks ; debug purpose only
           (temp
            (let ((temp-file (make-pathname :name (pathname-name file)
