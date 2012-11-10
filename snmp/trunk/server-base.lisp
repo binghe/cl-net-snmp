@@ -53,7 +53,7 @@
        (defun ,oid (,agent &optional ,ids)
          (declare (ignorable ,agent))
          (if (null ,ids) 0
-           ,@body))
+           (progn ,@body)))
        (eval-when (:load-toplevel :execute)
          (register-variable (oid ,name) #',oid)
          ,oid))))
