@@ -14,7 +14,7 @@
 ;;;
 ;;; Written by: Dan Corkill
 ;;;
-;;; Copyright (C) 2003-2010, Dan Corkill <corkill@GBBopen.org> 
+;;; Copyright (C) 2003-2011, Dan Corkill <corkill@GBBopen.org> 
 ;;;
 ;;; Developed and supported by the GBBopen Project (http://GBBopen.org) and
 ;;; donated to the CL Gardeners portable threads initiative
@@ -609,12 +609,13 @@
 ;;;  (ENCODE-TIME-OF-DAY is duplicated here (as %ENCODE-TIME-OF-DAY) from
 ;;;  GBBopen Tools, for stand-alone use.)
 
-(defun %encode-time-of-day (second minute hour
-                           &optional (universal-time (get-universal-time)))
+(defun %encode-time-of-day (second minute hour &optional universal-time)
   ;; get the decoded current time of day:
   (multiple-value-bind (current-second current-minute current-hour
                         date month year)
-      (decode-universal-time universal-time)
+      (if universal-time
+          (decode-universal-time universal-time)
+          (get-decoded-time))
     ;; substitute the supplied hour, minute, and second values:
     (let ((tentative-result
            (encode-universal-time second minute hour date month year)))
