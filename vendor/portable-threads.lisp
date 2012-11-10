@@ -1,8 +1,8 @@
 ;;;; -*- Mode:Common-Lisp; Package:PORTABLE-THREADS; Syntax:common-lisp -*-
 ;;;; *-* File: /usr/local/gbbopen/source/tools/portable-threads.lisp *-*
 ;;;; *-* Edited-By: cork *-*
-;;;; *-* Last-Edit: Thu Apr 14 00:59:16 2011 *-*
-;;;; *-* Machine: twister.local *-*
+;;;; *-* Last-Edit: Sun Mar 18 15:19:31 2012 *-*
+;;;; *-* Machine: phoenix.corkills.org *-*
 
 ;;;; **************************************************************************
 ;;;; **************************************************************************
@@ -68,9 +68,10 @@
 ;;;           SCHEDULED-FUNCTION-SCHEDULER-PAUSED-P, and
 ;;;           SCHEDULED-FUNCTION-SCHEDULER-RUNNING-P.  (Corkill)
 ;;;  12-18-09 Moved scheduled & periodic functions to separate 
-;;;           periodic-scheduled-functions.lisp file.  (Corkill)
+;;;           scheduled-periodic-functions.lisp file.  (Corkill)
 ;;;  03-29-11 Added partial ABCL support (provided by Chun Tian (binghe);
 ;;;           thanks!)
+;;;  06-24-11 Updates for Digitool MCL & ABCL (from Chun Tian (binghe))
 ;;;
 ;;; * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
@@ -446,7 +447,7 @@
 (defun all-threads ()
   #+abcl
   (let ((threads nil))
-    (flet ((push-thread (tread)
+    (flet ((push-thread (thread)
              (push thread threads)))
       (declare (dynamic-extent #'push-thread))
       (threads:mapcar-threads #'push-thread)
@@ -722,7 +723,7 @@
   `(nth-value 1 (mp:process-whostate ,thread)))
 
 (defun (setf thread-whostate) (whostate thread)
-  ;;; Only Allegro, Clozure CL, and Digitool MCL support user-settable 
+  ;;; Only Allegro and Clozure CL support user-settable 
   ;;; whostates; this function is a NOOP on other CLs.
   #+abcl
   (declare (ignore thread))
@@ -741,8 +742,9 @@
   #+(and cmu mp)
   whostate                              ; no-op
   #+digitool-mcl
-  (setf (ccl:process-whostate thread) whostate)
-  ;; We fake a basic whostate for ECL/threads:
+  (declare (ignore thread))
+  #+digitool-mcl
+  whostate				; no-op
   #+(and ecl threads)
   (declare (ignore thread))
   #+(and ecl threads)
@@ -751,7 +753,6 @@
   (declare (ignore thread))
   #+lispworks
   whostate                              ; no-op
-  ;; We fake a basic whostate for SBCL/sb-threads:
   #+(and sbcl sb-thread)
   (declare (ignore thread))
   #+(and sbcl sb-thread)
@@ -774,6 +775,29 @@
 
 #-(or allegro (and cmu mp))
 (defmacro with-timeout ((seconds &body timeout-body) &body timed-body)
+  #+abcl
+  (let ((tag-sym (gensym))
+        (timed-thread-sym (gensym))
+        (timer-thread-sym (gensym)))
+    ;; No timers in ABCL, so we use SLEEP in a separate "timer" thread:
+    `(catch ',tag-sym
+       (let* ((,timed-thread-sym (threads:current-thread))
+              (,timer-thread-sym
+               (threads:make-thread
+                #'(lambda ()
+                    (sleep ,seconds)
+                    (threads:interrupt-thread
+                     ,timed-thread-sym
+                     #'(lambda ()
+                         (ignore-errors
+                          (throw ',tag-sym
+                            (progn ,@timeout-body))))))
+                :name "WITH-TIMEOUT timer")))
+         (sleep 0)
+         (unwind-protect (progn ,@timed-body)
+           (when (threads:thread-alive-p ,timer-thread-sym)
+             (threads:destroy-thread ,timer-thread-sym)
+             (sleep 0))))))
   #+(and clisp mt)
   `(mt:with-timeout (,seconds ,@timeout-body) ,@timed-body)
   #+clozure
@@ -1101,7 +1125,8 @@
          
 ;;; ---------------------------------------------------------------------------
 
-#+(or allegro
+#+(or abcl
+      allegro
       clozure
       digitool-mcl
       lispworks)
@@ -1210,10 +1235,7 @@
 	   (java:jcall +lock+ .abcl-lock.)
 	   (unwind-protect
 		(progn ,@body)
-	     (when (> (java:jcall +get-hold-count+ .abcl-lock.) 1)
-	       (do ()
-		   ((= (java:jcall +get-hold-count+ .abcl-lock.) 1))
-		 (java:jcall +unlock+ .abcl-lock.)))
+             ;; Unlock (recursively held locks have their count decremented):
 	     (java:jcall +unlock+ .abcl-lock.)
 	     (values)))
          #+allegro
@@ -1316,7 +1338,7 @@
     #+digitool-mcl
     (eq (ccl::lock.value (lock-ccl-lock lock)) ccl:*current-process*)
     #+(and ecl threads)
-    (eq (mp:lock-holder lock) mp:*current-process*)
+    (eq (mp:lock-owner lock) mp:*current-process*)
     #+(and lispworks lispworks6)
     (mp:lock-owned-by-current-process-p lock)
     #+(and lispworks (not lispworks6))
@@ -1350,7 +1372,7 @@
          (eq (ccl::lock.value (lock-ccl-lock ,lock-sym))
              ccl:*current-process*)
          #+(and ecl threads)
-         (eq (mp:lock-holder ,lock-sym) mp:*current-process*)
+         (eq (mp:lock-owner ,lock-sym) mp:*current-process*)
          #+(and lispworks lispworks6)
          (mp:lock-owned-by-current-process-p ,lock-sym)
          #+(and lispworks (not lispworks6))
@@ -1515,7 +1537,8 @@
           scl)
     (declare (ignore whostate))
     (let ((lock-sym (gensym))
-          #+(or allegro
+          #+(or abcl
+                allegro
                 clozure
                 digitool-mcl)
           (saved-whostate (gensym)))
@@ -1594,13 +1617,11 @@
                  (non-holder-lock-release-error
                   ,lock-sym .current-thread. .holding-thread.))
                (setf ,saved-whostate (thread-whostate .current-thread.))
-               (setf (thread-whostate .current-thread.) ,whostate)
-               (ccl:release-lock .ccl-lock.)))
+               (ccl:process-unlock .ccl-lock.)))
            (unwind-protect
                (progn ,@body)
              (ccl:without-interrupts
-               (ccl:grab-lock .ccl-lock.)
-               (setf (thread-whostate .current-thread.) ,saved-whostate))))
+               (ccl:process-lock .ccl-lock. :whostate ,saved-whostate))))
          #+(and ecl threads)
          (progn
            (mp:giveup-lock ,lock-sym)   ; performs valid-holder check
@@ -1792,6 +1813,17 @@
   ;;  2. true if the symbol is bound; nil otherwise
   ;; The global symbol value is returned if no thread-local value is
   ;; bound.
+  #+abcl
+  (let ((result nil))
+    (threads:interrupt-thread
+     thread
+     #'(lambda () 
+         (setf result (if (boundp symbol)
+                          `(,(symbol-value symbol) t)
+                          '(nil nil)))))
+    ;; Wait for result:
+    (loop until result do (sleep 0))
+    (values-list result))
   #+allegro
   (multiple-value-bind (value boundp)
       (mp:symeval-in-process symbol thread)
