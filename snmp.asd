@@ -20,7 +20,7 @@
 (defsystem snmp
   :description "Simple Network Management Protocol"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
-  :version "6.0.2"
+  :version "6.0.3"
   :licence "MIT"
   :depends-on (:ironclad :usocket :trivial-gray-streams)
   :components ((:module "vendor"
