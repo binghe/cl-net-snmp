@@ -1,0 +1,19 @@
+CL-NET-SNMP 5.16 released!
+
+News in SNMP 5.16
+
+ * (SNMPv3 fix) Update session when remote peer changed (get a new report),
+   and resend current SNMPv3 query message.
+
+News in ASN.1 4.12
+
+ * Unknown asn.1 data will be decoded into RAW object but NIL
+ * Multiple OID display (PRINT-OBJECT) enhancements
+ * Condition-friendly OID function
+
+News in USOCKET-UDP 2.3
+
+ * New platform: Scieneer CL (need a udp-patch from SCL maintainer,)
+ * Souce code align to usocket-0.4.0, the first usocket release which
+   support WAIT-FOR-INPUT.
+ * Drop dependency on LispWorks-UDP package.
