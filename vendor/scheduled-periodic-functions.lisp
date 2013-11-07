@@ -1,8 +1,8 @@
 ;;;; -*- Mode:Common-Lisp; Package:PORTABLE-THREADS; Syntax:common-lisp -*-
 ;;;; *-* File: /usr/local/gbbopen/source/tools/scheduled-periodic-functions.lisp *-*
 ;;;; *-* Edited-By: cork *-*
-;;;; *-* Last-Edit: Thu Jul  8 06:24:44 2010 *-*
-;;;; *-* Machine: cyclone.cs.umass.edu *-*
+;;;; *-* Last-Edit: Wed Oct 30 16:02:13 2013 *-*
+;;;; *-* Machine: phoenix *-*
 
 ;;;; **************************************************************************
 ;;;; **************************************************************************
@@ -14,7 +14,7 @@
 ;;;
 ;;; Written by: Dan Corkill
 ;;;
-;;; Copyright (C) 2003-2010, Dan Corkill <corkill@GBBopen.org> 
+;;; Copyright (C) 2003-2013, Dan Corkill <corkill@GBBopen.org> 
 ;;;
 ;;; Developed and supported by the GBBopen Project (http://GBBopen.org) and
 ;;; donated to the CL Gardeners portable threads initiative
@@ -33,6 +33,8 @@
 ;;; * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 ;;;
 ;;;  12-18-09 Separated from portable-threads.lisp.  (Corkill)
+;;;  10-30-13 Retain scheduled-function in ALL-SCHEDULED-FUNCTIONS until after
+;;;           the scheduled execution has completed.  (Corkill)
 ;;;
 ;;; * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
@@ -55,6 +57,7 @@
             schedule-function
             schedule-function-relative
             scheduled-function          ; structure (not documented)
+            scheduled-function-context
             scheduled-function-invocation-time
             scheduled-function-marker
             scheduled-function-marker-test
@@ -71,7 +74,7 @@
 
 (defstruct (scheduled-function
             (:constructor %make-scheduled-function
-                          (function name name-test marker marker-test))
+                          (function name name-test marker marker-test context))
             (:copier nil))
   name
   name-test
@@ -80,7 +83,8 @@
   function
   invocation-time
   repeat-interval
-  verbose)
+  verbose
+  context)
 
 (defmethod print-object ((obj scheduled-function) stream)
   (if *print-readably*
@@ -154,11 +158,12 @@
                                                     function))
                                          (name-test #'eql)
                                          marker
-                                         (marker-test #'eql))
+                                         (marker-test #'eql)
+                                         context)
   #+threads-not-available
-  (declare (ignore name name-test marker marker-test))
+  (declare (ignore name name-test marker marker-test context))
   #-threads-not-available
-  (%make-scheduled-function function name name-test marker marker-test)
+  (%make-scheduled-function function name name-test marker marker-test context)
   #+threads-not-available
   (threads-not-available 'make-scheduled-function))
 
@@ -201,7 +206,7 @@
                 ;; have been awakened due to unscheduling the only
                 ;; scheduled-function)--thanks to Wendall Marvel for reporting
                 ;; this bug:
-                (when *scheduled-functions* 
+                (when *scheduled-functions*
                   ;; recheck that it's actually time to run the first
                   ;; scheduled function (in case we have been awakened due to
                   ;; a schedule change rather than due to reaching the
@@ -212,14 +217,18 @@
                         (now (get-universal-time)))
                     (when (<= invocation-time now)
                       (setf scheduled-function-to-run
-                            (pop *scheduled-functions*))))))
+                            (car *scheduled-functions*))))))
                ;; no need to wait:
                (t (setf scheduled-function-to-run
-                        (pop *scheduled-functions*))))))))
+                        (car *scheduled-functions*))))))))
       ;; funcall the scheduled function (outside of the CV lock):
       (when scheduled-function-to-run
         (unwind-protect (invoke-scheduled-function scheduled-function-to-run)
           (with-lock-held (*scheduled-functions-cv*)
+            ;; Remove the scheduled function (potentially to be reinserted if repeated):
+            (setf *scheduled-functions* (delete scheduled-function-to-run *scheduled-functions*
+                                                :count 1
+                                                :test #'eq))
             (let ((repeat-interval (scheduled-function-repeat-interval
                                     scheduled-function-to-run)))
               (cond 
@@ -372,8 +381,9 @@
 ;;; ---------------------------------------------------------------------------
 
 #-threads-not-available
-(defun schedule-function-internal (name-or-scheduled-function marker
-                                   invocation-time repeat-interval verbose)
+(defun schedule-function-internal (name-or-scheduled-function marker context
+                                   context-supplied-p invocation-time 
+                                   repeat-interval verbose)
   (or (with-lock-held (*scheduled-functions-cv*)
         (let* ((next-scheduled-function (first *scheduled-functions*))
                (unscheduled-scheduled-function 
@@ -387,6 +397,8 @@
                   invocation-time)
             (setf (scheduled-function-repeat-interval scheduled-function)
                   repeat-interval)
+            (when context-supplied-p
+              (setf (scheduled-function-context scheduled-function) context))
             (setf (scheduled-function-verbose scheduled-function) verbose)
             (insert-scheduled-function scheduled-function verbose)
             ;; awaken scheduler if this scheduled-function was the next to be
@@ -406,17 +418,20 @@
 
 (defun schedule-function (name-or-scheduled-function invocation-time
                           &key marker
+                               (context nil context-supplied-p)
                                repeat-interval
                                (verbose *schedule-function-verbose*))
   #+threads-not-available
-  (declare (ignore name-or-scheduled-function invocation-time marker 
-                   repeat-interval verbose))
+  (declare (ignore name-or-scheduled-function invocation-time marker context
+                   context-supplied-p repeat-interval verbose))
   #-threads-not-available
   (progn
     (check-type invocation-time integer)
     (check-type repeat-interval (or null integer))
     (schedule-function-internal name-or-scheduled-function
-                                marker 
+                                marker
+                                context
+                                context-supplied-p
                                 invocation-time 
                                 repeat-interval
                                 verbose)
@@ -428,19 +443,22 @@
 
 (defun schedule-function-relative (name-or-scheduled-function interval
                                    &key marker
+                                        (context nil context-supplied-p)
                                         repeat-interval 
                                         (verbose *schedule-function-verbose*))
   ;;; Syntactic sugar that simply adds `interval' to the current time before
   ;;; scheduling the scheduled-function.
   #+threads-not-available
-  (declare (ignore name-or-scheduled-function interval marker
-                   repeat-interval verbose))
+  (declare (ignore name-or-scheduled-function interval marker context
+                   context-supplied-p repeat-interval verbose))
   #-threads-not-available
   (progn
     (check-type interval integer)
     (check-type repeat-interval (or null integer))
     (schedule-function-internal name-or-scheduled-function 
                                 marker
+                                context
+                                context-supplied-p
                                 (+ (get-universal-time) interval)
                                 repeat-interval
                                 verbose)
@@ -609,12 +627,13 @@
 ;;;  (ENCODE-TIME-OF-DAY is duplicated here (as %ENCODE-TIME-OF-DAY) from
 ;;;  GBBopen Tools, for stand-alone use.)
 
-(defun %encode-time-of-day (second minute hour
-                           &optional (universal-time (get-universal-time)))
+(defun %encode-time-of-day (second minute hour &optional universal-time)
   ;; get the decoded current time of day:
   (multiple-value-bind (current-second current-minute current-hour
                         date month year)
-      (decode-universal-time universal-time)
+      (if universal-time
+          (decode-universal-time universal-time)
+          (get-decoded-time))
     ;; substitute the supplied hour, minute, and second values:
     (let ((tentative-result
            (encode-universal-time second minute hour date month year)))
