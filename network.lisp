@@ -66,46 +66,69 @@
         ;; (princ "E")
         (return recv-message))))
 
+(defun stream-session-p (session)
+  (declare (type session session))
+  (typep (socket-of session) 'usocket:stream-usocket))
+
+(defun send-stream-message (session message receive-p)
+  (declare (type session session)
+           (type message message))
+  (let* ((stream (usocket:socket-stream (socket-of session)))
+         (data (coerce (ber-encode message) 'octets)))
+    (write-sequence data stream)
+    (finish-output stream)
+    (when receive-p
+      (decode-message session stream))))
+
 (defgeneric send-snmp-message (session message &key &allow-other-keys))
 
 (defmethod send-snmp-message ((session v1-session) (message v1-message) &key (receive t))
   "this new send-snmp-message is just a interface,
    all UDP retransmit code are moved into usocket-udp project."
-  (cond (receive ; normal message
-         (socket-sync (socket-of session)
-                      message
-                      :encode-function #'(lambda (x)
-                                           (values (coerce (ber-encode x) 'octets)
-                                                           (request-id-of (pdu-of x))))
-                      :decode-function #'(lambda (x)
-                                           (let ((m (decode-message session x)))
-                                             (values m (request-id-of (pdu-of m)))))
-                      :max-receive-length +max-snmp-packet-size+))
-        ;; trap message: only send once
-        (t (let* ((data (coerce (ber-encode message) 'octets))
-                  (data-length (length data)))
-             (usocket:socket-send (socket-of session) data data-length)))))
+  (if (stream-session-p session)
+      (send-stream-message session message receive)
+    (if receive ; normal message
+        (flet ((encode-function (x)
+                 (values (coerce (ber-encode x) 'octets)
+                         (request-id-of (pdu-of x))))
+               (decode-function (x)
+                 (let ((m (decode-message session x)))
+                   (values m (request-id-of (pdu-of m))))))
+          (socket-sync (socket-of session) message
+                       :encode-function #'encode-function
+                       :decode-function #'decode-function
+                       :max-receive-length +max-snmp-packet-size+))
+      ;; trap message: only send once
+      (let* ((data (coerce (ber-encode message) 'octets))
+             (data-length (length data)))
+        (usocket:socket-send (socket-of session) data data-length)))))
 
 (defmethod send-snmp-message ((session v3-session) (message v3-message) &key (receive t))
   "this new send-snmp-message is just a interface,
    all UDP retransmit code are moved into usocket-udp project."
-  (cond (receive ; normal message
-         (labels ((encode-function (x)
-                    (values (coerce (ber-encode x) 'octets)
-                            (message-id-of x)))
-                  (decode-function (x)
-                    (let ((m (decode-message session x)))
-                      (values m (message-id-of m))))
-                  (send ()
-                    (socket-sync (socket-of session) message
-                                 :encode-function #'encode-function
-                                 :decode-function #'decode-function
-                                 :max-receive-length +max-snmp-packet-size+)))
-           (let ((reply-message (send)))
-             (if (report-flag-of reply-message)
-               (send) ; send again when got a snmp report
-               reply-message))))
-        ;; trap message: only send once
-        (t (let* ((data (coerce (ber-encode message) 'octets))
-                  (data-length (length data)))
-             (usocket:socket-send (socket-of session) data data-length)))))
+  (if (stream-session-p session)
+      (flet ((send () (send-stream-message session message receive)))
+        (let ((reply-message (send)))
+          (if (and receive (report-flag-of reply-message))
+              (send)
+            reply-message)))
+    (if receive ; normal message
+        (labels ((encode-function (x)
+                   (values (coerce (ber-encode x) 'octets)
+                           (message-id-of x)))
+                 (decode-function (x)
+                   (let ((m (decode-message session x)))
+                     (values m (message-id-of m))))
+                 (send ()
+                   (socket-sync (socket-of session) message
+                                :encode-function #'encode-function
+                                :decode-function #'decode-function
+                                :max-receive-length +max-snmp-packet-size+)))
+          (let ((reply-message (send)))
+            (if (report-flag-of reply-message)
+                (send) ; send again when got a snmp report
+              reply-message)))
+      ;; trap message: only send once
+      (let* ((data (coerce (ber-encode message) 'octets))
+             (data-length (length data)))
+        (usocket:socket-send (socket-of session) data data-length)))))

@@ -14,7 +14,9 @@
   :licence "MIT"
   :depends-on (:snmp)
   :components ((:module "interface"
-                :serial t
+		:serial t
 		:components ((:file "package")
-                             (:file "fli-templates")
-                             (:file "mibrowser")))))
+			     #+lispworks
+			     (:file "fli-templates")
+			     #+lispworks
+			     (:file "mibrowser")))))

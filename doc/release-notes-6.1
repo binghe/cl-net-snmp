@@ -1,0 +1,38 @@
+========================== SNMP 6.1 =============================
+
+The CL-NET-SNMP project is pleased to announce the release of 6.1. This
+is a major patch release which contains numerous enhancements from the
+last 6.0.x releases.
+
+CL-NET-SNMP is a free, high-level implementation of the Simple Network
+Management Protocol (SNMP), which is common used for Unix/Linux system
+administration and network management. CL-NET-SNMP provides a fast ASN.1
+BER encode/decode engine; a MIB to Common Lisp compiler; a dynamic MIB
+loader for runtime loading of MIB objects; a SNMP server which could run
+inside any supported Common Lisp platform for montoring your Lisp
+server-side applications; and an group of handful interface function for
+doing every SNMP operations. On LispWorks, CL-NET-SNMP has a GUI based
+"MIB Browser".  CL-NET-SNMP supports SNMPv3 by help of the IRONCLAD
+crypto library, and do TCP/UDP networking based on USOCKET 0.5.x.
+CL-NET-SNMP is maintained by Chun Tian (binghe), a Chinese Common Lisp
+programmer.
+
+News in this release:
+
+  * New features:
+    - Add support for SNMP/TCP (client-side only), by using the optional
+      keyword argument (:PROTOCOL :TCP) in SNMP:OPEN-SESSION or
+      SNMP:WITH-OPEN-SESSION.
+
+    - Add support for Macintosh Common Lisp (MCL/RMCL), TCP only.
+
+  * Other changes:
+    - Re-depend on trivial-gray-streams for MCL and SCL support.
+
+See <URL:http://common-lisp.net/projects/cl-net-snmp/> for download
+information, guidelines on reporting bugs, and mailing list details.
+
+I hope you can enjoy using this release of CL-NET-SNMP!
+
+---
+Chun Tian (binghe)

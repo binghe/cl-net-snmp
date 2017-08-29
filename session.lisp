@@ -14,19 +14,15 @@
 (defvar *default-priv-protocol* :des)
 
 (defclass session ()
-  ((socket            :type usocket:datagram-usocket
-                      :accessor socket-of
+  ((socket            :accessor socket-of
                       :initarg :socket)
-   (host              :type (or string integer)
-                      :accessor host-of
+   (host              :accessor host-of
                       :initarg :host)
-   (port              :type integer
-                      :accessor port-of
+   (port              :accessor port-of
                       :initarg :port)
-   (version           :type integer
-                      :accessor version-of
+   (version           :accessor version-of
                       :initarg :version))
-  (:documentation "SNMP session base"))
+  (:documentation "SNMP session base class"))
 
 (defclass v1-session (session)
   ((community         :type string
@@ -123,10 +119,15 @@
             (,+snmp-version-2c+ . ,+snmp-version-2c+)
             (,+snmp-version-3+  . ,+snmp-version-3+))))
 
-(defun snmp-connect (host port)
-  (usocket:socket-connect host port :protocol :datagram))
+(defun snmp-connect (host port &key (protocol :datagram))
+  (ecase protocol
+    ((:stream :tcp)
+     (usocket:socket-connect host port :protocol :stream :element-type '(unsigned-byte 8)))
+    ((:datagram :udp)
+     (usocket:socket-connect host port :protocol :datagram))))
 
-(defun open-session (host &key (port *default-snmp-port*)
+(defun open-session (host &key (protocol :datagram)
+                               (port *default-snmp-port*)
                                version
                                (community *default-snmp-community*)
                                (create-socket t)
@@ -137,7 +138,7 @@
          (args (list (gethash real-version *snmp-class-map*)
                      :host host :port port)))
     (when create-socket
-      (nconc args (list :socket (snmp-connect host port))))
+      (nconc args (list :socket (snmp-connect host port :protocol protocol))))
     (if (/= real-version +snmp-version-3+)
       ;; for SNMPv1 and v2c, only set the community
       (nconc args (list :community (or community *default-snmp-community*)))

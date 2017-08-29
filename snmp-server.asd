@@ -10,9 +10,9 @@
 (defsystem snmp-server
   :description "SNMP Server"
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
-  :version "4.0"
+  :version "4.1"
   :licence "MIT"
-  :depends-on (:snmp)
+  :depends-on (:snmp :usocket-server)
   :components ((:file "server-condition")
                (:file "snmp-server" :depends-on ("server-condition"))
                (:file "server-vacm" :depends-on ("snmp-server"))

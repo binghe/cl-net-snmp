@@ -22,17 +22,12 @@
   :author "Chun Tian (binghe) <binghe.lisp@gmail.com>"
   :version "7.0"
   :licence "MIT"
-  :depends-on (:ironclad :usocket :trivial-gray-streams)
+  :depends-on (:ironclad :usocket :trivial-gray-streams :ieee-floats
+               :portable-threads)
   :components ((:module "vendor"
                 :serial t
-                :components (#-portable-threads
-                             (:file "portable-threads")
-                             #-scheduled/periodic-functions
-                             (:file "scheduled-periodic-functions")
-                             (:file "ieee-floats")
-                             #-lispworks #-lispworks
-                             (:file "yacc")
-                             (:file "yacc-patch" :depends-on ("yacc"))))
+                :components (#-lispworks (:file "yacc")
+                             #-lispworks (:file "yacc-patch" :depends-on ("yacc"))))
                ;; base system
                (:file "package")
                (:module "runtime"                :depends-on ("package" "vendor")

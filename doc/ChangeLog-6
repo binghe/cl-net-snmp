@@ -1,7 +1,25 @@
 ;;;; -*- Mode: Text; -*-
-;;;; $Id$
 
-SNMP-6.0.1
+snmp-6.1
+
+* Added SNMP/TCP suppport
+* Re-depend on external packages (portable-threads, usocket-server, ieee-floats)
+* Most of vendor code has been removed.
+* Added support for LispWorks 7.0.
+
+snmp-6.0.2
+
+- Fixed compilation on ABCL.
+
+- Remove snmp-mib.asd, splited into snmp.asd and snmp-server.asd
+
+- Add HOST-RESOURCES-MIB and IF-MIB to prebuilt MIB list
+
+- Logical pathname fixes for case-sensitive filesystems
+
+- More vendor code from GBBopen
+
+snmp-6.0.1
 
 - Change CL-YACC's warnings into style-warnings to make ASDF/SBCL happy.
 
@@ -17,15 +35,3 @@ SNMP-6.0.1
 - Simple patch facility added (LOAD-ALL-PATCHES)
 
 - Fix for CLISP, import symbols from CLOS package (but still lack of networking)
-
-SNMP 6.0.2
-
-- Fixed compilation on ABCL.
-
-- Remove snmp-mib.asd, splited into snmp.asd and snmp-server.asd
-
-- Add HOST-RESOURCES-MIB and IF-MIB to prebuilt MIB list
-
-- Logical pathname fixes for case-sensitive filesystems
-
-- More vendor code from GBBopen
