@@ -24,7 +24,7 @@
 
 (defmethod encode-opaque ((o float))
   (concatenate 'vector #(#x9f #x78 #x04)
-               (let ((integer (snmp.ieee-floats:encode-float32 o)))
+               (let ((integer (ieee-floats:encode-float32 o)))
                  (let ((a (ash (logand integer #xff000000) -24))
                        (b (ash (logand integer #x00ff0000) -16))
                        (c (ash (logand integer #x0000ff00) -8))
@@ -57,7 +57,7 @@
         (f-2 (read-byte stream))
         (f-3 (read-byte stream)))
     (let ((integer (logior (ash f-0 24) (ash f-1 16) (ash f-2 8) f-3)))
-      (opaque (snmp.ieee-floats:decode-float32 integer)))))
+      (opaque (ieee-floats:decode-float32 integer)))))
 
 (defmethod ber-encode ((value float))
   (ber-encode (opaque value)))
