@@ -10,7 +10,7 @@
    (pdu     :type pdu
             :initarg :pdu
             :accessor pdu-of)
-   (context :type base-string
+   (context :type string
             :initarg :context
             :accessor context-of))
   (:documentation "SNMP message base class"))
